@@ -67,21 +67,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 ## 2. Интеграция CardKit.framework
 
-2.1 Взять файл CardKit.framework и перенести файл в папку проекта.
+Интегрировать CardKit.framework можно 3мя способами.
+
+- Вручную добавить CardKit.framework
+- Установить с использование Carthage
+- Установить с использованием Pod
+
+### 2.1 CardKit.framework
+
+2.1.1 Взять файл CardKit.framework и перенести файл в папку проекта.
 
 <div align="center">
   <img src="./images/tutorial/move_card_kit.framework.png" width="600"/>
 </div>
   <div align="center"> Рисунок 2.1. Перенос файла CardKit.framework </div>
 
-2.2. Открыть Targets -> General -> Frameworks,Libraries, and Embedded Content, У CardKit.framework заменить в колонке embeded c `Do not Embed` на `Embed & Sign`.
+2.2.1 Открыть Targets -> General -> Frameworks,Libraries, and Embedded Content, У CardKit.framework заменить в колонке embeded c `Do not Embed` на `Embed & Sign`.
 
 <div align="center">
   <img src="./images/tutorial/replace_with_embed_and_sign.png" width="600"/>
 </div>
   <div align="center"> Рисунок 2.2. Изменения настроек CardKit.framework </div>
 
-2.3. Импортировать фрэймворк в файле ViewController.swift
+2.3.1 Импортировать фрэймворк в файле ViewController.swift
+
+### 2.2 Carthage
+
+2.2.1 Создать Cartfile <br>
+2.2.2 Добавить в файл строчку `github "Runet-Business-Systems/CardKit"`
+
+### 2.3 Pod
+
+2.3.1 Инициализировать Pod <br>
+2.3.2 Добавить в Podfile строчку `pod 'CardKit', :git => 'https://github.com/Runet-Business-Systems/ios-sdk.git'`
 
 ```swift
 //ViewController.swift
