@@ -13,7 +13,7 @@
 #import "CardKFooterView.h"
 #import "CardKValidation.h"
 #import "CardKBankLogoView.h"
-#import "RSA.h"
+#import "SeTokenGenerator.h"
 
 const NSString *CardKBindingCardCellID = @"bindingCard";
 const NSString *CardKBindingButtonCellID = @"button";
@@ -86,12 +86,7 @@ NSString *CardKConfirmChoosedCardFooterID = @"footer";
     return;
   }
   
-  NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
-  NSString *uuid = [[NSUUID UUID] UUIDString];
-
-  NSString *cardData = [NSString stringWithFormat:@"%f/%@/%@/%@/%@", timeStamp, uuid, _cardKBinding.secureCode, CardKConfig.shared.mdOrder, _cardKBinding.bindingId];
-
-  NSString *seToken = [RSA encryptString:cardData publicKey:CardKConfig.shared.pubKey];
+  NSString *seToken = [SeTokenGenerator generateSeTokenWithBinding:_cardKBinding];
 
   [_cKitDelegate cardKitViewController:self didCreateSeToken:seToken allowSaveBinding:NO isNewCard: NO];
 }

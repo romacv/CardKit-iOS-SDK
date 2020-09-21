@@ -11,10 +11,11 @@
 #import "CardKCardView.h"
 #import "CardKBankLogoView.h"
 #import "CardKFooterView.h"
-#import "RSA.h"
 #import "CardKConfig.h"
 #import "CardKSwitchView.h"
 #import "CardKKindPaymentViewController.h"
+#import "SeTokenGenerator.h"
+
 const NSString *CardKCardCellID = @"card";
 const NSString *CardKOwnerCellID = @"owner";
 const NSString *CardKSwitchCellID = @"switch";
@@ -447,23 +448,7 @@ NSString *CardKFooterID = @"footer";
     return;
   }
   
-  NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
-  NSString *uuid = [[NSUUID UUID] UUIDString];
-  NSString *cardNumber = _cardView.number;
-  NSString *secureCode = _cardView.secureCode;
-  NSString *fullYear = _cardView.getFullYearFromExpirationDate;
-  NSString *month = _cardView.getMonthFromExpirationDate;
-  NSString *expirationDate = [NSString stringWithFormat:@"%@%@", fullYear, month];
-  
-  NSString *cardData = [NSString stringWithFormat:@"%f/%@/%@/%@/%@", timeStamp, uuid, cardNumber, secureCode, expirationDate];
-  
-  if (CardKConfig.shared.mdOrder != nil) {
-    cardData = [NSString stringWithFormat:@"%@/%@", cardData, CardKConfig.shared.mdOrder];
-  } else {
-    cardData = [NSString stringWithFormat:@"%@//", cardData];
-  }
-
-  NSString *seToken = [RSA encryptString:cardData publicKey: CardKConfig.shared.pubKey];
+  NSString *seToken = [SeTokenGenerator generateSeTokenWithCardView:_cardView];
   
   [_cKitDelegate cardKitViewController:self didCreateSeToken:seToken allowSaveBinding: _switchView.getSwitch.isOn isNewCard: YES];
 }
