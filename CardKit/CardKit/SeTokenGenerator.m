@@ -14,15 +14,20 @@
 
 @implementation SeTokenGenerator
 
-+ (NSString *) getTimeStamp {
++ (NSString *) getTimeStampWithDate:(NSDate *) date {
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
   [dateFormatter setLocale:enUSPOSIXLocale];
   [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
   [dateFormatter setCalendar:[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian]];
-  NSDate *now = [NSDate date];
   
-  return [dateFormatter stringFromDate:now];
+  return [dateFormatter stringFromDate:date];
+}
+
++ (NSString *) getTimeStamp {
+  NSDate *currentDate = [NSDate date];
+  
+  return [self getTimeStampWithDate:currentDate];
 }
 
 + (NSString *) generateSeTokenWithBinding:(CardKBinding *) cardKBinding; {
