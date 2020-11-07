@@ -46,6 +46,7 @@ const NSString *CardKKindPayRows = @"rows";
     [_button
       setTitle: NSLocalizedStringFromTableInBundle(@"payByCard", nil, _languageBundle,  @"Pay by card")
       forState: UIControlStateNormal];
+    
     [_button addTarget:self action:@selector(_buttonPressed:)
     forControlEvents:UIControlEventTouchUpInside];
     
@@ -59,6 +60,7 @@ const NSString *CardKKindPayRows = @"rows";
 }
 
 - (void)_buttonPressed:(UIButton *)button {
+  
   CardKViewController *controller = [[CardKViewController alloc] init];
   controller.cKitDelegate = _cKitDelegate;
   
@@ -77,7 +79,7 @@ const NSString *CardKKindPayRows = @"rows";
   }
   
   CardKTheme *theme = CardKConfig.shared.theme;
-  _button.frame = CGRectMake(0, 0, self.view.bounds.size.width, 40);
+
 
   self.tableView.separatorColor = theme.colorSeparatar;
   self.tableView.backgroundColor = theme.colorTableBackground;
@@ -87,7 +89,9 @@ const NSString *CardKKindPayRows = @"rows";
   UINavigationBar *bar = [self.navigationController navigationBar];
   bar.barTintColor = theme.colorCellBackground;
 
-  _button.tintColor = theme.colorButtonText;
+  [_button addTarget:self action:@selector(_buttonPressed:)
+  forControlEvents:UIControlEventTouchUpInside];
+
   _bankLogoView.frame = CGRectMake(self.view.bounds.size.width * 2, 0, 0, 0);
 }
 
@@ -96,6 +100,13 @@ const NSString *CardKKindPayRows = @"rows";
   
   CGRect bounds = _button.superview.bounds;
   _button.center = CGPointMake(bounds.size.width * 0.5, bounds.size.height * 0.5);
+  
+  CardKTheme *theme = CardKConfig.shared.theme;
+
+  _button.tintColor = theme.colorButtonText;
+  _button.frame = CGRectMake(0, 0, bounds.size.width, 44);
+  [_button addTarget:self action:@selector(_buttonPressed:)
+  forControlEvents:UIControlEventTouchUpInside];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return _sections.count;
@@ -126,7 +137,7 @@ const NSString *CardKKindPayRows = @"rows";
     cardKBinding.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 
   } else if ([CardKPayCardButtonCellID isEqual:cellID]) {
-    [cell addSubview:_button];
+    [cell.contentView addSubview:_button];
   }
    
   CardKTheme *theme = CardKConfig.shared.theme;

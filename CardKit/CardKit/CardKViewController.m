@@ -319,7 +319,7 @@ NSString *CardKFooterID = @"footer";
     _ownerTextField.frame = cell.contentView.bounds;
     [cell.contentView addSubview:_ownerTextField];
   } else if ([CardKButtonCellID isEqual:cellID]) {
-    [cell addSubview:_doneButton];
+    [cell.contentView addSubview:_doneButton];
   } else if ([CardKSwitchCellID isEqual:cellID]) {
     _switchView.frame = cell.contentView.bounds;
     cell.accessoryView = [_switchView getSwitch];

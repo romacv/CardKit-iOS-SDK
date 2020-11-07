@@ -186,7 +186,7 @@ NSString *CardKConfirmChoosedCardFooterID = @"footer";
     CGRect r = tableView.readableContentGuide.layoutFrame;
     _cardKBinding.frame = CGRectMake(r.origin.x + 45, 0, r.size.width - 70, cell.contentView.bounds.size.height);
   } else if ([CardKBindingButtonCellID isEqual:cellID]) {
-    [cell addSubview:_button];
+    [cell.contentView addSubview:_button];
   }
 
   CardKTheme *theme = CardKConfig.shared.theme;
