@@ -113,10 +113,7 @@
 }
 
 - (void) replaceTextWithCircleBullet {
-  NSInteger fontSize = 22;
-  if (self.superview.frame.size.width <= 320) {
-    fontSize = 19;
-  }
+  NSInteger fontSize = 18;
 
   NSString *bullet = @"\u2022";
   NSString *displayText = [_cardNumber stringByReplacingOccurrencesOfString:@"X" withString:bullet];

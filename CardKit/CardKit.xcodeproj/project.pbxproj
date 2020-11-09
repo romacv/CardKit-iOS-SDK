@@ -19,6 +19,8 @@
 		92985C86246A96F4009B7392 /* CardKSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92985C84246A96F4009B7392 /* CardKSwitchView.m */; };
 		92985C89246BEE1E009B7392 /* CardKKindPaymentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 92985C87246BEE1E009B7392 /* CardKKindPaymentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		92985C8A246BEE1E009B7392 /* CardKKindPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92985C88246BEE1E009B7392 /* CardKKindPaymentViewController.m */; };
+		929BA32425591CFC00AB0526 /* TextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 929BA32225591CFC00AB0526 /* TextField.h */; };
+		929BA32525591CFC00AB0526 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 929BA32325591CFC00AB0526 /* TextField.m */; };
 		92A1461A23435C6B002FBCC3 /* CardKConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A1461823435C6B002FBCC3 /* CardKConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		92A1461B23435C6B002FBCC3 /* CardKConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 92A1461923435C6B002FBCC3 /* CardKConfig.m */; };
 		92E247F22475481700C2EF6C /* CardKBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E247F02475481700C2EF6C /* CardKBinding.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -72,6 +74,8 @@
 		92985C84246A96F4009B7392 /* CardKSwitchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKSwitchView.m; sourceTree = "<group>"; };
 		92985C87246BEE1E009B7392 /* CardKKindPaymentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKKindPaymentViewController.h; sourceTree = "<group>"; };
 		92985C88246BEE1E009B7392 /* CardKKindPaymentViewController.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKKindPaymentViewController.m; sourceTree = "<group>"; tabWidth = 2; };
+		929BA32225591CFC00AB0526 /* TextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextField.h; sourceTree = "<group>"; };
+		929BA32325591CFC00AB0526 /* TextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextField.m; sourceTree = "<group>"; };
 		92A1461823435C6B002FBCC3 /* CardKConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKConfig.h; sourceTree = "<group>"; };
 		92A1461923435C6B002FBCC3 /* CardKConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKConfig.m; sourceTree = "<group>"; };
 		92E0D90A24AF4B7300F7846E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -164,6 +168,8 @@
 				D245ABBE231C4C2900369747 /* RSA.h */,
 				D245ABBF231C4C2900369747 /* RSA.m */,
 				D269080B231FA894001CB863 /* CardKTextField.h */,
+				929BA32225591CFC00AB0526 /* TextField.h */,
+				929BA32325591CFC00AB0526 /* TextField.m */,
 				D269080C231FA894001CB863 /* CardKTextField.m */,
 				D269080F231FB000001CB863 /* CardKCardView.h */,
 				D2690810231FB000001CB863 /* CardKCardView.m */,
@@ -217,6 +223,7 @@
 				D245ABC8231C529D00369747 /* CardKTheme.h in Headers */,
 				92985C89246BEE1E009B7392 /* CardKKindPaymentViewController.h in Headers */,
 				D2D0B367232122620007B3B9 /* PaymentSystemProvider.h in Headers */,
+				929BA32425591CFC00AB0526 /* TextField.h in Headers */,
 				9248868E251885FB00CA81D5 /* SeTokenGenerator.h in Headers */,
 				D2690811231FB000001CB863 /* CardKCardView.h in Headers */,
 				92A1461A23435C6B002FBCC3 /* CardKConfig.h in Headers */,
@@ -353,6 +360,7 @@
 				9234CC4F247BC315009E3034 /* CardKValidation.m in Sources */,
 				D245ABBD231C449F00369747 /* CardKViewController.m in Sources */,
 				92A1461B23435C6B002FBCC3 /* CardKConfig.m in Sources */,
+				929BA32525591CFC00AB0526 /* TextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

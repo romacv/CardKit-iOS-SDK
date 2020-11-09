@@ -10,6 +10,7 @@
 #import "Luhn.h"
 #import <AudioToolbox/AudioServices.h>
 #import "CardKConfig.h"
+#import "TextField.h"
 NSString *CardKTextFieldPatternCardNumber = @"XXXXXXXXXXXXXXXX";
 NSString *CardKTextFieldPatternExpirationDate = @"MMYY";
 NSString *CardKTextFieldPatternSecureCode = @"XXX";
@@ -62,7 +63,7 @@ NSString *CardKTextFieldPatternSecureCode = @"XXX";
   UILabel *_measureLabel;
   UILabel *_patternLabel;
   UILabel *_formatLabel;
-  UITextField *_textField;
+  TextField *_textField;
   
   NSString *_pattern;
   BOOL _showError;
@@ -79,7 +80,7 @@ NSString *CardKTextFieldPatternSecureCode = @"XXX";
     
     _patternLabel = [[UILabel alloc] init];
     _formatLabel = [[UILabel alloc] init];
-    _textField = [[UITextField alloc] init];
+    _textField = [[TextField alloc] init];
     _measureLabel = [[UILabel alloc] init];
     [_textField addTarget:self action:@selector(_editingChange:) forControlEvents:UIControlEventEditingChanged];
   
