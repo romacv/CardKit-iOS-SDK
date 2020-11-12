@@ -1,18 +1,18 @@
 //
-//  CardKitTests.m
-//  CardKitTests
+//  asdasdasdTests.m
+//  asdasdasdTests
 //
-//  Created by Yury Korolev on 01.09.2019.
-//  Copyright © 2019 AnjLab. All rights reserved.
+//  Created by Alex Korotkov on 11/12/20.
+//  Copyright © 2020 AnjLab. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface CardKitTests : XCTestCase
+@interface asdasdasdTests : XCTestCase
 
 @end
 
-@implementation CardKitTests
+@implementation asdasdasdTests
 
 - (void)setUp {
     // Put setup code here. This method is called before the invocation of each test method in the class.

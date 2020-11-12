@@ -8,17 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		0CDCE6C0041575C85620EDD3 /* Pods_SampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90E0DAB803DD340C070713CD /* Pods_SampleApp.framework */; };
+		920A4309255D4826005010F3 /* CardKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920A4308255D4826005010F3 /* CardKit.framework */; };
+		920A4322255D48D0005010F3 /* CardKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D245ABB6231C445D00369747 /* CardKit.framework */; };
+		920A4323255D48D0005010F3 /* CardKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D245ABB6231C445D00369747 /* CardKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9234CC56247D2157009E3034 /* bindings.json in Resources */ = {isa = PBXBuildFile; fileRef = 9234CC55247D2157009E3034 /* bindings.json */; };
 		9234CC5D247FDA8F009E3034 /* SampleCardKPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234CC5C247FDA8F009E3034 /* SampleCardKPaymentView.swift */; };
+		92429131255D60E100378C68 /* CardKitCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920A449A255D59C4005010F3 /* CardKitCore.framework */; };
+		92429132255D60E100378C68 /* CardKitCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 920A449A255D59C4005010F3 /* CardKitCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9262A63D24C5CAE600042DDC /* CardKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9262A63C24C5CAE600042DDC /* CardKit.podspec */; };
+		92BD9229255D458B001E1ECF /* CardKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92BD9228255D458B001E1ECF /* CardKit.framework */; };
 		92E0D90E24AF4EB000F7846E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92E0D91024AF4EB000F7846E /* Localizable.strings */; };
 		D245AB97231C444600369747 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D245AB96231C444600369747 /* AppDelegate.swift */; };
 		D245AB99231C444600369747 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D245AB98231C444600369747 /* ViewController.swift */; };
 		D245AB9E231C444700369747 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D245AB9D231C444700369747 /* Assets.xcassets */; };
 		D245ABA1231C444700369747 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D245AB9F231C444700369747 /* LaunchScreen.storyboard */; };
 		D245ABAC231C444700369747 /* SampleAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D245ABAB231C444700369747 /* SampleAppTests.swift */; };
-		D245ABB7231C445D00369747 /* CardKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D245ABB6231C445D00369747 /* CardKit.framework */; };
-		D245ABB8231C445D00369747 /* CardKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D245ABB6231C445D00369747 /* CardKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +42,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D245ABB8231C445D00369747 /* CardKit.framework in Embed Frameworks */,
+				92429132255D60E100378C68 /* CardKitCore.framework in Embed Frameworks */,
+				920A4323255D48D0005010F3 /* CardKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -49,10 +54,18 @@
 		547AE47F17B068B145C06A2D /* Pods-SampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleApp.debug.xcconfig"; path = "Target Support Files/Pods-SampleApp/Pods-SampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		747C8D3F93DB09475EB327A9 /* Pods-SampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleApp.release.xcconfig"; path = "Target Support Files/Pods-SampleApp/Pods-SampleApp.release.xcconfig"; sourceTree = "<group>"; };
 		90E0DAB803DD340C070713CD /* Pods_SampleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		920A4302255D47BF005010F3 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		920A4308255D4826005010F3 /* CardKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CardKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		920A430C255D483F005010F3 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		920A432D255D48E9005010F3 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		920A449A255D59C4005010F3 /* CardKitCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CardKitCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		920A44F6255D5CF0005010F3 /* CardKitCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CardKitCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9234CC55247D2157009E3034 /* bindings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bindings.json; sourceTree = "<group>"; };
 		9234CC57247E90AB009E3034 /* SampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SampleApp.entitlements; sourceTree = "<group>"; };
 		9234CC5C247FDA8F009E3034 /* SampleCardKPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleCardKPaymentView.swift; sourceTree = "<group>"; };
 		9262A63C24C5CAE600042DDC /* CardKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CardKit.podspec; path = ../CardKit.podspec; sourceTree = "<group>"; };
+		92BD9224255D4587001E1ECF /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		92BD9228255D458B001E1ECF /* CardKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CardKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92E0D90224AF3D6800F7846E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		92E0D90F24AF4EB000F7846E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		92E0D91124AF4EC300F7846E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -73,8 +86,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D245ABB7231C445D00369747 /* CardKit.framework in Frameworks */,
 				0CDCE6C0041575C85620EDD3 /* Pods_SampleApp.framework in Frameworks */,
+				92BD9229255D458B001E1ECF /* CardKit.framework in Frameworks */,
+				920A4309255D4826005010F3 /* CardKit.framework in Frameworks */,
+				92429131255D60E100378C68 /* CardKitCore.framework in Frameworks */,
+				920A4322255D48D0005010F3 /* CardKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +117,14 @@
 		CA78FC61FEBF08E39AE4240A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				920A44F6255D5CF0005010F3 /* CardKitCore.framework */,
+				920A449A255D59C4005010F3 /* CardKitCore.framework */,
+				920A432D255D48E9005010F3 /* Core.framework */,
+				920A430C255D483F005010F3 /* Core.framework */,
+				920A4308255D4826005010F3 /* CardKit.framework */,
+				920A4302255D47BF005010F3 /* Core.framework */,
+				92BD9228255D458B001E1ECF /* CardKit.framework */,
+				92BD9224255D4587001E1ECF /* Core.framework */,
 				90E0DAB803DD340C070713CD /* Pods_SampleApp.framework */,
 			);
 			name = Frameworks;
@@ -460,6 +484,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = FD6ZML48V9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -488,6 +516,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = FD6ZML48V9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (

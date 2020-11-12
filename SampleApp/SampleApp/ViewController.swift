@@ -8,6 +8,7 @@
 
 import UIKit
 import CardKit
+import CardKitCore
 
 let publicKey = """
 -----BEGIN PUBLIC KEY-----
@@ -65,6 +66,7 @@ class ViewController: UITableViewController {
   }
 
   func _openController() {
+    
     CardKConfig.shared.language = "";
     CardKConfig.shared.theme = CardKTheme.light();
     CardKConfig.shared.bindingCVCRequired = true;
@@ -79,6 +81,8 @@ class ViewController: UITableViewController {
     controller.cKitDelegate = self;
     
     let createdUiController = CardKViewController.create(self, controller: controller);
+    
+    
     let navController = UINavigationController(rootViewController: createdUiController)
     
     if #available(iOS 13.0, *) {
