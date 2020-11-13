@@ -68,9 +68,7 @@
   return [str isEqual:string];
 }
 
-+ (NSDictionary *)_validateCardNumber: (NSString *) number {
-  NSString *cardNumber = number;
-
++ (NSDictionary *)_validateCardNumber: (NSString *) cardNumber {
   NSInteger len = [cardNumber length];
   if (len < 16 || len > 19) {
       return @{@"field": CKCFieldPan, @"error": CKCErrorInvalidLength};
@@ -81,9 +79,7 @@
     return nil;
 }
 
-+ (NSDictionary *)_validateSecureCode: (NSString *) cvc {
-  NSString *secureCode = cvc;
-
++ (NSDictionary *)_validateSecureCode: (NSString *) secureCode {
   if ([secureCode length] != 3 || ![self _allDigitsInString:secureCode]) {
       return @{@"field": CKCFieldCVC, @"error": CKCErrorInvalid};
   }
