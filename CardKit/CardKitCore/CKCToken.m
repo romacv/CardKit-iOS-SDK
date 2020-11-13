@@ -70,29 +70,41 @@
 
 + (NSDictionary *)_validateCardNumber: (NSString *) cardNumber {
   NSInteger len = [cardNumber length];
+  if (len == 0) {
+    return @{@"field": CKCFieldPan, @"error": CKCErrorRequired};
+  }
+
   if (len < 16 || len > 19) {
     return @{@"field": CKCFieldPan, @"error": CKCErrorInvalidLength};
   } else if (![self _allDigitsInString:cardNumber] || ![self _isValidCreditCardNumber: cardNumber]) {
-    return @{@"field": CKCFieldPan, @"error": CKCErrorInvalid};
+    return @{@"field": CKCFieldPan, @"error": CKCErrorInvalidFormat};
   }
 
   return nil;
 }
 
 + (NSDictionary *)_validateSecureCode: (NSString *) secureCode {
+  if (secureCode.length == 0) {
+    return @{@"field": CKCFieldCVC, @"error": CKCErrorRequired};
+  }
+
   if ([secureCode length] != 3 || ![self _allDigitsInString:secureCode]) {
-      return @{@"field": CKCFieldCVC, @"error": CKCErrorInvalid};
+      return @{@"field": CKCFieldCVC, @"error": CKCErrorInvalidFormat};
   }
   
     return nil;
 }
 
 + (NSDictionary *)_validateExpireDate:(NSString *) expireDate {
+  if ([expireDate isEqual:@""] || expireDate == nil) {
+    return @{@"field": CKCFieldExpiryMMYY, @"error": CKCErrorRequired};;
+  }
+
   NSString * month = [self _getMonthFromExpirationDate: expireDate];
   NSString * year = [self _getFullYearFromExpirationDate: expireDate];
 
   if (month == nil || year == nil) {
-    return @{@"field": CKCFieldExpiryMMYY, @"error": CKCErrorRequired};
+    return @{@"field": CKCFieldExpiryMMYY, @"error": CKCErrorInvalidFormat};
   } else {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
@@ -112,6 +124,10 @@
 }
 
 + (NSDictionary *)_validateOwner:(NSString *) cardOwner {
+  if (cardOwner.length == 0) {
+    return @{@"field": CKCFieldCardholder, @"error": CKCErrorRequired};
+  }
+
   NSString *owner = [cardOwner stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
   NSInteger len = owner.length;
   if (len == 0 || len > 40) {
@@ -145,15 +161,15 @@
 + (CKCTokenResult *) generateWithBinding: (CKCBindingParams *) params  {
   NSMutableArray *errors = [[NSMutableArray alloc] init];
 
-  if ([params.bindingID isEqual: nil] || [params.bindingID isEqual:@""]) {
+  if (params.bindingID.length == 0) {
     [errors addObject:@{@"field": CKCFieldBindingID, @"error": CKCErrorRequired}];
   }
   
-  if ([params.mdOrder isEqual: nil] || [params.mdOrder isEqual:@""]) {
+  if (params.mdOrder.length == 0) {
     [errors addObject:@{@"field": CKCFieldMdOrder, @"error": CKCErrorRequired}];
   }
   
-  if ([params.pubKey isEqual: nil] || [params.pubKey isEqual:@""]) {
+  if (params.pubKey.length == 0) {
     [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorRequired}];
   }
   
@@ -184,7 +200,7 @@
 
   NSString *seToken = [RSA encryptString:cardData publicKey:params.pubKey];
   
-  if ([seToken isEqual:@""] || seToken == nil) {
+  if (seToken.length == 0) {
     [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorInvalid}];
     return tokenResult;
   }
@@ -195,11 +211,11 @@
 + (CKCTokenResult *) generateWithCard: (CKCCardParams *) params  {
   NSMutableArray *errors = [[NSMutableArray alloc] init];
 
-  if ([params.mdOrder isEqual: nil] || [params.mdOrder isEqual:@""]) {
+  if (params.mdOrder.length == 0) {
     [errors addObject:@{@"field": CKCFieldMdOrder, @"error": CKCErrorRequired}];
   }
   
-  if ([params.pubKey isEqual: nil] || [params.pubKey isEqual:@""]) {
+  if (params.pubKey.length == 0) {
     [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorRequired}];
   }
   
@@ -249,7 +265,7 @@
 
   NSString *seToken = [RSA encryptString:cardData publicKey: params.pubKey];
   
-  if ([seToken isEqual:@""] || seToken == nil) {
+  if (seToken.length == 0) {
     [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorInvalid}];
     tokenResult.errors = errors;
 
