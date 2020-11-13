@@ -184,7 +184,7 @@
 
   NSString *seToken = [RSA encryptString:cardData publicKey:params.pubKey];
   
-  if ([seToken isEqual:@""]) {
+  if ([seToken isEqual:@""] || seToken == nil) {
     [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorInvalid}];
     return tokenResult;
   }
@@ -249,7 +249,7 @@
 
   NSString *seToken = [RSA encryptString:cardData publicKey: params.pubKey];
   
-  if ([seToken isEqual:@""]) {
+  if ([seToken isEqual:@""] || seToken == nil) {
     [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorInvalid}];
     tokenResult.errors = errors;
 
