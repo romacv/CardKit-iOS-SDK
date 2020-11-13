@@ -26,7 +26,7 @@
   NSString *year = [text substringFromIndex:2];
 
   if (text.length == 5) {
-      year = [text substringFromIndex:3];
+    year = [text substringFromIndex:3];
   }
 
   NSString *fullYearStr = [NSString stringWithFormat:@"20%@", year];
@@ -71,12 +71,12 @@
 + (NSDictionary *)_validateCardNumber: (NSString *) cardNumber {
   NSInteger len = [cardNumber length];
   if (len < 16 || len > 19) {
-      return @{@"field": CKCFieldPan, @"error": CKCErrorInvalidLength};
+    return @{@"field": CKCFieldPan, @"error": CKCErrorInvalidLength};
   } else if (![self _allDigitsInString:cardNumber] || ![self _isValidCreditCardNumber: cardNumber]) {
-      return @{@"field": CKCFieldPan, @"error": CKCErrorInvalid};
+    return @{@"field": CKCFieldPan, @"error": CKCErrorInvalid};
   }
 
-    return nil;
+  return nil;
 }
 
 + (NSDictionary *)_validateSecureCode: (NSString *) secureCode {
@@ -88,11 +88,11 @@
 }
 
 + (NSDictionary *)_validateExpireDate:(NSString *) expireDate {
-    NSString * month = [self _getMonthFromExpirationDate: expireDate];
-    NSString * year = [self _getFullYearFromExpirationDate: expireDate];
+  NSString * month = [self _getMonthFromExpirationDate: expireDate];
+  NSString * year = [self _getFullYearFromExpirationDate: expireDate];
 
   if (month == nil || year == nil) {
-      return @{@"field": CKCFieldExpiryMMYY, @"error": CKCErrorRequired};
+    return @{@"field": CKCFieldExpiryMMYY, @"error": CKCErrorRequired};
   } else {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
@@ -104,26 +104,26 @@
     NSDate *expDate = [calendar dateFromComponents:comps];
     
     if ([[NSDate date] compare:expDate] != NSOrderedAscending) {
-        return @{@"field": CKCFieldExpiryMMYY, @"error": CKCErrorInvalidFormat};
+      return @{@"field": CKCFieldExpiryMMYY, @"error": CKCErrorInvalidFormat};
     }
   }
   
-    return nil;
+  return nil;
 }
 
 + (NSDictionary *)_validateOwner:(NSString *) cardOwner {
   NSString *owner = [cardOwner stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
   NSInteger len = owner.length;
   if (len == 0 || len > 40) {
-      return @{@"field": CKCFieldCardholder, @"error": CKCErrorInvalidLength};
+    return @{@"field": CKCFieldCardholder, @"error": CKCErrorInvalidLength};
   } else {
     NSString *str = [owner stringByReplacingOccurrencesOfString:@"[^a-zA-Z' .]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, owner.length)];
     if (![str isEqual:owner]) {
-        return @{@"field": CKCFieldCardholder, @"error": CKCErrorInvalidFormat};
+      return @{@"field": CKCFieldCardholder, @"error": CKCErrorInvalidFormat};
     }
   }
   
-    return nil;
+  return nil;
 }
 
 + (NSString *) _getTimeStampWithDate:(NSDate *) date {
@@ -143,128 +143,128 @@
 }
 
 + (CKCTokenResult *) generateWithBinding: (CKCBindingParams *) params  {
-    NSMutableArray *errors = [[NSMutableArray alloc] init];
+  NSMutableArray *errors = [[NSMutableArray alloc] init];
 
-    if ([params.bindingID isEqual: nil] || [params.bindingID isEqual:@""]) {
-        [errors addObject:@{@"field": CKCFieldBindingID, @"error": CKCErrorRequired}];
-    }
-    
-    if ([params.mdOrder isEqual: nil] || [params.mdOrder isEqual:@""]) {
-        [errors addObject:@{@"field": CKCFieldMdOrder, @"error": CKCErrorRequired}];
-    }
-    
-    if ([params.pubKey isEqual: nil] || [params.pubKey isEqual:@""]) {
-        [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorRequired}];
-    }
-    
-    CKCTokenResult * tokenResult = [[CKCTokenResult alloc] init];
-    tokenResult.token = nil;
+  if ([params.bindingID isEqual: nil] || [params.bindingID isEqual:@""]) {
+    [errors addObject:@{@"field": CKCFieldBindingID, @"error": CKCErrorRequired}];
+  }
+  
+  if ([params.mdOrder isEqual: nil] || [params.mdOrder isEqual:@""]) {
+    [errors addObject:@{@"field": CKCFieldMdOrder, @"error": CKCErrorRequired}];
+  }
+  
+  if ([params.pubKey isEqual: nil] || [params.pubKey isEqual:@""]) {
+    [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorRequired}];
+  }
+  
+  CKCTokenResult * tokenResult = [[CKCTokenResult alloc] init];
+  tokenResult.token = nil;
+  tokenResult.errors = errors;
+  
+  if (errors.count > 0) {
+    return tokenResult;
+  }
+  
+  NSDictionary *validatedSecureCode;
+
+  if (params.cvc != nil) {
+    validatedSecureCode = [self _validateSecureCode: params.cvc];
+  }
+
+  if (validatedSecureCode != nil) {
+    [errors addObject:validatedSecureCode];
     tokenResult.errors = errors;
-    
-    if (errors.count > 0) {
-        return tokenResult;
-    }
-    
-    NSDictionary *validatedSecureCode;
-
-    if (params.cvc != nil) {
-        validatedSecureCode = [self _validateSecureCode: params.cvc];
-    }
-
-    if (validatedSecureCode != nil) {
-        [errors addObject:validatedSecureCode];
-        tokenResult.errors = errors;
-
-        return tokenResult;
-    }
-
-    NSString *timeStamp = [self _getTimeStamp];
-    NSString *uuid = [[NSUUID UUID] UUIDString];
-    NSString *cardData = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", timeStamp, uuid, params.cvc, params.mdOrder, params.bindingID];
-
-    NSString *seToken = [RSA encryptString:cardData publicKey:params.pubKey];
-    
-    if ([seToken isEqual:@""]) {
-        [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorInvalid}];
-        return tokenResult;
-    }
 
     return tokenResult;
+  }
+
+  NSString *timeStamp = [self _getTimeStamp];
+  NSString *uuid = [[NSUUID UUID] UUIDString];
+  NSString *cardData = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", timeStamp, uuid, params.cvc, params.mdOrder, params.bindingID];
+
+  NSString *seToken = [RSA encryptString:cardData publicKey:params.pubKey];
+  
+  if ([seToken isEqual:@""]) {
+    [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorInvalid}];
+    return tokenResult;
+  }
+
+  return tokenResult;
 }
 
 + (CKCTokenResult *) generateWithCard: (CKCCardParams *) params  {
-    NSMutableArray *errors = [[NSMutableArray alloc] init];
+  NSMutableArray *errors = [[NSMutableArray alloc] init];
 
-    if ([params.mdOrder isEqual: nil] || [params.mdOrder isEqual:@""]) {
-        [errors addObject:@{@"field": CKCFieldMdOrder, @"error": CKCErrorRequired}];
-    }
-    
-    if ([params.pubKey isEqual: nil] || [params.pubKey isEqual:@""]) {
-        [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorRequired}];
-    }
-    
-    CKCTokenResult * tokenResult = [[CKCTokenResult alloc] init];
-    tokenResult.token = nil;
-    
-    if (errors.count > 0) {
-        tokenResult.errors = errors;
-        return tokenResult;
-    }
-    
-    NSDictionary *validatedSecureCode = [self _validateSecureCode: params.cvc];
-    NSDictionary *validatedExpireDate = [self _validateExpireDate: params.expiryMMYY];
-    NSDictionary *validatedCardNumber = [self _validateCardNumber: params.pan];
-    NSDictionary *validatedCarHolder = [self _validateOwner: params.cardholder];
+  if ([params.mdOrder isEqual: nil] || [params.mdOrder isEqual:@""]) {
+    [errors addObject:@{@"field": CKCFieldMdOrder, @"error": CKCErrorRequired}];
+  }
+  
+  if ([params.pubKey isEqual: nil] || [params.pubKey isEqual:@""]) {
+    [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorRequired}];
+  }
+  
+  CKCTokenResult * tokenResult = [[CKCTokenResult alloc] init];
+  tokenResult.token = nil;
+  
+  if (errors.count > 0) {
+    tokenResult.errors = errors;
+    return tokenResult;
+  }
+  
+  NSDictionary *validatedSecureCode = [self _validateSecureCode: params.cvc];
+  NSDictionary *validatedExpireDate = [self _validateExpireDate: params.expiryMMYY];
+  NSDictionary *validatedCardNumber = [self _validateCardNumber: params.pan];
+  NSDictionary *validatedCarHolder = [self _validateOwner: params.cardholder];
 
-    if (validatedSecureCode != nil) {
-        [errors addObject:validatedSecureCode];
-    }
-    
-    if (validatedExpireDate != nil) {
-        [errors addObject:validatedExpireDate];
-    }
-    
-    if (validatedCardNumber != nil) {
-        [errors addObject:validatedCardNumber];
-    }
-    
-    if (validatedCarHolder != nil) {
-        [errors addObject:validatedCarHolder];
-    }
-    
-    if (errors.count > 0) {
-        tokenResult.errors = errors;
-        return tokenResult;
-    }
+  if (validatedSecureCode != nil) {
+    [errors addObject:validatedSecureCode];
+  }
+  
+  if (validatedExpireDate != nil) {
+    [errors addObject:validatedExpireDate];
+  }
+  
+  if (validatedCardNumber != nil) {
+    [errors addObject:validatedCardNumber];
+  }
+  
+  if (validatedCarHolder != nil) {
+    [errors addObject:validatedCarHolder];
+  }
+  
+  if (errors.count > 0) {
+    tokenResult.errors = errors;
+    return tokenResult;
+  }
 
-    NSString *timeStamp = [self _getTimeStamp];
-    NSString *uuid = [[NSUUID UUID] UUIDString];
-    NSString *cardNumber = params.pan;
-    NSString *secureCode = params.cvc;
-    NSString *fullYear = [self _getFullYearFromExpirationDate: params.expiryMMYY];
-    NSString *month = [self _getMonthFromExpirationDate: params.expiryMMYY];
-    NSString *expirationDate = [NSString stringWithFormat:@"%@%@", fullYear, month];
-    
-    NSString *cardData = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", timeStamp, uuid, cardNumber, secureCode, expirationDate];
-    
-    if (params.mdOrder != nil) {
-      cardData = [NSString stringWithFormat:@"%@/%@", cardData, params.mdOrder];
-    } else {
-      cardData = [NSString stringWithFormat:@"%@//", cardData];
-    }
+  NSString *timeStamp = [self _getTimeStamp];
+  NSString *uuid = [[NSUUID UUID] UUIDString];
+  NSString *cardNumber = params.pan;
+  NSString *secureCode = params.cvc;
+  NSString *fullYear = [self _getFullYearFromExpirationDate: params.expiryMMYY];
+  NSString *month = [self _getMonthFromExpirationDate: params.expiryMMYY];
+  NSString *expirationDate = [NSString stringWithFormat:@"%@%@", fullYear, month];
+  
+  NSString *cardData = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", timeStamp, uuid, cardNumber, secureCode, expirationDate];
+  
+  if (params.mdOrder != nil) {
+    cardData = [NSString stringWithFormat:@"%@/%@", cardData, params.mdOrder];
+  } else {
+    cardData = [NSString stringWithFormat:@"%@//", cardData];
+  }
 
-    NSString *seToken = [RSA encryptString:cardData publicKey: params.pubKey];
-    
-    if ([seToken isEqual:@""]) {
-        [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorInvalid}];
-        tokenResult.errors = errors;
-
-        return tokenResult;
-    }
-    
-    tokenResult.token = seToken;
+  NSString *seToken = [RSA encryptString:cardData publicKey: params.pubKey];
+  
+  if ([seToken isEqual:@""]) {
+    [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorInvalid}];
+    tokenResult.errors = errors;
 
     return tokenResult;
+  }
+  
+  tokenResult.token = seToken;
+
+  return tokenResult;
 }
 
 @end
