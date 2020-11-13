@@ -185,6 +185,8 @@
 
   if (params.cvc != nil) {
     validatedSecureCode = [self _validateSecureCode: params.cvc];
+  } else {
+    params.cvc = @"";
   }
 
   if (validatedSecureCode != nil) {
@@ -204,6 +206,8 @@
     [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorInvalid}];
     return tokenResult;
   }
+  
+  tokenResult.token = seToken;
 
   return tokenResult;
 }
