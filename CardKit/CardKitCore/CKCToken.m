@@ -119,11 +119,6 @@
     return nil;
 }
 
-+ (NSArray *) validateCardForm: (CKCBindingParams *) params {
-    NSArray *errors = [[NSArray alloc] init];
-    return errors;
-}
-
 + (NSString *) getTimeStampWithDate:(NSDate *) date {
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
