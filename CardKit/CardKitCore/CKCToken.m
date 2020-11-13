@@ -245,13 +245,7 @@
   NSString *month = [self _getMonthFromExpirationDate: params.expiryMMYY];
   NSString *expirationDate = [NSString stringWithFormat:@"%@%@", fullYear, month];
   
-  NSString *cardData = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", timeStamp, uuid, cardNumber, secureCode, expirationDate];
-  
-  if (params.mdOrder != nil) {
-    cardData = [NSString stringWithFormat:@"%@/%@", cardData, params.mdOrder];
-  } else {
-    cardData = [NSString stringWithFormat:@"%@//", cardData];
-  }
+  NSString *cardData = [NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@", timeStamp, uuid, cardNumber, secureCode, expirationDate, params.mdOrder];
 
   NSString *seToken = [RSA encryptString:cardData publicKey: params.pubKey];
   

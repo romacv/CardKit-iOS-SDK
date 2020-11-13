@@ -33,6 +33,13 @@
 		9248868F251885FB00CA81D5 /* SeTokenGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9248868D251885FB00CA81D5 /* SeTokenGenerator.m */; };
 		9292CED0255E5FB100053EC3 /* CKCPubKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9007255D202E001E1ECF /* CKCPubKey.m */; };
 		9292CED5255E611F00053EC3 /* CKCPubKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD9006255D202E001E1ECF /* CKCPubKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9292CF4B255E9B2F00053EC3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF4A255E9B2F00053EC3 /* AppDelegate.m */; };
+		9292CF4E255E9B2F00053EC3 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF4D255E9B2F00053EC3 /* SceneDelegate.m */; };
+		9292CF51255E9B2F00053EC3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF50255E9B2F00053EC3 /* ViewController.m */; };
+		9292CF54255E9B2F00053EC3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9292CF52255E9B2F00053EC3 /* Main.storyboard */; };
+		9292CF56255E9B3000053EC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9292CF55255E9B3000053EC3 /* Assets.xcassets */; };
+		9292CF59255E9B3000053EC3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9292CF57255E9B3000053EC3 /* LaunchScreen.storyboard */; };
+		9292CF5C255E9B3000053EC3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF5B255E9B3000053EC3 /* main.m */; };
 		92985C85246A96F4009B7392 /* CardKSwitchView.h in Headers */ = {isa = PBXBuildFile; fileRef = 92985C83246A96F4009B7392 /* CardKSwitchView.h */; };
 		92985C86246A96F4009B7392 /* CardKSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92985C84246A96F4009B7392 /* CardKSwitchView.m */; };
 		92985C89246BEE1E009B7392 /* CardKKindPaymentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 92985C87246BEE1E009B7392 /* CardKKindPaymentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -73,6 +80,13 @@
 			remoteGlobalIDString = 924290B6255D5FE200378C68;
 			remoteInfo = CardKitCore;
 		};
+		9292CF83255E9B4700053EC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D245AB30231C435E00369747 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9292CF46255E9B2F00053EC3;
+			remoteInfo = TestApp;
+		};
 		D245AB44231C435E00369747 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D245AB30231C435E00369747 /* Project object */;
@@ -96,6 +110,22 @@
 		924290C6255D5FE300378C68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9248868C251885FB00CA81D5 /* SeTokenGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeTokenGenerator.h; sourceTree = "<group>"; };
 		9248868D251885FB00CA81D5 /* SeTokenGenerator.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = SeTokenGenerator.m; sourceTree = "<group>"; tabWidth = 2; };
+		9292CF47255E9B2F00053EC3 /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9292CF49255E9B2F00053EC3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9292CF4A255E9B2F00053EC3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9292CF4C255E9B2F00053EC3 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		9292CF4D255E9B2F00053EC3 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		9292CF4F255E9B2F00053EC3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9292CF50255E9B2F00053EC3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9292CF53255E9B2F00053EC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9292CF55255E9B3000053EC3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9292CF58255E9B3000053EC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9292CF5A255E9B3000053EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9292CF5B255E9B3000053EC3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9292CF65255E9B3000053EC3 /* TestAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestAppTests.m; sourceTree = "<group>"; };
+		9292CF67255E9B3000053EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9292CF70255E9B3000053EC3 /* TestAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestAppUITests.m; sourceTree = "<group>"; };
+		9292CF72255E9B3000053EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92985C83246A96F4009B7392 /* CardKSwitchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKSwitchView.h; sourceTree = "<group>"; };
 		92985C84246A96F4009B7392 /* CardKSwitchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKSwitchView.m; sourceTree = "<group>"; };
 		92985C87246BEE1E009B7392 /* CardKKindPaymentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKKindPaymentViewController.h; sourceTree = "<group>"; };
@@ -165,6 +195,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9292CF44255E9B2F00053EC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D245AB36231C435E00369747 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -215,6 +252,42 @@
 			path = CardKitCoreTests;
 			sourceTree = "<group>";
 		};
+		9292CF48255E9B2F00053EC3 /* TestApp */ = {
+			isa = PBXGroup;
+			children = (
+				9292CF49255E9B2F00053EC3 /* AppDelegate.h */,
+				9292CF4A255E9B2F00053EC3 /* AppDelegate.m */,
+				9292CF4C255E9B2F00053EC3 /* SceneDelegate.h */,
+				9292CF4D255E9B2F00053EC3 /* SceneDelegate.m */,
+				9292CF4F255E9B2F00053EC3 /* ViewController.h */,
+				9292CF50255E9B2F00053EC3 /* ViewController.m */,
+				9292CF52255E9B2F00053EC3 /* Main.storyboard */,
+				9292CF55255E9B3000053EC3 /* Assets.xcassets */,
+				9292CF57255E9B3000053EC3 /* LaunchScreen.storyboard */,
+				9292CF5A255E9B3000053EC3 /* Info.plist */,
+				9292CF5B255E9B3000053EC3 /* main.m */,
+			);
+			path = TestApp;
+			sourceTree = "<group>";
+		};
+		9292CF64255E9B3000053EC3 /* TestAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				9292CF65255E9B3000053EC3 /* TestAppTests.m */,
+				9292CF67255E9B3000053EC3 /* Info.plist */,
+			);
+			path = TestAppTests;
+			sourceTree = "<group>";
+		};
+		9292CF6F255E9B3000053EC3 /* TestAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9292CF70255E9B3000053EC3 /* TestAppUITests.m */,
+				9292CF72255E9B3000053EC3 /* Info.plist */,
+			);
+			path = TestAppUITests;
+			sourceTree = "<group>";
+		};
 		D245AB2F231C435E00369747 = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +296,9 @@
 				D245AB3B231C435E00369747 /* CardKit */,
 				924290B8255D5FE200378C68 /* CardKitCore */,
 				924290C3255D5FE300378C68 /* CardKitCoreTests */,
+				9292CF48255E9B2F00053EC3 /* TestApp */,
+				9292CF64255E9B3000053EC3 /* TestAppTests */,
+				9292CF6F255E9B3000053EC3 /* TestAppUITests */,
 				D245AB3A231C435E00369747 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -234,6 +310,7 @@
 				D245AB42231C435E00369747 /* CardKitTests.xctest */,
 				924290B7255D5FE200378C68 /* CardKitCore.framework */,
 				924290BF255D5FE300378C68 /* CardKitCoreTests.xctest */,
+				9292CF47255E9B2F00053EC3 /* TestApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -353,11 +430,29 @@
 			);
 			dependencies = (
 				924290C2255D5FE300378C68 /* PBXTargetDependency */,
+				9292CF84255E9B4700053EC3 /* PBXTargetDependency */,
 			);
 			name = CardKitCoreTests;
 			productName = CardKitCoreTests;
 			productReference = 924290BF255D5FE300378C68 /* CardKitCoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9292CF46255E9B2F00053EC3 /* TestApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9292CF73255E9B3000053EC3 /* Build configuration list for PBXNativeTarget "TestApp" */;
+			buildPhases = (
+				9292CF43255E9B2F00053EC3 /* Sources */,
+				9292CF44255E9B2F00053EC3 /* Frameworks */,
+				9292CF45255E9B2F00053EC3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestApp;
+			productName = TestApp;
+			productReference = 9292CF47255E9B2F00053EC3 /* TestApp.app */;
+			productType = "com.apple.product-type.application";
 		};
 		D245AB38231C435E00369747 /* CardKit */ = {
 			isa = PBXNativeTarget;
@@ -409,6 +504,10 @@
 					};
 					924290BE255D5FE300378C68 = {
 						CreatedOnToolsVersion = 12.1;
+						TestTargetID = 9292CF46255E9B2F00053EC3;
+					};
+					9292CF46255E9B2F00053EC3 = {
+						CreatedOnToolsVersion = 12.1;
 					};
 					D245AB38231C435E00369747 = {
 						CreatedOnToolsVersion = 10.3;
@@ -441,6 +540,7 @@
 				D245AB41231C435E00369747 /* CardKitTests */,
 				924290B6255D5FE200378C68 /* CardKitCore */,
 				924290BE255D5FE300378C68 /* CardKitCoreTests */,
+				9292CF46255E9B2F00053EC3 /* TestApp */,
 			);
 		};
 /* End PBXProject section */
@@ -458,6 +558,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9292CF45255E9B2F00053EC3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9292CF59255E9B3000053EC3 /* LaunchScreen.storyboard in Resources */,
+				9292CF56255E9B3000053EC3 /* Assets.xcassets in Resources */,
+				9292CF54255E9B2F00053EC3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +615,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9292CF43255E9B2F00053EC3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9292CF51255E9B2F00053EC3 /* ViewController.m in Sources */,
+				9292CF4B255E9B2F00053EC3 /* AppDelegate.m in Sources */,
+				9292CF5C255E9B3000053EC3 /* main.m in Sources */,
+				9292CF4E255E9B2F00053EC3 /* SceneDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D245AB35231C435E00369747 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -544,6 +665,11 @@
 			target = 924290B6255D5FE200378C68 /* CardKitCore */;
 			targetProxy = 924290C1255D5FE300378C68 /* PBXContainerItemProxy */;
 		};
+		9292CF84255E9B4700053EC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9292CF46255E9B2F00053EC3 /* TestApp */;
+			targetProxy = 9292CF83255E9B4700053EC3 /* PBXContainerItemProxy */;
+		};
 		D245AB45231C435E00369747 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D245AB38231C435E00369747 /* CardKit */;
@@ -552,6 +678,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		9292CF52255E9B2F00053EC3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9292CF53255E9B2F00053EC3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9292CF57255E9B3000053EC3 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9292CF58255E9B3000053EC3 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		D20CEBCF232F660400F9407C /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -634,6 +776,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "-.CardKitCoreTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApp.app/TestApp";
 			};
 			name = Debug;
 		};
@@ -651,6 +794,47 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "-.CardKitCoreTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApp.app/TestApp";
+			};
+			name = Release;
+		};
+		9292CF74255E9B3000053EC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FD6ZML48V9;
+				INFOPLIST_FILE = TestApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.TestApp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9292CF75255E9B3000053EC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FD6ZML48V9;
+				INFOPLIST_FILE = TestApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.TestApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -889,6 +1073,15 @@
 			buildConfigurations = (
 				924290CC255D5FE300378C68 /* Debug */,
 				924290CD255D5FE300378C68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9292CF73255E9B3000053EC3 /* Build configuration list for PBXNativeTarget "TestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9292CF74255E9B3000053EC3 /* Debug */,
+				9292CF75255E9B3000053EC3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
