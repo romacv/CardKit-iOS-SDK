@@ -20,7 +20,7 @@ extern CKCError _Nonnull const CKCErrorInvalid;
 
 extern CKCField _Nonnull const CKCFieldPan;
 extern CKCField _Nonnull const CKCFieldCVC;
-extern CKCField _Nonnull const CKCFieldExpireMMYY;
+extern CKCField _Nonnull const CKCFieldExpiryMMYY;
 extern CKCField _Nonnull const CKCFieldCardholder;
 extern CKCField _Nonnull const CKCFieldBindingID;
 extern CKCField _Nonnull const CKCFieldMdOrder;
