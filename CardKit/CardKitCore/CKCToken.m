@@ -163,7 +163,11 @@
         return tokenResult;
     }
     
-    NSDictionary *validatedSecureCode = [self _validateSecureCode: params.cvc];
+    NSDictionary *validatedSecureCode;
+
+    if (params.cvc != nil) {
+        validatedSecureCode = [self _validateSecureCode: params.cvc];
+    }
 
     if (validatedSecureCode != nil) {
         [errors addObject:validatedSecureCode];

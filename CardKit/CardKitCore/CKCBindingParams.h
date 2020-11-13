@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CKCBindingParams: NSObject
 @property NSString * bindingID;
-@property NSString * cvc;
+@property (nullable) NSString * cvc;
 @property NSString * mdOrder;
 @property NSString * pubKey;
 @end
