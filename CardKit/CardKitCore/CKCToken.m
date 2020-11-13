@@ -16,10 +16,19 @@
 @implementation CKCToken: NSObject
 + (nullable NSString *)getFullYearFromExpirationDate: (NSString *) time {
   NSString *text = [time stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-  if (text.length != 4) {
+  
+  NSRange slash = [text rangeOfString:@"/"];
+  
+  if ((text.length <= 4 && text.length >= 5) || (text.length == 5 && slash.location != 2)) {
     return nil;
   }
+
   NSString *year = [text substringFromIndex:2];
+
+  if (text.length == 5) {
+      year = [text substringFromIndex:3];
+  }
+
   NSString *fullYearStr = [NSString stringWithFormat:@"20%@", year];
   
   NSInteger fullYear = [fullYearStr integerValue];
@@ -35,9 +44,11 @@
 
 + (nullable NSString *)getMonthFromExpirationDate: (NSString *) time {
   NSString *text = [time stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-  if (text.length != 4) {
+
+  if (text.length <= 4 && text.length >= 5) {
     return nil;
   }
+
   NSString *monthStr = [text substringToIndex:2];
   
   NSInteger month = [monthStr integerValue];

@@ -111,7 +111,7 @@
 		92BD9006255D202E001E1ECF /* CKCPubKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKCPubKey.h; sourceTree = "<group>"; };
 		92BD9007255D202E001E1ECF /* CKCPubKey.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CKCPubKey.m; sourceTree = "<group>"; };
 		92BD900E255D204A001E1ECF /* CKCToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKCToken.h; sourceTree = "<group>"; };
-		92BD900F255D204A001E1ECF /* CKCToken.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CKCToken.m; sourceTree = "<group>"; };
+		92BD900F255D204A001E1ECF /* CKCToken.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CKCToken.m; sourceTree = "<group>"; tabWidth = 2; };
 		92BD9022255D2315001E1ECF /* CKCTokenResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKCTokenResult.h; sourceTree = "<group>"; };
 		92BD9023255D2315001E1ECF /* CKCTokenResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CKCTokenResult.m; sourceTree = "<group>"; };
 		92BD9032255D241D001E1ECF /* CKCCardParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKCCardParams.h; sourceTree = "<group>"; };
