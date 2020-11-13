@@ -63,6 +63,12 @@
     XCTAssertEqualObjects(res.errors[0], expectedResponse);
 }
 
+- (void)testGenerateTokenWithNilCVC {
+    bindingParams.cvc=nil;
+    CKCTokenResult *res = [CKCToken generateWithBinding:(bindingParams)];
+    
+    XCTAssertNotNil(res.token, @"pointer:%p", res.token);
+}
 
 - (void)testGenerateTokenWithCard {
     CKCTokenResult *res = [CKCToken generateWithCard:cardParams];
