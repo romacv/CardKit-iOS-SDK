@@ -18,3 +18,6 @@ FOUNDATION_EXPORT const unsigned char CardKitCoreVersionString[];
 
 
 #import <CardKitCore/CKCToken.h>
+#import <CardKitCore/CKCTokenResult.h>
+#import <CardKitCore/CKCBindingParams.h>
+#import <CardKitCore/CKCCardParams.h>

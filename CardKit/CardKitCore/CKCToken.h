@@ -9,12 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "CKCTokenResult.h"
 #import "CKCBindingParams.h"
+#import "CKCCardParams.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CKCToken: NSObject
 - (instancetype) init NS_UNAVAILABLE;
 + (CKCTokenResult *) generateWithBinding: (CKCBindingParams *) params;
++ (CKCTokenResult *) generateWithCard: (CKCCardParams *) params;
+
 @end
 
 NS_ASSUME_NONNULL_END

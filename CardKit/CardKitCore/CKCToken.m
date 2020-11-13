@@ -62,9 +62,9 @@
 
   NSInteger len = [cardNumber length];
   if (len < 16 || len > 19) {
-      return @{@"field": CKCFieldPan, @"errors": CKCErrorInvalidLength};
+      return @{@"field": CKCFieldPan, @"error": CKCErrorInvalidLength};
   } else if (![self allDigitsInString:cardNumber] || ![self isValidCreditCardNumber: cardNumber]) {
-      return @{@"field": CKCFieldPan, @"errors": CKCErrorInvalid};
+      return @{@"field": CKCFieldPan, @"error": CKCErrorInvalid};
   }
 
     return nil;
@@ -74,7 +74,7 @@
   NSString *secureCode = cvc;
 
   if ([secureCode length] != 3 || ![self allDigitsInString:secureCode]) {
-      return @{@"field": CKCFieldCVC, @"errors": CKCErrorInvalid};
+      return @{@"field": CKCFieldCVC, @"error": CKCErrorInvalid};
   }
   
     return nil;
@@ -85,7 +85,7 @@
     NSString * year = [self getFullYearFromExpirationDate: expireDate];
 
   if (month == nil || year == nil) {
-      return @{@"field": CKCFieldExpire, @"errors": CKCErrorRequired};
+      return @{@"field": CKCFieldExpire, @"error": CKCErrorRequired};
   } else {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
@@ -110,7 +110,7 @@
   if (len == 0 || len > 40) {
       return @{@"field": CKCFieldCardholder, @"error": CKCErrorInvalidLength};
   } else {
-    NSString *str = [owner stringByReplacingOccurrencesOfString:cardOwner withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, owner.length)];
+    NSString *str = [owner stringByReplacingOccurrencesOfString:@"[^a-zA-Z' .]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, owner.length)];
     if (![str isEqual:owner]) {
         return @{@"field": CKCFieldCardholder, @"error": CKCErrorInvalidFormat};
     }
@@ -206,7 +206,7 @@
     }
     
     NSDictionary *validatedSecureCode = [self _validateSecureCode: params.cvc];
-    NSDictionary *validatedExpireDate = [self _validateExpireDate: params.cvc];
+    NSDictionary *validatedExpireDate = [self _validateExpireDate: params.expiryMMYY];
     NSDictionary *validatedCardNumber = [self _validateCardNumber: params.pan];
     NSDictionary *validatedCarHolder = [self _validateOwner: params.cardholder];
 
@@ -235,8 +235,8 @@
     NSString *uuid = [[NSUUID UUID] UUIDString];
     NSString *cardNumber = params.pan;
     NSString *secureCode = params.cvc;
-    NSString *fullYear = @"";
-    NSString *month = @"";
+    NSString *fullYear = [self getFullYearFromExpirationDate: params.expiryMMYY];
+    NSString *month = [self getMonthFromExpirationDate: params.expiryMMYY];
     NSString *expirationDate = [NSString stringWithFormat:@"%@%@", fullYear, month];
     
     NSString *cardData = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", timeStamp, uuid, cardNumber, secureCode, expirationDate];
@@ -249,8 +249,10 @@
 
     NSString *seToken = [RSA encryptString:cardData publicKey: params.pubKey];
     
-    if (seToken == nil) {
-        [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorRequired}];
+    if ([seToken isEqual:@""]) {
+        [errors addObject:@{@"field": CKCFieldPubKey, @"error": CKCErrorInvalid}];
+        tokenResult.errors = errors;
+
         return tokenResult;
     }
     

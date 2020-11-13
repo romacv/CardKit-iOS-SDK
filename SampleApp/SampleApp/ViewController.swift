@@ -66,7 +66,6 @@ class ViewController: UITableViewController {
   }
 
   func _openController() {
-    
     CardKConfig.shared.language = "";
     CardKConfig.shared.theme = CardKTheme.light();
     CardKConfig.shared.bindingCVCRequired = true;
