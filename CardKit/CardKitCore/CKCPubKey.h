@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CKCPubKey: NSObject
-+ (NSString *) fromJSONString:(NSDictionary *) pubKeyObject;
++ (NSString *) fromJSONString:(NSString *) json;
 @end
 
 NS_ASSUME_NONNULL_END

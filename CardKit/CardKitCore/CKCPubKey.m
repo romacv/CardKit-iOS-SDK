@@ -9,7 +9,19 @@
 #import "CKCPubKey.h"
 
 @implementation CKCPubKey: NSObject
-+ (NSString *) fromJSONString:(NSDictionary *) pubKeyObject {
-    return @"";
++ (NSString *) fromJSONString:(NSString *) json {
+    NSData *jsonData = [json dataUsingEncoding:NSUTF8StringEncoding];
+
+    NSError *parseError = nil;
+
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&parseError];
+
+    NSArray *keys = [responseDictionary objectForKey:@"keys"];
+
+    NSDictionary *lastKey = [keys lastObject];
+
+    NSString *keyValue = [lastKey objectForKey:@"keyValue"];
+
+    return keyValue;
 }
 @end
