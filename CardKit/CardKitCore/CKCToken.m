@@ -85,7 +85,7 @@
     NSString * year = [self getFullYearFromExpirationDate: expireDate];
 
   if (month == nil || year == nil) {
-      return @{@"field": CKCFieldExpire, @"error": CKCErrorRequired};
+      return @{@"field": CKCFieldExpireMMYY, @"error": CKCErrorRequired};
   } else {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
@@ -97,7 +97,7 @@
     NSDate *expDate = [calendar dateFromComponents:comps];
     
     if ([[NSDate date] compare:expDate] != NSOrderedAscending) {
-        return @{@"field": CKCFieldExpire, @"error": CKCErrorInvalidFormat};
+        return @{@"field": CKCFieldExpireMMYY, @"error": CKCErrorInvalidFormat};
     }
   }
   

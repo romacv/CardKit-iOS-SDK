@@ -11,7 +11,7 @@
 
 CKCField CKCFieldPan = @"pan";
 CKCField CKCFieldCVC = @"cvc";
-CKCField CKCFieldExpire = @"expiryMMYY";
+CKCField CKCFieldExpireMMYY = @"expiryMMYY";
 CKCField CKCFieldCardholder = @"cardholder";
 CKCField CKCFieldBindingID = @"bindingID";
 CKCField CKCFieldMdOrder = @"mdOrder";
