@@ -14,7 +14,7 @@
 #import "Luhn.h"
 
 @implementation CKCToken: NSObject
-+ (nullable NSString *)getFullYearFromExpirationDate: (NSString *) time {
++ (nullable NSString *)_getFullYearFromExpirationDate: (NSString *) time {
   NSString *text = [time stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
   
   NSRange slash = [text rangeOfString:@"/"];
@@ -42,7 +42,7 @@
   return fullYearStr;
 }
 
-+ (nullable NSString *)getMonthFromExpirationDate: (NSString *) time {
++ (nullable NSString *)_getMonthFromExpirationDate: (NSString *) time {
   NSString *text = [time stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
   if (text.length <= 4 && text.length >= 5) {
@@ -59,11 +59,11 @@
   return monthStr;
 }
 
-+ (BOOL) isValidCreditCardNumber: (NSString *) pan {
++ (BOOL) _isValidCreditCardNumber: (NSString *) pan {
   return [Luhn validateString:pan];
 }
 
-+ (BOOL) allDigitsInString:(NSString *)str {
++ (BOOL) _allDigitsInString:(NSString *)str {
   NSString *string = [str stringByReplacingOccurrencesOfString:@"[^0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, str.length)];
   return [str isEqual:string];
 }
@@ -74,7 +74,7 @@
   NSInteger len = [cardNumber length];
   if (len < 16 || len > 19) {
       return @{@"field": CKCFieldPan, @"error": CKCErrorInvalidLength};
-  } else if (![self allDigitsInString:cardNumber] || ![self isValidCreditCardNumber: cardNumber]) {
+  } else if (![self _allDigitsInString:cardNumber] || ![self _isValidCreditCardNumber: cardNumber]) {
       return @{@"field": CKCFieldPan, @"error": CKCErrorInvalid};
   }
 
@@ -84,7 +84,7 @@
 + (NSDictionary *)_validateSecureCode: (NSString *) cvc {
   NSString *secureCode = cvc;
 
-  if ([secureCode length] != 3 || ![self allDigitsInString:secureCode]) {
+  if ([secureCode length] != 3 || ![self _allDigitsInString:secureCode]) {
       return @{@"field": CKCFieldCVC, @"error": CKCErrorInvalid};
   }
   
@@ -92,8 +92,8 @@
 }
 
 + (NSDictionary *)_validateExpireDate:(NSString *) expireDate {
-    NSString * month = [self getMonthFromExpirationDate: expireDate];
-    NSString * year = [self getFullYearFromExpirationDate: expireDate];
+    NSString * month = [self _getMonthFromExpirationDate: expireDate];
+    NSString * year = [self _getFullYearFromExpirationDate: expireDate];
 
   if (month == nil || year == nil) {
       return @{@"field": CKCFieldExpiryMMYY, @"error": CKCErrorRequired};
@@ -130,7 +130,7 @@
     return nil;
 }
 
-+ (NSString *) getTimeStampWithDate:(NSDate *) date {
++ (NSString *) _getTimeStampWithDate:(NSDate *) date {
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
   [dateFormatter setLocale:enUSPOSIXLocale];
@@ -140,10 +140,10 @@
   return [dateFormatter stringFromDate:date];
 }
 
-+ (NSString *) getTimeStamp {
++ (NSString *) _getTimeStamp {
   NSDate *currentDate = [NSDate date];
   
-  return [self getTimeStampWithDate:currentDate];
+  return [self _getTimeStampWithDate:currentDate];
 }
 
 + (CKCTokenResult *) generateWithBinding: (CKCBindingParams *) params  {
@@ -182,7 +182,7 @@
         return tokenResult;
     }
 
-    NSString *timeStamp = [self getTimeStamp];
+    NSString *timeStamp = [self _getTimeStamp];
     NSString *uuid = [[NSUUID UUID] UUIDString];
     NSString *cardData = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", timeStamp, uuid, params.cvc, params.mdOrder, params.bindingID];
 
@@ -241,12 +241,12 @@
         return tokenResult;
     }
 
-    NSString *timeStamp = [self getTimeStamp];
+    NSString *timeStamp = [self _getTimeStamp];
     NSString *uuid = [[NSUUID UUID] UUIDString];
     NSString *cardNumber = params.pan;
     NSString *secureCode = params.cvc;
-    NSString *fullYear = [self getFullYearFromExpirationDate: params.expiryMMYY];
-    NSString *month = [self getMonthFromExpirationDate: params.expiryMMYY];
+    NSString *fullYear = [self _getFullYearFromExpirationDate: params.expiryMMYY];
+    NSString *month = [self _getMonthFromExpirationDate: params.expiryMMYY];
     NSString *expirationDate = [NSString stringWithFormat:@"%@%@", fullYear, month];
     
     NSString *cardData = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", timeStamp, uuid, cardNumber, secureCode, expirationDate];
