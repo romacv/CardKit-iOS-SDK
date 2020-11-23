@@ -8,6 +8,7 @@
 
 import UIKit
 import CardKit
+import CardKitCore
 
 let publicKey = """
 -----BEGIN PUBLIC KEY-----
@@ -79,6 +80,8 @@ class ViewController: UITableViewController {
     controller.cKitDelegate = self;
     
     let createdUiController = CardKViewController.create(self, controller: controller);
+    
+    
     let navController = UINavigationController(rootViewController: createdUiController)
     
     if #available(iOS 13.0, *) {

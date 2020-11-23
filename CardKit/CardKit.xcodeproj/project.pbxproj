@@ -7,14 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		920312C3255D6562006FBED7 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 920312C2255D6562006FBED7 /* info.plist */; };
+		920312D3255D6621006FBED7 /* CKCToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD900E255D204A001E1ECF /* CKCToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		920312DC255D662A006FBED7 /* CKCCardParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD9032255D241D001E1ECF /* CKCCardParams.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		920312E5255D6631006FBED7 /* CKCBindingParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD903E255D24B4001E1ECF /* CKCBindingParams.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		920312EE255D664A006FBED7 /* CKCTokenResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD9022255D2315001E1ECF /* CKCTokenResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9219F465232B8EF100841B98 /* CardKFooterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9219F463232B8EF100841B98 /* CardKFooterView.h */; };
 		9219F466232B8EF100841B98 /* CardKFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9219F464232B8EF100841B98 /* CardKFooterView.m */; };
 		9234CC4E247BC315009E3034 /* CardKValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 9234CC4C247BC315009E3034 /* CardKValidation.h */; };
 		9234CC4F247BC315009E3034 /* CardKValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9234CC4D247BC315009E3034 /* CardKValidation.m */; };
 		9234CC5A247FBCDD009E3034 /* CardKPaymentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9234CC58247FBCDD009E3034 /* CardKPaymentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9234CC5B247FBCDD009E3034 /* CardKPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9234CC59247FBCDD009E3034 /* CardKPaymentView.m */; };
+		924290C0255D5FE300378C68 /* CardKitCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924290B7255D5FE200378C68 /* CardKitCore.framework */; };
+		924290C5255D5FE300378C68 /* CardKitCoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 924290C4255D5FE300378C68 /* CardKitCoreTests.m */; };
+		924290D4255D5FF600378C68 /* CKCPubKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9007255D202E001E1ECF /* CKCPubKey.m */; };
+		924290D5255D5FF600378C68 /* CKCTokenResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9023255D2315001E1ECF /* CKCTokenResult.m */; };
+		924290D6255D5FF600378C68 /* CKCBindingParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD903F255D24B4001E1ECF /* CKCBindingParams.m */; };
+		924290D7255D5FF600378C68 /* CKCToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD900F255D204A001E1ECF /* CKCToken.m */; };
+		924290D8255D5FF600378C68 /* Luhn.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD8F91255D1AE8001E1ECF /* Luhn.m */; };
+		924290D9255D5FF600378C68 /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD8FA9255D1B3A001E1ECF /* RSA.m */; };
+		924290DA255D5FF600378C68 /* CKCCardParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9033255D241D001E1ECF /* CKCCardParams.m */; };
+		9242910C255D60AC00378C68 /* CKCToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD900F255D204A001E1ECF /* CKCToken.m */; };
+		92429134255D610700378C68 /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD8FA9255D1B3A001E1ECF /* RSA.m */; };
 		9248868E251885FB00CA81D5 /* SeTokenGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 9248868C251885FB00CA81D5 /* SeTokenGenerator.h */; };
 		9248868F251885FB00CA81D5 /* SeTokenGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9248868D251885FB00CA81D5 /* SeTokenGenerator.m */; };
+		9292CED0255E5FB100053EC3 /* CKCPubKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9007255D202E001E1ECF /* CKCPubKey.m */; };
+		9292CED5255E611F00053EC3 /* CKCPubKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD9006255D202E001E1ECF /* CKCPubKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9292CF4B255E9B2F00053EC3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF4A255E9B2F00053EC3 /* AppDelegate.m */; };
+		9292CF4E255E9B2F00053EC3 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF4D255E9B2F00053EC3 /* SceneDelegate.m */; };
+		9292CF51255E9B2F00053EC3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF50255E9B2F00053EC3 /* ViewController.m */; };
+		9292CF54255E9B2F00053EC3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9292CF52255E9B2F00053EC3 /* Main.storyboard */; };
+		9292CF56255E9B3000053EC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9292CF55255E9B3000053EC3 /* Assets.xcassets */; };
+		9292CF59255E9B3000053EC3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9292CF57255E9B3000053EC3 /* LaunchScreen.storyboard */; };
+		9292CF5C255E9B3000053EC3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF5B255E9B3000053EC3 /* main.m */; };
+		9292CFA7255EA69B00053EC3 /* CKCTokenResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9023255D2315001E1ECF /* CKCTokenResult.m */; };
 		92985C85246A96F4009B7392 /* CardKSwitchView.h in Headers */ = {isa = PBXBuildFile; fileRef = 92985C83246A96F4009B7392 /* CardKSwitchView.h */; };
 		92985C86246A96F4009B7392 /* CardKSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92985C84246A96F4009B7392 /* CardKSwitchView.m */; };
 		92985C89246BEE1E009B7392 /* CardKKindPaymentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 92985C87246BEE1E009B7392 /* CardKKindPaymentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,20 +49,16 @@
 		929BA32525591CFC00AB0526 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 929BA32325591CFC00AB0526 /* TextField.m */; };
 		92A1461A23435C6B002FBCC3 /* CardKConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A1461823435C6B002FBCC3 /* CardKConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		92A1461B23435C6B002FBCC3 /* CardKConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 92A1461923435C6B002FBCC3 /* CardKConfig.m */; };
+		92D85548255D63DA0002936B /* CardKitCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D85547255D63DA0002936B /* CardKitCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		92E247F22475481700C2EF6C /* CardKBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E247F02475481700C2EF6C /* CardKBinding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		92E247F32475481700C2EF6C /* CardKBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E247F12475481700C2EF6C /* CardKBinding.m */; };
 		92E247F6247676A900C2EF6C /* ConfirmChoosedCard.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E247F4247676A900C2EF6C /* ConfirmChoosedCard.h */; };
 		92E247F7247676A900C2EF6C /* ConfirmChoosedCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E247F5247676A900C2EF6C /* ConfirmChoosedCard.m */; };
 		D20CEBCD232F660400F9407C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D20CEBCF232F660400F9407C /* Localizable.strings */; };
 		D245AB43231C435E00369747 /* CardKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D245AB39231C435E00369747 /* CardKit.framework */; };
-		D245AB48231C435E00369747 /* CardKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D245AB47231C435E00369747 /* CardKitTests.m */; };
 		D245AB4A231C435E00369747 /* CardKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D245AB3C231C435E00369747 /* CardKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D245ABBC231C449F00369747 /* CardKViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D245ABBA231C449F00369747 /* CardKViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D245ABBD231C449F00369747 /* CardKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D245ABBB231C449F00369747 /* CardKViewController.m */; };
-		D245ABC0231C4C2900369747 /* RSA.h in Headers */ = {isa = PBXBuildFile; fileRef = D245ABBE231C4C2900369747 /* RSA.h */; };
-		D245ABC1231C4C2900369747 /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = D245ABBF231C4C2900369747 /* RSA.m */; };
-		D245ABC3231C4E5200369747 /* Luhn.h in Headers */ = {isa = PBXBuildFile; fileRef = D245ABC2231C4E5200369747 /* Luhn.h */; };
-		D245ABC5231C4E6700369747 /* Luhn.m in Sources */ = {isa = PBXBuildFile; fileRef = D245ABC4231C4E6700369747 /* Luhn.m */; };
 		D245ABC8231C529D00369747 /* CardKTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = D245ABC6231C529D00369747 /* CardKTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D245ABC9231C529D00369747 /* CardKTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = D245ABC7231C529D00369747 /* CardKTheme.m */; };
 		D269080D231FA894001CB863 /* CardKTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = D269080B231FA894001CB863 /* CardKTextField.h */; };
@@ -52,6 +74,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		924290C1255D5FE300378C68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D245AB30231C435E00369747 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 924290B6255D5FE200378C68;
+			remoteInfo = CardKitCore;
+		};
+		9292CF83255E9B4700053EC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D245AB30231C435E00369747 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9292CF46255E9B2F00053EC3;
+			remoteInfo = TestApp;
+		};
 		D245AB44231C435E00369747 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D245AB30231C435E00369747 /* Project object */;
@@ -62,14 +98,35 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		920312C2255D6562006FBED7 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		9219F463232B8EF100841B98 /* CardKFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKFooterView.h; sourceTree = "<group>"; };
 		9219F464232B8EF100841B98 /* CardKFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKFooterView.m; sourceTree = "<group>"; };
 		9234CC4C247BC315009E3034 /* CardKValidation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKValidation.h; sourceTree = "<group>"; };
 		9234CC4D247BC315009E3034 /* CardKValidation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKValidation.m; sourceTree = "<group>"; };
 		9234CC58247FBCDD009E3034 /* CardKPaymentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKPaymentView.h; sourceTree = "<group>"; };
 		9234CC59247FBCDD009E3034 /* CardKPaymentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKPaymentView.m; sourceTree = "<group>"; };
+		924290B7255D5FE200378C68 /* CardKitCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CardKitCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		924290BF255D5FE300378C68 /* CardKitCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardKitCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		924290C4255D5FE300378C68 /* CardKitCoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKitCoreTests.m; sourceTree = "<group>"; };
+		924290C6255D5FE300378C68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9248868C251885FB00CA81D5 /* SeTokenGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeTokenGenerator.h; sourceTree = "<group>"; };
 		9248868D251885FB00CA81D5 /* SeTokenGenerator.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = SeTokenGenerator.m; sourceTree = "<group>"; tabWidth = 2; };
+		9292CF47255E9B2F00053EC3 /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9292CF49255E9B2F00053EC3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9292CF4A255E9B2F00053EC3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9292CF4C255E9B2F00053EC3 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		9292CF4D255E9B2F00053EC3 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		9292CF4F255E9B2F00053EC3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9292CF50255E9B2F00053EC3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9292CF53255E9B2F00053EC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9292CF55255E9B3000053EC3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9292CF58255E9B3000053EC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9292CF5A255E9B3000053EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9292CF5B255E9B3000053EC3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9292CF65255E9B3000053EC3 /* TestAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestAppTests.m; sourceTree = "<group>"; };
+		9292CF67255E9B3000053EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9292CF70255E9B3000053EC3 /* TestAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestAppUITests.m; sourceTree = "<group>"; };
+		9292CF72255E9B3000053EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92985C83246A96F4009B7392 /* CardKSwitchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKSwitchView.h; sourceTree = "<group>"; };
 		92985C84246A96F4009B7392 /* CardKSwitchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKSwitchView.m; sourceTree = "<group>"; };
 		92985C87246BEE1E009B7392 /* CardKKindPaymentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKKindPaymentViewController.h; sourceTree = "<group>"; };
@@ -78,6 +135,21 @@
 		929BA32325591CFC00AB0526 /* TextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextField.m; sourceTree = "<group>"; };
 		92A1461823435C6B002FBCC3 /* CardKConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKConfig.h; sourceTree = "<group>"; };
 		92A1461923435C6B002FBCC3 /* CardKConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKConfig.m; sourceTree = "<group>"; };
+		92BD8F91255D1AE8001E1ECF /* Luhn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Luhn.m; sourceTree = "<group>"; };
+		92BD8F92255D1AE9001E1ECF /* Luhn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Luhn.h; sourceTree = "<group>"; };
+		92BD8FA8255D1B3A001E1ECF /* RSA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSA.h; sourceTree = "<group>"; };
+		92BD8FA9255D1B3A001E1ECF /* RSA.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSA.m; sourceTree = "<group>"; };
+		92BD9006255D202E001E1ECF /* CKCPubKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKCPubKey.h; sourceTree = "<group>"; };
+		92BD9007255D202E001E1ECF /* CKCPubKey.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CKCPubKey.m; sourceTree = "<group>"; };
+		92BD900E255D204A001E1ECF /* CKCToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKCToken.h; sourceTree = "<group>"; };
+		92BD900F255D204A001E1ECF /* CKCToken.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CKCToken.m; sourceTree = "<group>"; tabWidth = 2; };
+		92BD9022255D2315001E1ECF /* CKCTokenResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKCTokenResult.h; sourceTree = "<group>"; };
+		92BD9023255D2315001E1ECF /* CKCTokenResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CKCTokenResult.m; sourceTree = "<group>"; };
+		92BD9032255D241D001E1ECF /* CKCCardParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKCCardParams.h; sourceTree = "<group>"; };
+		92BD9033255D241D001E1ECF /* CKCCardParams.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CKCCardParams.m; sourceTree = "<group>"; };
+		92BD903E255D24B4001E1ECF /* CKCBindingParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKCBindingParams.h; sourceTree = "<group>"; };
+		92BD903F255D24B4001E1ECF /* CKCBindingParams.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CKCBindingParams.m; sourceTree = "<group>"; };
+		92D85547255D63DA0002936B /* CardKitCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardKitCore.h; sourceTree = "<group>"; };
 		92E0D90A24AF4B7300F7846E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		92E247F02475481700C2EF6C /* CardKBinding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKBinding.h; sourceTree = "<group>"; };
 		92E247F12475481700C2EF6C /* CardKBinding.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKBinding.m; sourceTree = "<group>"; };
@@ -92,14 +164,8 @@
 		D245AB3C231C435E00369747 /* CardKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKit.h; sourceTree = "<group>"; };
 		D245AB3D231C435E00369747 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D245AB42231C435E00369747 /* CardKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D245AB47231C435E00369747 /* CardKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKitTests.m; sourceTree = "<group>"; };
-		D245AB49231C435E00369747 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D245ABBA231C449F00369747 /* CardKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKViewController.h; sourceTree = "<group>"; };
 		D245ABBB231C449F00369747 /* CardKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKViewController.m; sourceTree = "<group>"; };
-		D245ABBE231C4C2900369747 /* RSA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSA.h; sourceTree = "<group>"; };
-		D245ABBF231C4C2900369747 /* RSA.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSA.m; sourceTree = "<group>"; };
-		D245ABC2231C4E5200369747 /* Luhn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Luhn.h; sourceTree = "<group>"; };
-		D245ABC4231C4E6700369747 /* Luhn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Luhn.m; sourceTree = "<group>"; };
 		D245ABC6231C529D00369747 /* CardKTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKTheme.h; sourceTree = "<group>"; };
 		D245ABC7231C529D00369747 /* CardKTheme.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKTheme.m; sourceTree = "<group>"; };
 		D269080B231FA894001CB863 /* CardKTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKTextField.h; sourceTree = "<group>"; };
@@ -115,6 +181,28 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		924290B4255D5FE200378C68 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		924290BC255D5FE300378C68 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				924290C0255D5FE300378C68 /* CardKitCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9292CF44255E9B2F00053EC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D245AB36231C435E00369747 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -133,13 +221,85 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		924290B8255D5FE200378C68 /* CardKitCore */ = {
+			isa = PBXGroup;
+			children = (
+				92D85547255D63DA0002936B /* CardKitCore.h */,
+				92BD8F92255D1AE9001E1ECF /* Luhn.h */,
+				92BD8F91255D1AE8001E1ECF /* Luhn.m */,
+				92BD8FA8255D1B3A001E1ECF /* RSA.h */,
+				92BD8FA9255D1B3A001E1ECF /* RSA.m */,
+				92BD9006255D202E001E1ECF /* CKCPubKey.h */,
+				92BD9007255D202E001E1ECF /* CKCPubKey.m */,
+				92BD900E255D204A001E1ECF /* CKCToken.h */,
+				92BD900F255D204A001E1ECF /* CKCToken.m */,
+				92BD9022255D2315001E1ECF /* CKCTokenResult.h */,
+				92BD9023255D2315001E1ECF /* CKCTokenResult.m */,
+				92BD9032255D241D001E1ECF /* CKCCardParams.h */,
+				92BD9033255D241D001E1ECF /* CKCCardParams.m */,
+				92BD903E255D24B4001E1ECF /* CKCBindingParams.h */,
+				92BD903F255D24B4001E1ECF /* CKCBindingParams.m */,
+				920312C2255D6562006FBED7 /* info.plist */,
+			);
+			path = CardKitCore;
+			sourceTree = "<group>";
+		};
+		924290C3255D5FE300378C68 /* CardKitCoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				924290C4255D5FE300378C68 /* CardKitCoreTests.m */,
+				924290C6255D5FE300378C68 /* Info.plist */,
+			);
+			path = CardKitCoreTests;
+			sourceTree = "<group>";
+		};
+		9292CF48255E9B2F00053EC3 /* TestApp */ = {
+			isa = PBXGroup;
+			children = (
+				9292CF49255E9B2F00053EC3 /* AppDelegate.h */,
+				9292CF4A255E9B2F00053EC3 /* AppDelegate.m */,
+				9292CF4C255E9B2F00053EC3 /* SceneDelegate.h */,
+				9292CF4D255E9B2F00053EC3 /* SceneDelegate.m */,
+				9292CF4F255E9B2F00053EC3 /* ViewController.h */,
+				9292CF50255E9B2F00053EC3 /* ViewController.m */,
+				9292CF52255E9B2F00053EC3 /* Main.storyboard */,
+				9292CF55255E9B3000053EC3 /* Assets.xcassets */,
+				9292CF57255E9B3000053EC3 /* LaunchScreen.storyboard */,
+				9292CF5A255E9B3000053EC3 /* Info.plist */,
+				9292CF5B255E9B3000053EC3 /* main.m */,
+			);
+			path = TestApp;
+			sourceTree = "<group>";
+		};
+		9292CF64255E9B3000053EC3 /* TestAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				9292CF65255E9B3000053EC3 /* TestAppTests.m */,
+				9292CF67255E9B3000053EC3 /* Info.plist */,
+			);
+			path = TestAppTests;
+			sourceTree = "<group>";
+		};
+		9292CF6F255E9B3000053EC3 /* TestAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9292CF70255E9B3000053EC3 /* TestAppUITests.m */,
+				9292CF72255E9B3000053EC3 /* Info.plist */,
+			);
+			path = TestAppUITests;
+			sourceTree = "<group>";
+		};
 		D245AB2F231C435E00369747 = {
 			isa = PBXGroup;
 			children = (
-				D20CEBCF232F660400F9407C /* Localizable.strings */,
 				D2D0B3632320F3A60007B3B9 /* banks-info */,
+				D20CEBCF232F660400F9407C /* Localizable.strings */,
 				D245AB3B231C435E00369747 /* CardKit */,
-				D245AB46231C435E00369747 /* CardKitTests */,
+				924290B8255D5FE200378C68 /* CardKitCore */,
+				924290C3255D5FE300378C68 /* CardKitCoreTests */,
+				9292CF48255E9B2F00053EC3 /* TestApp */,
+				9292CF64255E9B3000053EC3 /* TestAppTests */,
+				9292CF6F255E9B3000053EC3 /* TestAppUITests */,
 				D245AB3A231C435E00369747 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -149,6 +309,9 @@
 			children = (
 				D245AB39231C435E00369747 /* CardKit.framework */,
 				D245AB42231C435E00369747 /* CardKitTests.xctest */,
+				924290B7255D5FE200378C68 /* CardKitCore.framework */,
+				924290BF255D5FE300378C68 /* CardKitCoreTests.xctest */,
+				9292CF47255E9B2F00053EC3 /* TestApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -163,10 +326,6 @@
 				D245ABBB231C449F00369747 /* CardKViewController.m */,
 				D245ABC6231C529D00369747 /* CardKTheme.h */,
 				D245ABC7231C529D00369747 /* CardKTheme.m */,
-				D245ABC2231C4E5200369747 /* Luhn.h */,
-				D245ABC4231C4E6700369747 /* Luhn.m */,
-				D245ABBE231C4C2900369747 /* RSA.h */,
-				D245ABBF231C4C2900369747 /* RSA.m */,
 				D269080B231FA894001CB863 /* CardKTextField.h */,
 				929BA32225591CFC00AB0526 /* TextField.h */,
 				929BA32325591CFC00AB0526 /* TextField.m */,
@@ -199,23 +358,26 @@
 			path = CardKit;
 			sourceTree = "<group>";
 		};
-		D245AB46231C435E00369747 /* CardKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				D245AB47231C435E00369747 /* CardKitTests.m */,
-				D245AB49231C435E00369747 /* Info.plist */,
-			);
-			path = CardKitTests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		924290B2255D5FE200378C68 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				920312E5255D6631006FBED7 /* CKCBindingParams.h in Headers */,
+				920312D3255D6621006FBED7 /* CKCToken.h in Headers */,
+				920312EE255D664A006FBED7 /* CKCTokenResult.h in Headers */,
+				920312DC255D662A006FBED7 /* CKCCardParams.h in Headers */,
+				9292CED5255E611F00053EC3 /* CKCPubKey.h in Headers */,
+				92D85548255D63DA0002936B /* CardKitCore.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D245AB34231C435E00369747 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D245ABC0231C4C2900369747 /* RSA.h in Headers */,
 				92E247F6247676A900C2EF6C /* ConfirmChoosedCard.h in Headers */,
 				92985C85246A96F4009B7392 /* CardKSwitchView.h in Headers */,
 				9234CC4E247BC315009E3034 /* CardKValidation.h in Headers */,
@@ -233,13 +395,66 @@
 				D2D0B35E2320E3AC0007B3B9 /* CardKBankLogoView.h in Headers */,
 				D245ABBC231C449F00369747 /* CardKViewController.h in Headers */,
 				D245AB4A231C435E00369747 /* CardKit.h in Headers */,
-				D245ABC3231C4E5200369747 /* Luhn.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		924290B6255D5FE200378C68 /* CardKitCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 924290C8255D5FE300378C68 /* Build configuration list for PBXNativeTarget "CardKitCore" */;
+			buildPhases = (
+				924290B2255D5FE200378C68 /* Headers */,
+				924290B3255D5FE200378C68 /* Sources */,
+				924290B4255D5FE200378C68 /* Frameworks */,
+				924290B5255D5FE200378C68 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CardKitCore;
+			productName = CardKitCore;
+			productReference = 924290B7255D5FE200378C68 /* CardKitCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		924290BE255D5FE300378C68 /* CardKitCoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 924290CB255D5FE300378C68 /* Build configuration list for PBXNativeTarget "CardKitCoreTests" */;
+			buildPhases = (
+				924290BB255D5FE300378C68 /* Sources */,
+				924290BC255D5FE300378C68 /* Frameworks */,
+				924290BD255D5FE300378C68 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				924290C2255D5FE300378C68 /* PBXTargetDependency */,
+				9292CF84255E9B4700053EC3 /* PBXTargetDependency */,
+			);
+			name = CardKitCoreTests;
+			productName = CardKitCoreTests;
+			productReference = 924290BF255D5FE300378C68 /* CardKitCoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9292CF46255E9B2F00053EC3 /* TestApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9292CF73255E9B3000053EC3 /* Build configuration list for PBXNativeTarget "TestApp" */;
+			buildPhases = (
+				9292CF43255E9B2F00053EC3 /* Sources */,
+				9292CF44255E9B2F00053EC3 /* Frameworks */,
+				9292CF45255E9B2F00053EC3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestApp;
+			productName = TestApp;
+			productReference = 9292CF47255E9B2F00053EC3 /* TestApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 		D245AB38231C435E00369747 /* CardKit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D245AB4D231C435E00369747 /* Build configuration list for PBXNativeTarget "CardKit" */;
@@ -285,6 +500,16 @@
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = AnjLab;
 				TargetAttributes = {
+					924290B6255D5FE200378C68 = {
+						CreatedOnToolsVersion = 12.1;
+					};
+					924290BE255D5FE300378C68 = {
+						CreatedOnToolsVersion = 12.1;
+						TestTargetID = 9292CF46255E9B2F00053EC3;
+					};
+					9292CF46255E9B2F00053EC3 = {
+						CreatedOnToolsVersion = 12.1;
+					};
 					D245AB38231C435E00369747 = {
 						CreatedOnToolsVersion = 10.3;
 					};
@@ -314,11 +539,39 @@
 			targets = (
 				D245AB38231C435E00369747 /* CardKit */,
 				D245AB41231C435E00369747 /* CardKitTests */,
+				924290B6255D5FE200378C68 /* CardKitCore */,
+				924290BE255D5FE300378C68 /* CardKitCoreTests */,
+				9292CF46255E9B2F00053EC3 /* TestApp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		924290B5255D5FE200378C68 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				920312C3255D6562006FBED7 /* info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		924290BD255D5FE300378C68 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9292CF45255E9B2F00053EC3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9292CF59255E9B3000053EC3 /* LaunchScreen.storyboard in Resources */,
+				9292CF56255E9B3000053EC3 /* Assets.xcassets in Resources */,
+				9292CF54255E9B2F00053EC3 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D245AB37231C435E00369747 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -339,6 +592,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		924290B3255D5FE200378C68 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				924290D9255D5FF600378C68 /* RSA.m in Sources */,
+				924290D8255D5FF600378C68 /* Luhn.m in Sources */,
+				924290DA255D5FF600378C68 /* CKCCardParams.m in Sources */,
+				924290D6255D5FF600378C68 /* CKCBindingParams.m in Sources */,
+				924290D5255D5FF600378C68 /* CKCTokenResult.m in Sources */,
+				924290D4255D5FF600378C68 /* CKCPubKey.m in Sources */,
+				924290D7255D5FF600378C68 /* CKCToken.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		924290BB255D5FE300378C68 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9292CFA7255EA69B00053EC3 /* CKCTokenResult.m in Sources */,
+				924290C5255D5FE300378C68 /* CardKitCoreTests.m in Sources */,
+				9292CED0255E5FB100053EC3 /* CKCPubKey.m in Sources */,
+				9242910C255D60AC00378C68 /* CKCToken.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9292CF43255E9B2F00053EC3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9292CF51255E9B2F00053EC3 /* ViewController.m in Sources */,
+				9292CF4B255E9B2F00053EC3 /* AppDelegate.m in Sources */,
+				9292CF5C255E9B3000053EC3 /* main.m in Sources */,
+				9292CF4E255E9B2F00053EC3 /* SceneDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D245AB35231C435E00369747 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -355,10 +644,9 @@
 				9248868F251885FB00CA81D5 /* SeTokenGenerator.m in Sources */,
 				D245ABC9231C529D00369747 /* CardKTheme.m in Sources */,
 				92E247F32475481700C2EF6C /* CardKBinding.m in Sources */,
-				D245ABC1231C4C2900369747 /* RSA.m in Sources */,
-				D245ABC5231C4E6700369747 /* Luhn.m in Sources */,
 				9234CC4F247BC315009E3034 /* CardKValidation.m in Sources */,
 				D245ABBD231C449F00369747 /* CardKViewController.m in Sources */,
+				92429134255D610700378C68 /* RSA.m in Sources */,
 				92A1461B23435C6B002FBCC3 /* CardKConfig.m in Sources */,
 				929BA32525591CFC00AB0526 /* TextField.m in Sources */,
 			);
@@ -368,13 +656,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D245AB48231C435E00369747 /* CardKitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		924290C2255D5FE300378C68 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 924290B6255D5FE200378C68 /* CardKitCore */;
+			targetProxy = 924290C1255D5FE300378C68 /* PBXContainerItemProxy */;
+		};
+		9292CF84255E9B4700053EC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9292CF46255E9B2F00053EC3 /* TestApp */;
+			targetProxy = 9292CF83255E9B4700053EC3 /* PBXContainerItemProxy */;
+		};
 		D245AB45231C435E00369747 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D245AB38231C435E00369747 /* CardKit */;
@@ -383,6 +680,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		9292CF52255E9B2F00053EC3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9292CF53255E9B2F00053EC3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9292CF57255E9B3000053EC3 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9292CF58255E9B3000053EC3 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		D20CEBCF232F660400F9407C /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -399,6 +712,136 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		924290C9255D5FE300378C68 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = FD6ZML48V9;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = CardKitCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.CardKitCore";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		924290CA255D5FE300378C68 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = FD6ZML48V9;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = CardKitCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.CardKitCore";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		924290CC255D5FE300378C68 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FD6ZML48V9;
+				INFOPLIST_FILE = CardKitCoreTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.CardKitCoreTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApp.app/TestApp";
+			};
+			name = Debug;
+		};
+		924290CD255D5FE300378C68 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FD6ZML48V9;
+				INFOPLIST_FILE = CardKitCoreTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.CardKitCoreTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApp.app/TestApp";
+			};
+			name = Release;
+		};
+		9292CF74255E9B3000053EC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FD6ZML48V9;
+				INFOPLIST_FILE = TestApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.TestApp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9292CF75255E9B3000053EC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FD6ZML48V9;
+				INFOPLIST_FILE = TestApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.TestApp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		D245AB4B231C435E00369747 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -452,7 +895,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -509,7 +952,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -536,7 +979,7 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = CardKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -567,7 +1010,7 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = CardKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -618,6 +1061,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		924290C8255D5FE300378C68 /* Build configuration list for PBXNativeTarget "CardKitCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				924290C9255D5FE300378C68 /* Debug */,
+				924290CA255D5FE300378C68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		924290CB255D5FE300378C68 /* Build configuration list for PBXNativeTarget "CardKitCoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				924290CC255D5FE300378C68 /* Debug */,
+				924290CD255D5FE300378C68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9292CF73255E9B3000053EC3 /* Build configuration list for PBXNativeTarget "TestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9292CF74255E9B3000053EC3 /* Debug */,
+				9292CF75255E9B3000053EC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D245AB33231C435E00369747 /* Build configuration list for PBXProject "CardKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
