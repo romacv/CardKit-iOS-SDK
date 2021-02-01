@@ -8,19 +8,6 @@
 
 import UIKit
 import CardKit
-import CardKitCore
-
-let publicKey = """
------BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiDgvGLU1dFQ0tA0Epbpj
-1gbbAz9/lvZdTyspHCPQ4zTYki1xER8Dy99jzxj83VIiamnwkHUsmcg5mxXfRI/Y
-7mDq9LT1mmoM5RytpfuuFELWrBE59jZzc4FgwcVdvR8oV4ol7RDPDHpSxl9ihC1h
-2KZ/GoKi9G6TULRzD+hLeo9vIpC0vIIGUyxDWtOWi0yDf4MYisUKmgbYya+Z5oOD
-ANHUCiJuMMuuH7ot6hJPxZ61LE0FQP6pxo+r1cezGekwlc8NrKq3XeeNgu4kWFXN
-TBSwAcNAizIvEY4wrqc4ARR3nTlwAxkye9bTNVNROMMiMtu1ERGyRFjI7wnSmRnN
-EwIDAQAB
------END PUBLIC KEY-----
-"""
 
 struct Section {
   let title: String?
@@ -43,6 +30,8 @@ struct SectionItem {
     case navSystemTheme
     case language
     case paymentView
+    case threeDS
+    case threeDSCustomColors
   }
 }
 
@@ -61,6 +50,11 @@ class SampleAppCardIO: NSObject, CardIOViewDelegate {
 class ViewController: UITableViewController {
   var sampleAppCardIO: SampleAppCardIO? = nil
   
+  let publicKey = """
+        -----BEGIN PUBLIC KEY-----
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAws0r6I8emCsURXfuQcU2c9mwUlOiDjuCZ/f+EdadA4vq/kYt3w6kC5TUW97Fm/HTikkHd0bt8wJvOzz3T0O4so+vBaC0xjE8JuU1eCd+zUX/plw1REVVii1RNh9gMWW1fRNu6KDNSZyfftY2BTcP1dbE1itpXMGUPW+TOk3U9WP4vf7pL/xIHxCsHzb0zgmwShm3D46w7dPW+HO3PEHakSWV9bInkchOvh/vJBiRw6iadAjtNJ4+EkgNjHwZJDuo/0bQV+r9jeOe+O1aXLYK/s1UjRs5T4uGeIzmdLUKnu4eTOQ16P6BHWAjyqPnXliYIKfi+FjZxyWEAlYUq+CRqQIDAQAB-----END PUBLIC KEY-----
+  """
+  
   @objc func _close(sender:UIButton){
     self.navigationController?.dismiss(animated: true, completion: nil)
   }
@@ -71,10 +65,11 @@ class ViewController: UITableViewController {
     CardKConfig.shared.bindingCVCRequired = true;
     CardKConfig.shared.bindings = self._fetchBindingCards();
     CardKConfig.shared.isTestMod = true;
-    CardKConfig.shared.mdOrder = "mdOrder";
+    CardKConfig.shared.mdOrder = "ae0adc7d-ef2d-7a2c-96c5-e8f61917ef58";
     CardKConfig.shared.mrBinApiURL = "https://mrbin.io/bins/display";
     CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
     CardKConfig.shared.bindingsSectionTitle = "Your cards";
+    CardKConfig.shared.pubKey = publicKey;
     
     let controller = CardKViewController();
     controller.cKitDelegate = self;
@@ -320,18 +315,34 @@ class ViewController: UITableViewController {
   
     self.navigationController?.pushViewController(controller, animated: true)
   }
+    
+  func _open3DSView() {
+    let controller = ThreeDS2ViewController(style: .grouped);
+
+    self.navigationController?.pushViewController(controller, animated: true)
+  }
+  
+  func _open3DSViewCustom() {
+    let controller = ThreeDS2ViewController(style: .grouped);
+    
+    controller.initialize(isUseCustomTheme: true)
+  
+    self.navigationController?.pushViewController(controller, animated: true)
+  }
   
   func _callFunctionByKindOfButton(kind: SectionItem.Kind, language: String) {
     switch kind {
-    case .lightTheme: _openController()
-    case .darkTheme: _openDark()
-    case .systemTheme: _openSystemTheme()
-    case .customTheme: _openCustomTheme()
-    case .navLightTheme: _openLightUINavigation()
-    case .navDarkTheme: _openDarkUINavigation()
-    case .navSystemTheme: _openSystemUINavigation()
-    case .language: _openWitchChooseLanguage(language: language)
-    case .paymentView: _openPaymentView()
+      case .lightTheme: _openController()
+      case .darkTheme: _openDark()
+      case .systemTheme: _openSystemTheme()
+      case .customTheme: _openCustomTheme()
+      case .navLightTheme: _openLightUINavigation()
+      case .navDarkTheme: _openDarkUINavigation()
+      case .navSystemTheme: _openSystemUINavigation()
+      case .language: _openWitchChooseLanguage(language: language)
+      case .paymentView: _openPaymentView()
+      case .threeDS: _open3DSView()
+      case .threeDSCustomColors: _open3DSViewCustom()
     }
   }
   
@@ -352,6 +363,12 @@ class ViewController: UITableViewController {
     Section(title: "CardKPaymentView", items: [
       SectionItem(title: "Apple Pay", kind: .paymentView, isShowChevron: true, language: ""),
     ]),
+    
+    Section(title: "ThreeDSSample", items: [
+      SectionItem(title: "ThreeDS Sample with default theme", kind: .threeDS, isShowChevron: true, language: ""),
+      SectionItem(title: "ThreeDS Sample with custom theme", kind: .threeDSCustomColors, isShowChevron: true, language: ""),
+    ]),
+    
     
     Section(title: "Localization", items: [
       SectionItem(title: "English - en", kind: .language, isShowChevron: false, language: "en"),
