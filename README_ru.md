@@ -2,9 +2,9 @@
 
 SDK содержит два класса и один делегат.
 
-[Инструкция интеграции SDK](Tutorial.md) <br/>
-[Инструкция интеграции Apple pay](TutorialApplePay.md) <br/>
-[Инструкция интеграции CardKitCore](TutorialCardKitCore.md)
+[Инструкция интеграции SDK](Tutorial_ru.md) <br/>
+[Инструкция интеграции Apple pay](TutorialApplePay_ru.md) <br/>
+[Инструкция интеграции CardKitCore](TutorialCardKitCore_ru.md)
 
 ## Настройка параметров SDK
 
