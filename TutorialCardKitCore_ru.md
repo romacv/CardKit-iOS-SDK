@@ -1,13 +1,13 @@
-# CardCitCore Tutorial
+# Туториал CardKitСore
 
 ## CardKitCore API 
 
 ```ts
 type CKCCardParams = {
-  pan: string               // card number (without separators and spaces)
+  pan: string               // номер карты (без разделителей и пробелов)
   cvc: string
-  expiryMMYY: string        // date in MM/YYY or MMYYY format
-  cardholder: string | null // if null - not validated
+  expiryMMYY: string        // дата в формате ММ/ГГ или ММГГ
+  cardholder: string | null // если null - не валидируется
   
   mdOrder: string
   
@@ -16,7 +16,7 @@ type CKCCardParams = {
 
 type CKCBindingParams = {
   bindingID: string
-  cvc: string | null // if null, then it is not validated
+  cvc: string | null // если null, то не валидируется
 
   mdOrder: string
   
@@ -24,11 +24,11 @@ type CKCBindingParams = {
 }
 
 type CKCError = 
-   | 'invalid-pub-key' // empty or invalid key
-   | 'required'        // Required field
-   | 'invalid-format'  // invalid data format (for example, numbers in a cardholder)
-   | 'invalid-length'  // invalid field length
-   | 'invalid'         // invalid field value (general)
+   | 'invalid-pub-key' // пустой или не верный ключ
+   | 'required'        // поле обязательно для заполнения
+   | 'invalid-format'  // не верный формат данных (например, цифры в cardholder)
+   | 'invalid-length'  // не верная длина поля
+   | 'invalid'         // не верное значение поля (общее)
    
 type CKCField = 
    | 'pan'
@@ -45,7 +45,7 @@ type CKCTokenResult = {
 }
 
 class CKCPubKey {
-  // utility for parsing JSON response from public key servers
+  // утилита, для разбора JSON ответа с серверов публичных ключей
   static fromJSONString(json: string): string | null
 }
 
@@ -56,7 +56,7 @@ class CKCToken {
 
 ```
 
-Example of use
+Пример использования
 
 ```ts
 
@@ -82,9 +82,9 @@ console.log(result)
 
 ```
 
-## Implementation example
+## Пример реализации
 
-### Token generation by card data
+### Генерация токена по данным карты
 ```swift
 import CardKitCore
 
@@ -99,7 +99,7 @@ cardParams.pubKey =  "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A
 let res = CKCToken.generate(withCard: cardParams);
 ```
 
-### Token generation by BindingId
+### Генерация токена по BindingId
 
 ```swift
 import CardKitCore
@@ -113,7 +113,7 @@ bindingParams.pubKey = "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ
 let res = CKCToken.generate(withBinding: bindingParams)
 ```
 
-### Extracting public key from JSON
+### Извлечение публично ключа из JSON
 
 ```swift
 let JSONWithPubKey = """{

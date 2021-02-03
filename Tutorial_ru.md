@@ -1,28 +1,28 @@
-# CardKit SDK tutorial
+# Туториал CardKit SDK
 
-The project setup is described below. Framework can be installed manually or via cocoapods or carthage.
+Ниже описано настрой проетка. Framework можно установить вручную или через cocoapods или carthage.
 
-To install using cocoapods in Podfile, add the line `pod 'CardKit', :git => 'https://github.com/Runet-Business-Systems/CardKit.git'`.
-To install using carthage in Cartfile, add the line `github "Runet-Business-Systems/CardKit"`
+Для установки с использованием cocoapods в Podfile добавьте строчку `pod 'CardKit', :git => 'https://github.com/Runet-Business-Systems/CardKit.git'`.
+Для установки с использованием carthage в Cartfile добавьте строчку `github "Runet-Business-Systems/CardKit"`
 
-## 1. Project Setup
+## 1. Настройка проекта
 
-1.1 Create a project
+1.1 Создать проект
 
 <div align="center">
   <img src="./images/tutorial/create_project.png" width="600"/>
 </div>
-  <div align="center"> Image 1.1. Project Creation </div>
+  <div align="center"> Рисунок 1.1. Создание проекта </div>
 
-1.2. Clear the `Main interface` field in Target
+1.2. Очистить в Target поле `Main interface`
 
 <div align="center">
   <img src="./images/tutorial/clean_main_interface.png" width="600"/>
 </div>
 
-  <div align="center"> Image 1.2. Empty field </div>
+  <div align="center"> Рисунок 1.2. Пустое поле </div>
 
-1.3 In AppDelegate.swift, initialize the ViewController as the first page.
+1.3 В AppDelegate.swift инициализировать ViewController как первую страницу.
 
 ```swift
 //AppDelegate.swift
@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   ...
 ```
 
-1.4 Implement functions in AppDegate.swift.
+1.4 В AppDegate.swift реализовать функции.
 
 ```swift
  ...
@@ -61,50 +61,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <div align="center">
   <img src="./images/tutorial/app_delegate.png" width="600"/>
 </div>
-  <div align="center"> Image 1.3. AppDelegate.swift </div>
+  <div align="center"> Рисунок 1.3. AppDelegate.swift </div>
 
-**Result:**
+**Результат:**
 
 <div align="center">
   <img src="./images/tutorial/result_part_1.png" width="300"/>
 </div>
-  <div align="center"> Image 1.4. Work result </div>
+  <div align="center"> Рисунок 1.4. Результат работы </div>
 
-## 2. CardKit.framework integration
+## 2. Интеграция CardKit.framework
 
-You can integrate CardKit.framework in 3 ways.
+Интегрировать CardKit.framework можно 3мя способами.
 
-- To add CardKit.framework manually
-- TO install using Carthage
-- To install using Pod
+- Вручную добавить CardKit.framework
+- Установить с использование Carthage
+- Установить с использованием Pod
 
 ### 2.1 CardKit.framework
 
-2.1.1 Take the file CardKit.framework and move the file to the project folder.
+2.1.1 Взять файл CardKit.framework и перенести файл в папку проекта.
 
 <div align="center">
   <img src="./images/tutorial/move_card_kit.framework.png" width="600"/>
 </div>
-  <div align="center"> Image 2.1. File moving CardKit.framework </div>
+  <div align="center"> Рисунок 2.1. Перенос файла CardKit.framework </div>
 
-2.2.1 Open Targets -> General -> Frameworks,Libraries, and Embedded Content, In CardKit.framework, replace in the embeded column from `Do not Embed` with` Embed & Sign`.
+2.2.1 Открыть Targets -> General -> Frameworks,Libraries, and Embedded Content, У CardKit.framework заменить в колонке embeded c `Do not Embed` на `Embed & Sign`.
 
 <div align="center">
   <img src="./images/tutorial/replace_with_embed_and_sign.png" width="600"/>
 </div>
-  <div align="center"> Image 2.2. Changing settings CardKit.framework </div>
+  <div align="center"> Рисунок 2.2. Изменения настроек CardKit.framework </div>
 
-2.3.1 Import framework in the ViewController.swift file
+2.3.1 Импортировать фрэймворк в файле ViewController.swift
 
 ### 2.2 Carthage
 
-2.2.1 Create Cartfile <br>
-2.2.2 Add the line `github" Runet-Business-Systems / CardKit " to the file`
+2.2.1 Создать Cartfile <br>
+2.2.2 Добавить в файл строчку `github "Runet-Business-Systems/CardKit"`
 
 ### 2.3 Pod
 
-2.3.1 Initialize Pod <br>
-2.3.2 Add the line `pod 'CardKit' to the Podfile, :git => 'https://github.com/Runet-Business-Systems/ios-sdk.git'`
+2.3.1 Инициализировать Pod <br>
+2.3.2 Добавить в Podfile строчку `pod 'CardKit', :git => 'https://github.com/Runet-Business-Systems/ios-sdk.git'`
 
 ```swift
 //ViewController.swift
@@ -113,9 +113,9 @@ import CardKit
 ...
 ```
 
-## 3. Using SDK
+## 3. Использование SDK
 
-3.1 Implement cardKitViewController function
+3.1 Реализовать функцию cardKitViewController
 
 ```swift
 //ViewController.swift
@@ -132,9 +132,9 @@ extension ViewController: CardKDelegate {
 }
 ```
 
-3.2 Implement the function `didLoad(\_ controller: CardKViewController)`
+3.2 Реализовать функцию `didLoad(\_ controller: CardKViewController)`
 
-The function `didLoad(\_ controller: CardKViewController)` assigns attributes to `CardKViewController
+В функции `didLoad(\_ controller: CardKViewController)` присваиваются атрибуты контроллера `CardKViewController`
 
 ```swift
 //ViewController.swift
@@ -151,7 +151,7 @@ extension ViewController: CardKDelegate {
 }
 ```
 
-3.3 Implement a form call function
+3.3 Реализовать функцию вызова формы
 
 ```swift
 //ViewController.swift
@@ -193,7 +193,7 @@ extension ViewController: CardKDelegate {
 ...
 ```
 
-3.4 Implement a form close function
+3.4 Реализовать функцию закрытия формы
 
 ```swift
 //ViewController.swift
@@ -204,7 +204,7 @@ extension ViewController: CardKDelegate {
 ...
 ```
 
-3.5 Add a button to call the form
+3.5 Добавить кнопку для вызова формы
 
 ```swift
  override func viewDidLoad() {
@@ -221,17 +221,17 @@ extension ViewController: CardKDelegate {
 }
 ```
 
-**Result:**
+**Результат:**
 
 <div align="center">
   <div style="display: flex; justify-content: center;">
   <div>
     <img src="./images/tutorial/result_part_3_open_form.png" width="400"/>
-    <div align="center"> Image 3.1a. Button </div>
+    <div align="center"> Рисунок 3.1a. Кнопка </div>
   </div>
   <div>
     <img src="./images/tutorial/result_part_3_form.png" width="400"/>
-    <div align="center"> Image 3.2b. Card entry form </div>
+    <div align="center"> Рисунок 3.2b. Форма для ввода карты </div>
   </div>
   </div>
 </div>

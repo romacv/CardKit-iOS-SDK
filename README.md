@@ -1,51 +1,52 @@
-# Документация CardKit SDK
+# CardKit SDK documentation
 
-SDK содержит два класса и один делегат.
+SDK contains two classes and one delegate.
 
-[Инструкция интеграции SDK](Tutorial.md) <br/>
-[Инструкция интеграции Apple pay](TutorialApplePay.md) <br/>
-[Инструкция интеграции CardKitCore](TutorialCardKitCore.md)
+[SDK integration tutorial](Tutorial.md) <br/>
+[Apple pay integration tutorial](TutorialApplePay.md) <br/>
+[CardKitCore integration tutorial](TutorialCardKitCore.md)
 
-## Настройка параметров SDK
+## Configuring SDK Settings
 
-### 1. Выбор темы
+### 1. Theme selection
 
 ```swift
-// Светлая тема
+// Light theme
  CardKConfig.shared.theme = CardKTheme.light();
 
-// Темная тема
+// Dark theme
  CardKConfig.shared.theme = CardKTheme.dark();
 
-// Системная тема iOS ТОЛЬКО ДЛЯ IOS 13.0+ (поддерживает авто переключение)
+// iOS System Theme ONLY FOR IOS 13.0+ (supports auto-switch)
  CardKConfig.shared.theme = CardKTheme.system();
 ```
 
-### 2. Локализация
+### 2. Localization
 
 ```swift
  // language = "ru" | "en" | "es" | "de" | "fr" | "uk";
  CardKConfig.shared.language = language;
 ```
 
-### 3. Свойства объекта CardKConfig
+### 3. CardKConfig object properties
 
-|  Название Свойства   |   Тип данных   |   Значение по умолчанию   | Опциональное | Описание                                                               |
+|  Property name       |   Data type    |   Defaul value            |   Optional   | Description                                                            |
 | :------------------: | :------------: | :-----------------------: | :----------: | ---------------------------------------------------------------------- |
-|        theme         |   CardKTheme   | CardKTheme.defaultTheme() |      Да      | Цветовая тема пользовательского интерфейса                             |
-|       language       |     String     |            nil            |      Да      | Язык пользовательского интерфейса                                      |
-|  bindingCVCRequired  |      BOOL      |          `false`          |      Да      | Обязательный ввод CVC оплачивая ранее сохранненой картой               |
-|      isTestMod       |      BOOL      |          `false`          |      Да      | Запуск в тестовом режиме, для выбора тестовых ключей.                  |
-|       mdOrder        |     String     |             -             |     Нет      | идентификатор заказа который нужно оплатить криптограммой              |
-|       bindings       | [CardKBinding] |             -             |     Нет      | Массив связок                                                          |
-|        pubKey        |     String     |    `<Публичный ключ>`     |     Нет      | Публичный ключ                                                         |
-|       testURL        |     String     |          `<URL>`          |      Да      | URL для запроса тестового ключа                                        |
-|       prodURL        |     String     |          `<URL>`          |      Да      | URL для запроса продакшин ключа                                        |
-|       mrBinURL       |     String     |            nil            |     Нет      | URL корень для отображения картинки например: `https://mrbin.io/bins/` |
-|     mrBinApiURL      |     String     |            nil            |     Нет      | URL для определения банка                                              |
-| bindingsSectionTitle |     String     |            nil            |      Да      | Текст загаловка секции списка связок                                   |
-| fetchKeys            |  Function      |              -            |       -      | Функция для запроса публичного ключа                                   |
-### 4. Пример
+|        theme         |   CardKTheme   | CardKTheme.defaultTheme() |      Yes     | UI color theme                                                         |
+|       language       |     String     |            nil            |      Yes     | UI Language                                                            |
+|  bindingCVCRequired  |      BOOL      |          `false`          |      Yes     | Required entry of CVC when paying with a previously saved card               |
+|      isTestMod       |      BOOL      |          `false`          |      Yes     | Run in test mode, to select test keys.                                 |
+|       mdOrder        |     String     |             -             |      No      | order identifier to be paid with cryptogram                            |
+|       bindings       | [CardKBinding] |             -             |      No      | Array of bindings                                                      |
+|     cardKProdKey     |     String     |    `<Public key>`         |      Yes     | Public key for production                                              |
+|     cardKTestKey     |     String     |    `<Public key>`         |      Yes     | Public key for testing                                                 |
+|       testURL        |     String     |          `<URL>`          |      Yes     | Test Key Request URL                                                   |
+|       prodURL        |     String     |          `<URL>`          |      Yes     | Production Key Request URL                                             |
+|       mrBinURL       |     String     |            nil            |      No      | URL root for image display example: `https://mrbin.io/bins/`           |
+|     mrBinApiURL      |     String     |            nil            |      No      | Bank identification URL                                                |
+| bindingsSectionTitle |     String     |            nil            |      Yes     | Title text of the bindings list section                                |
+
+### 4. Example
 
 ```swift
   ...
@@ -55,36 +56,34 @@ SDK содержит два класса и один делегат.
   CardKConfig.shared.bindings = [];
   CardKConfig.shared.isTestMod = true;
   CardKConfig.shared.mdOrder = "mdOrder";
-  CardKConfig.shared.pubKey = "pubKey"; // Присвоить свой собственный публичный ключ
-  CardKConfig.fetchKeys("url") // Запросить публичный ключ
   ...
 ```
 
-## Свойства объекта CardKViewController
+## CardKViewController object properties
 
-|   Название Свойства    |           Тип данных            |  Значение по умолчанию  | Опциональное | Описание                                   |
+|   Property name        |               Data type         |  Defaul value           | Optional     |         Description                        |
 | :--------------------: | :-----------------------------: | :---------------------: | :----------: | ------------------------------------------ |
-|      cKitDelegate      | id<CardKViewControllerDelegate> |          `nil`          |     Нет      | -                                          |
-|   allowedCardScaner    |              BOOL               |         `false`         |      Да      | Разрешить исспользование сканера карточки. |
-|  purchaseButtonTitle   |             String              | `Purchase` / `Оплатить` |      Да      | Переопределения текста кнопки.             |
-|    allowSaveBinding    |              BOOL               |         `false`         |      Да      | Отобразить тумблер "Сохранить карут"       |
-|     isSaveBinding      |              BOOL               |         `false`         |              | Значение тумблера по умолчанию             |
-| displayCardHolderField |              BOOL               |         `false`         |              | Отображать поле ввода обладателя карты     |
+|      cKitDelegate      | id<CardKViewControllerDelegate> |          `nil`          |      No      | -                                          |
+|   allowedCardScaner    |              BOOL               |         `false`         |      Yes     | Allow the use of the card scanner.         |
+|  purchaseButtonTitle   |             String              | `Purchase` / `Pay`      |      Yes     | Overriding the button text.                |
+|    allowSaveBinding    |              BOOL               |         `false`         |      Yes     | Show the "Save card" switch                |
+|     isSaveBinding      |              BOOL               |         `false`         |              | Switch default value                       |
+| displayCardHolderField |              BOOL               |         `false`         |              | Show cardholder input field                |
 
-## Инициализация контроллера
+## Controller initialization
 
-### 1. Описание аргументов
+### 1. Description of arguments
 
-Для отображения sdk необходимо вызвать статический метод `create` класса CardKViewController.
-Аргументы функции `create`:
+To show sdk, you need to call the static method `create` of the CardKViewController class.
+Function Arguments `create`:
 
-|  Название аргумента  |       Тип данных       | Значение по умолчанию | Опциональное | Описание                                      |
+|   Argument name      |         Data type      | Defaul value          | Optional     |      Description                              |
 | :------------------: | :--------------------: | :-------------------: | :----------: | --------------------------------------------- |
-|         self         |    UIViewController    |         `nil`         |     Нет      | ссылка главного контроллера                   |
-| navigationController | UINavigationController |         `nil`         |      Да      | навигационный контроллер                      |
-|      controller      |  CardKViewController   |         `nil`         |     нет      | инициализированный объект CardKViewController |
+|         self         |    UIViewController    |         `nil`         |     No       | main controller link                          |
+| navigationController | UINavigationController |         `nil`         |     Yes      | navigation controller                         |
+|      controller      |  CardKViewController   |         `nil`         |     No       | initialized CardKViewController object        |
 
-Результат функции `create` - объект класса `UIViewController`
+Function result `create` - class object `UIViewController`
 
 ```swift
   let controller = CardKViewController();
@@ -96,106 +95,107 @@ SDK содержит два класса и один делегат.
   <img src="./images/modal_window.png" width="300"/>
 </div>
 
-<div align="center"> Рисунок 1. Контроллер в модальном окне. </div>
+<div align="center"> Image 1. Controller in a modal window. </div>
 
-## Работа со связками
+## Working with bindings
 
-### 1. Отображение связок
+### 1. Bindings display
 
-Контроллер со списком связок отобразится, если массив `bindings` в `CardKConfing` не пустой массив. Если массив пустой, то будет отображаться форма создания новой карты.
+A controller with the list of bindings will be displayed if the `bindings` array in `CardKConfing` is not an empty array. 
+If the array is empty, the form for creating a new card will be displayed.
 
-Свойства объекта `CardKBinding`:
+Object Properties `CardKBinding`:
 
-| Название Свойства | Тип данных | Значение по умолчанию | Опциональное | Описание            |
-| :---------------: | :--------: | :-------------------: | :----------: | ------------------- |
-|     bindingId     |   Number   |           -           |     Нет      | Id связки           |
-|   paymentSystem   |   String   |           -           |     Нет      | Платежная система   |
-|    cardNumber     |   String   |           -           |     Нет      | Номер карты         |
-|    expireDate     |   String   |           -           |     Нет      | Срок действия карты |
+| Property name     | Data type  | Defaul value          | Optional    | Description         |
+| :---------------: | :--------: | :-------------------: | :----------:| ------------------- |
+|     bindingId     |   Number   |           -           |     No      | Id bindings         |
+|   paymentSystem   |   String   |           -           |     No      | Payment system      |
+|    cardNumber     |   String   |           -           |     No      | Card number         |
+|    expireDate     |   String   |           -           |     No      | Card expiry date    |
 
 <div align="center">
    <img src="./images/list_bindings.png" width="300"/>
 </div>
 
-<div align="center"> Рисунок 2. Список связок </div>
+<div align="center"> Picture 2. List of bindings </div>
 
-### 2. Отображение поля CVC
+### 2. CVC field display
 
-Для отображение поля CVC в форме оплаты выбранной связки необходимо присвоить значение `true` у `bindingCVCRequired` в `CardKConfing`.
+To display the CVC field in the payment form of the selected binding you must assign `true` value to `bindingCVCRequired` in `CardKConfing`.
 
 ```swift
   CardKConfig.shared.bindingCVCRequired = true;
 ```
 
-Пример отображение формы когда bindingCVCRequired = true или false
+An example of displaying a form when bindingCVCRequired = true or false
 
 <div align="center">
   <div style="display: flex; justify-content: center;">
   <div>
     <img src="./images/cvc_show_field.png" width="400"/>
-    <div align="center"> Рисунок 3a. Поле bindingCVCRequired = true </div>
+    <div align="center"> Image 3a. Field bindingCVCRequired = true </div>
   </div>
   <div>
     <img src="./images/cvc_hide_field.png" width="400"/>
-    <div align="center"> Рисунок 3b. Поле bindingCVCRequired = false </div>
+    <div align="center"> Image 3b. Field bindingCVCRequired = false </div>
   </div>
   </div>
 </div>
 
-## Отображение поля Cardholder
+## Displaying Cardholder field
 
-Для отображения поля необходимо присвоить значение `true` у `displayCardHolderField` в `CardKViewController`.
+To display the field you must assign `true` value to `displayCardHolderField` in `CardKViewController`.
 
 ```swift
 controller.displayCardHolderField = true;
 ```
 
-Пример отображения формы когда displayCardHolderField = true или false
+An example of displaying a form when displayCardHolderField = true or false
 
 <div align="center">
   <div style="display: flex; justify-content: center;">
     <div>
       <img src="./images/cardholder_show.png" width="400"/>
-      <div align="center"> Рисунок 4a. Поле displayCardHolderField = true </div>
+      <div align="center"> Image 4a. Field displayCardHolderField = true </div>
     </div>
     <div>
       <img src="./images/cardholder_hide.png" width="400"/>
-      <div align="center"> Рисунок 4b. Поле displayCardHolderField = false </div>
+      <div align="center"> Image 4b. Field displayCardHolderField = false </div>
     </div>
   </div>
 </div>
 
-## Отображение тумблера "Сохранить карту"
+## Displaying the "Save Card" switch
 
-Для отображения тумблира в форме необходимо присвоить значение `true` у `allowSaveBinding` в `CardKViewController`.
-Для управления значения тумблера по умолчанию необходимо присвоить значение `isSaveBinding` в `CardKViewController`.
+To display the switch in the form, you must assign `true` value to `allowSaveBinding` in `CardKViewController`.
+To control the default switch value, assign `isSaveBinding` value to `CardKViewController`.
 
 ```swift
 controller.allowSaveBinding = true;
 ```
 
-Пример отображения формы когда allowSaveBinding = true или false
+Example of a form display when allowSaveBinding = true or false
 
 <div align="center">
   <div style="display: flex; justify-content: center;">
   <div>
    <img src="./images/switch_show_true.png" width="400"/>
-   <div align="center"> Рисунок 5a. Поле allowSaveBinding = true, isSaveBinding = true</div>
+   <div align="center"> Image 5a. Field allowSaveBinding = true, isSaveBinding = true</div>
    </div>
    <div>
     <img src="./images/cardholder_show.png" width="400"/>
-    <div align="center"> Рисунок 5b. Поле allowSaveBinding = false </div>
+    <div align="center"> Image 5b. Field allowSaveBinding = false </div>
     </div>
     <div>
     <img src="./images/switch_show_false.png" width="400"/>
-    <div align="center"> Рисунок 5c. Поле allowSaveBinding = false, isSaveBinding = false </div>
+    <div align="center"> Image 5c. Field allowSaveBinding = false, isSaveBinding = false </div>
     </div>
   </div>
 </div>
 
-## Поддержка IPad. Отображение формы в Popover
+## IPad support. Displaying a form in Popover
 
-1. Выбрать тему и инициализировать `CardKViewController`.
+1. Select a theme and initialize `CardKViewController`.
 
 ```swift
 // ViewController.swift
@@ -208,7 +208,7 @@ let navController = UINavigationController(rootViewController: createdUiControll
 ...
 ```
 
-2. Проверить версию IOS текущего устройства. Если версия 13.0+, тогда отобразить форму.
+2. Check the IOS version of the current device. If the version is 13.0+ then display the form.
 
 ```swift
 ...
@@ -219,7 +219,7 @@ if #available(iOS 13.0, *) {
 ...
 ```
 
-3.  Если версия < 13.0, инициализировать `UINavigationController` и атрибуту `modalPresentationStyle` присвоить значение `.formSheet`.
+3.  If version <13.0, initialize `UINavigationController` and assign `.formSheet` to the `modalPresentationStyle` attribute.
 
 ```swift
 ...
@@ -227,7 +227,7 @@ navController.modalPresentationStyle = .formSheet
 ...
 ```
 
-4. Атрибуту `leftBarButtonItem` в CardKViewController присвоить объект класса `UIBarButtonItem`.
+4. Assign an object of class `UIBarButtonItem` to the `leftBarButtonItem` attribute in CardKViewController.
 
 ```swift
 ...
@@ -235,20 +235,20 @@ let closeBarButtonItem = UIBarButtonItem(
   title: "Close",
   style: .done,
   target: self,
-  action: #selector(_close(sender:)) //Функция _close реализована ниже.
+  action: #selector(_close(sender:)) //The _close function is implemented below.
 )
 createdUiController.navigationItem.leftBarButtonItem = closeBarButtonItem
 ...
 ```
 
-5. Отобразить форму.
+5. Displaying the form.
 
 ```swift
 ...
 self.present(navController, animated: true)
 ```
 
-**Функция \_close**
+**function \_close**
 
 ```swift
 @objc func _close(sender:UIButton){
@@ -256,23 +256,23 @@ self.present(navController, animated: true)
 }
 ```
 
-**Результат: На рисунке 6 - IOS 13. На рисунке 7 - IOS 10.**
+**Result: On the image 6 - IOS 13. On the image 7 - IOS 10.**
 
 <div align="center">
    <img src="./images/ios13_popover.png" width="600"/>
 </div>
 
-  <div align="center"> Рисунок 6. Popover iPadOS 13 </div>
+  <div align="center"> Image 6. Popover iPadOS 13 </div>
 
 <div align="center">
    <img src="./images/ios10_popover.png" width="600"/>
 </div>
 
-<div align="center"> Рисунок 7. Popover iOS 10 </div>
+<div align="center"> Image 7. Popover iOS 10 </div>
 
-## Отображение формы на отдельной странице
+## Displaying the form on a separate page
 
-1. Выбрать тему и инициализировать `CardKViewController`.
+1. Select a theme and initialize `CardKViewController`.
 
 ```swift
 // ViewController.swift
@@ -281,28 +281,28 @@ let createdUiController = CardKViewController.create(self, controller: controlle
 ...
 ```
 
-2. Добавить `CardKViewController` в `NavigationController`.
+2. Add `CardKViewController` to `NavigationController`.
 
 ```swift
 ...
 self.navigationController?.pushViewController(createdUiController, animated: true)
 ```
 
-**Результат**
+**Result**
 
 <div align="center">
    <img src="./images/form_in_new_window.png" width="600"/>
-   <div align="center"> Рисунок 8. Форма на отдельной странице </div>
+   <div align="center"> Image 8. Form on a separate page </div>
 </div>
 
-## Получение SeToken
+## Creating SeToken
 
-Для получения SeToken необходимо реализовать функцию `cardKitViewController`.
+To get the SeToken you need to implement the `cardKitViewController` function.
 
-- cotroller - объект класса `CardKViewController`;
-- didCreateSeToken - готовый `SeToken`.
-- allowSaveBinding - согласие пользователя на сохранение данных новой карты
-- isNewCard - оплата новоый карты или связкой. Новая карта - `true`, связкой - `false`
+- cotroller - class object `CardKViewController`;
+- didCreateSeToken - created `SeToken`.
+- allowSaveBinding - the user's consent to save the new card details
+- isNewCard - payment with a new card or bundle. A new card - `true`, bundle - `false`
 
 ```swift
 // ViewController.swift
@@ -313,10 +313,10 @@ func cardKitViewController(_ controller: CardKViewController, didCreateSeToken s
 }
 ```
 
-## Настройка CardKViewControler
+## Setting up CardKViewController
 
-Для присваивания атрибутов СardKViewControler новыми параметрами необходимо реализовать функцию didLoad(\_ controller: CardKViewController)
-В функции `didLoad(\_ controller: CardKViewController)` присваиваются атрибуты контроллера `CardKViewController`
+To assign the СardKViewControler attributes with new parameters, you need to implement the didLoad function(\_ controller: CardKViewController)
+In function `didLoad(\_ controller: CardKViewController)` controller attributes are assigned `CardKViewController`
 
 ```swift
 //ViewController.swift
@@ -329,9 +329,9 @@ func didLoad(_ controller: CardKViewController) {
 }
 ```
 
-## Настройка кнопки Apple pay
+## Setting up the Apple pay button
 
-1. Инициализация CardKPaymentView
+1. Initialization of CardKPaymentView
 
 ```swift
 let cardKPaymentView = CardKPaymentView.init(delegate: self);
@@ -339,15 +339,15 @@ cardKPaymentView.controller = self;
 cardKPaymentView.frame = CGReact(x: 0, y: 0, width: 100, height: 100);
 ```
 
-2. Настройка PKPaymentView
+2. Setting up PKPaymentView
 
-| Название аргумента |      Тип данных      | Значение по умолчанию | Опциональное | Описание                            |
+| Argument name      |      Data type       | Default value         | Optiona;     | Description                         |
 | :----------------: | :------------------: | :-------------------: | :----------: | ----------------------------------- |
-|     merchantId     |        String        |         `nil`         |     Нет      | `merchantId` для оплаты в apple pay |
-|   paymentRequest   |   PKPaymentRequest   |         `nil`         |     Нет      | Объект для описания данных оплаты   |
-| paymentButtonType  | PKPaymentButtonType  |         `nil`         |     Нет      | Тип кнопки ApplePay                 |
-| paymentButtonStyle | PKPaymentButtonStyle |         `nil`         |     Нет      | Вид кнопки ApplePay                 |
-|   cardPaybutton    |       UIButton       |         `nil`         |      Да      | Настройка кнопки "Оплата картой"    |
+|     merchantId     |        String        |         `nil`         |     No       | `merchantId` for apple pay          |
+|   paymentRequest   |   PKPaymentRequest   |         `nil`         |     No       | Object to describe payment data     |
+| paymentButtonType  | PKPaymentButtonType  |         `nil`         |     No       | ApplePay button type                |
+| paymentButtonStyle | PKPaymentButtonStyle |         `nil`         |     No       | ApplePay button style               |
+|   cardPaybutton    |       UIButton       |         `nil`         |     Yes      | Setting up the "Pay by card" button"|
 
 ```swift
 func willShow(_ paymentView: CardKPaymentView) {
@@ -370,19 +370,19 @@ func willShow(_ paymentView: CardKPaymentView) {
 }
 ```
 
-**_Пример отображения кнопок_**
+**_Example of button display_**
 
 <div align="center">
   <img src="./images/apple_pay_buttons.png" width="300"/>
-   <div align="center"> Рисунок 9. Пример отображения конопок Apple Pay </div>
+   <div align="center"> Image 9. Example of the Apple Pay button display </div>
 </div>
 
-3. Получение результата оплаты
+3. Getting the payment result
 
-Для получения PKPayment необходимо реализовать функцию `cardKPaymentView`.
+To get PKPayment, you need to implement the function `cardKPaymentView`.
 
-- paymentView - объект класса `CardKPaymentView`;
-- pKPayment - рузультат оплаты, объект класса PKPayment.
+- paymentView - class object `CardKPaymentView`;
+- pKPayment - payment result, class object PKPayment.
 
 ```swift
 func cardKPaymentView(_ paymentView: CardKPaymentView, didAuthorizePayment pKPayment: PKPayment) {
@@ -390,16 +390,16 @@ func cardKPaymentView(_ paymentView: CardKPaymentView, didAuthorizePayment pKPay
 }
 ```
 
-## Работа с Card.io
+## Working with Card.io
 
-Для работы с Card.io необходимо:
+To work with Card.io you need:
 
-1. реализвать класс `SampleAppCardIO` c функцией `cardIOView`;
+1. Implement the `SampleAppCardIO` class with the `cardIOView` function;
 
-- cardIOView - объект класса `CardIOView`;
-- didScanCard - данные карты после сканирования;
+- cardIOView - class object `CardIOView`;
+- didScanCard - card data after scanning;
 
-Если есть данные карты, то вызываем функцию `setCardNumber` и присваиваем данные карты.
+If there is card data, then call the `setCardNumber` function and assign the card data.
 
 ```swift
 // ViewController.swift
@@ -415,9 +415,9 @@ class SampleAppCardIO: NSObject, CardIOViewDelegate {
 }
 ```
 
-2. реализовать функцию `cardKitViewControllerScanCardRequest()`
+2. Implement the `cardKitViewControllerScanCardRequest function()`
 
-- cotroller - объект класса `CardKViewController`;
+- cotroller - class object `CardKViewController`;
 
 ```swift
 // ViewController.swift
@@ -435,9 +435,9 @@ func cardKitViewControllerScanCardRequest(_ controller: CardKViewController) {
 }
 ```
 
-3. атрибуту allowedCardScaner присвоить значение `True`. Желательно использовать функция `CardIOUtilities.canReadCardWithCamera()`;
+3. assign `True` value to allowedCardScaner attribute. It is advisable to use the function `CardIOUtilities.canReadCardWithCamera()`;
 
-4. вызвать функцию CardIOUtilities.preloadCardIO();
+4. call the function CardIOUtilities.preloadCardIO();
 
 ```swift
 // ViewController.swift
@@ -449,11 +449,11 @@ func _openController() {
 }
 ```
 
-## Переопределение темы
+## Theme overriding
 
-Свойства темы:
+Theme Properties:
 
-| Номер | Название свойства    |
+| Number| Property name        |
 | :---: | :------------------- |
 |   1   | colorLabel           |
 |   2   | colorPlaceholder     |
@@ -465,10 +465,10 @@ func _openController() {
 
 <div align="center">
   <img src="./images/custom_theme.png" width="600"/>
-  <div align="center"> Рисунок 10. Нумерация свойств </div>
+  <div align="center"> Image 10. Property numbering </div>
 </div>
 
-Пример переопределения темы:
+Example of overriding a theme:
 
 ```swift
 func _openCustomTheme() {

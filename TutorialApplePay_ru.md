@@ -1,10 +1,10 @@
-# Setting up Apple Pay
+# Настройка Apple Pay
 
-First you need to go through point 1, 2 of [SDK integration instructions](Tutorial.md)
+В начале необходимо пройти пункт 1, 2 из [инструкции интеграции SDK](Tutorial.md)
 
-## 1. Using SDK
+## 1. Использование SDK
 
-1.1 Implement cardKitViewController function
+1.1 Реализовать функцию cardKitViewController
 
 ```swift
 //SampleCardKPaymentView.swift
@@ -22,9 +22,9 @@ extension SampleCardKPaymentView: CardKDelegate {
 }
 ```
 
-1.2 Implement `didLoad(\_ controller: CardKViewController)` function
+1.2 Реализовать функцию `didLoad(\_ controller: CardKViewController)`
 
-The function `didLoad(\_ controller: CardKViewController)` assigns attributes to `CardKViewController
+В функции `didLoad(\_ controller: CardKViewController)` присваиваются атрибуты контроллера `CardKViewController`
 
 ```swift
 //ViewController.swift
@@ -41,7 +41,7 @@ extension ViewController: CardKDelegate {
 }
 ```
 
-1.3 Implement `willShow(_ paymentView: CardKPaymentView)` function
+1.3 Реализовать функцию `willShow(_ paymentView: CardKPaymentView)`
 
 ```swift
 //
@@ -69,7 +69,7 @@ extension ViewController: CardKDelegate {
 }
 ```
 
-1.4 Display CardKPaymentView
+1.4 Отобразить CardKPaymentView
 
 ```swift
 //ViewController.swift
@@ -90,11 +90,11 @@ extension ViewController: CardKDelegate {
 ...
 ```
 
-**Result:**
+**Результат:**
 
 <div align="center">
   <div align="inline">
   <img src="./images/apple_pay_buttons.png" width="300"/>
-  <div align="center"> Image 1.1. Example of a controller with apple pay buttons </div>
+  <div align="center"> Рисунок 1.1. Пример контроллера с apple pay кнопками </div>
   </div>
 </div>
