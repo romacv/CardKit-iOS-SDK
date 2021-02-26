@@ -4,8 +4,8 @@ SDK contains two classes and one delegate.
 
 [SDK integration tutorial](Tutorial.md) <br/>
 [Apple pay integration tutorial](TutorialApplePay.md) <br/>
-[CardKitCore integration tutorial](TutorialCardKitCore.md)
-
+[CardKitCore integration tutorial](TutorialCardKitCore.md)<br/>
+[3DS2 integration tutorial](Tutorial3DS2_ru.md)
 ## Configuring SDK Settings
 
 ### 1. Theme selection
