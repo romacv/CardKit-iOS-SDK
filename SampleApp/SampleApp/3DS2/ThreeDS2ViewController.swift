@@ -36,6 +36,7 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    ThreeDS2ViewController.logs.removeAllObjects()
     if #available(iOS 13.0, *) {
       CardKConfig.shared.theme = CardKTheme.system()
     } else {
@@ -130,10 +131,6 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     
     self.setToolbarItems([cancelButton,spaceButton, doneButton], animated: false)
     self.navigationController?.isToolbarHidden = false
-  }
-  
-  override func viewDidDisappear(_ animated: Bool) {
-    ThreeDS2ViewController.logs.removeAllObjects()
   }
   
   func _runSDK() {
