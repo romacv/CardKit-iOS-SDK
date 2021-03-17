@@ -19,6 +19,7 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
   let _notificationCenter = NotificationCenter.default
   let _headerView = UIView()
   let _textFieldBaseUrl = UITextField()
+  let _textFieldCost = UITextField()
   let _transactionManager: TransactionManager = TransactionManager()
   let _reqResController = ReqResDetailsController()
   
@@ -57,17 +58,25 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     
     _transactionManager.delegateAddLog = self
     _textFieldBaseUrl.text = url
+    _textFieldCost.text = "2000"
+    _textFieldCost.keyboardType = .numberPad
 
     if #available(iOS 13.0, *) {
       _textFieldBaseUrl.backgroundColor = .systemGray5
+      _textFieldCost.backgroundColor = .systemGray5
     } else {
       _textFieldBaseUrl.backgroundColor = theme.colorCellBackground
+      _textFieldCost.backgroundColor = theme.colorCellBackground
     };
+    
+    _textFieldCost.layer.cornerRadius = 10
+    _textFieldCost.textAlignment = .center
     
     _textFieldBaseUrl.layer.cornerRadius = 10
     _textFieldBaseUrl.textAlignment = .center
     
     _headerView.addSubview(_textFieldBaseUrl)
+    _headerView.addSubview(_textFieldCost)
     self.tableView.tableHeaderView = _headerView
   
     self.tableView.rowHeight = UITableView.automaticDimension
@@ -120,7 +129,8 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
   
   override func viewWillAppear(_ animated: Bool) {
     _textFieldBaseUrl.frame = CGRect(x: 20, y: 10, width: self.view.bounds.width - 40, height: 50)
-    _headerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 70)
+    _textFieldCost.frame = CGRect(x: 20, y: 80, width: self.view.bounds.width - 40, height: 50)
+    _headerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 160)
     
     self.tableView.tableHeaderView?.frame = _headerView.frame
     self.navigationController?.isNavigationBarHidden = false
@@ -136,7 +146,7 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
   func _runSDK() {
     url = _textFieldBaseUrl.text ?? url
     
-    ThreeDS2ViewController.requestParams.amount = "2000"
+    ThreeDS2ViewController.requestParams.amount = _textFieldCost.text
     ThreeDS2ViewController.requestParams.userName = "3ds2-api"
     ThreeDS2ViewController.requestParams.password = "testPwd"
     ThreeDS2ViewController.requestParams.returnUrl = "../merchants/rbs/finish.html"
