@@ -28,6 +28,7 @@
   NSString *_lastAnouncment;
   NSBundle *_languageBundle;
   BOOL _showCVCField;
+  NSString *_paymentSystem;
 }
 
 - (instancetype)init
@@ -45,7 +46,8 @@
      } else {
        _languageBundle = _bundle;
      }
-    
+
+    _paymentSystemImageView = [[UIImageView alloc] init];
     _secureCodeTextField = [[CardKTextField alloc] init];
     _secureCodeTextField.pattern = CardKTextFieldPatternSecureCode;
     _secureCodeTextField.placeholder = NSLocalizedStringFromTableInBundle(@"CVC", nil, _languageBundle, @"CVC placeholder");
@@ -58,6 +60,7 @@
     _expireDateLabel = [[UILabel alloc] init];
     _cardNumberLabel = [[UILabel alloc] init];
     
+    [self addSubview:_paymentSystemImageView];
     [self addSubview:_cardNumberLabel];
     [self addSubview:_expireDateLabel];
   }
@@ -88,6 +91,17 @@
   NSString *imageName = [PaymentSystemProvider imageNameByPaymentSystem: _paymentSystem compatibleWithTraitCollection: self.traitCollection];
   return [PaymentSystemProvider namedImage:imageName inBundle:_bundle compatibleWithTraitCollection:self.traitCollection];
 }
+
+- (void)setPaymentSystem:(NSString *)paymentSystem {
+  _paymentSystem = paymentSystem;
+  _paymentSystemImageView.image = self.imagePath;
+  
+}
+
+- (NSString *)paymentSystem {
+  return _paymentSystem;
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
   _expireDateLabel.text = _expireDate;
@@ -99,9 +113,11 @@
  [self replaceTextWithCircleBullet];
   
   CGRect bounds = self.bounds;
-  NSInteger leftExpireDate = bounds.size.width - _expireDateLabel.intrinsicContentSize.width;
+  NSInteger leftExpireDate = bounds.size.width - _expireDateLabel.intrinsicContentSize.width - 20;
 
-  _cardNumberLabel.frame = CGRectMake(0, 0, _cardNumberLabel.intrinsicContentSize.width, bounds.size.height);
+  _paymentSystemImageView.frame = CGRectMake(0, 0, 35, 26);
+  _paymentSystemImageView.center = CGPointMake(35/2, bounds.size.height / 2);
+  _cardNumberLabel.frame = CGRectMake(CGRectGetMaxX(_paymentSystemImageView.frame) + 15, 0, _cardNumberLabel.intrinsicContentSize.width, bounds.size.height);
 
   _expireDateLabel.frame = CGRectMake(leftExpireDate, 0, _expireDateLabel.intrinsicContentSize.width, bounds.size.height);
 
@@ -125,7 +141,6 @@
   
   [attributedString addAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Menlo-bold" size:fontSize]} range:bulletsRange];
   [attributedString addAttribute:NSBaselineOffsetAttributeName value:[NSNumber numberWithFloat:-2.0] range:bulletsRange];
-  
 
   _cardNumberLabel.attributedText = attributedString;
   [_cardNumberLabel setBaselineAdjustment:UIBaselineAdjustmentAlignCenters];

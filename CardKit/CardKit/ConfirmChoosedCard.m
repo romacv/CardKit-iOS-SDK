@@ -179,12 +179,10 @@ NSString *CardKConfirmChoosedCardFooterID = @"footer";
 
   if ([CardKBindingCardCellID isEqual:cellID] || ([CardKBindingCardCellID isEqual:cellID] && CardKConfig.shared.bindingCVCRequired)) {
     _cardKBinding.showCVCField = YES;
-    [cell addSubview:_cardKBinding];
-    cell.imageView.image = _cardKBinding.imagePath;
-    _cardKBinding.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    
-    CGRect r = tableView.readableContentGuide.layoutFrame;
-    _cardKBinding.frame = CGRectMake(r.origin.x + 45, 0, r.size.width - 70, cell.contentView.bounds.size.height);
+    [cell.contentView addSubview:_cardKBinding];
+//    
+//    CGRect r = tableView.readableContentGuide.layoutFrame;
+//    _cardKBinding.frame = CGRectMake(r.origin.x, 0, r.size.width, cell.contentView.bounds.size.height);
   } else if ([CardKBindingButtonCellID isEqual:cellID]) {
     [cell.contentView addSubview:_button];
   }
@@ -201,6 +199,12 @@ NSString *CardKConfirmChoosedCardFooterID = @"footer";
     CGRect r = tableView.readableContentGuide.layoutFrame;
     UITableViewHeaderFooterView * v = (UITableViewHeaderFooterView *)view;
     v.contentView.subviews.firstObject.frame = CGRectMake(r.origin.x, 0, v.contentView.bounds.size.width, v.contentView.bounds.size.height);
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+  CGRect r = tableView.readableContentGuide.layoutFrame;
+
+  cell.contentView.subviews.firstObject.frame = CGRectMake(r.origin.x, 0, r.size.width - r.origin.x, cell.contentView.bounds.size.height);
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

@@ -159,8 +159,12 @@ const NSString *CardKKindPayRows = @"rows";
   if([CardKSavedCardsCellID isEqual:cellID]) {
     CardKBinding *cardKBinding = _sections[indexPath.section][CardKKindPayRows][0][CardKSavedCardsCellID][indexPath.row];
 
+
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.imageView.image = cardKBinding.imagePath;
+//    cell.imageView.image = cardKBinding.imagePath;
+//    tableView.separatorInset = UIEdgeInsetsZero;
+//    tableView.layoutMargins = UIEdgeInsetsZero;
+//    cell.layoutMargins = UIEdgeInsetsZero;
     [cell.contentView addSubview:cardKBinding];
   } else if ([CardKPayCardButtonCellID isEqual:cellID]) {
     [cell.contentView addSubview:_button];
@@ -179,7 +183,8 @@ const NSString *CardKKindPayRows = @"rows";
   
   if ([CardKSavedCardsCellID isEqual:cellID]) {
     CGRect r = tableView.readableContentGuide.layoutFrame;
-    cell.contentView.subviews[1].frame = CGRectMake(65, 0, r.size.width - 70, cell.contentView.bounds.size.height);
+    
+    cell.contentView.subviews.firstObject.frame = CGRectMake(r.origin.x, 0, r.size.width - r.origin.x, cell.contentView.bounds.size.height);
   }
 }
 
