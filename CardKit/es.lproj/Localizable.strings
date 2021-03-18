@@ -25,3 +25,6 @@
 
 "switchViewTitle" = "Guardar tarjeta";
 "payByCard" = "Nueva tarjeta";
+
+"edit" = "Editar";
+"save" = "Salvar";

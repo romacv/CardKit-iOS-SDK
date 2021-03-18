@@ -62,7 +62,7 @@ const NSString *CardKKindPayRows = @"rows";
     
     if (CardKConfig.shared.isEditBindingListMode) {
       _editModeButton = [[UIBarButtonItem alloc]
-                                     initWithTitle:@"Edit"
+                         initWithTitle:NSLocalizedStringFromTableInBundle(@"edit", nil, _languageBundle, @"Edit")
                                      style: UIBarButtonItemStylePlain
                                      target:self
                                      action:@selector(_editMode:)];
@@ -84,11 +84,11 @@ const NSString *CardKKindPayRows = @"rows";
 - (void)_editMode:(UIButton *)button {
   if (self.tableView.isEditing) {
     [self.tableView setEditing:NO animated:YES];
-    _editModeButton.title = @"Edit";
+    _editModeButton.title = NSLocalizedStringFromTableInBundle(@"edit", nil, _languageBundle, @"Edit");
     [self.cKitDelegate didRemoveBindings:_removedBindings];
   } else {
     [self.tableView setEditing:YES animated:YES];
-    _editModeButton.title = @"Save";
+    _editModeButton.title = NSLocalizedStringFromTableInBundle(@"save", nil, _languageBundle, @"Save");
   }
 }
 
