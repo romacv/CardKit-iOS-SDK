@@ -307,11 +307,15 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
 }
 
 extension ThreeDS2ViewController: CardKDelegate {
+  func didRemove(_ removedBindings: [CardKBinding]) {
+    
+  }
+  
   func cardKPaymentView(_ paymentView: CardKPaymentView, didAuthorizePayment pKPayment: PKPayment) {
   
   }
   
-  func cardKitViewController(_ controller: UIViewController, didCreateSeToken seToken: String, allowSaveBinding: Bool, isNewCard: Bool) {
+  func cardKitViewController(_ controller: UIViewController, didCreateSeToken seToken: String, allowSaveBinding: Bool, isNewCard: Boolb) {
     debugPrint(seToken)
 
     let alert = UIAlertController(title: "SeToken", message: "allowSaveCard = \(allowSaveBinding) \n isNewCard = \(isNewCard) \n seToken = \(seToken)", preferredStyle: UIAlertController.Style.alert)

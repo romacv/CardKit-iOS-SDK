@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <PassKit/PassKit.h>
 #import "CardKTheme.h"
-
+#import "CardKBinding.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)willShowPaymentView:(CardKPaymentView *) paymentView;
 - (void)cardKPaymentView:(CardKPaymentView *) paymentView didAuthorizePayment:(PKPayment *) pKPayment;
+- (void)didRemoveBindings:(NSArray<CardKBinding *> *)removedBindings;
 
 @optional - (void)cardKitViewControllerScanCardRequest:(CardKViewController *)controller;
 

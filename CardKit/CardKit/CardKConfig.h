@@ -36,6 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
 /*! Массив связок*/
 @property NSArray<CardKBinding *> *bindings;
 
+/*! Массив связок*/
+@property BOOL isEditBindingListMode;
+
 /*! URL для запроса тестового ключа */
 @property NSString *testURL;
 

@@ -63,6 +63,10 @@ class SampleCardKPaymentView: UIViewController {
 }
 
 extension SampleCardKPaymentView: CardKDelegate {
+  func didRemove(_ removedBindings: [CardKBinding]) {
+    
+  }
+  
   func cardKPaymentView(_ paymentView: CardKPaymentView, didAuthorizePayment pKPayment: PKPayment) {
   
   }

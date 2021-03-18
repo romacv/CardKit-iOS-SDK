@@ -70,6 +70,7 @@ class ViewController: UITableViewController {
     CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
     CardKConfig.shared.bindingsSectionTitle = "Your cards";
     CardKConfig.shared.pubKey = publicKey;
+    CardKConfig.shared.isEditBindingListMode = true;
     
     let controller = CardKViewController();
     controller.cKitDelegate = self;
@@ -225,6 +226,7 @@ class ViewController: UITableViewController {
     CardKConfig.shared.mrBinApiURL = "https://mrbin.io/bins/display";
     CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
     CardKConfig.shared.bindingsSectionTitle = "Your cards";
+    CardKConfig.shared.isEditBindingListMode = false;
     
     let controller = CardKViewController();
     controller.cKitDelegate = self
@@ -463,6 +465,13 @@ class ViewController: UITableViewController {
 }
 
 extension ViewController: CardKDelegate {
+  func didRemove(_ removedBindings: [CardKBinding]) {
+    let alert = UIAlertController(title: "Removed bindings", message: "bindings = \(removedBindings)", preferredStyle: UIAlertController.Style.alert)
+    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+    navigationController?.present(alert, animated: true)
+  }
+  
   func cardKPaymentView(_ paymentView: CardKPaymentView, didAuthorizePayment pKPayment: PKPayment) {
     
   }
