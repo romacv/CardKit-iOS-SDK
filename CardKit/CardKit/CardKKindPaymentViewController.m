@@ -29,6 +29,7 @@ const NSString *CardKKindPayRows = @"rows";
   CardKBankLogoView *_bankLogoView;
   NSMutableArray *_removedBindings;
   NSMutableArray *_currentBindings;
+  BOOL _isEditing;
 }
 
 - (instancetype)init {
@@ -69,6 +70,7 @@ const NSString *CardKKindPayRows = @"rows";
       
       self.navigationItem.rightBarButtonItem = _editModeButton;
     }
+    _isEditing = NO;
   }
   return self;
 }
@@ -83,12 +85,21 @@ const NSString *CardKKindPayRows = @"rows";
 
 - (void)_editMode:(UIButton *)button {
   if (self.tableView.isEditing) {
+    _isEditing = NO;
     [self.tableView setEditing:NO animated:YES];
     _editModeButton.title = NSLocalizedStringFromTableInBundle(@"edit", nil, _languageBundle, @"Edit");
     [self.cKitDelegate didRemoveBindings:_removedBindings];
+    [self _disableRightBarButton];
   } else {
+    _isEditing = YES;
     [self.tableView setEditing:YES animated:YES];
     _editModeButton.title = NSLocalizedStringFromTableInBundle(@"save", nil, _languageBundle, @"Save");
+  }
+}
+
+- (void)_disableRightBarButton {
+  if (!_isEditing && [_currentBindings count] == 0) {
+    self.navigationItem.rightBarButtonItem.enabled = NO;
   }
 }
 
@@ -239,7 +250,7 @@ const NSString *CardKKindPayRows = @"rows";
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
   NSString *cellID = [_sections[indexPath.section][CardKKindPayRows][0] allKeys][0];
 
-  if (self.tableView.isEditing && [CardKSavedCardsCellID isEqual:cellID]) {
+  if (CardKConfig.shared.isEditBindingListMode && [CardKSavedCardsCellID isEqual:cellID]) {
     return YES;
   } else {
     return NO;
@@ -255,18 +266,25 @@ const NSString *CardKKindPayRows = @"rows";
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-  if (editingStyle == UITableViewCellEditingStyleDelete) {
+  if (_isEditing && editingStyle == UITableViewCellEditingStyleDelete) {
     [_removedBindings addObject: _currentBindings[indexPath.row]];
     [_currentBindings removeObjectAtIndex:indexPath.row];
     
-    if ([_currentBindings count] != 0) {
-      [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    } else {
-      _sections = @[@{CardKKindPayRows: @[@{CardKPayCardButtonCellID: @[]}]}];
-      NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:indexPath.section];
-      
-      [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
-    }
+  } else if (editingStyle == UITableViewCellEditingStyleDelete){
+    [self.cKitDelegate didRemoveBindings:@[_currentBindings[indexPath.row]]];
+    
+    [_currentBindings removeObjectAtIndex:indexPath.row];
   }
+  
+  if ([_currentBindings count] != 0) {
+    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+  } else {
+    _sections = @[@{CardKKindPayRows: @[@{CardKPayCardButtonCellID: @[]}]}];
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:indexPath.section];
+    
+    [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+  }
+  
+  [self _disableRightBarButton];
 }
 @end
