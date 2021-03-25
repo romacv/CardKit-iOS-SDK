@@ -32,6 +32,7 @@ struct SectionItem {
     case paymentView
     case threeDS
     case threeDSCustomColors
+    case editMode
   }
 }
 
@@ -70,7 +71,7 @@ class ViewController: UITableViewController {
     CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
     CardKConfig.shared.bindingsSectionTitle = "Your cards";
     CardKConfig.shared.pubKey = publicKey;
-    CardKConfig.shared.isEditBindingListMode = true;
+    CardKConfig.shared.isEditBindingListMode = false;
     
     let controller = CardKViewController();
     controller.cKitDelegate = self;
@@ -108,6 +109,7 @@ class ViewController: UITableViewController {
     CardKConfig.shared.mrBinApiURL = "https://mrbin.io/bins/display";
     CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
     CardKConfig.shared.bindingsSectionTitle = "Your cards";
+    CardKConfig.shared.isEditBindingListMode = false;
 
     let controller = CardKViewController();
     controller.cKitDelegate = self
@@ -142,6 +144,7 @@ class ViewController: UITableViewController {
     CardKConfig.shared.mrBinApiURL = "https://mrbin.io/bins/display";
     CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
     CardKConfig.shared.bindingsSectionTitle = "Your cards";
+    CardKConfig.shared.isEditBindingListMode = false;
     
     if #available(iOS 13.0, *) {
       CardKConfig.shared.theme = CardKTheme.system();
@@ -191,6 +194,7 @@ class ViewController: UITableViewController {
     CardKConfig.shared.isTestMod = true;
     CardKConfig.shared.mdOrder = "mdOrder";
     CardKConfig.shared.bindingsSectionTitle = "Your cards";
+    CardKConfig.shared.isEditBindingListMode = false;
     
     let controller = CardKViewController();
     controller.cKitDelegate = self
@@ -235,6 +239,26 @@ class ViewController: UITableViewController {
     
     self.navigationController?.pushViewController(createdUiController, animated: true);
   }
+  
+  func _openEditBindingsMode() {
+    CardKConfig.shared.theme = CardKTheme.light();
+    CardKConfig.shared.language = "";
+    CardKConfig.shared.bindingCVCRequired = false;
+    CardKConfig.shared.bindings = self._fetchBindingCards();
+    CardKConfig.shared.isTestMod = true;
+    CardKConfig.shared.mdOrder = "mdOrder";
+    CardKConfig.shared.mrBinApiURL = "https://mrbin.io/bins/display";
+    CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
+    CardKConfig.shared.bindingsSectionTitle = "Your cards";
+    CardKConfig.shared.isEditBindingListMode = true;
+    
+    let controller = CardKViewController();
+    controller.cKitDelegate = self
+
+    let createdUiController = CardKViewController.create(self, controller: controller);
+    
+    self.navigationController?.pushViewController(createdUiController, animated: true);
+  }
 
   func _openDarkUINavigation() {
     CardKConfig.shared.theme = CardKTheme.dark();
@@ -246,7 +270,8 @@ class ViewController: UITableViewController {
     CardKConfig.shared.mrBinApiURL = "https://mrbin.io/bins/display";
     CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
     CardKConfig.shared.bindingsSectionTitle = "Your cards";
-    
+    CardKConfig.shared.isEditBindingListMode = false;
+
     let controller = CardKViewController();
     controller.cKitDelegate = self
 
@@ -268,7 +293,8 @@ class ViewController: UITableViewController {
     CardKConfig.shared.bindings = [];
     CardKConfig.shared.isTestMod = true;
     CardKConfig.shared.mdOrder = "mdOrder";
-    
+    CardKConfig.shared.isEditBindingListMode = false;
+
     let controller = CardKViewController();
     controller.cKitDelegate = self
 
@@ -339,6 +365,7 @@ class ViewController: UITableViewController {
       case .systemTheme: _openSystemTheme()
       case .customTheme: _openCustomTheme()
       case .navLightTheme: _openLightUINavigation()
+      case .editMode: _openEditBindingsMode()
       case .navDarkTheme: _openDarkUINavigation()
       case .navSystemTheme: _openSystemUINavigation()
       case .language: _openWitchChooseLanguage(language: language)
@@ -358,7 +385,8 @@ class ViewController: UITableViewController {
     
     Section(title: "Navigation", items: [
       SectionItem(title: "Open Light with bindings", kind: .navLightTheme, isShowChevron: true, language: ""),
-      SectionItem(title: "Dark Light", kind: .navDarkTheme, isShowChevron: true, language: ""),
+      SectionItem(title: "Light theme with edit mode", kind: .editMode, isShowChevron: true, language: ""),
+      SectionItem(title: "Dark theme", kind: .navDarkTheme, isShowChevron: true, language: ""),
       SectionItem(title: "System theme", kind: .navSystemTheme, isShowChevron: true, language: "")
     ]),
     
