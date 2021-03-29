@@ -505,7 +505,21 @@ extension ViewController: CardKDelegate {
   }
   
   func willShow(_ paymentView: CardKPaymentView) {
-    
+    let paymentNetworks = [PKPaymentNetwork.amex, .discover, .masterCard, .visa]
+    let paymentItem = PKPaymentSummaryItem.init(label: "Коробка", amount: NSDecimalNumber(value: 0.1))
+    let merchandId = "merchant.cardkit";
+    paymentView.merchantId = merchandId
+    paymentView.paymentRequest.currencyCode = "RUB"
+    paymentView.paymentRequest.countryCode = "RU"
+    paymentView.paymentRequest.merchantIdentifier = merchandId
+    paymentView.paymentRequest.merchantCapabilities = PKMerchantCapability.capability3DS
+    paymentView.paymentRequest.supportedNetworks = paymentNetworks
+    paymentView.paymentRequest.paymentSummaryItems = [paymentItem]
+    paymentView.paymentButtonStyle = .whiteOutline;
+
+    paymentView.cardPaybutton.backgroundColor = .systemBlue;
+    paymentView.cardPaybutton.setTitleColor(.white, for: .normal);
+    paymentView.cardPaybutton.setTitle("New card", for: .normal);
   }
   
   func didLoad(_ controller: CardKViewController) {

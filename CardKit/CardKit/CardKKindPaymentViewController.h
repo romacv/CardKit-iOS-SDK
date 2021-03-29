@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "CardKViewController.h"
+#import "CardKPaymentView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CardKKindPaymentViewController : UITableViewController
+@interface CardKKindPaymentViewController: UITableViewController<CardKPaymentViewDelegate>
 
 /*! Делегат контроллера*/
 @property (weak, nonatomic) id<CardKDelegate> cKitDelegate;

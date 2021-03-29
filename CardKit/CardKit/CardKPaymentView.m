@@ -55,7 +55,7 @@
     
     _applePayButton = [[PKPaymentButton alloc] initWithPaymentButtonType: _paymentButtonType paymentButtonStyle: _paymentButtonStyle];
     
-    [_applePayButton addTarget:self action:@selector(onApplePayButtonPressed:)
+    [_applePayButton addTarget:self action:@selector(_applePayButtonPressed:)
     forControlEvents:UIControlEventTouchUpInside];
     [self addSubview: _applePayButton];
     
@@ -128,12 +128,17 @@
   _applePayButton.frame = CGRectMake(CGRectGetMaxX(_cardPaybutton.frame) + 8, 0, buttonWidth - minMargin, buttonHeight);
 }
 
--(IBAction)onApplePayButtonPressed:(id)sender
+-(void)_applePayButtonPressed:(id)sender
 {
-    _viewController = [[PKPaymentAuthorizationViewController alloc] initWithPaymentRequest: _paymentRequest];
-    
-    _viewController.delegate = (id <PKPaymentAuthorizationViewControllerDelegate>)self;
+  _viewController = [[PKPaymentAuthorizationViewController alloc] initWithPaymentRequest: _paymentRequest];
+
+  _viewController.delegate = (id <PKPaymentAuthorizationViewControllerDelegate>)self;
+
+  if (self.cardKPaymentViewDelegate) {
+    [self.cardKPaymentViewDelegate pressedApplePayButton: _viewController];
+  } else {
     [_controller presentViewController:_viewController animated:YES completion:nil];
+  }
 }
 
 -(void)paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller
@@ -159,12 +164,16 @@
 }
 
 - (void)_cardPaybuttonPressed:(UIButton *)button {
-  CardKViewController *controller = [[CardKViewController alloc] init];
-  controller.cKitDelegate = _cKitDelegate;
-  
-  UIViewController *viewController = [CardKViewController create:_cKitDelegate controller: controller];
+  if (self.cardKPaymentViewDelegate) {
+    [self.cardKPaymentViewDelegate pressedCardPayButton];
+  } else {
+    CardKViewController *controller = [[CardKViewController alloc] init];
+    controller.cKitDelegate = _cKitDelegate;
+    
+    UIViewController *viewController = [CardKViewController create:_cKitDelegate controller: controller];
 
-  [_controller presentViewController:viewController animated:YES completion:nil];
+    [_controller presentViewController:viewController animated:YES completion:nil];
+  }
 }
 
 @end
