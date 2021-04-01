@@ -16,6 +16,7 @@
 		9239893D25AC461800DB1682 /* CardKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9239890A25AC348100DB1682 /* CardKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9245F89525B190FB0065AF9E /* ReqResDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245F89425B190FB0065AF9E /* ReqResDetailsController.swift */; };
 		9262A63D24C5CAE600042DDC /* CardKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9262A63C24C5CAE600042DDC /* CardKit.podspec */; };
+		926876CD2613153C0080D65B /* PaymentFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926876CC2613153C0080D65B /* PaymentFlowController.swift */; };
 		926A717825B969D800C72A92 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926A717725B969D800C72A92 /* Utils.swift */; };
 		927F3701259CA52A0019DE21 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927F3700259CA5290019DE21 /* TransactionManager.swift */; };
 		927F3704259CA54E0019DE21 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927F3703259CA54E0019DE21 /* Log.swift */; };
@@ -67,6 +68,7 @@
 		9239890E25AC348500DB1682 /* CardKitCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CardKitCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9245F89425B190FB0065AF9E /* ReqResDetailsController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReqResDetailsController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		9262A63C24C5CAE600042DDC /* CardKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CardKit.podspec; path = ../CardKit.podspec; sourceTree = "<group>"; };
+		926876CC2613153C0080D65B /* PaymentFlowController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = PaymentFlowController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		926A717725B969D800C72A92 /* Utils.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; tabWidth = 2; };
 		927F3700259CA5290019DE21 /* TransactionManager.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; tabWidth = 2; };
 		927F3703259CA54E0019DE21 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -127,6 +129,14 @@
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
+		926876CB261315060080D65B /* PaymentFlow */ = {
+			isa = PBXGroup;
+			children = (
+				926876CC2613153C0080D65B /* PaymentFlowController.swift */,
+			);
+			path = PaymentFlow;
+			sourceTree = "<group>";
+		};
 		927F370F259CA6A20019DE21 /* 3DS2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +188,7 @@
 		D245AB95231C444600369747 /* SampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				926876CB261315060080D65B /* PaymentFlow */,
 				9234CC57247E90AB009E3034 /* SampleApp.entitlements */,
 				D245AB96231C444600369747 /* AppDelegate.swift */,
 				D245AB98231C444600369747 /* ViewController.swift */,
@@ -350,6 +361,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				926876CD2613153C0080D65B /* PaymentFlowController.swift in Sources */,
 				927F370A259CA5780019DE21 /* LogDelegate.swift in Sources */,
 				927F3707259CA5600019DE21 /* ARes.swift in Sources */,
 				927F3701259CA52A0019DE21 /* TransactionManager.swift in Sources */,

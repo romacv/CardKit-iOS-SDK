@@ -33,6 +33,7 @@ struct SectionItem {
     case threeDS
     case threeDSCustomColors
     case editMode
+    case paymentFlow
   }
 }
 
@@ -358,6 +359,10 @@ class ViewController: UITableViewController {
     self.navigationController?.pushViewController(controller, animated: true)
   }
   
+  func _openPaymentFlow() {
+    self.navigationController?.pushViewController(PaymentFlowController(), animated: true)
+  }
+  
   func _callFunctionByKindOfButton(kind: SectionItem.Kind, language: String) {
     switch kind {
       case .lightTheme: _openController()
@@ -372,6 +377,7 @@ class ViewController: UITableViewController {
       case .paymentView: _openPaymentView()
       case .threeDS: _open3DSView()
       case .threeDSCustomColors: _open3DSViewCustom()
+      case .paymentFlow: _openPaymentFlow()
     }
   }
   
@@ -392,6 +398,10 @@ class ViewController: UITableViewController {
     
     Section(title: "CardKPaymentView", items: [
       SectionItem(title: "Apple Pay", kind: .paymentView, isShowChevron: true, language: ""),
+    ]),
+    
+    Section(title: "PaymentFlow", items: [
+      SectionItem(title: "Payment flow", kind: .paymentFlow, isShowChevron: true, language: ""),
     ]),
     
     Section(title: "ThreeDSSample", items: [

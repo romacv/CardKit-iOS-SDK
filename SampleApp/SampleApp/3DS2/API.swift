@@ -24,6 +24,8 @@ struct RequestParams {
   var threeDSSDKKey: String?
   
   var authParams: ThreeDSSDK.AuthenticationRequestParameters?
+
+  var cliendId: String?
 }
 
 struct ResponseParams {

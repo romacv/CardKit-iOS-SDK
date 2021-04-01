@@ -223,7 +223,6 @@ NSString *CardKFooterID = @"footer";
 - (void)_cardChanged {
   NSString *number = _cardView.number;
 
-  
   [_bankLogoView fetchBankInfo: CardKConfig.shared.mrBinApiURL cardNumber: number];
   [self _refreshErrors];
 }
@@ -462,6 +461,14 @@ NSString *CardKFooterID = @"footer";
   [_ownerTextField resignFirstResponder];
   
   [_cKitDelegate cardKitViewControllerScanCardRequest:self];
+}
+
+- (CardKCardView *)getCardKView {
+    return _cardView;
+}
+
+- (NSString *)getCardOwner {
+    return _ownerTextField.text;
 }
 
 - (void)setCardNumber:(nullable NSString *)number holderName:(nullable NSString *)holderName expirationDate:(nullable NSString *)date cvc:(nullable NSString *)cvc bindingId:(nullable NSString *)bindingId {
