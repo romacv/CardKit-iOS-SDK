@@ -34,7 +34,7 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
       self.tableView.reloadData()
     }
   }
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     ThreeDS2ViewController.logs.removeAllObjects()
@@ -74,7 +74,7 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     
     _textFieldBaseUrl.layer.cornerRadius = 10
     _textFieldBaseUrl.textAlignment = .center
-    
+
     _headerView.addSubview(_textFieldBaseUrl)
     _headerView.addSubview(_textFieldCost)
     self.tableView.tableHeaderView = _headerView
@@ -86,8 +86,39 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     self.tableView.delegate = self
     self.tableView.setNeedsLayout()
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellIdentifier")
+    self.tableView.autoresizingMask = .flexibleWidth
     
     _notificationCenter.addObserver(self, selector: #selector(_reloadTableView), name: Notification.Name("ReloadTable"), object: nil)
+    
+    let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+
+    view.addGestureRecognizer(tap)
+    
+    addDoneButtonOnKeyboard()
+  }
+  
+  func addDoneButtonOnKeyboard(){
+    let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+    doneToolbar.barStyle = .default
+
+    let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+    let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
+
+    let items = [flexSpace, done]
+    doneToolbar.items = items
+    doneToolbar.sizeToFit()
+
+    _textFieldBaseUrl.inputAccessoryView = doneToolbar
+    _textFieldCost.inputAccessoryView = doneToolbar
+  }
+  
+  @objc func doneButtonAction(){
+    _textFieldBaseUrl.resignFirstResponder()
+    _textFieldCost.resignFirstResponder()
+  }
+
+  @objc func dismissKeyboard() {
+    view.endEditing(true)
   }
   
   @objc func _reloadTableView() {
@@ -127,7 +158,7 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     self.present(navController, animated: true)
   }
   
-  override func viewWillAppear(_ animated: Bool) {
+  override func viewWillLayoutSubviews() {
     _textFieldBaseUrl.frame = CGRect(x: 20, y: 10, width: self.view.bounds.width - 40, height: 50)
     _textFieldCost.frame = CGRect(x: 20, y: 80, width: self.view.bounds.width - 40, height: 50)
     _headerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 160)
