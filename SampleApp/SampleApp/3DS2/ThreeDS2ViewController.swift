@@ -90,10 +90,6 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     
     _notificationCenter.addObserver(self, selector: #selector(_reloadTableView), name: Notification.Name("ReloadTable"), object: nil)
     
-    let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
-
-    view.addGestureRecognizer(tap)
-    
     addDoneButtonOnKeyboard()
   }
   
