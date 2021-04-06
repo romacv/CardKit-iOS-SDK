@@ -40,6 +40,7 @@
       [_spinner startAnimating];
       
       _cardKPaymentError = [[CardKPaymentError alloc] init];
+      _url = @"https://web.rbsdev.com/soyuzpayment";
     }
     return self;
   }
@@ -50,7 +51,6 @@
   }
 
   - (void)viewDidAppear:(BOOL)animated {
-    _url = @"https://web.rbsdev.com/soyuzpayment";
     [self _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
       
     }];
@@ -77,9 +77,18 @@
 
   }
 
+  - (void)_sendError {
+    self->_cardKPaymentError.massage = @"Ошибка запроса статуса";
+    [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self.navigationController popViewControllerAnimated:YES];
+    });
+  }
+
   - (void) _getSessionStatusRequest:(void (^)(CardKPaymentSessionStatus *)) handler {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
-    NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/getSessionStatus.do", mdOrder];
+    NSString *URL = [NSString stringWithFormat:@"%@%@?%@", @"", @"/rest/getSessionStatus.do", mdOrder];
 
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
 
@@ -91,14 +100,7 @@
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
   
       if(httpResponse.statusCode != 200) {
-        self->_cardKPaymentError.massage = @"Ошибка запроса статуса";
-        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-          
-          [self.navigationController popViewControllerAnimated:YES];
-        });
-        
+        [self _sendError];
         return;
       }
       
@@ -115,6 +117,7 @@
       CardKConfig.shared.bindingCVCRequired = !self->_sessionStatus.cvcNotRequired;
       
       
+      
       if (self->_sessionStatus.redirect != nil) {
         self->_cardKPaymentError.massage = self->_sessionStatus.redirect;
         [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
@@ -124,6 +127,7 @@
         });
       } else {
         dispatch_async(dispatch_get_main_queue(), ^{
+          handler(self->_sessionStatus);
           UIViewController *sourceViewController = self;
           UIViewController *destinationController = self->_controller;
           UINavigationController *navigationController = sourceViewController.navigationController;

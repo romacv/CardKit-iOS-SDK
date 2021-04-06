@@ -12,8 +12,12 @@
 #import "CardKit.h"
 
 @interface PaymentFlowController: CardKPaymentFlowController
-    @property (nullable) XCTestExpectation* sePaymentExpectation;
-    @property NSDictionary* _Nullable flowExpectation;
-    - (void) _sePayment;
-    - (void)_getSessionStatusRequest:(void (^)(CardKPaymentSessionStatus *)) handler;
+  @property (nullable) XCTestExpectation* sePaymentExpectation;
+  - (void) _sePayment;
+
+  @property (nullable) XCTestExpectation* sendErrorExpectation;
+  - (void) _sendError;
+
+//    @property (nullable) XCTestExpectation* sePaymentExpectation;
+    - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *)) handler;
 @end

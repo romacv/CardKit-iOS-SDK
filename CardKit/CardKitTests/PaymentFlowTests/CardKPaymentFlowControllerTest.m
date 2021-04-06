@@ -46,10 +46,12 @@
 }
 
 - (void)testRequest {
-  XCTestExpectation *expectation = [self expectationWithDescription:@"Testing Async Method Works!"];
+  
   PaymentFlowController *payment = [[PaymentFlowController alloc] init];
   payment.userName = @"3ds2-api";
   payment.password = @"testPwd";
+//  payment.sePaymentExpectation = [self expectationWithDescription:@"Testing sePayment!"];
+  payment.sendErrorExpectation = [self expectationWithDescription:@"Testing send error"];
   
   NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"2000"];
   NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
@@ -82,15 +84,16 @@
         
         CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
         
+        
         [payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
-//          [expectation fulfill];
+          
         }];
       }
   }];
   [dataTask resume];
   
   
-  [self waitForExpectationsWithTimeout:5 handler:nil];
+  [self waitForExpectations:@[payment.sendErrorExpectation] timeout:20];
 }
 
 @end

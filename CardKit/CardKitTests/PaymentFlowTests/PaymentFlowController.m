@@ -14,25 +14,22 @@
 
 @interface CardKPaymentFlowController (Test)
   - (void)_sePayment;
-  - (void)_getSessionStatusRequest:(void (^)(CardKPaymentSessionStatus *)) handler;
+  - (void)_sendError;
+  - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *)) handler;
 @end
 
 @implementation PaymentFlowController: CardKPaymentFlowController
-
-    - (NSString *) _urlParameters:(NSArray<NSString *> *) parameters {
-        
-//        [super _urlParameters:parameters];
-        return @"";
-    }
-
   - (void)_sePayment{
-      [super _sePayment];
-//      [_sePaymentExpectation fulfill];
+    [super _sePayment];
+    [self.sePaymentExpectation fulfill];
   }
 
-  - (void)_getSessionStatusRequest:(void (^)(CardKPaymentSessionStatus *)) handler {
-    [super _getSessionStatusRequest: handler];
-//    [_sePaymentExpectation fulfill];
+  - (void) _getSessionStatusRequest:(void (^)(CardKPaymentSessionStatus *)) handler {
+    [super _getSessionStatusRequest:handler];
   }
 
+  - (void)_sendError {
+    [super _sendError];
+    [_sendErrorExpectation fulfill];
+  }
 @end

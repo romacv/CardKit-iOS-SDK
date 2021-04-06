@@ -121,7 +121,7 @@
 		920480EC261B034F00026C1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92048132261B04FB00026C1F /* CardKPaymentFlowControllerTest.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKPaymentFlowControllerTest.m; sourceTree = "<group>"; tabWidth = 2; };
 		9204814E261B056900026C1F /* PaymentFlowController.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = PaymentFlowController.m; sourceTree = "<group>"; tabWidth = 2; };
-		9204815F261B05F300026C1F /* PaymentFlowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentFlowController.h; sourceTree = "<group>"; };
+		9204815F261B05F300026C1F /* PaymentFlowController.h */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.h; path = PaymentFlowController.h; sourceTree = "<group>"; tabWidth = 2; };
 		9219F463232B8EF100841B98 /* CardKFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKFooterView.h; sourceTree = "<group>"; };
 		9219F464232B8EF100841B98 /* CardKFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKFooterView.m; sourceTree = "<group>"; };
 		9234CC4C247BC315009E3034 /* CardKValidation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKValidation.h; sourceTree = "<group>"; };
