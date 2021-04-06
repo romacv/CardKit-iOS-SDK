@@ -10,13 +10,21 @@ import Foundation
 
 class Utils {
   static func jsonSerialization(data: [String: String]) -> String {
-    let jsonData = try! JSONSerialization.data(withJSONObject: data, options: [.prettyPrinted])
-    return String(data: jsonData, encoding: .utf8)!
+    do {
+      let jsonData = try JSONSerialization.data(withJSONObject: data, options: [.prettyPrinted])
+      return String(data: jsonData, encoding: .utf8)!
+    } catch {
+      return "Ошибка JSONSerialization"
+    }
   }
   
   static func jsonSerialization(data: Data) -> String {
-    let json = try! JSONSerialization.jsonObject(with: data, options: [])
-    let dataWithPretty = try! JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted])
-    return String(data: dataWithPretty, encoding: .utf8)!
+    do {
+      let json = try JSONSerialization.jsonObject(with: data, options: [])
+      let dataWithPretty = try JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted])
+      return String(data: dataWithPretty, encoding: .utf8)!
+    } catch {
+      return "Ошибка JSONSerialization"
+    }
   }
 }

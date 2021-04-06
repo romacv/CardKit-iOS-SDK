@@ -183,17 +183,9 @@ public class TransactionManager: NSObject, ChallengeStatusReceiver {
         API.fetchOrderStatus(params: ThreeDS2ViewController.requestParams) {(data, response) in
           let params = ThreeDS2ViewController.requestParams
           let body = [
-            "seToken": params.seToken ?? "",
-            "MDORDER": params.orderId ?? "",
-            "threeDSServerTransId": params.threeDSServerTransId ?? "",
+            "orderId": params.orderId ?? "",
             "userName": params.userName ?? "",
-            "password": params.password ?? "",
-            "TEXT": params.text ?? "",
-            "threeDSSDK": params.threeDSSDK ?? "",
-            "threeDSSDKEncData": params.authParams!.getDeviceData(),
-            "threeDSSDKEphemPubKey": params.authParams!.getSDKEphemeralPublicKey(),
-            "threeDSSDKAppId": params.authParams!.getSDKAppID(),
-            "threeDSSDKTransId": params.authParams!.getSDKTransactionID()
+            "password": params.password ?? ""
           ];
 
           DispatchQueue.main.async {

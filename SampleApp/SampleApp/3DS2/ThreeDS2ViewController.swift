@@ -88,6 +88,7 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellIdentifier")
     self.tableView.autoresizingMask = .flexibleWidth
     
+    
     _notificationCenter.addObserver(self, selector: #selector(_reloadTableView), name: Notification.Name("ReloadTable"), object: nil)
     
     addDoneButtonOnKeyboard()
@@ -198,6 +199,9 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
       self.addLog(title: "Register New Order",
                   request: String(describing: Utils.jsonSerialization(data: body)), response:String(describing: Utils.jsonSerialization(data: response)))
    
+      DispatchQueue.main.async {
+        self._notificationCenter.post(name: Notification.Name("ReloadTable"), object: nil)
+      }
       ThreeDS2ViewController.requestParams.orderId = data.orderId
       
       CardKConfig.shared.mdOrder = data.orderId ?? ""
@@ -217,11 +221,17 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
           "threeDSSDK": params.threeDSSDK ?? "",
         ];
         
-        self.addLog(title: "Payment", request: String(describing: Utils.jsonSerialization(data: body)), response: Utils.jsonSerialization(data: response))
+        if let response = response {
+          self.addLog(title: "Payment", request: String(describing: Utils.jsonSerialization(data: body)), response: Utils.jsonSerialization(data: response))
+        } else {
+          self.addLog(title: "Payment", request: String(describing: Utils.jsonSerialization(data: body)), response: Utils.jsonSerialization(data: ["error": "пустой объект"]))
+        }
+  
+         
+        self._notificationCenter.post(name: Notification.Name("ReloadTable"), object: nil)
 
         guard let data = data else {
           self._transactionManager.close()
-          self._notificationCenter.post(name: Notification.Name("ReloadTable"), object: nil)
           return
         }
         
@@ -252,7 +262,6 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
           self._sePaymentStep2()
         } catch {
           TransactionManager.sdkProgressDialog?.close()
-          self._notificationCenter.post(name: Notification.Name("ReloadTable"), object: nil)
         }
       }
     }
@@ -276,6 +285,10 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
       ];
       
       self.addLog(title: "Payment step 2", request: String(describing: Utils.jsonSerialization(data: body)), response: String(describing: Utils.jsonSerialization(data: response)))
+
+      DispatchQueue.main.async {
+        self._notificationCenter.post(name: Notification.Name("ReloadTable"), object: nil)
+      }
 
       guard let data = data else {
         self._transactionManager.close()
