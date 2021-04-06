@@ -193,6 +193,7 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
   }
   
   override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
     _textFieldBaseUrl.frame = CGRect(x: 20, y: 10, width: self.view.bounds.width - 40, height: 50)
     _textFieldCost.frame = CGRect(x: 20, y: _textFieldBaseUrl.frame.maxY + 10, width: self.view.bounds.width - 40, height: 50)
     
