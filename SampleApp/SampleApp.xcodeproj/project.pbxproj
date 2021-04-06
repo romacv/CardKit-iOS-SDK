@@ -74,7 +74,7 @@
 		927F3703259CA54E0019DE21 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		927F3706259CA5600019DE21 /* ARes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARes.swift; sourceTree = "<group>"; };
 		927F3709259CA5780019DE21 /* LogDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDelegate.swift; sourceTree = "<group>"; };
-		927F370C259CA5970019DE21 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		927F370C259CA5970019DE21 /* API.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; tabWidth = 2; };
 		927F3710259CA6E80019DE21 /* ThreeDS2ViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ThreeDS2ViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		92E0D90224AF3D6800F7846E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		92E0D90F24AF4EB000F7846E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -542,7 +542,7 @@
 				CODE_SIGN_ENTITLEMENTS = SampleApp/SampleApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_TEAM = FD6ZML48V9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -575,7 +575,7 @@
 				CODE_SIGN_ENTITLEMENTS = SampleApp/SampleApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_TEAM = FD6ZML48V9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

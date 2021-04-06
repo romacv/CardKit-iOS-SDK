@@ -73,7 +73,7 @@ class API {
 
         if let responseJSON = responseJSON as? [String: Any] {
           var responseParams = ResponseParams()
-          responseParams.orderId = (responseJSON["orderId"] as! String)
+          responseParams.orderId = (responseJSON["orderId"] as? String)
           completionHandler(responseParams, data)
         }
       })
@@ -81,7 +81,7 @@ class API {
       dataTask.resume()
   }
 
-  static func sePayment(params: RequestParams, completionHandler: @escaping (ResponseParams?, Data) -> Void) {
+  static func sePayment(params: RequestParams, completionHandler: @escaping (ResponseParams?, Data?) -> Void) {
     let headers = [
       "Content-Type": "application/x-www-form-urlencoded"
     ]
@@ -101,12 +101,15 @@ class API {
     request.encodeParameters(parameters: body)
 
     URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+//      completionHandler(nil, data)
+
       guard let data = data else {
-//        completionHandler(nil, data)
+        completionHandler(nil, nil)
         return
       }
       
-      guard let responseJSON = try! JSONSerialization.jsonObject(with: data, options: []) as? [String : Any] else {
+      guard let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any] else {
+        completionHandler(nil, data)
         return
       }
       
@@ -203,7 +206,6 @@ class API {
       
         let responseJSON = try! JSONSerialization.jsonObject(with: data, options: [])
       
-      let responseParams = ResponseParams()
       completionHandler(responseJSON, data)
     }).resume()
   }
@@ -214,22 +216,14 @@ class API {
     ]
 
     let body = [
-      "seToken": params.seToken ?? "",
-      "MDORDER": params.orderId ?? "",
-      "threeDSServerTransId": params.threeDSServerTransId ?? "",
+      "orderId": params.orderId ?? "",
       "userName": params.userName ?? "",
       "password": params.password ?? "",
-      "TEXT": params.text ?? "",
-      "threeDSSDK": params.threeDSSDK ?? "",
-      "threeDSSDKEncData": params.authParams!.getDeviceData(),
-      "threeDSSDKEphemPubKey": params.authParams!.getSDKEphemeralPublicKey(),
-      "threeDSSDKAppId": params.authParams!.getSDKAppID(),
-      "threeDSSDKTransId": params.authParams!.getSDKTransactionID()
     ];
 
     let orderId = params.orderId ?? ""
     
-    var request: URLRequest = URLRequest(url: URL(string: "\(url)/rest/getOrderStatusExtended.do?orderId=\(orderId)&userName=3ds2-api&password=testPwd")!)
+    var request: URLRequest = URLRequest(url: URL(string: "\(url)/rest/getOrderStatusExtended.do")!)
 
     request.httpMethod = "POST"
     request.allHTTPHeaderFields = headers

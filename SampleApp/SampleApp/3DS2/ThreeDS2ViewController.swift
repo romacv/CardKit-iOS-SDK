@@ -20,6 +20,9 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
   let _headerView = UIView()
   let _textFieldBaseUrl = UITextField()
   let _textFieldCost = UITextField()
+  let _textFieldUserName = UITextField()
+  let _textFieldPassword = UITextField()
+
   let _transactionManager: TransactionManager = TransactionManager()
   let _reqResController = ReqResDetailsController()
   
@@ -34,7 +37,7 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
       self.tableView.reloadData()
     }
   }
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     ThreeDS2ViewController.logs.removeAllObjects()
@@ -58,15 +61,29 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     
     _transactionManager.delegateAddLog = self
     _textFieldBaseUrl.text = url
+    _textFieldBaseUrl.placeholder = "url"
+    
     _textFieldCost.text = "2000"
     _textFieldCost.keyboardType = .numberPad
-
+    _textFieldCost.placeholder = "Стоимость"
+    
+    _textFieldPassword.text = "testPwd"
+    _textFieldPassword.isSecureTextEntry = true
+    _textFieldPassword.placeholder = "Пароль"
+    
+    _textFieldUserName.text = "3ds2-api"
+    _textFieldUserName.placeholder = "Имя пользователя"
+    
     if #available(iOS 13.0, *) {
       _textFieldBaseUrl.backgroundColor = .systemGray5
       _textFieldCost.backgroundColor = .systemGray5
+      _textFieldPassword.backgroundColor = .systemGray5
+      _textFieldUserName.backgroundColor = .systemGray5
     } else {
       _textFieldBaseUrl.backgroundColor = theme.colorCellBackground
       _textFieldCost.backgroundColor = theme.colorCellBackground
+      _textFieldPassword.backgroundColor = theme.colorCellBackground
+      _textFieldUserName.backgroundColor = theme.colorCellBackground
     };
     
     _textFieldCost.layer.cornerRadius = 10
@@ -75,8 +92,17 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     _textFieldBaseUrl.layer.cornerRadius = 10
     _textFieldBaseUrl.textAlignment = .center
     
+    _textFieldPassword.layer.cornerRadius = 10
+    _textFieldPassword.textAlignment = .center
+    
+    _textFieldUserName.layer.cornerRadius = 10
+    _textFieldUserName.textAlignment = .center
+
     _headerView.addSubview(_textFieldBaseUrl)
     _headerView.addSubview(_textFieldCost)
+    _headerView.addSubview(_textFieldPassword)
+    _headerView.addSubview(_textFieldUserName)
+
     self.tableView.tableHeaderView = _headerView
   
     self.tableView.rowHeight = UITableView.automaticDimension
@@ -86,8 +112,40 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     self.tableView.delegate = self
     self.tableView.setNeedsLayout()
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellIdentifier")
+    self.tableView.autoresizingMask = .flexibleWidth
+    
     
     _notificationCenter.addObserver(self, selector: #selector(_reloadTableView), name: Notification.Name("ReloadTable"), object: nil)
+    
+    addDoneButtonOnKeyboard()
+  }
+  
+  func addDoneButtonOnKeyboard(){
+    let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+    doneToolbar.barStyle = .default
+
+    let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+    let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
+
+    let items = [flexSpace, done]
+    doneToolbar.items = items
+    doneToolbar.sizeToFit()
+
+    _textFieldBaseUrl.inputAccessoryView = doneToolbar
+    _textFieldCost.inputAccessoryView = doneToolbar
+    _textFieldPassword.inputAccessoryView = doneToolbar
+    _textFieldUserName.inputAccessoryView = doneToolbar
+  }
+  
+  @objc func doneButtonAction(){
+    _textFieldBaseUrl.resignFirstResponder()
+    _textFieldCost.resignFirstResponder()
+    _textFieldPassword.resignFirstResponder()
+    _textFieldUserName.resignFirstResponder()
+  }
+
+  @objc func dismissKeyboard() {
+    view.endEditing(true)
   }
   
   @objc func _reloadTableView() {
@@ -127,10 +185,14 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     self.present(navController, animated: true)
   }
   
-  override func viewWillAppear(_ animated: Bool) {
+  override func viewWillLayoutSubviews() {
     _textFieldBaseUrl.frame = CGRect(x: 20, y: 10, width: self.view.bounds.width - 40, height: 50)
-    _textFieldCost.frame = CGRect(x: 20, y: 80, width: self.view.bounds.width - 40, height: 50)
-    _headerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 160)
+    _textFieldCost.frame = CGRect(x: 20, y: _textFieldBaseUrl.frame.maxY + 10, width: self.view.bounds.width - 40, height: 50)
+    
+    _textFieldUserName.frame = CGRect(x: 20, y: _textFieldCost.frame.maxY + 10, width: self.view.bounds.width / 2 - 30, height: 50)
+    _textFieldPassword.frame = CGRect(x: _textFieldUserName.frame.maxX + 30, y: _textFieldCost.frame.maxY + 10, width: self.view.bounds.width / 2 - 40, height: 50)
+
+    _headerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: _textFieldPassword.frame.maxY + 20)
     
     self.tableView.tableHeaderView?.frame = _headerView.frame
     self.navigationController?.isNavigationBarHidden = false
@@ -147,8 +209,8 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     url = _textFieldBaseUrl.text ?? url
     
     ThreeDS2ViewController.requestParams.amount = _textFieldCost.text
-    ThreeDS2ViewController.requestParams.userName = "3ds2-api"
-    ThreeDS2ViewController.requestParams.password = "testPwd"
+    ThreeDS2ViewController.requestParams.userName = _textFieldUserName.text
+    ThreeDS2ViewController.requestParams.password = _textFieldPassword.text
     ThreeDS2ViewController.requestParams.returnUrl = "../merchants/rbs/finish.html"
     ThreeDS2ViewController.requestParams.failUrl = "errors_ru.html"
     ThreeDS2ViewController.requestParams.email = "test@test.ru"
@@ -171,6 +233,9 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
       self.addLog(title: "Register New Order",
                   request: String(describing: Utils.jsonSerialization(data: body)), response:String(describing: Utils.jsonSerialization(data: response)))
    
+      DispatchQueue.main.async {
+        self._notificationCenter.post(name: Notification.Name("ReloadTable"), object: nil)
+      }
       ThreeDS2ViewController.requestParams.orderId = data.orderId
       
       CardKConfig.shared.mdOrder = data.orderId ?? ""
@@ -190,11 +255,17 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
           "threeDSSDK": params.threeDSSDK ?? "",
         ];
         
-        self.addLog(title: "Payment", request: String(describing: Utils.jsonSerialization(data: body)), response: Utils.jsonSerialization(data: response))
+        if let response = response {
+          self.addLog(title: "Payment", request: String(describing: Utils.jsonSerialization(data: body)), response: Utils.jsonSerialization(data: response))
+        } else {
+          self.addLog(title: "Payment", request: String(describing: Utils.jsonSerialization(data: body)), response: Utils.jsonSerialization(data: ["error": "пустой объект"]))
+        }
+  
+         
+        self._notificationCenter.post(name: Notification.Name("ReloadTable"), object: nil)
 
         guard let data = data else {
           self._transactionManager.close()
-          self._notificationCenter.post(name: Notification.Name("ReloadTable"), object: nil)
           return
         }
         
@@ -225,7 +296,6 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
           self._sePaymentStep2()
         } catch {
           TransactionManager.sdkProgressDialog?.close()
-          self._notificationCenter.post(name: Notification.Name("ReloadTable"), object: nil)
         }
       }
     }
@@ -249,6 +319,10 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
       ];
       
       self.addLog(title: "Payment step 2", request: String(describing: Utils.jsonSerialization(data: body)), response: String(describing: Utils.jsonSerialization(data: response)))
+
+      DispatchQueue.main.async {
+        self._notificationCenter.post(name: Notification.Name("ReloadTable"), object: nil)
+      }
 
       guard let data = data else {
         self._transactionManager.close()
