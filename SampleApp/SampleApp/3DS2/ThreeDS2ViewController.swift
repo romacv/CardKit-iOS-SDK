@@ -20,6 +20,9 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
   let _headerView = UIView()
   let _textFieldBaseUrl = UITextField()
   let _textFieldCost = UITextField()
+  let _textFieldUserName = UITextField()
+  let _textFieldPassword = UITextField()
+
   let _transactionManager: TransactionManager = TransactionManager()
   let _reqResController = ReqResDetailsController()
   
@@ -58,15 +61,29 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     
     _transactionManager.delegateAddLog = self
     _textFieldBaseUrl.text = url
+    _textFieldBaseUrl.placeholder = "url"
+    
     _textFieldCost.text = "2000"
     _textFieldCost.keyboardType = .numberPad
-
+    _textFieldCost.placeholder = "Стоимость"
+    
+    _textFieldPassword.text = "testPwd"
+    _textFieldPassword.isSecureTextEntry = true
+    _textFieldPassword.placeholder = "Пароль"
+    
+    _textFieldUserName.text = "3ds2-api"
+    _textFieldUserName.placeholder = "Имя пользователя"
+    
     if #available(iOS 13.0, *) {
       _textFieldBaseUrl.backgroundColor = .systemGray5
       _textFieldCost.backgroundColor = .systemGray5
+      _textFieldPassword.backgroundColor = .systemGray5
+      _textFieldUserName.backgroundColor = .systemGray5
     } else {
       _textFieldBaseUrl.backgroundColor = theme.colorCellBackground
       _textFieldCost.backgroundColor = theme.colorCellBackground
+      _textFieldPassword.backgroundColor = theme.colorCellBackground
+      _textFieldUserName.backgroundColor = theme.colorCellBackground
     };
     
     _textFieldCost.layer.cornerRadius = 10
@@ -74,9 +91,18 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     
     _textFieldBaseUrl.layer.cornerRadius = 10
     _textFieldBaseUrl.textAlignment = .center
+    
+    _textFieldPassword.layer.cornerRadius = 10
+    _textFieldPassword.textAlignment = .center
+    
+    _textFieldUserName.layer.cornerRadius = 10
+    _textFieldUserName.textAlignment = .center
 
     _headerView.addSubview(_textFieldBaseUrl)
     _headerView.addSubview(_textFieldCost)
+    _headerView.addSubview(_textFieldPassword)
+    _headerView.addSubview(_textFieldUserName)
+
     self.tableView.tableHeaderView = _headerView
   
     self.tableView.rowHeight = UITableView.automaticDimension
@@ -107,11 +133,15 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
 
     _textFieldBaseUrl.inputAccessoryView = doneToolbar
     _textFieldCost.inputAccessoryView = doneToolbar
+    _textFieldPassword.inputAccessoryView = doneToolbar
+    _textFieldUserName.inputAccessoryView = doneToolbar
   }
   
   @objc func doneButtonAction(){
     _textFieldBaseUrl.resignFirstResponder()
     _textFieldCost.resignFirstResponder()
+    _textFieldPassword.resignFirstResponder()
+    _textFieldUserName.resignFirstResponder()
   }
 
   @objc func dismissKeyboard() {
@@ -157,8 +187,12 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
   
   override func viewWillLayoutSubviews() {
     _textFieldBaseUrl.frame = CGRect(x: 20, y: 10, width: self.view.bounds.width - 40, height: 50)
-    _textFieldCost.frame = CGRect(x: 20, y: 80, width: self.view.bounds.width - 40, height: 50)
-    _headerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 160)
+    _textFieldCost.frame = CGRect(x: 20, y: _textFieldBaseUrl.frame.maxY + 10, width: self.view.bounds.width - 40, height: 50)
+    
+    _textFieldUserName.frame = CGRect(x: 20, y: _textFieldCost.frame.maxY + 10, width: self.view.bounds.width / 2 - 30, height: 50)
+    _textFieldPassword.frame = CGRect(x: _textFieldUserName.frame.maxX + 30, y: _textFieldCost.frame.maxY + 10, width: self.view.bounds.width / 2 - 40, height: 50)
+
+    _headerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: _textFieldPassword.frame.maxY + 20)
     
     self.tableView.tableHeaderView?.frame = _headerView.frame
     self.navigationController?.isNavigationBarHidden = false
@@ -175,8 +209,8 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate {
     url = _textFieldBaseUrl.text ?? url
     
     ThreeDS2ViewController.requestParams.amount = _textFieldCost.text
-    ThreeDS2ViewController.requestParams.userName = "3ds2-api"
-    ThreeDS2ViewController.requestParams.password = "testPwd"
+    ThreeDS2ViewController.requestParams.userName = _textFieldUserName.text
+    ThreeDS2ViewController.requestParams.password = _textFieldPassword.text
     ThreeDS2ViewController.requestParams.returnUrl = "../merchants/rbs/finish.html"
     ThreeDS2ViewController.requestParams.failUrl = "errors_ru.html"
     ThreeDS2ViewController.requestParams.email = "test@test.ru"
