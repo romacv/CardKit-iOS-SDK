@@ -8,16 +8,27 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "CardKPaymentSessionStatus.h"
+
 #import "CardKit.h"
+#import "CardKPaymentSessionStatus.h"
 
 @interface PaymentFlowController: CardKPaymentFlowController
+  @property (weak, nonatomic) id<CardKDelegate> cKitDelegate;
+
   @property (nullable) XCTestExpectation* sePaymentExpectation;
   - (void) _sePayment;
+
+  @property (nullable) XCTestExpectation* sePaymentStep2Expectation;
+  - (void) _sePaymentStep2;
 
   @property (nullable) XCTestExpectation* sendErrorExpectation;
   - (void) _sendError;
 
-//    @property (nullable) XCTestExpectation* sePaymentExpectation;
-    - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *)) handler;
+  @property (nullable) XCTestExpectation* sendRedirectErrorExpectation;
+  - (void)_sendRedirectError;
+
+  @property (nullable) XCTestExpectation* moveChoosePaymentMethodControllerExpectation;
+  - (void)_moveChoosePaymentMethodController;
+
+  - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *)) handler;
 @end

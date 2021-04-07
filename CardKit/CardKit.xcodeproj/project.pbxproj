@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,10 @@
 		9204814F261B056900026C1F /* PaymentFlowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9204814E261B056900026C1F /* PaymentFlowController.m */; };
 		9219F465232B8EF100841B98 /* CardKFooterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9219F463232B8EF100841B98 /* CardKFooterView.h */; };
 		9219F466232B8EF100841B98 /* CardKFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9219F464232B8EF100841B98 /* CardKFooterView.m */; };
+		922FE283261D9EB7005EE6A3 /* CardKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE282261D9EB7005EE6A3 /* CardKViewController.m */; };
+		922FE2CB261DCCC0005EE6A3 /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */; };
+		922FE2D8261DCCD6005EE6A3 /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */; };
+		922FE2D9261DCCD6005EE6A3 /* ThreeDSSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9234CC4E247BC315009E3034 /* CardKValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 9234CC4C247BC315009E3034 /* CardKValidation.h */; };
 		9234CC4F247BC315009E3034 /* CardKValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9234CC4D247BC315009E3034 /* CardKValidation.m */; };
 		9234CC5A247FBCDD009E3034 /* CardKPaymentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9234CC58247FBCDD009E3034 /* CardKPaymentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -96,6 +100,13 @@
 			remoteGlobalIDString = D245AB38231C435E00369747;
 			remoteInfo = CardKit;
 		};
+		922FE298261DAB89005EE6A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D245AB30231C435E00369747 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9292CF46255E9B2F00053EC3;
+			remoteInfo = TestApp;
+		};
 		924290C1255D5FE300378C68 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D245AB30231C435E00369747 /* Project object */;
@@ -112,6 +123,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		922FE2BC261DC321005EE6A3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				922FE2D9261DCCD6005EE6A3 /* ThreeDSSDK.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		920072D72615E43F0014F864 /* CardKPaymentSessionStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKPaymentSessionStatus.h; sourceTree = "<group>"; };
 		920072D82615E43F0014F864 /* CardKPaymentSessionStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKPaymentSessionStatus.m; sourceTree = "<group>"; };
@@ -124,6 +149,9 @@
 		9204815F261B05F300026C1F /* PaymentFlowController.h */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.h; path = PaymentFlowController.h; sourceTree = "<group>"; tabWidth = 2; };
 		9219F463232B8EF100841B98 /* CardKFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKFooterView.h; sourceTree = "<group>"; };
 		9219F464232B8EF100841B98 /* CardKFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKFooterView.m; sourceTree = "<group>"; };
+		922FE281261D9EB7005EE6A3 /* CardKViewControllerInher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKViewControllerInher.h; sourceTree = "<group>"; };
+		922FE282261D9EB7005EE6A3 /* CardKViewController.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKViewController.m; sourceTree = "<group>"; tabWidth = 2; };
+		922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThreeDSSDK.xcframework; path = ../../sdk_3ds2_ios/build/ThreeDSSDK/ThreeDSSDK.xcframework; sourceTree = "<group>"; };
 		9234CC4C247BC315009E3034 /* CardKValidation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKValidation.h; sourceTree = "<group>"; };
 		9234CC4D247BC315009E3034 /* CardKValidation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKValidation.m; sourceTree = "<group>"; };
 		9234CC58247FBCDD009E3034 /* CardKPaymentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKPaymentView.h; sourceTree = "<group>"; };
@@ -213,6 +241,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				922FE2CB261DCCC0005EE6A3 /* ThreeDSSDK.xcframework in Frameworks */,
 				920480ED261B034F00026C1F /* CardKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,6 +272,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				922FE2D8261DCCD6005EE6A3 /* ThreeDSSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +310,8 @@
 				92048132261B04FB00026C1F /* CardKPaymentFlowControllerTest.m */,
 				9204814E261B056900026C1F /* PaymentFlowController.m */,
 				9204815F261B05F300026C1F /* PaymentFlowController.h */,
+				922FE281261D9EB7005EE6A3 /* CardKViewControllerInher.h */,
+				922FE282261D9EB7005EE6A3 /* CardKViewController.m */,
 			);
 			path = PaymentFlowTests;
 			sourceTree = "<group>";
@@ -346,6 +378,7 @@
 		D245AB2F231C435E00369747 = {
 			isa = PBXGroup;
 			children = (
+				922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */,
 				D2D0B3632320F3A60007B3B9 /* banks-info */,
 				D20CEBCF232F660400F9407C /* Localizable.strings */,
 				D245AB3B231C435E00369747 /* CardKit */,
@@ -476,6 +509,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				922FE299261DAB89005EE6A3 /* PBXTargetDependency */,
 				920480EF261B034F00026C1F /* PBXTargetDependency */,
 			);
 			name = CardKitTests;
@@ -545,6 +579,7 @@
 				D245AB35231C435E00369747 /* Sources */,
 				D245AB36231C435E00369747 /* Frameworks */,
 				D245AB37231C435E00369747 /* Resources */,
+				922FE2BC261DC321005EE6A3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -566,6 +601,7 @@
 				TargetAttributes = {
 					920480E7261B034F00026C1F = {
 						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 9292CF46255E9B2F00053EC3;
 					};
 					924290B6255D5FE200378C68 = {
 						CreatedOnToolsVersion = 12.1;
@@ -661,6 +697,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				922FE283261D9EB7005EE6A3 /* CardKViewController.m in Sources */,
 				92048133261B04FB00026C1F /* CardKPaymentFlowControllerTest.m in Sources */,
 				9204814F261B056900026C1F /* PaymentFlowController.m in Sources */,
 				920480EB261B034F00026C1F /* CardKitTests.m in Sources */,
@@ -740,6 +777,11 @@
 			target = D245AB38231C435E00369747 /* CardKit */;
 			targetProxy = 920480EE261B034F00026C1F /* PBXContainerItemProxy */;
 		};
+		922FE299261DAB89005EE6A3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9292CF46255E9B2F00053EC3 /* TestApp */;
+			targetProxy = 922FE298261DAB89005EE6A3 /* PBXContainerItemProxy */;
+		};
 		924290C2255D5FE300378C68 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 924290B6255D5FE200378C68 /* CardKitCore */;
@@ -801,6 +843,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.anjlab.CardKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApp.app/TestApp";
 			};
 			name = Debug;
 		};
@@ -820,6 +863,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.anjlab.CardKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApp.app/TestApp";
 			};
 			name = Release;
 		};

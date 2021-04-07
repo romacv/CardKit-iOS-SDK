@@ -12,6 +12,7 @@
 #import "RSA.h"
 #import "ConfirmChoosedCard.h"
 #import "CardKPaymentSessionStatus.h"
+#import <ThreeDSSDK/ThreeDSSDK.h>
 
 @implementation CardKPaymentFlowController {
   CardKKindPaymentViewController *_controller;
@@ -27,6 +28,7 @@
   {
     self = [super init];
     if (self) {
+      
       _theme = CardKConfig.shared.theme;
       self.view.backgroundColor = CardKConfig.shared.theme.colorTableBackground;
       
@@ -86,9 +88,31 @@
     });
   }
 
+  - (void)_sendRedirectError {
+    self->_cardKPaymentError.massage = self->_sessionStatus.redirect;
+    [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self.navigationController popViewControllerAnimated:YES];
+    });
+  }
+  
+  - (void)_moveChoosePaymentMethodController {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      UIViewController *sourceViewController = self;
+      UIViewController *destinationController = self->_controller;
+      UINavigationController *navigationController = sourceViewController.navigationController;
+      
+      [navigationController popToRootViewControllerAnimated:NO];
+      [navigationController pushViewController:destinationController animated:NO];
+      
+      [self->_spinner stopAnimating];
+    });
+  }
+
   - (void) _getSessionStatusRequest:(void (^)(CardKPaymentSessionStatus *)) handler {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
-    NSString *URL = [NSString stringWithFormat:@"%@%@?%@", @"", @"/rest/getSessionStatus.do", mdOrder];
+    NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/getSessionStatus.do", mdOrder];
 
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
 
@@ -116,28 +140,13 @@
       CardKConfig.shared.bindings = self->_sessionStatus.bindingItems;
       CardKConfig.shared.bindingCVCRequired = !self->_sessionStatus.cvcNotRequired;
       
-      
-      
       if (self->_sessionStatus.redirect != nil) {
-        self->_cardKPaymentError.massage = self->_sessionStatus.redirect;
-        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-          [self.navigationController popViewControllerAnimated:YES];
-        });
+        [self _sendRedirectError];
       } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-          handler(self->_sessionStatus);
-          UIViewController *sourceViewController = self;
-          UIViewController *destinationController = self->_controller;
-          UINavigationController *navigationController = sourceViewController.navigationController;
-          
-          [navigationController popToRootViewControllerAnimated:NO];
-          [navigationController pushViewController:destinationController animated:NO];
-          
-          [self->_spinner stopAnimating];
-        });
+        [self _moveChoosePaymentMethodController];
       }
+      
+      handler(self->_sessionStatus);
     }];
     [dataTask resume];
   }
@@ -216,12 +225,7 @@
         self->_cardKPaymentError.massage = redirect;
         [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
       } else if (is3DSVer2){
-        // Run 3dsVer2
         [self _sePayment];
-//        [responseDictionary objectForKey:@"errorCode"];
-//        [responseDictionary objectForKey:@"error"];
-//        [responseDictionary objectForKey:@"redirect"];
-//        [responseDictionary objectForKey:@"acsUrl"];
       }
     }];
     [dataTask resume];
@@ -307,102 +311,14 @@
       NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
       if(httpResponse.statusCode == 200) {
-            NSError *parseError = nil;
-            NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-        
-        
-//        CardKConfig.shared.mdOrder = data.orderId ?? ""
-
+        NSError *parseError = nil;
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
       }
   }];
   [dataTask resume];
-  
-//  API.sePayment(params: ThreeDS2ViewController.requestParams) {(data, response) in
-//    DispatchQueue.main.async {
-//      let params = ThreeDS2ViewController.requestParams
-//      let body = [
-//        "seToken": params.seToken ?? "",
-//        "MDORDER": params.orderId ?? "",
-//        "userName": params.userName ?? "",
-//        "password": params.password ?? "",
-//        "TEXT": params.text ?? "",
-//        "threeDSSDK": params.threeDSSDK ?? "",
-//      ];
-//
-//      self.addLog(title: "Payment", request: String(describing: Utils.jsonSerialization(data: body)), response: Utils.jsonSerialization(data: response))
-//
-//      guard let data = data else {
-//        self._transactionManager.close()
-//        self._notificationCenter.post(name: Notification.Name("ReloadTable"), object: nil)
-//        return
-//      }
-//
-//      ThreeDS2ViewController.requestParams.threeDSSDKKey = data.threeDSSDKKey
-//      ThreeDS2ViewController.requestParams.threeDSServerTransId = data.threeDSServerTransId
-//
-//      self._transactionManager.pubKey = data.threeDSSDKKey ?? ""
-//
-//      var isDarkMode = false
-//
-//      if #available(iOS 12.0, *) {
-//        if self.traitCollection.userInterfaceStyle == .dark {
-//          isDarkMode = true
-//        }
-//      }
-//
-//      if self.isUseCustomTheme {
-//        do {
-//          try self._transactionManager.setUpUICustomization(isDarkMode: isDarkMode)
-//        } catch {}
-//      }
-//
-//      self._transactionManager.initializeSdk()
-//      TransactionManager.sdkProgressDialog?.show()
-//
-//      do {
-//        ThreeDS2ViewController.requestParams.authParams = try self._transactionManager.getAuthRequestParameters()
-//        self._sePaymentStep2()
-//      } catch {
-//        TransactionManager.sdkProgressDialog?.close()
-//        self._notificationCenter.post(name: Notification.Name("ReloadTable"), object: nil)
-//      }
-//    }
-//  }
 }
 
 - (void)_sePaymentStep2 {
-//  API.sePaymentStep2(params: ThreeDS2ViewController.requestParams) {(data, response) in
-//    let params = ThreeDS2ViewController.requestParams
-//    let body = [
-//      "seToken": params.seToken ?? "",
-//      "MDORDER": params.orderId ?? "",
-//      "threeDSServerTransId": params.threeDSServerTransId ?? "",
-//      "userName": params.userName ?? "",
-//      "password": params.password ?? "",
-//      "TEXT": params.text ?? "",
-//      "threeDSSDK": params.threeDSSDK ?? "",
-//      "threeDSSDKEncData": params.authParams!.getDeviceData(),
-//      "threeDSSDKEphemPubKey":params.authParams!.getSDKEphemeralPublicKey(),
-//      "threeDSSDKAppId": params.authParams!.getSDKAppID(),
-//      "threeDSSDKTransId": params.authParams!.getSDKTransactionID()
-//    ];
-//
-//    self.addLog(title: "Payment step 2", request: String(describing: Utils.jsonSerialization(data: body)), response: String(describing: Utils.jsonSerialization(data: response)))
-//
-//    guard let data = data else {
-//      self._transactionManager.close()
-//      return
-//    }
-//
-//    self._aRes["threeDSServerTransID"] = ThreeDS2ViewController.requestParams.threeDSServerTransId ?? ""
-//    self._aRes["acsTransID"] = data.acsTransID
-//    self._aRes["acsReferenceNumber"] = data.acsReferenceNumber
-//    self._aRes["acsSignedContent"] = data.acsSignedContent
-//
-//    let _aRes: ARes = ARes(JSON: self._aRes)!;
-//
-//    self._transactionManager.handleResponse(responseObject: _aRes)
-//  }
 }
 
 
