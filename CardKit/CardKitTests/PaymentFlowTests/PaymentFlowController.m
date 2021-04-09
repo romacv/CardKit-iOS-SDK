@@ -18,6 +18,7 @@
   - (void)_sePayment;
   - (void)_sendError;
 
+  - (void)_sePaymentStep2;
   - (void)_sendRedirectError;
   - (void)_moveChoosePaymentMethodController;
 
@@ -27,16 +28,6 @@
 @implementation PaymentFlowController: CardKPaymentFlowController
   - (void) _getSessionStatusRequest:(void (^)(CardKPaymentSessionStatus *)) handler {
     [super _getSessionStatusRequest:handler];
-  }
-
-  - (void)_sePayment{
-    [super _sePayment];
-    [self.sePaymentExpectation fulfill];
-  }
-
-  - (void)_sePaymentStep2 {
-    [super _sePaymentStep2];
-    [self.sePaymentStep2Expectation fulfill];
   }
 
   - (void)_sendError {

@@ -36,8 +36,6 @@
   payment.password = @"testPwd";
 
   payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
-  
-  payment.sePaymentExpectation = [self expectationWithDescription:@"sePayemnt"];
 
   NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"2000"];
   NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
@@ -79,7 +77,7 @@
   [dataTask resume];
   
   
-  [self waitForExpectations:@[payment.moveChoosePaymentMethodControllerExpectation, payment.sePaymentExpectation] timeout:30];
+  [self waitForExpectations:@[payment.moveChoosePaymentMethodControllerExpectation] timeout:30];
 }
 
 @end

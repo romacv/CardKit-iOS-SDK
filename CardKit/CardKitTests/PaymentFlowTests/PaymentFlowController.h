@@ -15,12 +15,6 @@
 @interface PaymentFlowController: CardKPaymentFlowController
   @property (weak, nonatomic) id<CardKDelegate> cKitDelegate;
 
-  @property (nullable) XCTestExpectation* sePaymentExpectation;
-  - (void) _sePayment;
-
-  @property (nullable) XCTestExpectation* sePaymentStep2Expectation;
-  - (void) _sePaymentStep2;
-
   @property (nullable) XCTestExpectation* sendErrorExpectation;
   - (void) _sendError;
 
