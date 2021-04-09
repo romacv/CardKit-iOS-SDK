@@ -10,6 +10,7 @@
 #import "CardKViewController.h"
 #import "CardKPaymentInfo.h"
 #import "CardKPaymentError.h"
+#import "RequestParams.h"
 
 @protocol CardKPaymentFlowDelegate <NSObject>
 
@@ -23,5 +24,4 @@
 
   @property NSString* userName;
   @property NSString* password;
-
 @end

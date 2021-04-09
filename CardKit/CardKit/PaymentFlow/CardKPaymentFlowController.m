@@ -14,6 +14,8 @@
 #import "CardKPaymentSessionStatus.h"
 #import <ThreeDSSDK/ThreeDSSDK.h>
 
+#import <CardKit/CardKit-Swift.h>
+
 @implementation CardKPaymentFlowController {
   CardKKindPaymentViewController *_controller;
   NSString *_url;
@@ -23,12 +25,12 @@
   CardKPaymentSessionStatus *_sessionStatus;
   CardKPaymentError *_cardKPaymentError;
   NSString *_seToken;
+  TransactionManager *_transactionManager;
 }
 - (instancetype)init
   {
     self = [super init];
     if (self) {
-      
       _theme = CardKConfig.shared.theme;
       self.view.backgroundColor = CardKConfig.shared.theme.colorTableBackground;
       
@@ -43,6 +45,8 @@
       
       _cardKPaymentError = [[CardKPaymentError alloc] init];
       _url = @"https://web.rbsdev.com/soyuzpayment";
+      
+      _transactionManager = [[TransactionManager alloc] init];
     }
     return self;
   }
@@ -76,7 +80,7 @@
   }
 
   - (void)callPaymentErrorDelegate {
-
+    
   }
 
   - (void)_sendError {
@@ -170,33 +174,31 @@
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
         if(httpResponse.statusCode == 200) {
-          
-//          NSError *parseError = nil;
-//          NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-//          handler(responseDictionary);
         }
     }];
     [dataTask resume];
   }
 
-- (void) _getProcessFormRequest:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
+- (void) _processFormRequest:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
     NSString *pan = [NSString stringWithFormat:@"%@%@", @"$PAN=", cardView.number];
     NSString *cvc = [NSString stringWithFormat:@"%@%@", @"$CVC=", cardView.secureCode];
     NSString *month = [NSString stringWithFormat:@"%@%@", @"MM=", cardView.getMonthFromExpirationDate];
     NSString *year = [NSString stringWithFormat:@"%@%@", @"YYYY=", cardView.getFullYearFromExpirationDate];
-    NSString *seTokenParam = [NSString stringWithFormat:@"%@%@", @"seToken=", seToken];
     NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
     NSString *owner = [NSString stringWithFormat:@"%@%@", @"TEXT=", cardOwner];
+  NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"true"];
   
-    NSString *parameters = [self _urlParameters:@[mdOrder, pan, cvc, month, year, language, owner]];
+    NSString *parameters = [self _urlParameters:@[mdOrder, pan, cvc, month, year, language, owner, @"bindingNotNeeded=false", threeDSSDK]];
 
-    NSString *URL = [NSString stringWithFormat:@"%@%@?%@&bindingNotNeeded=false", _url, @"/rest/processform.do", parameters];
+    NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];
   
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
 
     request.HTTPMethod = @"POST";
-
+    [request setHTTPBody:postData];
+  
     NSURLSession *session = [NSURLSession sharedSession];
 
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -225,8 +227,71 @@
         self->_cardKPaymentError.massage = redirect;
         [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
       } else if (is3DSVer2){
-        [self _sePayment];
+        RequestParams.shared.threeDSServerTransId = [responseDictionary objectForKey:@"threeDSServerTransId"];
+        RequestParams.shared.threeDSSDKKey = [responseDictionary objectForKey:@"threeDSSDKKey"];
+
+        self->_transactionManager.pubKey = RequestParams.shared.threeDSSDKKey;
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [self->_transactionManager setUpUICustomizationWithIsDarkMode:NO error:nil];
+          [self->_transactionManager initializeSdk];
+          [self->_transactionManager showProgressDialog];
+          NSDictionary *reqParams = [self->_transactionManager getAuthRequestParameters];
+          
+          RequestParams.shared.deviceData = reqParams[@"deviceData"];
+          RequestParams.shared.ephemeralPublicKey = reqParams[@"ephemeralPublicKey"];
+          RequestParams.shared.appId = reqParams[@"appId"];
+          RequestParams.shared.transactionId = reqParams[@"transactionId"];
+          
+
+          [self _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler];
+        });
       }
+    }];
+    [dataTask resume];
+  }
+
+- (void) _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
+    NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
+    NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"true"];
+    NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
+    NSString *owner = [NSString stringWithFormat:@"%@%@", @"TEXT=", cardOwner];
+  
+    NSString *pan = [NSString stringWithFormat:@"%@%@", @"$PAN=", cardView.number];
+    NSString *cvc = [NSString stringWithFormat:@"%@%@", @"$CVC=", cardView.secureCode];
+    NSString *month = [NSString stringWithFormat:@"%@%@", @"MM=", cardView.getMonthFromExpirationDate];
+    NSString *year = [NSString stringWithFormat:@"%@%@", @"YYYY=", cardView.getFullYearFromExpirationDate];
+  
+    NSString *threeDSSDKEncData = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEncData=", RequestParams.shared.deviceData];
+    NSString *threeDSSDKEphemPubKey = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEphemPubKey=", RequestParams.shared.ephemeralPublicKey];
+    NSString *threeDSSDKAppId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKAppId=", RequestParams.shared.appId];
+    NSString *threeDSSDKTransId = [NSString stringWithFormat:@"%@%@", @" threeDSSDKTransId=", RequestParams.shared.transactionId];
+    NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
+    NSString *seTokenParam = [NSString stringWithFormat:@"%@%@", @"seToken=", seToken];
+  
+    NSString *parameters = [self _urlParameters:@[mdOrder, threeDSSDK, language, owner, @"bindingNotNeeded=false", threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId, pan, cvc, month, year]];
+
+    NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];
+  
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+
+    request.HTTPMethod = @"POST";
+    [request setHTTPBody:postData];
+  
+    NSURLSession *session = [NSURLSession sharedSession];
+
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+      if(httpResponse.statusCode != 200) {
+        self->_cardKPaymentError.massage = @"Ошибка запроса данных формы";
+        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
+
+        return;
+      }
+      
+      NSError *parseError = nil;
+      NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
     }];
     [dataTask resume];
   }
@@ -250,9 +315,7 @@
       NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
       if(httpResponse.statusCode == 200) {
-  //          NSError *parseError = nil;
-  //          NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-  //          handler(responseDictionary);
+
       }
   }];
   [dataTask resume];
@@ -275,52 +338,11 @@
       NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
       if(httpResponse.statusCode == 200) {
-  //          NSError *parseError = nil;
-  //          NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-  //          handler(responseDictionary);
+
       }
   }];
   [dataTask resume];
 }
-
-- (void)sePayment {
-  
-}
-
-- (void)_sePayment {
-  NSString *seToken = [NSString stringWithFormat:@"%@%@", @"seToken=", _seToken];
-  NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
-  NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", _userName];
-  NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", _password];
-  NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"YES"];
-  
-  NSString *parameters = [self _urlParameters:@[seToken, mdOrder, userName, password, threeDSSDK]];
-  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-  
-
-  NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/paymentorder.do"];
-
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
-
-  request.HTTPMethod = @"POST";
-  [request setHTTPBody:postData];
-
-  NSURLSession *session = [NSURLSession sharedSession];
-
-  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-      if(httpResponse.statusCode == 200) {
-        NSError *parseError = nil;
-        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-      }
-  }];
-  [dataTask resume];
-}
-
-- (void)_sePaymentStep2 {
-}
-
 
 // CardKDelegate
 - (void)cardKPaymentView:(nonnull CardKPaymentView *)paymentView didAuthorizePayment:(nonnull PKPayment *)pKPayment {
@@ -332,7 +354,7 @@
   _seToken = seToken;
   if (isNewCard) {
     CardKViewController *cardKViewController = (CardKViewController *) controller;
-    [self _getProcessFormRequest: [cardKViewController getCardKView]
+    [self _processFormRequest: [cardKViewController getCardKView]
                        cardOwner:[cardKViewController getCardOwner]
                         seToken:seToken
                         callback:^(NSDictionary * sessionStatus) {}];
