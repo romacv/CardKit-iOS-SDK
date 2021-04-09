@@ -21,9 +21,16 @@
 		9219F465232B8EF100841B98 /* CardKFooterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9219F463232B8EF100841B98 /* CardKFooterView.h */; };
 		9219F466232B8EF100841B98 /* CardKFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9219F464232B8EF100841B98 /* CardKFooterView.m */; };
 		922FE283261D9EB7005EE6A3 /* CardKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE282261D9EB7005EE6A3 /* CardKViewController.m */; };
-		922FE2CB261DCCC0005EE6A3 /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */; };
 		922FE2D8261DCCD6005EE6A3 /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */; };
 		922FE2D9261DCCD6005EE6A3 /* ThreeDSSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		922FE328261DFAAC005EE6A3 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922FE327261DFAAC005EE6A3 /* TransactionManager.swift */; };
+		922FE33D261ED515005EE6A3 /* ARes.h in Headers */ = {isa = PBXBuildFile; fileRef = 922FE33B261ED515005EE6A3 /* ARes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		922FE33E261ED515005EE6A3 /* ARes.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE33C261ED515005EE6A3 /* ARes.m */; };
+		922FE33F261ED515005EE6A3 /* ARes.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE33C261ED515005EE6A3 /* ARes.m */; };
+		922FE389261ED95C005EE6A3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922FE388261ED95C005EE6A3 /* API.swift */; };
+		922FE3A5261EF220005EE6A3 /* RequestParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 922FE3A3261EF220005EE6A3 /* RequestParams.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		922FE3A6261EF220005EE6A3 /* RequestParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE3A4261EF220005EE6A3 /* RequestParams.m */; };
+		922FE3A7261EF221005EE6A3 /* RequestParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE3A4261EF220005EE6A3 /* RequestParams.m */; };
 		9234CC4E247BC315009E3034 /* CardKValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 9234CC4C247BC315009E3034 /* CardKValidation.h */; };
 		9234CC4F247BC315009E3034 /* CardKValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9234CC4D247BC315009E3034 /* CardKValidation.m */; };
 		9234CC5A247FBCDD009E3034 /* CardKPaymentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9234CC58247FBCDD009E3034 /* CardKPaymentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -47,6 +54,11 @@
 		9245F8DD25B19A150065AF9E /* Luhn.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD8F92255D1AE9001E1ECF /* Luhn.h */; };
 		9248868E251885FB00CA81D5 /* SeTokenGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 9248868C251885FB00CA81D5 /* SeTokenGenerator.h */; };
 		9248868F251885FB00CA81D5 /* SeTokenGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9248868D251885FB00CA81D5 /* SeTokenGenerator.m */; };
+		927EEF24261F200800250EA0 /* TransactionManager-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 922FE32E261DFB0F005EE6A3 /* TransactionManager-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		927EEFB2261F2B1900250EA0 /* API-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 927EEFB1261F2B1900250EA0 /* API-Bridging-Header.h */; };
+		927EEFEF261F2E4500250EA0 /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */; };
+		927EEFF5261F2EB200250EA0 /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */; };
+		927EEFF6261F2EB200250EA0 /* ThreeDSSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9292CED0255E5FB100053EC3 /* CKCPubKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9007255D202E001E1ECF /* CKCPubKey.m */; };
 		9292CED5255E611F00053EC3 /* CKCPubKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD9006255D202E001E1ECF /* CKCPubKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9292CF4B255E9B2F00053EC3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF4A255E9B2F00053EC3 /* AppDelegate.m */; };
@@ -135,6 +147,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		927EEFF7261F2EB200250EA0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				927EEFF6261F2EB200250EA0 /* ThreeDSSDK.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -152,6 +175,13 @@
 		922FE281261D9EB7005EE6A3 /* CardKViewControllerInher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKViewControllerInher.h; sourceTree = "<group>"; };
 		922FE282261D9EB7005EE6A3 /* CardKViewController.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKViewController.m; sourceTree = "<group>"; tabWidth = 2; };
 		922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThreeDSSDK.xcframework; path = ../../sdk_3ds2_ios/build/ThreeDSSDK/ThreeDSSDK.xcframework; sourceTree = "<group>"; };
+		922FE327261DFAAC005EE6A3 /* TransactionManager.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; tabWidth = 2; };
+		922FE32E261DFB0F005EE6A3 /* TransactionManager-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TransactionManager-Bridging-Header.h"; sourceTree = "<group>"; };
+		922FE33B261ED515005EE6A3 /* ARes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARes.h; sourceTree = "<group>"; };
+		922FE33C261ED515005EE6A3 /* ARes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARes.m; sourceTree = "<group>"; };
+		922FE388261ED95C005EE6A3 /* API.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; tabWidth = 2; };
+		922FE3A3261EF220005EE6A3 /* RequestParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RequestParams.h; sourceTree = "<group>"; };
+		922FE3A4261EF220005EE6A3 /* RequestParams.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RequestParams.m; sourceTree = "<group>"; };
 		9234CC4C247BC315009E3034 /* CardKValidation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKValidation.h; sourceTree = "<group>"; };
 		9234CC4D247BC315009E3034 /* CardKValidation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKValidation.m; sourceTree = "<group>"; };
 		9234CC58247FBCDD009E3034 /* CardKPaymentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKPaymentView.h; sourceTree = "<group>"; };
@@ -164,6 +194,7 @@
 		924290BF255D5FE300378C68 /* CardKitCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardKitCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9248868C251885FB00CA81D5 /* SeTokenGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeTokenGenerator.h; sourceTree = "<group>"; };
 		9248868D251885FB00CA81D5 /* SeTokenGenerator.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = SeTokenGenerator.m; sourceTree = "<group>"; tabWidth = 2; };
+		927EEFB1261F2B1900250EA0 /* API-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "API-Bridging-Header.h"; sourceTree = "<group>"; };
 		9292CF47255E9B2F00053EC3 /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9292CF49255E9B2F00053EC3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9292CF4A255E9B2F00053EC3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -241,7 +272,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				922FE2CB261DCCC0005EE6A3 /* ThreeDSSDK.xcframework in Frameworks */,
+				927EEFEF261F2E4500250EA0 /* ThreeDSSDK.xcframework in Frameworks */,
 				920480ED261B034F00026C1F /* CardKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,6 +296,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				927EEFF5261F2EB200250EA0 /* ThreeDSSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +322,14 @@
 				92CB792C2616FCB600BE41E4 /* CardKPaymentInfo.m */,
 				92CB794C2617001D00BE41E4 /* CardKPaymentError.h */,
 				92CB794D2617001D00BE41E4 /* CardKPaymentError.m */,
+				922FE327261DFAAC005EE6A3 /* TransactionManager.swift */,
+				922FE32E261DFB0F005EE6A3 /* TransactionManager-Bridging-Header.h */,
+				922FE33B261ED515005EE6A3 /* ARes.h */,
+				922FE33C261ED515005EE6A3 /* ARes.m */,
+				922FE388261ED95C005EE6A3 /* API.swift */,
+				927EEFB1261F2B1900250EA0 /* API-Bridging-Header.h */,
+				922FE3A3261EF220005EE6A3 /* RequestParams.h */,
+				922FE3A4261EF220005EE6A3 /* RequestParams.m */,
 			);
 			path = PaymentFlow;
 			sourceTree = "<group>";
@@ -337,6 +377,13 @@
 				920312C2255D6562006FBED7 /* info.plist */,
 			);
 			path = CardKitCore;
+			sourceTree = "<group>";
+		};
+		927EEFF4261F2EB200250EA0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		9292CF48255E9B2F00053EC3 /* TestApp */ = {
@@ -388,6 +435,7 @@
 				9292CF6F255E9B3000053EC3 /* TestAppUITests */,
 				920480E9261B034F00026C1F /* CardKitTests */,
 				D245AB3A231C435E00369747 /* Products */,
+				927EEFF4261F2EB200250EA0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -471,6 +519,8 @@
 			files = (
 				92E247F6247676A900C2EF6C /* ConfirmChoosedCard.h in Headers */,
 				92985C85246A96F4009B7392 /* CardKSwitchView.h in Headers */,
+				927EEFB2261F2B1900250EA0 /* API-Bridging-Header.h in Headers */,
+				927EEF24261F200800250EA0 /* TransactionManager-Bridging-Header.h in Headers */,
 				9234CC4E247BC315009E3034 /* CardKValidation.h in Headers */,
 				92E247F22475481700C2EF6C /* CardKBinding.h in Headers */,
 				92365727260E073000913228 /* CardKPaymentFlowController.h in Headers */,
@@ -488,10 +538,12 @@
 				9234CC5A247FBCDD009E3034 /* CardKPaymentView.h in Headers */,
 				D269080D231FA894001CB863 /* CardKTextField.h in Headers */,
 				D2D0B35E2320E3AC0007B3B9 /* CardKBankLogoView.h in Headers */,
+				922FE33D261ED515005EE6A3 /* ARes.h in Headers */,
 				9236573A260E0E0200913228 /* API.h in Headers */,
 				D245ABBC231C449F00369747 /* CardKViewController.h in Headers */,
 				92CB794E2617001D00BE41E4 /* CardKPaymentError.h in Headers */,
 				D245AB4A231C435E00369747 /* CardKit.h in Headers */,
+				922FE3A5261EF220005EE6A3 /* RequestParams.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +613,7 @@
 				9292CF43255E9B2F00053EC3 /* Sources */,
 				9292CF44255E9B2F00053EC3 /* Frameworks */,
 				9292CF45255E9B2F00053EC3 /* Resources */,
+				927EEFF7261F2EB200250EA0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -601,6 +654,7 @@
 				TargetAttributes = {
 					920480E7261B034F00026C1F = {
 						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1240;
 						TestTargetID = 9292CF46255E9B2F00053EC3;
 					};
 					924290B6255D5FE200378C68 = {
@@ -700,6 +754,8 @@
 				922FE283261D9EB7005EE6A3 /* CardKViewController.m in Sources */,
 				92048133261B04FB00026C1F /* CardKPaymentFlowControllerTest.m in Sources */,
 				9204814F261B056900026C1F /* PaymentFlowController.m in Sources */,
+				922FE3A7261EF221005EE6A3 /* RequestParams.m in Sources */,
+				922FE33F261ED515005EE6A3 /* ARes.m in Sources */,
 				920480EB261B034F00026C1F /* CardKitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -751,6 +807,8 @@
 				9219F466232B8EF100841B98 /* CardKFooterView.m in Sources */,
 				92365728260E073000913228 /* CardKPaymentFlowController.m in Sources */,
 				92E247F7247676A900C2EF6C /* ConfirmChoosedCard.m in Sources */,
+				922FE389261ED95C005EE6A3 /* API.swift in Sources */,
+				922FE33E261ED515005EE6A3 /* ARes.m in Sources */,
 				D269080E231FA894001CB863 /* CardKTextField.m in Sources */,
 				9234CC5B247FBCDD009E3034 /* CardKPaymentView.m in Sources */,
 				92985C8A246BEE1E009B7392 /* CardKKindPaymentViewController.m in Sources */,
@@ -759,10 +817,12 @@
 				92CB792E2616FCB600BE41E4 /* CardKPaymentInfo.m in Sources */,
 				9245F8D125B19A0D0065AF9E /* Luhn.m in Sources */,
 				920072DA2615E43F0014F864 /* CardKPaymentSessionStatus.m in Sources */,
+				922FE3A6261EF220005EE6A3 /* RequestParams.m in Sources */,
 				D245ABC9231C529D00369747 /* CardKTheme.m in Sources */,
 				92E247F32475481700C2EF6C /* CardKBinding.m in Sources */,
 				9234CC4F247BC315009E3034 /* CardKValidation.m in Sources */,
 				D245ABBD231C449F00369747 /* CardKViewController.m in Sources */,
+				922FE328261DFAAC005EE6A3 /* TransactionManager.swift in Sources */,
 				92429134255D610700378C68 /* RSA.m in Sources */,
 				92A1461B23435C6B002FBCC3 /* CardKConfig.m in Sources */,
 				929BA32525591CFC00AB0526 /* TextField.m in Sources */,
@@ -830,6 +890,8 @@
 		920480F1261B034F00026C1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FD6ZML48V9;
@@ -842,6 +904,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.anjlab.CardKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CardKit/PaymentFlow/CardKitTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApp.app/TestApp";
 			};
@@ -850,6 +915,8 @@
 		920480F2261B034F00026C1F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FD6ZML48V9;
@@ -862,6 +929,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.anjlab.CardKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CardKit/PaymentFlow/CardKitTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApp.app/TestApp";
 			};
