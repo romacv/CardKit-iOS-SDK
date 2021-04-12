@@ -27,10 +27,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString *threeDSSDKKey;
 @property NSString *cliendId;
 
-@property NSString *deviceData;
-@property NSString *ephemeralPublicKey;
-@property NSString *appId;
-@property NSString *transactionId;
+@property NSString *threeDSSDKEncData;
+@property NSString *threeDSSDKEphemPubKey;
+@property NSString *threeDSSDKAppId;
+@property NSString *threeDSSDKTransId;
 
 @property (class, readonly, strong, nonatomic) RequestParams *shared;
 

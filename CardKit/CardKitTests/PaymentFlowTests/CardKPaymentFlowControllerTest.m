@@ -77,7 +77,7 @@
   [dataTask resume];
   
   
-  [self waitForExpectations:@[payment.moveChoosePaymentMethodControllerExpectation] timeout:30];
+    [self waitForExpectations:@[payment.moveChoosePaymentMethodControllerExpectation] timeout:30];
 }
 
 @end

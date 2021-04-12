@@ -45,7 +45,7 @@
     
     CardKCardView *cardView = [[CardKCardView alloc] init];
     
-    cardView.number = @"4777777777777778";
+    cardView.number = @"5777777777777775";
     cardView.secureCode = @"123";
     cardView.expirationDate = @"1224";
     

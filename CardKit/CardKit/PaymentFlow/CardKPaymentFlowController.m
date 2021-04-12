@@ -15,6 +15,7 @@
 #import <ThreeDSSDK/ThreeDSSDK.h>
 
 #import <CardKit/CardKit-Swift.h>
+#import "ARes.h"
 
 @implementation CardKPaymentFlowController {
   CardKKindPaymentViewController *_controller;
@@ -181,22 +182,17 @@
 
 - (void) _processFormRequest:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
-    NSString *pan = [NSString stringWithFormat:@"%@%@", @"$PAN=", cardView.number];
-    NSString *cvc = [NSString stringWithFormat:@"%@%@", @"$CVC=", cardView.secureCode];
-    NSString *month = [NSString stringWithFormat:@"%@%@", @"MM=", cardView.getMonthFromExpirationDate];
-    NSString *year = [NSString stringWithFormat:@"%@%@", @"YYYY=", cardView.getFullYearFromExpirationDate];
     NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
     NSString *owner = [NSString stringWithFormat:@"%@%@", @"TEXT=", cardOwner];
-  NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"true"];
-  
-    NSString *parameters = [self _urlParameters:@[mdOrder, pan, cvc, month, year, language, owner, @"bindingNotNeeded=false", threeDSSDK]];
+    NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"true"];
 
-    NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *seTokenParam = [NSString stringWithFormat:@"%@%@", @"seToken=", [seToken stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]];
+    NSString *parameters = [self _urlParameters:@[mdOrder, seTokenParam, language, owner, @"bindingNotNeeded=false", threeDSSDK]];
     NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];
-  
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
-
     request.HTTPMethod = @"POST";
+  
+    NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     [request setHTTPBody:postData];
   
     NSURLSession *session = [NSURLSession sharedSession];
@@ -237,11 +233,10 @@
           [self->_transactionManager showProgressDialog];
           NSDictionary *reqParams = [self->_transactionManager getAuthRequestParameters];
           
-          RequestParams.shared.deviceData = reqParams[@"deviceData"];
-          RequestParams.shared.ephemeralPublicKey = reqParams[@"ephemeralPublicKey"];
-          RequestParams.shared.appId = reqParams[@"appId"];
-          RequestParams.shared.transactionId = reqParams[@"transactionId"];
-          
+          RequestParams.shared.threeDSSDKEncData = reqParams[@"threeDSSDKEncData"];
+          RequestParams.shared.threeDSSDKEphemPubKey = reqParams[@"threeDSSDKEphemPubKey"];
+          RequestParams.shared.threeDSSDKAppId = reqParams[@"threeDSSDKAppId"];
+          RequestParams.shared.threeDSSDKTransId = reqParams[@"threeDSSDKTransId"];
 
           [self _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler];
         });
@@ -256,19 +251,15 @@
     NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
     NSString *owner = [NSString stringWithFormat:@"%@%@", @"TEXT=", cardOwner];
   
-    NSString *pan = [NSString stringWithFormat:@"%@%@", @"$PAN=", cardView.number];
-    NSString *cvc = [NSString stringWithFormat:@"%@%@", @"$CVC=", cardView.secureCode];
-    NSString *month = [NSString stringWithFormat:@"%@%@", @"MM=", cardView.getMonthFromExpirationDate];
-    NSString *year = [NSString stringWithFormat:@"%@%@", @"YYYY=", cardView.getFullYearFromExpirationDate];
+    NSString *seTokenParam = [NSString stringWithFormat:@"%@%@", @"seToken=", [seToken stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]];
   
-    NSString *threeDSSDKEncData = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEncData=", RequestParams.shared.deviceData];
-    NSString *threeDSSDKEphemPubKey = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEphemPubKey=", RequestParams.shared.ephemeralPublicKey];
-    NSString *threeDSSDKAppId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKAppId=", RequestParams.shared.appId];
-    NSString *threeDSSDKTransId = [NSString stringWithFormat:@"%@%@", @" threeDSSDKTransId=", RequestParams.shared.transactionId];
+    NSString *threeDSSDKEncData = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEncData=", RequestParams.shared.threeDSSDKEncData];
+    NSString *threeDSSDKEphemPubKey = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEphemPubKey=", RequestParams.shared.threeDSSDKEphemPubKey];
+    NSString *threeDSSDKAppId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKAppId=", RequestParams.shared.threeDSSDKAppId];
+    NSString *threeDSSDKTransId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKTransId=", RequestParams.shared.threeDSSDKTransId];
     NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
-    NSString *seTokenParam = [NSString stringWithFormat:@"%@%@", @"seToken=", seToken];
   
-    NSString *parameters = [self _urlParameters:@[mdOrder, threeDSSDK, language, owner, @"bindingNotNeeded=false", threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId, pan, cvc, month, year]];
+    NSString *parameters = [self _urlParameters:@[mdOrder, threeDSSDK, language, owner, @"bindingNotNeeded=false", threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId, seTokenParam]];
 
     NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];
@@ -283,7 +274,7 @@
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
       NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
-      if(httpResponse.statusCode != 200) {
+      if (httpResponse.statusCode != 200) {
         self->_cardKPaymentError.massage = @"Ошибка запроса данных формы";
         [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
 
@@ -292,6 +283,29 @@
       
       NSError *parseError = nil;
       NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+
+      NSString *redirect = [responseDictionary objectForKey:@"redirect"];
+      BOOL is3DSVer2 = (BOOL)[responseDictionary[@"is3DSVer2"] boolValue];
+      NSString *errorMessage = [responseDictionary objectForKey:@"error"];
+      NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
+      
+      if (errorCode != 0) {
+        self->_cardKPaymentError.massage = errorMessage;
+        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
+        [self->_transactionManager closeProgressDialog];
+      } else if (redirect != nil) {
+        self->_cardKPaymentError.massage = redirect;
+        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
+        [self->_transactionManager closeProgressDialog];
+      } else if (is3DSVer2){
+        ARes *aRes = [[ARes alloc] init];
+        aRes.acsTransID = [responseDictionary objectForKey:@"threeDSAcsTransactionId"];
+        aRes.acsReferenceNumber = [responseDictionary objectForKey:@"threeDSAcsRefNumber"];
+        aRes.acsSignedContent = [responseDictionary objectForKey:@"threeDSAcsSignedContent"];
+        aRes.threeDSServerTransID = RequestParams.shared.threeDSServerTransId;
+
+        [self->_transactionManager handleResponseWithResponseObject:aRes];
+      }
     }];
     [dataTask resume];
   }

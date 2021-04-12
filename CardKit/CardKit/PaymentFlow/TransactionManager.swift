@@ -118,11 +118,12 @@ import ThreeDSSDK
   @objc public func getAuthRequestParameters() -> [NSString: Any]? {
     do {
       let authRequestParams = try self._sdkTransaction?.getAuthenticationRequestParameters()
+    
       return [
-        "deviceData": authRequestParams?.getDeviceData() ?? "",
-        "ephemeralPublicKey": authRequestParams?.getSDKEphemeralPublicKey() ?? "",
-        "appId": authRequestParams?.getSDKAppID() ?? "",
-        "transactionId": authRequestParams?.getSDKTransactionID() ?? ""
+        "threeDSSDKEncData": authRequestParams?.getDeviceData() ?? "",
+        "threeDSSDKEphemPubKey": authRequestParams?.getSDKEphemeralPublicKey() ?? "",
+        "threeDSSDKAppId": authRequestParams?.getSDKAppID() ?? "",
+        "threeDSSDKTransId": authRequestParams?.getSDKTransactionID() ?? ""
       ];
     } catch  {
       return nil;
