@@ -69,11 +69,9 @@ class API {
 
     let body = [
       "threeDSServerTransId": params.threeDSServerTransId,
-      "userName": params.userName,
-      "password": params.password,
     ];
 
-    var request = URLRequest(url: URL(string: "\(url)/rest/finish3dsVer2Payment.do")!)
+    var request = URLRequest(url: URL(string: "\(url)/rest/finish3dsVer2PaymentAnonymous.do")!)
     request.httpMethod = "POST"
     request.allHTTPHeaderFields = headers
     request.encodeParameters(parameters: body)

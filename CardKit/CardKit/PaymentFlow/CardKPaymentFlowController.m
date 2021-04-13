@@ -45,9 +45,11 @@
       [_spinner startAnimating];
       
       _cardKPaymentError = [[CardKPaymentError alloc] init];
+
       _url = @"https://web.rbsdev.com/soyuzpayment";
       
       _transactionManager = [[TransactionManager alloc] init];
+      _transactionManager.delegate = self;
     }
     return self;
   }
@@ -310,6 +312,10 @@
     [dataTask resume];
   }
 
+- (void)finish3dsPayment:(NSString *) transactionStatus {
+  
+}
+
 - (void)_getFinishedPaymentInfo {
   NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"orderId=", CardKConfig.shared.mdOrder];
   NSString *withCart = [NSString stringWithFormat:@"%@%@", @"withCart=", @"NO"];
@@ -410,4 +416,16 @@
 - (void)encodeWithCoder:(nonnull NSCoder *)coder {
   
 }
+- (void)cancelled {
+  
+}
+
+- (void)completedWithTransactionStatus:(NSString *) transactionStatus {
+
+}
+
+- (void)errorEventReceived {
+  
+}
+
 @end

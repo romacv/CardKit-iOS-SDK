@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+//#import "CardKit/CardKit-Swift.h"
+//#import 
 #import "CardKViewController.h"
 #import "CardKPaymentInfo.h"
 #import "CardKPaymentError.h"
 #import "RequestParams.h"
+@class TransactionManager;
+@protocol TransactionManagerDelegate;
 
 @protocol CardKPaymentFlowDelegate <NSObject>
 
@@ -19,7 +23,7 @@
 
 @end
 
-@interface CardKPaymentFlowController: UIViewController<CardKDelegate>
+@interface CardKPaymentFlowController: UIViewController<CardKDelegate, TransactionManagerDelegate>
   @property (weak, nonatomic) id<CardKPaymentFlowDelegate> cardKPaymentFlowDelegate;
 
   @property NSString* userName;

@@ -11,17 +11,13 @@ import UIKit
 import ThreeDSSDK
 
 @objc public protocol TransactionManagerDelegate {
-    func errorEventReceived()
-}
-
-@objc protocol AddLogDelegate {
-  func addLog(title: String, request: String, response: String, isReload: Bool) -> Void
+  func errorEventReceived()
+  func cancelled()
+  func completed(transactionStatus: NSString)
 }
 
 @objc public class TransactionManager: NSObject, ChallengeStatusReceiver {
-    weak var delegateAddLog: AddLogDelegate?
-    weak var delegate: TransactionManagerDelegate?
-
+    @objc public weak var delegate: TransactionManagerDelegate?
     static var sdkProgressDialog: ProgressDialog? = nil
 
     @objc public var pubKey: String = ""
@@ -165,26 +161,6 @@ import ThreeDSSDK
       }
     }
 
-    public func completed(completionEvent e: CompletionEvent) {
-      let transactionStatus : String? = e.getTransactionStatus()
-      
-      API.finishOrder(params: RequestParams.shared) { (data, response) in
-        API.fetchOrderStatus(params: RequestParams.shared) {(data, response) in
-        }
-      }
-
-      var strMessage : String = ""
-
-      switch transactionStatus {
-        case "Y"?:
-          strMessage = "Status Y"
-        case "N"?:
-          strMessage = "Status N"
-        default:
-          strMessage = "Status unknow"
-      }
-    }
-
     @objc public func showProgressDialog() {
       TransactionManager.sdkProgressDialog?.show();
     }
@@ -192,46 +168,32 @@ import ThreeDSSDK
     @objc public func closeProgressDialog() {
       TransactionManager.sdkProgressDialog?.close();
     }
-  
-    public func close() {
-      do {
-        try _sdkTransaction?.close()
-      } catch {
-        
-      }
-    }
-    
-    private func _reloadTable() {
-      self._notificationCenter.post(name: Notification.Name("_reloadTable"), object: nil)
-    }
-
 }
 
 extension TransactionManager {
+  public func completed(completionEvent e: CompletionEvent) {
+    let transactionStatus: NSString = e.getTransactionStatus() as NSString
+    
+    delegate?.completed(transactionStatus: transactionStatus)
+  }
+  
   public func cancelled() {
-    self._reloadTable()
     testFinished()
+    delegate?.cancelled()
   }
 
   public func timedout() {
-    
-    
     delegate?.errorEventReceived()
-    self._reloadTable()
     testFinished()
   }
 
   public func protocolError(protocolErrorEvent e: ProtocolErrorEvent) {
-    
-
     delegate?.errorEventReceived()
-    self._reloadTable()
     testFinished()
   }
   
   public func runtimeError(runtimeErrorEvent: RuntimeErrorEvent) {
     delegate?.errorEventReceived()
-    self._reloadTable()
     testFinished()
   }
 }
