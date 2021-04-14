@@ -14,9 +14,9 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "920480E7261B034F00026C1F"
-               BuildableName = "CardKitTests.xctest"
-               BlueprintName = "CardKitTests"
+               BlueprintIdentifier = "924290BE255D5FE300378C68"
+               BuildableName = "CardKitCoreTests.xctest"
+               BlueprintName = "CardKitCoreTests"
                ReferencedContainer = "container:CardKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,29 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "920480E7261B034F00026C1F"
-               BuildableName = "CardKitTests.xctest"
-               BlueprintName = "CardKitTests"
-               ReferencedContainer = "container:CardKit.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "922A8FEE2625985D00B6FC4F"
-               BuildableName = "TestAppUITests.xctest"
-               BlueprintName = "TestAppUITests"
-               ReferencedContainer = "container:CardKit.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "922A900C26259A9F00B6FC4F"
-               BuildableName = "CardKitUITests.xctest"
-               BlueprintName = "CardKitUITests"
+               BlueprintIdentifier = "924290BE255D5FE300378C68"
+               BuildableName = "CardKitCoreTests.xctest"
+               BlueprintName = "CardKitCoreTests"
                ReferencedContainer = "container:CardKit.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -77,15 +57,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "920480E7261B034F00026C1F"
-            BuildableName = "CardKitTests.xctest"
-            BlueprintName = "CardKitTests"
-            ReferencedContainer = "container:CardKit.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
