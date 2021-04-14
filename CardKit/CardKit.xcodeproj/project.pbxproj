@@ -205,8 +205,6 @@
 		9292CF58255E9B3000053EC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9292CF5A255E9B3000053EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9292CF5B255E9B3000053EC3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		9292CF65255E9B3000053EC3 /* TestAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestAppTests.m; sourceTree = "<group>"; };
-		9292CF67255E9B3000053EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92985C83246A96F4009B7392 /* CardKSwitchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKSwitchView.h; sourceTree = "<group>"; };
 		92985C84246A96F4009B7392 /* CardKSwitchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKSwitchView.m; sourceTree = "<group>"; };
 		92985C87246BEE1E009B7392 /* CardKKindPaymentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKKindPaymentViewController.h; sourceTree = "<group>"; };
@@ -400,15 +398,6 @@
 			path = TestApp;
 			sourceTree = "<group>";
 		};
-		9292CF64255E9B3000053EC3 /* TestAppTests */ = {
-			isa = PBXGroup;
-			children = (
-				9292CF65255E9B3000053EC3 /* TestAppTests.m */,
-				9292CF67255E9B3000053EC3 /* Info.plist */,
-			);
-			path = TestAppTests;
-			sourceTree = "<group>";
-		};
 		D245AB2F231C435E00369747 = {
 			isa = PBXGroup;
 			children = (
@@ -418,7 +407,6 @@
 				D245AB3B231C435E00369747 /* CardKit */,
 				924290B8255D5FE200378C68 /* CardKitCore */,
 				9292CF48255E9B2F00053EC3 /* TestApp */,
-				9292CF64255E9B3000053EC3 /* TestAppTests */,
 				920480E9261B034F00026C1F /* CardKitTests */,
 				D245AB3A231C435E00369747 /* Products */,
 				927EEFF4261F2EB200250EA0 /* Frameworks */,
