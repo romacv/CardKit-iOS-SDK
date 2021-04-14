@@ -115,6 +115,13 @@
 			remoteGlobalIDString = 924290B6255D5FE200378C68;
 			remoteInfo = CardKitCore;
 		};
+		922A91E22627104600B6FC4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D245AB30231C435E00369747 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9292CF46255E9B2F00053EC3;
+			remoteInfo = TestApp;
+		};
 		922FE298261DAB89005EE6A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D245AB30231C435E00369747 /* Project object */;
@@ -558,6 +565,7 @@
 			);
 			dependencies = (
 				922A91DB26270F2300B6FC4F /* PBXTargetDependency */,
+				922A91E32627104600B6FC4F /* PBXTargetDependency */,
 			);
 			name = CardKitCoreTests;
 			productName = CardKitCoreTests;
@@ -636,6 +644,7 @@
 					};
 					922A91D326270F2300B6FC4F = {
 						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 9292CF46255E9B2F00053EC3;
 					};
 					924290B6255D5FE200378C68 = {
 						CreatedOnToolsVersion = 12.1;
@@ -815,6 +824,11 @@
 			target = 924290B6255D5FE200378C68 /* CardKitCore */;
 			targetProxy = 922A91DA26270F2300B6FC4F /* PBXContainerItemProxy */;
 		};
+		922A91E32627104600B6FC4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9292CF46255E9B2F00053EC3 /* TestApp */;
+			targetProxy = 922A91E22627104600B6FC4F /* PBXContainerItemProxy */;
+		};
 		922FE299261DAB89005EE6A3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9292CF46255E9B2F00053EC3 /* TestApp */;
@@ -922,6 +936,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.anjlab.CardKitCoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApp.app/TestApp";
 			};
 			name = Debug;
 		};
@@ -941,6 +956,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.anjlab.CardKitCoreTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApp.app/TestApp";
 			};
 			name = Release;
 		};
