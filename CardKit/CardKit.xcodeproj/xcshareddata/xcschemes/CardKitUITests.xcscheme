@@ -14,9 +14,9 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "920480E7261B034F00026C1F"
-               BuildableName = "CardKitTests.xctest"
-               BlueprintName = "CardKitTests"
+               BlueprintIdentifier = "922A902126259AC400B6FC4F"
+               BuildableName = "CardKitUITests.xctest"
+               BlueprintName = "CardKitUITests"
                ReferencedContainer = "container:CardKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,27 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "920480E7261B034F00026C1F"
-               BuildableName = "CardKitTests.xctest"
-               BlueprintName = "CardKitTests"
-               ReferencedContainer = "container:CardKit.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "922A8FEE2625985D00B6FC4F"
-               BuildableName = "TestAppUITests.xctest"
-               BlueprintName = "TestAppUITests"
-               ReferencedContainer = "container:CardKit.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "922A900C26259A9F00B6FC4F"
+               BlueprintIdentifier = "922A902126259AC400B6FC4F"
                BuildableName = "CardKitUITests.xctest"
                BlueprintName = "CardKitUITests"
                ReferencedContainer = "container:CardKit.xcodeproj">
@@ -64,6 +44,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      enableThreadSanitizer = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -80,9 +61,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "920480E7261B034F00026C1F"
-            BuildableName = "CardKitTests.xctest"
-            BlueprintName = "CardKitTests"
+            BlueprintIdentifier = "922A902126259AC400B6FC4F"
+            BuildableName = "CardKitUITests.xctest"
+            BlueprintName = "CardKitUITests"
             ReferencedContainer = "container:CardKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

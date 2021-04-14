@@ -62,9 +62,7 @@
 		9292CED0255E5FB100053EC3 /* CKCPubKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9007255D202E001E1ECF /* CKCPubKey.m */; };
 		9292CED5255E611F00053EC3 /* CKCPubKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD9006255D202E001E1ECF /* CKCPubKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9292CF4B255E9B2F00053EC3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF4A255E9B2F00053EC3 /* AppDelegate.m */; };
-		9292CF4E255E9B2F00053EC3 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF4D255E9B2F00053EC3 /* SceneDelegate.m */; };
 		9292CF51255E9B2F00053EC3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF50255E9B2F00053EC3 /* ViewController.m */; };
-		9292CF54255E9B2F00053EC3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9292CF52255E9B2F00053EC3 /* Main.storyboard */; };
 		9292CF56255E9B3000053EC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9292CF55255E9B3000053EC3 /* Assets.xcassets */; };
 		9292CF59255E9B3000053EC3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9292CF57255E9B3000053EC3 /* LaunchScreen.storyboard */; };
 		9292CF5C255E9B3000053EC3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF5B255E9B3000053EC3 /* main.m */; };
@@ -172,6 +170,7 @@
 		9204815F261B05F300026C1F /* PaymentFlowController.h */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.h; path = PaymentFlowController.h; sourceTree = "<group>"; tabWidth = 2; };
 		9219F463232B8EF100841B98 /* CardKFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKFooterView.h; sourceTree = "<group>"; };
 		9219F464232B8EF100841B98 /* CardKFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKFooterView.m; sourceTree = "<group>"; };
+		922A912D2625D5A000B6FC4F /* TestApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TestApp.entitlements; sourceTree = "<group>"; };
 		922FE281261D9EB7005EE6A3 /* CardKViewControllerInher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKViewControllerInher.h; sourceTree = "<group>"; };
 		922FE282261D9EB7005EE6A3 /* CardKViewController.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKViewController.m; sourceTree = "<group>"; tabWidth = 2; };
 		922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThreeDSSDK.xcframework; path = ../../sdk_3ds2_ios/build/ThreeDSSDK/ThreeDSSDK.xcframework; sourceTree = "<group>"; };
@@ -199,7 +198,6 @@
 		9292CF49255E9B2F00053EC3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9292CF4A255E9B2F00053EC3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9292CF4C255E9B2F00053EC3 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		9292CF4D255E9B2F00053EC3 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		9292CF4F255E9B2F00053EC3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		9292CF50255E9B2F00053EC3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9292CF53255E9B2F00053EC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -209,8 +207,6 @@
 		9292CF5B255E9B3000053EC3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9292CF65255E9B3000053EC3 /* TestAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestAppTests.m; sourceTree = "<group>"; };
 		9292CF67255E9B3000053EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9292CF70255E9B3000053EC3 /* TestAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestAppUITests.m; sourceTree = "<group>"; };
-		9292CF72255E9B3000053EC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92985C83246A96F4009B7392 /* CardKSwitchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKSwitchView.h; sourceTree = "<group>"; };
 		92985C84246A96F4009B7392 /* CardKSwitchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKSwitchView.m; sourceTree = "<group>"; };
 		92985C87246BEE1E009B7392 /* CardKKindPaymentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKKindPaymentViewController.h; sourceTree = "<group>"; };
@@ -389,10 +385,10 @@
 		9292CF48255E9B2F00053EC3 /* TestApp */ = {
 			isa = PBXGroup;
 			children = (
+				922A912D2625D5A000B6FC4F /* TestApp.entitlements */,
 				9292CF49255E9B2F00053EC3 /* AppDelegate.h */,
 				9292CF4A255E9B2F00053EC3 /* AppDelegate.m */,
 				9292CF4C255E9B2F00053EC3 /* SceneDelegate.h */,
-				9292CF4D255E9B2F00053EC3 /* SceneDelegate.m */,
 				9292CF4F255E9B2F00053EC3 /* ViewController.h */,
 				9292CF50255E9B2F00053EC3 /* ViewController.m */,
 				9292CF52255E9B2F00053EC3 /* Main.storyboard */,
@@ -413,15 +409,6 @@
 			path = TestAppTests;
 			sourceTree = "<group>";
 		};
-		9292CF6F255E9B3000053EC3 /* TestAppUITests */ = {
-			isa = PBXGroup;
-			children = (
-				9292CF70255E9B3000053EC3 /* TestAppUITests.m */,
-				9292CF72255E9B3000053EC3 /* Info.plist */,
-			);
-			path = TestAppUITests;
-			sourceTree = "<group>";
-		};
 		D245AB2F231C435E00369747 = {
 			isa = PBXGroup;
 			children = (
@@ -432,7 +419,6 @@
 				924290B8255D5FE200378C68 /* CardKitCore */,
 				9292CF48255E9B2F00053EC3 /* TestApp */,
 				9292CF64255E9B3000053EC3 /* TestAppTests */,
-				9292CF6F255E9B3000053EC3 /* TestAppUITests */,
 				920480E9261B034F00026C1F /* CardKitTests */,
 				D245AB3A231C435E00369747 /* Products */,
 				927EEFF4261F2EB200250EA0 /* Frameworks */,
@@ -649,6 +635,7 @@
 		D245AB30231C435E00369747 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = AnjLab;
 				TargetAttributes = {
@@ -730,7 +717,6 @@
 			files = (
 				9292CF59255E9B3000053EC3 /* LaunchScreen.storyboard in Resources */,
 				9292CF56255E9B3000053EC3 /* Assets.xcassets in Resources */,
-				9292CF54255E9B2F00053EC3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -791,7 +777,6 @@
 				9292CF51255E9B2F00053EC3 /* ViewController.m in Sources */,
 				9292CF4B255E9B2F00053EC3 /* AppDelegate.m in Sources */,
 				9292CF5C255E9B3000053EC3 /* main.m in Sources */,
-				9292CF4E255E9B2F00053EC3 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -891,6 +876,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -916,6 +902,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1033,13 +1020,15 @@
 		9292CF74255E9B3000053EC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = TestApp/TestApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FD6ZML48V9;
 				INFOPLIST_FILE = TestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1053,13 +1042,15 @@
 		9292CF75255E9B3000053EC3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = TestApp/TestApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FD6ZML48V9;
 				INFOPLIST_FILE = TestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

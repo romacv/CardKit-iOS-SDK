@@ -13,6 +13,8 @@
 #import "CardKPaymentSessionStatus.h"
 #import "SeTokenGenerator.h"
 #import "CardKViewControllerInher.h"
+#import "CardKPaymentSessionStatus.h"
+#import "CardKCardView.h"
 
 @interface CardKPaymentFlowController (Test)
   - (void)_sePayment;
@@ -21,6 +23,9 @@
   - (void)_sePaymentStep2;
   - (void)_sendRedirectError;
   - (void)_moveChoosePaymentMethodController;
+
+- (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler;
+- (void) _runChallange:(NSDictionary *) responseDictionary;
 
   - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *)) handler;
 @end
@@ -38,6 +43,25 @@
   - (void)_sendRedirectError {
     [super _sendRedirectError];
     [self.sendRedirectErrorExpectation fulfill];
+  }
+
+- (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
+  
+  [super _initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler];
+}
+
+  - (void) _runChallange:(NSDictionary *) responseDictionary {
+    [super _runChallange:(NSDictionary *) responseDictionary];
+    
+    double delayInSeconds = 10.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+      [self _fillForm];
+    });
+  }
+
+  - (void) _fillForm {
+    [_delegate fillForm];
   }
 
   - (void)_moveChoosePaymentMethodController {

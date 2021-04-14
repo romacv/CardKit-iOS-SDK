@@ -12,7 +12,15 @@
 #import "CardKit.h"
 #import "CardKPaymentSessionStatus.h"
 
+@protocol PaymentFlowControllerDelegate
+
+- (void)fillForm;
+
+@end
+
+
 @interface PaymentFlowController: CardKPaymentFlowController
+  @property (weak, nonatomic) id<PaymentFlowControllerDelegate> delegate;
   @property (weak, nonatomic) id<CardKDelegate> cKitDelegate;
 
   @property (nullable) XCTestExpectation* sendErrorExpectation;
@@ -23,6 +31,10 @@
 
   @property (nullable) XCTestExpectation* moveChoosePaymentMethodControllerExpectation;
   - (void)_moveChoosePaymentMethodController;
+
+  - (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler;
+
+  - (void) _runChallange:(NSDictionary *) responseDictionary;
 
   - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *)) handler;
 @end

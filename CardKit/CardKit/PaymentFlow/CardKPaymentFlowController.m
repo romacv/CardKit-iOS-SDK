@@ -90,31 +90,25 @@
     self->_cardKPaymentError.massage = @"Ошибка запроса статуса";
     [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [self.navigationController popViewControllerAnimated:YES];
-    });
+    [self.navigationController popViewControllerAnimated:YES];
   }
 
   - (void)_sendRedirectError {
     self->_cardKPaymentError.massage = self->_sessionStatus.redirect;
     [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [self.navigationController popViewControllerAnimated:YES];
-    });
+  
+    [self.navigationController popViewControllerAnimated:YES];
   }
   
   - (void)_moveChoosePaymentMethodController {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      UIViewController *sourceViewController = self;
-      UIViewController *destinationController = self->_controller;
-      UINavigationController *navigationController = sourceViewController.navigationController;
-      
-      [navigationController popToRootViewControllerAnimated:NO];
-      [navigationController pushViewController:destinationController animated:NO];
-      
-      [self->_spinner stopAnimating];
-    });
+    UIViewController *sourceViewController = self;
+    UIViewController *destinationController = self->_controller;
+    UINavigationController *navigationController = sourceViewController.navigationController;
+    
+    [navigationController popToRootViewControllerAnimated:NO];
+    [navigationController pushViewController:destinationController animated:NO];
+    
+    [self->_spinner stopAnimating];
   }
 
   - (void) _getSessionStatusRequest:(void (^)(CardKPaymentSessionStatus *)) handler {
@@ -128,6 +122,8 @@
     NSURLSession *session = [NSURLSession sharedSession];
     
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      
+      dispatch_async(dispatch_get_main_queue(), ^{
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
   
       if(httpResponse.statusCode != 200) {
@@ -152,8 +148,9 @@
       } else {
         [self _moveChoosePaymentMethodController];
       }
-      
-      handler(self->_sessionStatus);
+        
+        handler(self->_sessionStatus);
+      });
     }];
     [dataTask resume];
   }
@@ -182,6 +179,22 @@
     [dataTask resume];
   }
 
+- (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self->_transactionManager setUpUICustomizationWithIsDarkMode:NO error:nil];
+    [self->_transactionManager initializeSdk];
+    [self->_transactionManager showProgressDialog];
+    NSDictionary *reqParams = [self->_transactionManager getAuthRequestParameters];
+    
+    RequestParams.shared.threeDSSDKEncData = reqParams[@"threeDSSDKEncData"];
+    RequestParams.shared.threeDSSDKEphemPubKey = reqParams[@"threeDSSDKEphemPubKey"];
+    RequestParams.shared.threeDSSDKAppId = reqParams[@"threeDSSDKAppId"];
+    RequestParams.shared.threeDSSDKTransId = reqParams[@"threeDSSDKTransId"];
+
+    [self _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler];
+  });
+}
+
 - (void) _processFormRequest:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
     NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
@@ -200,12 +213,15 @@
     NSURLSession *session = [NSURLSession sharedSession];
 
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      
+      dispatch_async(dispatch_get_main_queue(), ^{
+        
       NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
+      
+        
       if(httpResponse.statusCode != 200) {
-        self->_cardKPaymentError.massage = @"Ошибка запроса данных формы";
-        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
-
+        [self _sendError];
         return;
       }
       
@@ -229,23 +245,24 @@
         RequestParams.shared.threeDSSDKKey = [responseDictionary objectForKey:@"threeDSSDKKey"];
 
         self->_transactionManager.pubKey = RequestParams.shared.threeDSSDKKey;
-        dispatch_async(dispatch_get_main_queue(), ^{
-          [self->_transactionManager setUpUICustomizationWithIsDarkMode:NO error:nil];
-          [self->_transactionManager initializeSdk];
-          [self->_transactionManager showProgressDialog];
-          NSDictionary *reqParams = [self->_transactionManager getAuthRequestParameters];
-          
-          RequestParams.shared.threeDSSDKEncData = reqParams[@"threeDSSDKEncData"];
-          RequestParams.shared.threeDSSDKEphemPubKey = reqParams[@"threeDSSDKEphemPubKey"];
-          RequestParams.shared.threeDSSDKAppId = reqParams[@"threeDSSDKAppId"];
-          RequestParams.shared.threeDSSDKTransId = reqParams[@"threeDSSDKTransId"];
-
-          [self _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler];
-        });
+       
+        [self _initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler];
       }
+      
+    });
     }];
     [dataTask resume];
   }
+
+- (void) _runChallange:(NSDictionary *) responseDictionary {
+  ARes *aRes = [[ARes alloc] init];
+  aRes.acsTransID = [responseDictionary objectForKey:@"threeDSAcsTransactionId"];
+  aRes.acsReferenceNumber = [responseDictionary objectForKey:@"threeDSAcsRefNumber"];
+  aRes.acsSignedContent = [responseDictionary objectForKey:@"threeDSAcsSignedContent"];
+  aRes.threeDSServerTransID = RequestParams.shared.threeDSServerTransId;
+
+  [self->_transactionManager handleResponseWithResponseObject:aRes];
+}
 
 - (void) _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
@@ -300,13 +317,7 @@
         [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
         [self->_transactionManager closeProgressDialog];
       } else if (is3DSVer2){
-        ARes *aRes = [[ARes alloc] init];
-        aRes.acsTransID = [responseDictionary objectForKey:@"threeDSAcsTransactionId"];
-        aRes.acsReferenceNumber = [responseDictionary objectForKey:@"threeDSAcsRefNumber"];
-        aRes.acsSignedContent = [responseDictionary objectForKey:@"threeDSAcsSignedContent"];
-        aRes.threeDSServerTransID = RequestParams.shared.threeDSServerTransId;
-
-        [self->_transactionManager handleResponseWithResponseObject:aRes];
+        [self _runChallange: responseDictionary];
       }
     }];
     [dataTask resume];
