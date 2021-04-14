@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "CardKit/CardKit-Swift.h"
-//#import 
+
 #import "CardKViewController.h"
 #import "CardKPaymentInfo.h"
 #import "CardKPaymentError.h"

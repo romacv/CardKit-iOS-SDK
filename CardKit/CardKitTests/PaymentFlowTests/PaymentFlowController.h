@@ -20,8 +20,8 @@
 
 
 @interface PaymentFlowController: CardKPaymentFlowController
-  @property (weak, nonatomic) id<PaymentFlowControllerDelegate> delegate;
-  @property (weak, nonatomic) id<CardKDelegate> cKitDelegate;
+  @property (weak, nonatomic, nullable) id<PaymentFlowControllerDelegate> delegate;
+  @property (weak, nonatomic, nullable) id<CardKDelegate> cKitDelegate;
 
   @property (nullable) XCTestExpectation* sendErrorExpectation;
   - (void) _sendError;
@@ -32,9 +32,9 @@
   @property (nullable) XCTestExpectation* moveChoosePaymentMethodControllerExpectation;
   - (void)_moveChoosePaymentMethodController;
 
-  - (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler;
+  - (void)_initSDK:(CardKCardView *_Nonnull) cardView cardOwner:(NSString *_Nonnull) cardOwner seToken:(NSString *_Nonnull) seToken callback: (void (^_Nonnull)(NSDictionary *_Nonnull)) handler;
 
-  - (void) _runChallange:(NSDictionary *) responseDictionary;
+  - (void) _runChallange:(NSDictionary *_Nonnull) responseDictionary;
 
-  - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *)) handler;
+  - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *_Nonnull)) handler;
 @end
