@@ -132,7 +132,9 @@
   NSInteger fontSize = 18;
 
   NSString *bullet = @"\u2022";
-  NSString *displayText = [_cardNumber stringByReplacingOccurrencesOfString:@"X" withString:bullet];
+  NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(X|\\*)" options:NSRegularExpressionCaseInsensitive error:nil];
+  NSString *displayText = [regex stringByReplacingMatchesInString:_cardNumber options:0 range:NSMakeRange(0, [_cardNumber length]) withTemplate:bullet];
+  
   NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:displayText];
 
   NSRange firstBullet = [displayText rangeOfString:bullet];
