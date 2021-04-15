@@ -48,17 +48,17 @@
     [self.sendRedirectErrorExpectation fulfill];
   }
 
-- (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
-  
-  [super _initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler];
-}
+  - (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
+    
+    [super _initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler];
+  }
 
   - (void) _runChallange:(NSDictionary *) responseDictionary {
     [super _runChallange:(NSDictionary *) responseDictionary];
     
     double delayInSeconds = 10.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(timer, dispatch_get_main_queue(), ^(void){
       [self _fillForm];
     });
   }
@@ -92,19 +92,19 @@
     [self.moveChoosePaymentMethodControllerExpectation fulfill];
   }
 
-- (void)completedWithTransactionStatus:(NSString *) transactionStatus{
-  [super completedWithTransactionStatus:transactionStatus];
-  [self.completedWithTransactionStatusExpectation fulfill];
-}
+  - (void)completedWithTransactionStatus:(NSString *) transactionStatus{
+    [super completedWithTransactionStatus:transactionStatus];
+    [self.completedWithTransactionStatusExpectation fulfill];
+  }
 
-- (void)_getFinishSessionStatusRequest {
-  [super _getFinishSessionStatusRequest];
-  [self.getFinishSessionStatusRequestExpectation fulfill];
-}
+  - (void)_getFinishSessionStatusRequest {
+    [super _getFinishSessionStatusRequest];
+    [self.getFinishSessionStatusRequestExpectation fulfill];
+  }
 
-- (void)_getFinishedPaymentInfo {
-  [super _getFinishedPaymentInfo];
-  [self.getFinishedPaymentInfoExpectation fulfill];
-}
+  - (void)_getFinishedPaymentInfo {
+    [super _getFinishedPaymentInfo];
+    [self.getFinishedPaymentInfoExpectation fulfill];
+  }
 
 @end
