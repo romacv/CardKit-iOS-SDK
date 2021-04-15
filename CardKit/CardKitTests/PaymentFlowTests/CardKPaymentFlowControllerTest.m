@@ -45,7 +45,11 @@ const NSInteger __SMSCodeTextFieldTag = 20000;
   payment.password = @"testPwd";
 
   payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
-
+  payment.completedWithTransactionStatusExpectation = [self expectationWithDescription:@"completedWithTransactionStatusExpectation"];
+  payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
+  payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
+  
+  
   NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"2000"];
   NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
   NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
@@ -85,7 +89,11 @@ const NSInteger __SMSCodeTextFieldTag = 20000;
   }];
   [dataTask resume];
   
-  [self waitForExpectations:@[payment.moveChoosePaymentMethodControllerExpectation] timeout:200];
+  [self waitForExpectations:@[
+      payment.moveChoosePaymentMethodControllerExpectation,
+      payment.completedWithTransactionStatusExpectation,
+      payment.getFinishSessionStatusRequestExpectation,
+      payment.getFinishedPaymentInfoExpectation] timeout:200];
 }
 
 - (void)fillForm {

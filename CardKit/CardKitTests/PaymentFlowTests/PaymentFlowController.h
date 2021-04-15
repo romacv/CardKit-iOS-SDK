@@ -32,6 +32,15 @@
   @property (nullable) XCTestExpectation* moveChoosePaymentMethodControllerExpectation;
   - (void)_moveChoosePaymentMethodController;
 
+  @property (nullable) XCTestExpectation* completedWithTransactionStatusExpectation;
+  - (void)completedWithTransactionStatus:(NSString *_Nonnull) transactionStatus;
+
+  @property (nullable) XCTestExpectation* getFinishSessionStatusRequestExpectation;
+  - (void)_getFinishSessionStatusRequest;
+
+  @property (nullable) XCTestExpectation* getFinishedPaymentInfoExpectation;
+  - (void)_getFinishedPaymentInfo;
+
   - (void)_initSDK:(CardKCardView *_Nonnull) cardView cardOwner:(NSString *_Nonnull) cardOwner seToken:(NSString *_Nonnull) seToken callback: (void (^_Nonnull)(NSDictionary *_Nonnull)) handler;
 
   - (void) _runChallange:(NSDictionary *_Nonnull) responseDictionary;
