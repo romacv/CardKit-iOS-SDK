@@ -219,7 +219,7 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
     ThreeDS2ViewController.requestParams.amount = _textFieldCost.text
     ThreeDS2ViewController.requestParams.userName = _textFieldUserName.text
     ThreeDS2ViewController.requestParams.password = _textFieldPassword.text
-    ThreeDS2ViewController.requestParams.returnUrl = "../merchants/rbs/finish.html"
+    ThreeDS2ViewController.requestParams.returnUrl = "finish.html"
     ThreeDS2ViewController.requestParams.failUrl = "errors_ru.html"
     ThreeDS2ViewController.requestParams.email = "test@test.ru"
     ThreeDS2ViewController.requestParams.text = "DE DE"
