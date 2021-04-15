@@ -111,6 +111,41 @@
     [self->_spinner stopAnimating];
   }
 
+  - (void) _getFinishSessionStatusRequest {
+    NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
+    NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/getSessionStatus.do", mdOrder];
+
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+
+    request.HTTPMethod = @"GET";
+
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      
+      dispatch_async(dispatch_get_main_queue(), ^{
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+      if(httpResponse.statusCode != 200) {
+        [self _sendError];
+        return;
+      }
+      
+      NSError *parseError = nil;
+      NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+
+      self-> _sessionStatus.redirect = [responseDictionary objectForKey:@"redirect"];
+
+      if (self->_sessionStatus.redirect == nil) {
+        [self _sendRedirectError];
+      } else {
+        [self _getFinishedPaymentInfo];
+      }
+      });
+    }];
+    [dataTask resume];
+  }
+
   - (void) _getSessionStatusRequest:(void (^)(CardKPaymentSessionStatus *)) handler {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
     NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/getSessionStatus.do", mdOrder];
@@ -329,7 +364,7 @@
 
 - (void)_getFinishedPaymentInfo {
   NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"orderId=", CardKConfig.shared.mdOrder];
-  NSString *withCart = [NSString stringWithFormat:@"%@%@", @"withCart=", @"NO"];
+  NSString *withCart = [NSString stringWithFormat:@"%@%@", @"withCart=", @"false"];
   NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
 
   NSString *parameters = [self _urlParameters:@[mdOrder, withCart, language]];
@@ -377,7 +412,6 @@
 
 // CardKDelegate
 - (void)cardKPaymentView:(nonnull CardKPaymentView *)paymentView didAuthorizePayment:(nonnull PKPayment *)pKPayment {
-  
 }
 
 - (void)cardKitViewController:(nonnull UIViewController *)controller didCreateSeToken:(nonnull NSString *)seToken allowSaveBinding:(BOOL)allowSaveBinding isNewCard:(BOOL)isNewCard {
@@ -424,6 +458,7 @@
   paymentView.paymentRequest.paymentSummaryItems = @[paymentItem];
 }
 
+// PaymentFlowDelegate
 - (void)encodeWithCoder:(nonnull NSCoder *)coder {
   
 }
@@ -432,7 +467,49 @@
 }
 
 - (void)completedWithTransactionStatus:(NSString *) transactionStatus {
+  NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
 
+  NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/finish3dsVer2PaymentAnonymous.do"];
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+  request.HTTPMethod = @"POST";
+
+  NSData *postData = [threeDSServerTransId dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+  [request setHTTPBody:postData];
+
+  NSURLSession *session = [NSURLSession sharedSession];
+
+  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+      
+    if(httpResponse.statusCode != 200) {
+      [self _sendError];
+      return;
+    }
+    
+    NSError *parseError = nil;
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+
+    NSString *redirect = [responseDictionary objectForKey:@"redirect"];
+    BOOL is3DSVer2 = (BOOL)[responseDictionary[@"is3DSVer2"] boolValue];
+      
+    NSString *errorMessage = [responseDictionary objectForKey:@"error"];
+    NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
+    NSInteger remainingSecs = [responseDictionary[@"remainingSecs"] integerValue];
+      
+    if (errorCode != 0) {
+      self->_cardKPaymentError.massage = errorMessage;
+      [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
+    } else if (redirect == nil || remainingSecs > 0 ) {
+      // Повторный запуск проекта
+    } else {
+      [self _getFinishSessionStatusRequest];
+    }
+  });
+  }];
+  [dataTask resume];
 }
 
 - (void)errorEventReceived {
