@@ -56,8 +56,9 @@ const NSInteger __SMSCodeTextFieldTag = 20000;
   NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"../merchants/rbs/finish.html"];
   NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
   NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
+  NSString *clientId = [NSString stringWithFormat:@"%@%@", @"clientId=", @"clientId"];
   
-  NSString *parameters = [NSString stringWithFormat:@"%@&%@&%@&%@&%@&%@", amount, userName, password, returnUrl, failUrl, email];
+  NSString *parameters = [NSString stringWithFormat:@"%@&%@&%@&%@&%@&%@&%@", amount, userName, password, returnUrl, failUrl, email, clientId];
 
   NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
   

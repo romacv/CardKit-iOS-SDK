@@ -86,7 +86,7 @@
     cardKViewController.ownerTextField = ownetTextField;
     
     self.cKitDelegate = self;
-    
+  
     [_cKitDelegate cardKitViewController:cardKViewController didCreateSeToken:seToken allowSaveBinding:YES isNewCard: YES];
     
     [self.moveChoosePaymentMethodControllerExpectation fulfill];
@@ -106,4 +106,5 @@
   [super _getFinishedPaymentInfo];
   [self.getFinishedPaymentInfoExpectation fulfill];
 }
+
 @end

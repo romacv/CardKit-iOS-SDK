@@ -177,7 +177,7 @@
       
       CardKConfig.shared.bindings = self->_sessionStatus.bindingItems;
       CardKConfig.shared.bindingCVCRequired = !self->_sessionStatus.cvcNotRequired;
-      
+        
       if (self->_sessionStatus.redirect != nil) {
         [self _sendRedirectError];
       } else {
@@ -214,7 +214,7 @@
     [dataTask resume];
   }
 
-- (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
+- (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler {
   dispatch_async(dispatch_get_main_queue(), ^{
     [self->_transactionManager setUpUICustomizationWithIsDarkMode:NO error:nil];
     [self->_transactionManager initializeSdk];
@@ -226,18 +226,19 @@
     RequestParams.shared.threeDSSDKAppId = reqParams[@"threeDSSDKAppId"];
     RequestParams.shared.threeDSSDKTransId = reqParams[@"threeDSSDKTransId"];
 
-    [self _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler];
+    [self _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler];
   });
 }
 
-- (void) _processFormRequest:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
+- (void) _processFormRequest:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
     NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
     NSString *owner = [NSString stringWithFormat:@"%@%@", @"TEXT=", cardOwner];
     NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"true"];
-
     NSString *seTokenParam = [NSString stringWithFormat:@"%@%@", @"seToken=", [seToken stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]];
-    NSString *parameters = [self _urlParameters:@[mdOrder, seTokenParam, language, owner, @"bindingNotNeeded=false", threeDSSDK]];
+  NSString *bindingNotNeeded = [NSString stringWithFormat:@"%@%@", @"bindingNotNeeded=", allowSaveBinding ? @"false" : @"true"];
+
+    NSString *parameters = [self _urlParameters:@[mdOrder, seTokenParam, language, owner, bindingNotNeeded, threeDSSDK]];
     NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
     request.HTTPMethod = @"POST";
@@ -281,7 +282,7 @@
 
         self->_transactionManager.pubKey = RequestParams.shared.threeDSSDKKey;
        
-        [self _initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler];
+        [self _initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler];
       }
       
     });
@@ -299,12 +300,12 @@
   [self->_transactionManager handleResponseWithResponseObject:aRes];
 }
 
-- (void) _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
+- (void) _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
     NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"true"];
     NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
     NSString *owner = [NSString stringWithFormat:@"%@%@", @"TEXT=", cardOwner];
-  
+    NSString *bindingNotNeeded = [NSString stringWithFormat:@"%@%@", @"bindingNotNeeded=", allowSaveBinding ? @"false" : @"true"];
     NSString *seTokenParam = [NSString stringWithFormat:@"%@%@", @"seToken=", [seToken stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]];
   
     NSString *threeDSSDKEncData = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEncData=", RequestParams.shared.threeDSSDKEncData];
@@ -313,7 +314,7 @@
     NSString *threeDSSDKTransId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKTransId=", RequestParams.shared.threeDSSDKTransId];
     NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
   
-    NSString *parameters = [self _urlParameters:@[mdOrder, threeDSSDK, language, owner, @"bindingNotNeeded=false", threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId, seTokenParam]];
+    NSString *parameters = [self _urlParameters:@[mdOrder, threeDSSDK, language, owner, bindingNotNeeded, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId, seTokenParam]];
 
     NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];
@@ -378,7 +379,7 @@
   NSURLSession *session = [NSURLSession sharedSession];
 
   NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      dispatch_async(dispatch_get_main_queue(), ^(void){
+      dispatch_async(dispatch_get_main_queue(), ^{
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
           
         if(httpResponse.statusCode != 200) {
@@ -428,9 +429,10 @@
   if (isNewCard) {
     CardKViewController *cardKViewController = (CardKViewController *) controller;
     [self _processFormRequest: [cardKViewController getCardKView]
-                       cardOwner:[cardKViewController getCardOwner]
-                        seToken:seToken
-                        callback:^(NSDictionary * sessionStatus) {}];
+               cardOwner:[cardKViewController getCardOwner]
+                seToken:seToken
+     allowSaveBinding: allowSaveBinding
+                callback:^(NSDictionary * sessionStatus) {}];
     
   } else {
     ConfirmChoosedCard *confirmChoosedCardController = (ConfirmChoosedCard *) controller;
