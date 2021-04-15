@@ -378,11 +378,19 @@
   NSURLSession *session = [NSURLSession sharedSession];
 
   NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-      if(httpResponse.statusCode == 200) {
-
-      }
+      dispatch_async(dispatch_get_main_queue(), ^(void){
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+          
+        if(httpResponse.statusCode != 200) {
+          [self _sendError];
+          return;
+        }
+        
+        NSError *parseError = nil;
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+        
+        [self->_cardKPaymentFlowDelegate didFinishPaymentFlow:responseDictionary];
+    });
   }];
   [dataTask resume];
 }

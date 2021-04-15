@@ -11,18 +11,18 @@ import CardKit
 
 class PaymentFlowController: UIViewController {
   static var requestParams: RequestParams = RequestParams();
-//  let _paymentFlowController: CardKPaymentFlowController = CardKPaymentFlowController();
+  let _paymentFlowController: CardKPaymentFlowController = CardKPaymentFlowController();
   var _button: UIButton = UIButton();
 
   init() {
     super.init(nibName: nil, bundle: nil)
-    
+
+    _paymentFlowController.cardKPaymentFlowDelegate = self;
     self.view.addSubview(_button)
   }
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-//    fatalError("init(coder:) has not been implemented")
   }
   
   override func viewDidLoad() {
@@ -67,17 +67,26 @@ class PaymentFlowController: UIViewController {
   }
 
   func _registerOrder() {
-    let _paymentFlowController: CardKPaymentFlowController = CardKPaymentFlowController();
     API.registerNewOrder(params: PaymentFlowController.requestParams) {(data, response) in
       PaymentFlowController.requestParams.orderId = data.orderId
       CardKConfig.shared.mdOrder = data.orderId ?? ""
       
       DispatchQueue.main.async {
-        _paymentFlowController.userName = "3ds2-api";
-        _paymentFlowController.password = "testPwd";
+        self._paymentFlowController.userName = "3ds2-api";
+        self._paymentFlowController.password = "testPwd";
 
-        self.navigationController?.pushViewController(_paymentFlowController, animated: true)
+        self.navigationController?.pushViewController(self._paymentFlowController, animated: true)
       }
     }
+  }
+}
+
+extension PaymentFlowController: CardKPaymentFlowDelegate {
+  func didFinishPaymentFlow(_ paymentInfo: [AnyHashable : Any]!) {
+    Log.i(object: self, message: "didFinishPaymentFlow")
+  }
+  
+  func didErrorPaymentFlow(_ paymentError: CardKPaymentError!) {
+    Log.i(object: self, message: "didErrorPaymentFlow")
   }
 }

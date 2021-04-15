@@ -17,7 +17,7 @@
 
 @protocol CardKPaymentFlowDelegate <NSObject>
 
-- (void)didFinishPaymentFlow:(CardKPaymentInfo *) paymentInfo;
+- (void)didFinishPaymentFlow:(NSDictionary *) paymentInfo;
 - (void)didErrorPaymentFlow:(CardKPaymentError *) paymentError;
 
 @end
