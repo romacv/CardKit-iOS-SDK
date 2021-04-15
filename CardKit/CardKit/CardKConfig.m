@@ -61,7 +61,7 @@ static CardKConfig *__instance = nil;
         NSError *parseError = nil;
         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
         NSArray *keys = [responseDictionary objectForKey:@"keys"];
-        NSDictionary *lastKey = [keys lastObject];
+        NSDictionary *lastKey = [keys firstObject];
         NSString *keyValue = [lastKey objectForKey:@"keyValue"];
 
         __instance.pubKey = keyValue;
