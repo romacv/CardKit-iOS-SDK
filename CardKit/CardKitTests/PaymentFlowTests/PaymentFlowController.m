@@ -27,10 +27,12 @@
   - (void)_getFinishSessionStatusRequest;
   - (void)_getFinishedPaymentInfo;
 
-- (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler;
-- (void) _runChallange:(NSDictionary *) responseDictionary;
+  - (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler;
+  - (void) _runChallange:(NSDictionary *) responseDictionary;
 
   - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *)) handler;
+
+- (NSArray<CardKBinding *> *) _convertBindingItemsToCardKBinding:(NSArray<NSDictionary *> *) bindingItems;
 @end
 
 @implementation PaymentFlowController: CardKPaymentFlowController
@@ -107,4 +109,9 @@
     [self.getFinishedPaymentInfoExpectation fulfill];
   }
 
+
+- (NSArray<CardKBinding *> *) _convertBindingItemsToCardKBinding:(NSArray<NSDictionary *> *) bindingItems {
+  NSArray<CardKBinding *> *cardKBindings = [super _convertBindingItemsToCardKBinding:bindingItems];
+  return  cardKBindings;
+}
 @end

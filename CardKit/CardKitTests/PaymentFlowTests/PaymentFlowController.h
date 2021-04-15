@@ -46,4 +46,6 @@
   - (void) _runChallange:(NSDictionary *_Nonnull) responseDictionary;
 
   - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *_Nonnull)) handler;
+
+  - (NSArray<CardKBinding *> *_Nonnull) _convertBindingItemsToCardKBinding:(NSArray<NSDictionary *> *_Nonnull) bindingItems;
 @end

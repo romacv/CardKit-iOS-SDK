@@ -25,7 +25,7 @@ struct RequestParams {
   
   var authParams: ThreeDSSDK.AuthenticationRequestParameters?
 
-  var cliendId: String?
+  var clientId: String?
 }
 
 struct ResponseParams {
@@ -57,6 +57,7 @@ class API {
         "returnUrl": params.returnUrl ?? "",
         "failUrl": params.failUrl ?? "",
         "email": params.email ?? "",
+        "clientId": params.clientId ?? "",
       ];
 
       var request = URLRequest(url: NSURL(string: "\(url)/rest/register.do")! as URL)

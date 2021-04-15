@@ -39,9 +39,6 @@
       [self.view addSubview:_spinner];
       _spinner.color = _theme.colorPlaceholder;
       
-      _controller = [[CardKKindPaymentViewController alloc] init];
-      _controller.cKitDelegate = self;
-
       [_spinner startAnimating];
       
       _cardKPaymentError = [[CardKPaymentError alloc] init];
@@ -101,6 +98,9 @@
   }
   
   - (void)_moveChoosePaymentMethodController {
+    _controller = [[CardKKindPaymentViewController alloc] init];
+    _controller.cKitDelegate = self;
+    
     UIViewController *sourceViewController = self;
     UIViewController *destinationController = self->_controller;
     UINavigationController *navigationController = sourceViewController.navigationController;
@@ -145,6 +145,26 @@
     }];
     [dataTask resume];
   }
+  
+  - (NSArray<CardKBinding *> *) _convertBindingItemsToCardKBinding:(NSArray<NSDictionary *> *) bindingItems {
+    
+    NSMutableArray<CardKBinding *> *bindings = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary *binding in bindingItems) {
+      CardKBinding *cardKBinding = [[CardKBinding alloc] init];
+      
+      NSArray *label = [(NSString *) binding[@"label"] componentsSeparatedByString:@" "];
+      cardKBinding.bindingId = binding[@"id"];
+      cardKBinding.paymentSystem = binding[@"paymentSystem"];
+      
+      cardKBinding.cardNumber = label[0];
+      cardKBinding.expireDate = label[1];
+      
+      [bindings addObject:cardKBinding];
+    }
+  
+    return bindings;
+  }
 
   - (void) _getSessionStatusRequest:(void (^)(CardKPaymentSessionStatus *)) handler {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
@@ -170,14 +190,17 @@
       NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
       
       self->_sessionStatus = [[CardKPaymentSessionStatus alloc] init];
-      self->_sessionStatus.bindingItems = [responseDictionary objectForKey:@"bindingItems"];
+        
+      NSArray<NSDictionary *> *bindingItems = (NSArray<NSDictionary *> *) responseDictionary[@"bindingItems"];
+
+      self->_sessionStatus.bindingItems = [self _convertBindingItemsToCardKBinding: bindingItems];
       self->_sessionStatus.bindingEnabled = (BOOL)[responseDictionary[@"bindingEnabled"] boolValue];
       self->_sessionStatus.cvcNotRequired = (BOOL)[responseDictionary[@"cvcNotRequired"] boolValue];
       self-> _sessionStatus.redirect = [responseDictionary objectForKey:@"redirect"];
       
-      CardKConfig.shared.bindings = self->_sessionStatus.bindingItems;
+      CardKConfig.shared.bindings = [[NSArray alloc] initWithArray:self->_sessionStatus.bindingItems];
       CardKConfig.shared.bindingCVCRequired = !self->_sessionStatus.cvcNotRequired;
-        
+      
       if (self->_sessionStatus.redirect != nil) {
         [self _sendRedirectError];
       } else {

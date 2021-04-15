@@ -38,6 +38,24 @@ const NSInteger __SMSCodeTextFieldTag = 20000;
 - (void)tearDown {
 }
 
+- (void)testConvertBindingItemToCardKBinding {
+  NSDictionary *binding = @{@"cardHolder": @"Alex", @"createdDate": @"1618475680663", @"id": @"17900526-aaf8-7672-8d99-288600c305c8", @"isMaestro": @"0", @"label": @"577777**7775 12/24", @"payerEmail": @"test@test.ru", @"payerPhone": @"", @"paymentSystem": @"MASTERCARD"};
+  
+  CardKBinding *cardKBinding = [[CardKBinding alloc] init];
+  cardKBinding.bindingId = binding[@"id"];
+  cardKBinding.paymentSystem = binding[@"paymentSystem"];
+  cardKBinding.cardNumber = @"577777**7775";
+  cardKBinding.expireDate = @"12/24";
+  
+  NSArray<CardKBinding *> *prepareCardKBinding = @[cardKBinding];
+  NSArray<CardKBinding *> *cardKBindings  = [payment _convertBindingItemsToCardKBinding:@[binding]];
+  
+  XCTAssertEqualObjects(cardKBindings[0].bindingId, prepareCardKBinding[0].bindingId);
+  XCTAssertEqualObjects(cardKBindings[0].paymentSystem, prepareCardKBinding[0].paymentSystem);
+  XCTAssertEqualObjects(cardKBindings[0].cardNumber, prepareCardKBinding[0].cardNumber);
+  XCTAssertEqualObjects(cardKBindings[0].expireDate, prepareCardKBinding[0].expireDate);
+}
+
 - (void)testPaymentFlowWithNewCard {
   payment.delegate = self;
   
@@ -53,7 +71,7 @@ const NSInteger __SMSCodeTextFieldTag = 20000;
   NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"2000"];
   NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
   NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
-  NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"../merchants/rbs/finish.html"];
+  NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"returnUrl"];
   NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
   NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
   NSString *clientId = [NSString stringWithFormat:@"%@%@", @"clientId=", @"clientId"];

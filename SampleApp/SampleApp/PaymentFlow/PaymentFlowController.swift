@@ -35,7 +35,6 @@ class PaymentFlowController: UIViewController {
     };
     CardKConfig.shared.language = "ru";
     CardKConfig.shared.bindingCVCRequired = true;
-    CardKConfig.shared.bindings = ViewController()._fetchBindingCards();
     CardKConfig.shared.isTestMod = true;
     CardKConfig.shared.mrBinApiURL = "https://mrbin.io/bins/display";
     CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
@@ -47,19 +46,17 @@ class PaymentFlowController: UIViewController {
     PaymentFlowController.requestParams.amount = "2000"
     PaymentFlowController.requestParams.userName = "3ds2-api"
     PaymentFlowController.requestParams.password = "testPwd"
-    PaymentFlowController.requestParams.returnUrl = "../merchants/rbs/finish.html"
+    PaymentFlowController.requestParams.returnUrl = "returnUrl"
     PaymentFlowController.requestParams.failUrl = "errors_ru.html"
     PaymentFlowController.requestParams.email = "test@test.ru"
     PaymentFlowController.requestParams.text = "DE DE"
     PaymentFlowController.requestParams.threeDSSDK = "true"
-    PaymentFlowController.requestParams.cliendId = "clientId"
+    PaymentFlowController.requestParams.clientId = "clientId"
     
     _button.setTitle("Начать Payement flow", for: .normal);
     _button.frame = CGRect(x: 0, y: 0, width: 200, height: 100);
     _button.center = CGPoint(x: self.view.bounds.size.width / 2, y: self.view.bounds.size.height / 2);
     _button.addTarget(self, action: #selector(_pressedButton), for: .touchDown);
-//    _button.target(forAction: <#T##Selector#>, withSender: <#T##Any?#>)
-//    self._registerOrder();
   }
   
   @objc func _pressedButton() {
