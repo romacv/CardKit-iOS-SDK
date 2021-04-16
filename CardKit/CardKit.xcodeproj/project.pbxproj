@@ -24,6 +24,7 @@
 		922A91D926270F2300B6FC4F /* CardKitCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924290B7255D5FE200378C68 /* CardKitCore.framework */; platformFilter = ios; };
 		922A920F262716BC00B6FC4F /* CardKViewControllerInher.h in Headers */ = {isa = PBXBuildFile; fileRef = 922FE281261D9EB7005EE6A3 /* CardKViewControllerInher.h */; };
 		922A9213262716C100B6FC4F /* PaymentFlowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 9204815F261B05F300026C1F /* PaymentFlowController.h */; };
+		922D6CA6262990EB0092E078 /* CardKPaymentFlowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92365726260E073000913228 /* CardKPaymentFlowController.m */; };
 		922FE283261D9EB7005EE6A3 /* CardKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE282261D9EB7005EE6A3 /* CardKViewController.m */; };
 		922FE2D8261DCCD6005EE6A3 /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */; };
 		922FE2D9261DCCD6005EE6A3 /* ThreeDSSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 922FE2C9261DCCC0005EE6A3 /* ThreeDSSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -40,7 +41,6 @@
 		9234CC5A247FBCDD009E3034 /* CardKPaymentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9234CC58247FBCDD009E3034 /* CardKPaymentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9234CC5B247FBCDD009E3034 /* CardKPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9234CC59247FBCDD009E3034 /* CardKPaymentView.m */; };
 		92365727260E073000913228 /* CardKPaymentFlowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 92365725260E073000913228 /* CardKPaymentFlowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		92365728260E073000913228 /* CardKPaymentFlowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92365726260E073000913228 /* CardKPaymentFlowController.m */; };
 		9236573A260E0E0200913228 /* API.h in Headers */ = {isa = PBXBuildFile; fileRef = 92365738260E0E0200913228 /* API.h */; };
 		9236573B260E0E0200913228 /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 92365739260E0E0200913228 /* API.m */; };
 		924290D4255D5FF600378C68 /* CKCPubKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9007255D202E001E1ECF /* CKCPubKey.m */; };
@@ -790,7 +790,6 @@
 				9236573B260E0E0200913228 /* API.m in Sources */,
 				D2D0B35F2320E3AC0007B3B9 /* CardKBankLogoView.m in Sources */,
 				9219F466232B8EF100841B98 /* CardKFooterView.m in Sources */,
-				92365728260E073000913228 /* CardKPaymentFlowController.m in Sources */,
 				92E247F7247676A900C2EF6C /* ConfirmChoosedCard.m in Sources */,
 				922FE389261ED95C005EE6A3 /* API.swift in Sources */,
 				922FE33E261ED515005EE6A3 /* ARes.m in Sources */,
@@ -810,6 +809,7 @@
 				922FE328261DFAAC005EE6A3 /* TransactionManager.swift in Sources */,
 				92429134255D610700378C68 /* RSA.m in Sources */,
 				92A1461B23435C6B002FBCC3 /* CardKConfig.m in Sources */,
+				922D6CA6262990EB0092E078 /* CardKPaymentFlowController.m in Sources */,
 				929BA32525591CFC00AB0526 /* TextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

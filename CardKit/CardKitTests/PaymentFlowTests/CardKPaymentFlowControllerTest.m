@@ -112,7 +112,7 @@ const NSInteger __SMSCodeTextFieldTag = 20000;
       payment.moveChoosePaymentMethodControllerExpectation,
       payment.completedWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
-      payment.getFinishedPaymentInfoExpectation] timeout:200];
+      payment.getFinishedPaymentInfoExpectation] timeout:20];
 }
 
 - (void)testPaymentFlowWithBinding {
@@ -180,7 +180,7 @@ const NSInteger __SMSCodeTextFieldTag = 20000;
       payment.processBindingFormRequestStep2Expectation,
       payment.completedWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
-      payment.getFinishedPaymentInfoExpectation] timeout:200];
+      payment.getFinishedPaymentInfoExpectation] timeout:20];
 }
 
 - (void)fillForm {
