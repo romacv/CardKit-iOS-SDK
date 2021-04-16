@@ -15,6 +15,7 @@
 #import "CardKViewControllerInher.h"
 #import "CardKPaymentSessionStatus.h"
 #import "CardKCardView.h"
+#import "ConfirmChoosedCard.h"
 
 @interface CardKPaymentFlowController (Test)
   - (void)_sePayment;
@@ -32,7 +33,10 @@
 
   - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *)) handler;
 
-- (NSArray<CardKBinding *> *) _convertBindingItemsToCardKBinding:(NSArray<NSDictionary *> *) bindingItems;
+  - (NSArray<CardKBinding *> *) _convertBindingItemsToCardKBinding:(NSArray<NSDictionary *> *) bindingItems;
+
+  - (void) _processBindingFormRequest:(ConfirmChoosedCard *) choosedCard callback: (void (^)(NSDictionary *)) handler;
+  - (void) _processBindingFormRequestStep2:(ConfirmChoosedCard *) choosedCard callback: (void (^)(NSDictionary *)) handler;
 @end
 
 @implementation PaymentFlowController: CardKPaymentFlowController
@@ -72,6 +76,16 @@
   - (void)_moveChoosePaymentMethodController {
     [super _moveChoosePaymentMethodController];
     
+    if (_doUseNewCard) {
+      [self _runNewCardFlow];
+    } else {
+      [self _runBindingFlow];
+    }
+    
+    [self.moveChoosePaymentMethodControllerExpectation fulfill];
+  }
+
+  - (void) _runNewCardFlow {
     CardKCardView *cardView = [[CardKCardView alloc] init];
     
     cardView.number = @"5777777777777775";
@@ -88,10 +102,27 @@
     cardKViewController.ownerTextField = ownetTextField;
     
     self.cKitDelegate = self;
-  
-    [_cKitDelegate cardKitViewController:cardKViewController didCreateSeToken:seToken allowSaveBinding:YES isNewCard: YES];
+
+    if (_doUseNewCard) {
+      [_cKitDelegate cardKitViewController:cardKViewController didCreateSeToken:seToken allowSaveBinding:YES isNewCard: YES];
+    }
+  }
+
+  - (void) _runBindingFlow {
+    ConfirmChoosedCard *confirmChoosedCardController = [[ConfirmChoosedCard alloc] init];
+    confirmChoosedCardController.cKitDelegate = self;
+    CardKBinding *cardKBinding = CardKConfig.shared.bindings[0];
     
-    [self.moveChoosePaymentMethodControllerExpectation fulfill];
+    if (CardKConfig.shared.bindingCVCRequired) {
+      cardKBinding.secureCode = @"123";
+    }
+    
+    self.cKitDelegate = self;
+    NSString *seToken = [SeTokenGenerator generateSeTokenWithBinding:cardKBinding];
+    
+    confirmChoosedCardController.cardKBinding = cardKBinding;
+    
+    [_cKitDelegate cardKitViewController:confirmChoosedCardController didCreateSeToken:seToken allowSaveBinding:NO isNewCard: NO];
   }
 
   - (void)completedWithTransactionStatus:(NSString *) transactionStatus{
@@ -107,6 +138,16 @@
   - (void)_getFinishedPaymentInfo {
     [super _getFinishedPaymentInfo];
     [self.getFinishedPaymentInfoExpectation fulfill];
+  }
+
+  - (void) _processBindingFormRequest:(ConfirmChoosedCard *) choosedCard callback: (void (^)(NSDictionary *)) handler {
+    [super _processBindingFormRequest:choosedCard callback:handler];
+    [self.processBindingFormRequestExpectation fulfill];
+  }
+
+  - (void) _processBindingFormRequestStep2:(ConfirmChoosedCard *) choosedCard callback: (void (^)(NSDictionary *)) handler {
+    [super _processBindingFormRequestStep2:choosedCard callback:handler];
+    [self.processBindingFormRequestStep2Expectation fulfill];
   }
 
 

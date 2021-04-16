@@ -213,26 +213,147 @@
     [dataTask resume];
   }
 
-  - (void) _getProcessBindingFormRequest:(ConfirmChoosedCard *) choosedCard callback: (void (^)(NSDictionary *)) handler {
+  - (void) _processBindingFormRequest:(ConfirmChoosedCard *) choosedCard callback: (void (^)(NSDictionary *)) handler {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"orderId=", CardKConfig.shared.mdOrder];
     NSString *bindingId = [NSString stringWithFormat:@"%@%@", @"bindingId=", choosedCard.cardKBinding.bindingId];
     NSString *cvc = [NSString stringWithFormat:@"%@%@", @"cvc=", choosedCard.cardKBinding.secureCode];
     NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
-    NSString *parameters = [self _urlParameters:@[mdOrder, bindingId, cvc, language]];
+    NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"true"];
     
-    NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/processBindingForm.do", parameters];
+    NSString *parameters = @"";
+    
+    if (CardKConfig.shared.bindingCVCRequired) {
+      parameters = [self _urlParameters:@[mdOrder, bindingId, cvc, language, threeDSSDK]];
+    } else {
+      parameters = [self _urlParameters:@[mdOrder, bindingId, language, threeDSSDK]];
+    }
+    
+    NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processBindingForm.do"];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
 
     request.HTTPMethod = @"POST";
+    
+    NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    [request setHTTPBody:postData];
+
+
+    NSURLSession *session = [NSURLSession sharedSession];
+
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+      
+      dispatch_async(dispatch_get_main_queue(), ^{
+        
+      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+      if(httpResponse.statusCode != 200) {
+        [self _sendError];
+        return;
+      }
+      
+      NSError *parseError = nil;
+      NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+
+      
+      NSString *redirect = [responseDictionary objectForKey:@"redirect"];
+      BOOL is3DSVer2 = (BOOL)[responseDictionary[@"is3DSVer2"] boolValue];
+      NSString *errorMessage = [responseDictionary objectForKey:@"error"];
+      NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
+      
+      if (errorCode != 0) {
+        self->_cardKPaymentError.massage = errorMessage;
+        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
+      } else if (redirect != nil) {
+        self->_cardKPaymentError.massage = redirect;
+        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
+      } else if (is3DSVer2){
+        RequestParams.shared.threeDSServerTransId = [responseDictionary objectForKey:@"threeDSServerTransId"];
+        RequestParams.shared.threeDSSDKKey = [responseDictionary objectForKey:@"threeDSSDKKey"];
+
+        self->_transactionManager.pubKey = RequestParams.shared.threeDSSDKKey;
+       
+        
+        [self->_transactionManager setUpUICustomizationWithIsDarkMode:NO error:nil];
+        [self->_transactionManager initializeSdk];
+        [self->_transactionManager showProgressDialog];
+        NSDictionary *reqParams = [self->_transactionManager getAuthRequestParameters];
+        
+        RequestParams.shared.threeDSSDKEncData = reqParams[@"threeDSSDKEncData"];
+        RequestParams.shared.threeDSSDKEphemPubKey = reqParams[@"threeDSSDKEphemPubKey"];
+        RequestParams.shared.threeDSSDKAppId = reqParams[@"threeDSSDKAppId"];
+        RequestParams.shared.threeDSSDKTransId = reqParams[@"threeDSSDKTransId"];
+
+        [self _processBindingFormRequestStep2:(ConfirmChoosedCard *) choosedCard  callback: (void (^)(NSDictionary *)) handler];
+      }
+    });
+      
+    }];
+    [dataTask resume];
+  }
+
+  - (void) _processBindingFormRequestStep2:(ConfirmChoosedCard *) choosedCard callback: (void (^)(NSDictionary *)) handler {
+    NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"orderId=", CardKConfig.shared.mdOrder];
+    NSString *bindingId = [NSString stringWithFormat:@"%@%@", @"bindingId=", choosedCard.cardKBinding.bindingId];
+    NSString *cvc = [NSString stringWithFormat:@"%@%@", @"cvc=", choosedCard.cardKBinding.secureCode];
+    NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
+    
+    NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"true"];
+    NSString *threeDSSDKEncData = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEncData=", RequestParams.shared.threeDSSDKEncData];
+    NSString *threeDSSDKEphemPubKey = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEphemPubKey=", RequestParams.shared.threeDSSDKEphemPubKey];
+    NSString *threeDSSDKAppId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKAppId=", RequestParams.shared.threeDSSDKAppId];
+    NSString *threeDSSDKTransId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKTransId=", RequestParams.shared.threeDSSDKTransId];
+    NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
+    
+    NSString *parameters = @"";
+    
+    if (CardKConfig.shared.bindingCVCRequired) {
+      parameters = [self _urlParameters:@[mdOrder, bindingId, cvc, threeDSSDK, language, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId]];
+    } else {
+      parameters = [self _urlParameters:@[mdOrder, bindingId, threeDSSDK, language, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId]];
+    }
+    
+    NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processBindingForm.do"];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+
+    request.HTTPMethod = @"POST";
+    
+    NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    [request setHTTPBody:postData];
 
     NSURLSession *session = [NSURLSession sharedSession];
 
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
-        if(httpResponse.statusCode == 200) {
-        }
+      if (httpResponse.statusCode != 200) {
+        self->_cardKPaymentError.massage = @"Ошибка запроса данных формы";
+        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
+
+        return;
+      }
+      
+      NSError *parseError = nil;
+      NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+
+      NSString *redirect = [responseDictionary objectForKey:@"redirect"];
+      BOOL is3DSVer2 = (BOOL)[responseDictionary[@"is3DSVer2"] boolValue];
+      NSString *errorMessage = [responseDictionary objectForKey:@"error"];
+      NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
+      
+      if (errorCode != 0) {
+        self->_cardKPaymentError.massage = errorMessage;
+        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
+        [self->_transactionManager closeProgressDialog];
+      } else if (redirect != nil) {
+        self->_cardKPaymentError.massage = redirect;
+        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
+        [self->_transactionManager closeProgressDialog];
+      } else if (is3DSVer2){
+        [self _runChallange: responseDictionary];
+      }
+      
     }];
     [dataTask resume];
   }
@@ -452,7 +573,7 @@
   } else {
     ConfirmChoosedCard *confirmChoosedCardController = (ConfirmChoosedCard *) controller;
     _cardKBinding = confirmChoosedCardController.cardKBinding;
-    [self _getProcessBindingFormRequest:confirmChoosedCardController
+    [self _processBindingFormRequest:confirmChoosedCardController
                         callback:^(NSDictionary * sessionStatus) {}];
   }
 }

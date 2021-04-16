@@ -11,6 +11,7 @@
 
 #import "CardKit.h"
 #import "CardKPaymentSessionStatus.h"
+#import "ConfirmChoosedCard.h"
 
 @protocol PaymentFlowControllerDelegate
 
@@ -22,24 +23,23 @@
 @interface PaymentFlowController: CardKPaymentFlowController
   @property (weak, nonatomic, nullable) id<PaymentFlowControllerDelegate> delegate;
   @property (weak, nonatomic, nullable) id<CardKDelegate> cKitDelegate;
+  @property BOOL doUseNewCard;
 
   @property (nullable) XCTestExpectation* sendErrorExpectation;
-  - (void) _sendError;
 
   @property (nullable) XCTestExpectation* sendRedirectErrorExpectation;
-  - (void)_sendRedirectError;
 
   @property (nullable) XCTestExpectation* moveChoosePaymentMethodControllerExpectation;
-  - (void)_moveChoosePaymentMethodController;
 
   @property (nullable) XCTestExpectation* completedWithTransactionStatusExpectation;
-  - (void)completedWithTransactionStatus:(NSString *_Nonnull) transactionStatus;
 
   @property (nullable) XCTestExpectation* getFinishSessionStatusRequestExpectation;
-  - (void)_getFinishSessionStatusRequest;
 
   @property (nullable) XCTestExpectation* getFinishedPaymentInfoExpectation;
-  - (void)_getFinishedPaymentInfo;
+
+  @property (nullable) XCTestExpectation* processBindingFormRequestExpectation;
+
+  @property (nullable) XCTestExpectation* processBindingFormRequestStep2Expectation;
 
   - (void)_initSDK:(CardKCardView *_Nonnull) cardView cardOwner:(NSString *_Nonnull) cardOwner seToken:(NSString *_Nonnull) seToken callback: (void (^_Nonnull)(NSDictionary *_Nonnull)) handler;
 
