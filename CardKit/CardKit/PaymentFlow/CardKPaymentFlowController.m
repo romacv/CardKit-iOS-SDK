@@ -17,6 +17,11 @@
 #import <CardKit/CardKit-Swift.h>
 #import "ARes.h"
 
+@protocol TransactionManagerDelegate;
+
+@interface CardKPaymentFlowController () <TransactionManagerDelegate>
+@end
+
 @implementation CardKPaymentFlowController {
   CardKKindPaymentViewController *_controller;
   NSString *_url;

@@ -31,7 +31,6 @@
 		922FE328261DFAAC005EE6A3 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922FE327261DFAAC005EE6A3 /* TransactionManager.swift */; };
 		922FE33D261ED515005EE6A3 /* ARes.h in Headers */ = {isa = PBXBuildFile; fileRef = 922FE33B261ED515005EE6A3 /* ARes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		922FE33E261ED515005EE6A3 /* ARes.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE33C261ED515005EE6A3 /* ARes.m */; };
-		922FE33F261ED515005EE6A3 /* ARes.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE33C261ED515005EE6A3 /* ARes.m */; };
 		922FE389261ED95C005EE6A3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922FE388261ED95C005EE6A3 /* API.swift */; };
 		922FE3A5261EF220005EE6A3 /* RequestParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 922FE3A3261EF220005EE6A3 /* RequestParams.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		922FE3A6261EF220005EE6A3 /* RequestParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE3A4261EF220005EE6A3 /* RequestParams.m */; };
@@ -56,7 +55,6 @@
 		9245F8DD25B19A150065AF9E /* Luhn.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD8F92255D1AE9001E1ECF /* Luhn.h */; };
 		9248868E251885FB00CA81D5 /* SeTokenGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 9248868C251885FB00CA81D5 /* SeTokenGenerator.h */; };
 		9248868F251885FB00CA81D5 /* SeTokenGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9248868D251885FB00CA81D5 /* SeTokenGenerator.m */; };
-		927EEF24261F200800250EA0 /* TransactionManager-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 922FE32E261DFB0F005EE6A3 /* TransactionManager-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		927EEFB2261F2B1900250EA0 /* API-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 927EEFB1261F2B1900250EA0 /* API-Bridging-Header.h */; };
 		9292CED5255E611F00053EC3 /* CKCPubKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD9006255D202E001E1ECF /* CKCPubKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9292CF4B255E9B2F00053EC3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9292CF4A255E9B2F00053EC3 /* AppDelegate.m */; };
@@ -174,7 +172,6 @@
 		922FE281261D9EB7005EE6A3 /* CardKViewControllerInher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKViewControllerInher.h; sourceTree = "<group>"; };
 		922FE282261D9EB7005EE6A3 /* CardKViewController.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKViewController.m; sourceTree = "<group>"; tabWidth = 2; };
 		922FE327261DFAAC005EE6A3 /* TransactionManager.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; tabWidth = 2; };
-		922FE32E261DFB0F005EE6A3 /* TransactionManager-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TransactionManager-Bridging-Header.h"; sourceTree = "<group>"; };
 		922FE33B261ED515005EE6A3 /* ARes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARes.h; sourceTree = "<group>"; };
 		922FE33C261ED515005EE6A3 /* ARes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARes.m; sourceTree = "<group>"; };
 		922FE388261ED95C005EE6A3 /* API.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -313,7 +310,6 @@
 				92CB794C2617001D00BE41E4 /* CardKPaymentError.h */,
 				92CB794D2617001D00BE41E4 /* CardKPaymentError.m */,
 				922FE327261DFAAC005EE6A3 /* TransactionManager.swift */,
-				922FE32E261DFB0F005EE6A3 /* TransactionManager-Bridging-Header.h */,
 				922FE33B261ED515005EE6A3 /* ARes.h */,
 				922FE33C261ED515005EE6A3 /* ARes.m */,
 				922FE388261ED95C005EE6A3 /* API.swift */,
@@ -501,7 +497,6 @@
 				92985C85246A96F4009B7392 /* CardKSwitchView.h in Headers */,
 				922A920F262716BC00B6FC4F /* CardKViewControllerInher.h in Headers */,
 				927EEFB2261F2B1900250EA0 /* API-Bridging-Header.h in Headers */,
-				927EEF24261F200800250EA0 /* TransactionManager-Bridging-Header.h in Headers */,
 				9234CC4E247BC315009E3034 /* CardKValidation.h in Headers */,
 				92E247F22475481700C2EF6C /* CardKBinding.h in Headers */,
 				92365727260E073000913228 /* CardKPaymentFlowController.h in Headers */,
@@ -632,7 +627,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = AnjLab;
 				TargetAttributes = {
 					920480E7261B034F00026C1F = {
@@ -737,7 +732,6 @@
 				92048133261B04FB00026C1F /* CardKPaymentFlowControllerTest.m in Sources */,
 				9204814F261B056900026C1F /* PaymentFlowController.m in Sources */,
 				922FE3A7261EF221005EE6A3 /* RequestParams.m in Sources */,
-				922FE33F261ED515005EE6A3 /* ARes.m in Sources */,
 				920480EB261B034F00026C1F /* CardKitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -873,7 +867,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FD6ZML48V9;
 				INFOPLIST_FILE = CardKitTests/Info.plist;
@@ -899,7 +893,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FD6ZML48V9;
 				INFOPLIST_FILE = CardKitTests/Info.plist;
@@ -921,7 +915,7 @@
 		922A91DD26270F2300B6FC4F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FD6ZML48V9;
 				INFOPLIST_FILE = CardKitCoreTests/Info.plist;
@@ -941,7 +935,7 @@
 		922A91DE26270F2300B6FC4F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FD6ZML48V9;
 				INFOPLIST_FILE = CardKitCoreTests/Info.plist;

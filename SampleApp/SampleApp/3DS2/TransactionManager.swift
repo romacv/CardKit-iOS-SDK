@@ -169,7 +169,6 @@ public class TransactionManager: NSObject, ChallengeStatusReceiver {
     }
 
     public func completed(completionEvent e: CompletionEvent) {
-      let transactionStatus : String? = e.getTransactionStatus()
       API.finishOrder(params: ThreeDS2ViewController.requestParams) { (data, response) in
         let params = ThreeDS2ViewController.requestParams
         let body = [
@@ -195,17 +194,6 @@ public class TransactionManager: NSObject, ChallengeStatusReceiver {
                                    isReload: true)
           }
         }
-      }
-
-      var strMessage : String = ""
-
-      switch transactionStatus {
-        case "Y"?:
-          strMessage = "Status Y"
-        case "N"?:
-          strMessage = "Status N"
-        default:
-          strMessage = "Status unknow"
       }
     }
 

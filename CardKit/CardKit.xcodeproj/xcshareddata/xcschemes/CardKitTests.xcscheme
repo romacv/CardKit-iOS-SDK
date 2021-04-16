@@ -77,15 +77,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "920480E7261B034F00026C1F"
-            BuildableName = "CardKitTests.xctest"
-            BlueprintName = "CardKitTests"
-            ReferencedContainer = "container:CardKit.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
