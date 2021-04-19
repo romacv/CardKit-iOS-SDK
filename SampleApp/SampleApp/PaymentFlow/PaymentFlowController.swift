@@ -72,7 +72,9 @@ class PaymentFlowController: UIViewController {
         self._paymentFlowController.userName = "3ds2-api";
         self._paymentFlowController.password = "testPwd";
 
-        self.navigationController?.pushViewController(self._paymentFlowController, animated: true)
+        let navController = UINavigationController(rootViewController: self._paymentFlowController)
+        
+        self.present(navController, animated: true, completion: nil)
       }
     }
   }
