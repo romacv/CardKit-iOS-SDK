@@ -110,8 +110,8 @@
     UIViewController *sourceViewController = self;
     UIViewController *destinationController = self->_controller;
     UINavigationController *navigationController = sourceViewController.navigationController;
-    
-    [navigationController popToRootViewControllerAnimated:NO];
+
+    [destinationController.navigationItem setHidesBackButton:YES animated:NO];
     [navigationController pushViewController:destinationController animated:NO];
     
     [self->_spinner stopAnimating];
