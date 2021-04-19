@@ -8,19 +8,27 @@
 
 #import <XCTest/XCTest.h>
 #import "PaymentFlowController.h"
-
+#import <ThreeDSSDK/ThreeDSSDK.h>
 @interface CardKPaymentFlowControllerTest: XCTestCase<PaymentFlowControllerDelegate>
 
+@end
+
+@interface OptionView: UIView
+  - (void) handleTapWithSender:(UITapGestureRecognizer *) sender;
 @end
 
 const NSInteger __doneButtonTag = 10000;
 const NSInteger __resendSMSButtonTag = 10001;
 const NSInteger __cancelButtonTag = 10002;
+const NSInteger __doneButtonInGroupFlowTag = 10003;
+
 const NSInteger __SMSCodeTextFieldTag = 20000;
+const NSInteger __optionGroupViewTag = 20001;
 
 typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
-  ActionTypeInFormCancelFlow = 0,
-  ActionTypeInFormFillOTPForm = 1 << 0
+  ActionTypeCancelFlow = 0,
+  ActionTypeFillOTPForm = 1,
+  ActionTypeFillMultiSelectForm = 2
 };
 
 @implementation CardKPaymentFlowControllerTest {
@@ -63,7 +71,10 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)testPaymentFlowWithNewCard {
-  actionTypeInForm = ActionTypeInFormFillOTPForm;
+  payment = [[PaymentFlowController alloc] init];
+  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
+  
+  actionTypeInForm = ActionTypeFillOTPForm;
   payment.delegate = self;
   payment.userName = @"3ds2-api";
   payment.password = @"testPwd";
@@ -71,7 +82,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 
   payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
   payment.runChallangeExpectation = [self expectationWithDescription:@"runChallangeExpectation"];
-  payment.completedWithTransactionStatusExpectation = [self expectationWithDescription:@"completedWithTransactionStatusExpectation"];
+  payment.didCompleteWithTransactionStatusExpectation = [self expectationWithDescription:@"didCompleteWithTransactionStatusExpectation"];
   payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
   payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
   
@@ -119,13 +130,16 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   [self waitForExpectations:@[
       payment.moveChoosePaymentMethodControllerExpectation,
       payment.runChallangeExpectation,
-      payment.completedWithTransactionStatusExpectation,
+      payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
       payment.getFinishedPaymentInfoExpectation] timeout:20];
 }
 
 - (void)testPaymentFlowWithBinding {
-  actionTypeInForm = ActionTypeInFormFillOTPForm;
+  payment = [[PaymentFlowController alloc] init];
+  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
+  
+  actionTypeInForm = ActionTypeFillOTPForm;
   payment.delegate = self;
   payment.userName = @"3ds2-api";
   payment.password = @"testPwd";
@@ -139,7 +153,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   
   payment.runChallangeExpectation = [self expectationWithDescription:@"runChallangeExpectation"];
   
-  payment.completedWithTransactionStatusExpectation = [self expectationWithDescription:@"completedWithTransactionStatusExpectation"];
+  payment.didCompleteWithTransactionStatusExpectation = [self expectationWithDescription:@"didCompleteWithTransactionStatusExpectation"];
   
   payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
   
@@ -191,13 +205,16 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.processBindingFormRequestExpectation,
       payment.processBindingFormRequestStep2Expectation,
       payment.runChallangeExpectation,
-      payment.completedWithTransactionStatusExpectation,
+      payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
       payment.getFinishedPaymentInfoExpectation] timeout:20];
 }
 
 - (void)testCancelFlowWithBinding {
-  actionTypeInForm = ActionTypeInFormCancelFlow;
+  payment = [[PaymentFlowController alloc] init];
+  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
+  
+  actionTypeInForm = ActionTypeCancelFlow;
   payment.delegate = self;
   payment.userName = @"3ds2-api";
   payment.password = @"testPwd";
@@ -258,6 +275,135 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.didCancelExpectation] timeout:20];
 }
 
+- (void)testMultiSelectFlowWithNewCard{
+  payment = [[PaymentFlowController alloc] init];
+  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
+  
+  actionTypeInForm = ActionTypeFillMultiSelectForm;
+  payment.delegate = self;
+  payment.userName = @"3ds2-api";
+  payment.password = @"testPwd";
+  payment.doUseNewCard = YES;
+
+  payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
+  payment.runChallangeExpectation = [self expectationWithDescription:@"runChallangeExpectation"];
+  payment.didCompleteWithTransactionStatusExpectation = [self expectationWithDescription:@"didCompleteWithTransactionStatusExpectation"];
+  payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
+  payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
+  
+  
+  NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"222"];
+  NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
+  NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
+  NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"returnUrl"];
+  NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
+  NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
+  NSString *clientId = [NSString stringWithFormat:@"%@%@", @"clientId=", @"clientId"];
+  
+  NSString *parameters = [NSString stringWithFormat:@"%@&%@&%@&%@&%@&%@&%@", amount, userName, password, returnUrl, failUrl, email, clientId];
+
+  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+  
+  NSString *url = @"https://web.rbsdev.com/soyuzpayment";
+  
+  NSString *URL = [NSString stringWithFormat:@"%@%@", url, @"/rest/register.do"];
+
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+
+  request.HTTPMethod = @"POST";
+  [request setHTTPBody:postData];
+
+  NSURLSession *session = [NSURLSession sharedSession];
+
+  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+      if(httpResponse.statusCode == 200) {
+        NSError *parseError = nil;
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+        
+        CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
+        
+        
+        [self->payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
+          
+        }];
+      }
+  }];
+  [dataTask resume];
+  
+  [self waitForExpectations:@[
+      payment.moveChoosePaymentMethodControllerExpectation,
+      payment.runChallangeExpectation,
+      payment.didCompleteWithTransactionStatusExpectation,
+      payment.getFinishSessionStatusRequestExpectation,
+      payment.getFinishedPaymentInfoExpectation] timeout:20];
+}
+
+- (void)testSingleSelectFlowWithNewCard{
+  payment = [[PaymentFlowController alloc] init];
+  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
+  
+  actionTypeInForm = ActionTypeFillMultiSelectForm;
+  payment.delegate = self;
+  payment.userName = @"3ds2-api";
+  payment.password = @"testPwd";
+  payment.doUseNewCard = YES;
+
+  payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
+  payment.runChallangeExpectation = [self expectationWithDescription:@"runChallangeExpectation"];
+  payment.didCompleteWithTransactionStatusExpectation = [self expectationWithDescription:@"didCompleteWithTransactionStatusExpectation"];
+  payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
+  payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
+  
+  NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"111"];
+  NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
+  NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
+  NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"returnUrl"];
+  NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
+  NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
+  NSString *clientId = [NSString stringWithFormat:@"%@%@", @"clientId=", @"clientId"];
+  
+  NSString *parameters = [NSString stringWithFormat:@"%@&%@&%@&%@&%@&%@&%@", amount, userName, password, returnUrl, failUrl, email, clientId];
+
+  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+  
+  NSString *url = @"https://web.rbsdev.com/soyuzpayment";
+  
+  NSString *URL = [NSString stringWithFormat:@"%@%@", url, @"/rest/register.do"];
+
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+
+  request.HTTPMethod = @"POST";
+  [request setHTTPBody:postData];
+
+  NSURLSession *session = [NSURLSession sharedSession];
+
+  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+      if(httpResponse.statusCode == 200) {
+        NSError *parseError = nil;
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+        
+        CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
+        
+        
+        [self->payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
+          
+        }];
+      }
+  }];
+  [dataTask resume];
+  
+  [self waitForExpectations:@[
+      payment.moveChoosePaymentMethodControllerExpectation,
+      payment.runChallangeExpectation,
+      payment.didCompleteWithTransactionStatusExpectation,
+      payment.getFinishSessionStatusRequestExpectation,
+      payment.getFinishedPaymentInfoExpectation] timeout:20];
+}
+
 
 - (void)_fillOTPForm {
   UIWindow *window = UIApplication.sharedApplication.windows[1];
@@ -266,6 +412,24 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   [textField insertText:@"123456"];
   
   UIButton *confirmButton = (UIButton *)[window.rootViewController.view viewWithTag:__doneButtonTag];
+  
+  [confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)_fillMultiSelectForm {
+  UIWindow *window = UIApplication.sharedApplication.windows[1];
+  UIView *uiStackView = (UIView *)[window.rootViewController.view viewWithTag:__optionGroupViewTag];
+
+  NSArray<OptionView *> * checkboxs = [uiStackView subviews];
+  
+  OptionView *checkbox = checkboxs[0];
+  
+  UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] init];
+  [gesture setValue:@(UIGestureRecognizerStateEnded) forKey:@"state"];
+  
+  [checkbox handleTapWithSender:gesture];
+  
+  UIButton *confirmButton = (UIButton *)[window.rootViewController.view viewWithTag:__doneButtonInGroupFlowTag];
   
   [confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
@@ -281,11 +445,14 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 - (void)fillForm {
   dispatch_async(dispatch_get_main_queue(), ^{
     switch (self->actionTypeInForm) {
-      case ActionTypeInFormCancelFlow:
+      case ActionTypeCancelFlow:
         [self _cancelPaymentFlow];
         break;
-      case ActionTypeInFormFillOTPForm:
+      case ActionTypeFillOTPForm:
         [self _fillOTPForm];
+        break;
+      case ActionTypeFillMultiSelectForm:
+        [self _fillMultiSelectForm];
         break;
       default:
         break;

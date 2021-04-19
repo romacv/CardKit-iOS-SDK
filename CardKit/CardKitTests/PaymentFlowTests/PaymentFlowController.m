@@ -24,7 +24,7 @@
   - (void)_sePaymentStep2;
   - (void)_sendRedirectError;
   - (void)_moveChoosePaymentMethodController;
-  - (void)completedWithTransactionStatus:(NSString *) transactionStatus;
+  - (void)didCompleteWithTransactionStatus:(NSString *) transactionStatus;
   - (void)_getFinishSessionStatusRequest;
   - (void)_getFinishedPaymentInfo;
   - (void)didCancel;
@@ -128,9 +128,9 @@
     [_cKitDelegate cardKitViewController:confirmChoosedCardController didCreateSeToken:seToken allowSaveBinding:NO isNewCard: NO];
   }
 
-  - (void)completedWithTransactionStatus:(NSString *) transactionStatus{
-    [super completedWithTransactionStatus:transactionStatus];
-    [self.completedWithTransactionStatusExpectation fulfill];
+  - (void)didCompleteWithTransactionStatus:(NSString *) transactionStatus{
+    [super didCompleteWithTransactionStatus:transactionStatus];
+    [self.didCompleteWithTransactionStatusExpectation fulfill];
   }
 
   - (void)_getFinishSessionStatusRequest {

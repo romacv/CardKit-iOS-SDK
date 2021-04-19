@@ -143,7 +143,7 @@
       NSError *parseError = nil;
       NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
 
-      self-> _sessionStatus.redirect = [responseDictionary objectForKey:@"redirect"];
+      self->_sessionStatus.redirect = [responseDictionary objectForKey:@"redirect"];
 
       if (self->_sessionStatus.redirect == nil) {
         [self _sendRedirectError];

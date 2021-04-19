@@ -31,7 +31,7 @@
 
   @property (nullable) XCTestExpectation* moveChoosePaymentMethodControllerExpectation;
 
-  @property (nullable) XCTestExpectation* completedWithTransactionStatusExpectation;
+  @property (nullable) XCTestExpectation* didCompleteWithTransactionStatusExpectation;
 
   @property (nullable) XCTestExpectation* getFinishSessionStatusRequestExpectation;
 
