@@ -348,7 +348,7 @@
       NSString *errorMessage = [responseDictionary objectForKey:@"error"];
       NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
       
-      if (errorCode != 0) {
+      if (errorCode != 0 || ![errorMessage isEqual:@""]) {
         self->_cardKPaymentError.massage = errorMessage;
         [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
         [self->_transactionManager closeProgressDialog];
@@ -490,7 +490,7 @@
       NSString *errorMessage = [responseDictionary objectForKey:@"error"];
       NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
       
-      if (errorCode != 0) {
+      if (errorCode != 0 || ![errorMessage isEqual:@""]) {
         self->_cardKPaymentError.massage = errorMessage;
         [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
         [self->_transactionManager closeProgressDialog];
