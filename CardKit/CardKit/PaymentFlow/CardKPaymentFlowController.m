@@ -23,7 +23,7 @@
 @end
 
 @implementation CardKPaymentFlowController {
-  CardKKindPaymentViewController *_controller;
+  CardKKindPaymentViewController *_kindPaymentController;
   NSString *_url;
   UIActivityIndicatorView *_spinner;
   CardKTheme *_theme;
@@ -104,18 +104,21 @@
   }
   
   - (void)_moveChoosePaymentMethodController {
-    _controller = [[CardKKindPaymentViewController alloc] init];
-    _controller.cKitDelegate = self;
-    
-    UIViewController *sourceViewController = self;
-    UIViewController *destinationController = self->_controller;
-    UINavigationController *navigationController = sourceViewController.navigationController;
+    _kindPaymentController = [[CardKKindPaymentViewController alloc] init];
+    _kindPaymentController.cKitDelegate = self;
 
-    [destinationController.navigationItem setHidesBackButton:YES animated:NO];
-    [navigationController pushViewController:destinationController animated:NO];
+    [self addChildViewController:_kindPaymentController];
+    _kindPaymentController.view.frame = self.view.frame;
+    [self.view addSubview:_kindPaymentController.view];
     
     [self->_spinner stopAnimating];
   }
+
+- (void) _goBack {
+  UIViewController *test = self.navigationController.viewControllers[self.navigationController.viewControllers.count-3];
+  [self.navigationController popToViewController:test animated:YES];
+}
+  
 
   - (void) _getFinishSessionStatusRequest {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
@@ -348,7 +351,7 @@
       NSString *errorMessage = [responseDictionary objectForKey:@"error"];
       NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
       
-      if (errorCode != 0 || ![errorMessage isEqual:@""]) {
+      if (errorCode != 0) {
         self->_cardKPaymentError.massage = errorMessage;
         [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
         [self->_transactionManager closeProgressDialog];
@@ -490,7 +493,7 @@
       NSString *errorMessage = [responseDictionary objectForKey:@"error"];
       NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
       
-      if (errorCode != 0 || ![errorMessage isEqual:@""]) {
+      if (errorCode != 0) {
         self->_cardKPaymentError.massage = errorMessage;
         [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
         [self->_transactionManager closeProgressDialog];
@@ -610,7 +613,6 @@
   paymentView.paymentRequest.paymentSummaryItems = @[paymentItem];
 }
 
-// PaymentFlowDelegate
 - (void)encodeWithCoder:(nonnull NSCoder *)coder {
   
 }
