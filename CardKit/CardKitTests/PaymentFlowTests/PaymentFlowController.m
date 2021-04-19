@@ -27,6 +27,7 @@
   - (void)completedWithTransactionStatus:(NSString *) transactionStatus;
   - (void)_getFinishSessionStatusRequest;
   - (void)_getFinishedPaymentInfo;
+  - (void)didCancel;
 
   - (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler;
   - (void) _runChallange:(NSDictionary *) responseDictionary;
@@ -67,6 +68,8 @@
     dispatch_after(timer, dispatch_get_main_queue(), ^(void){
       [self _fillForm];
     });
+    
+    [self.runChallangeExpectation fulfill];
   }
 
   - (void) _fillForm {
@@ -150,9 +153,14 @@
     [self.processBindingFormRequestStep2Expectation fulfill];
   }
 
+  - (void)didCancel {
+    [super didCancel];
+    
+    [self.didCancelExpectation fulfill];
+  }
 
-- (NSArray<CardKBinding *> *) _convertBindingItemsToCardKBinding:(NSArray<NSDictionary *> *) bindingItems {
-  NSArray<CardKBinding *> *cardKBindings = [super _convertBindingItemsToCardKBinding:bindingItems];
-  return  cardKBindings;
-}
+  - (NSArray<CardKBinding *> *) _convertBindingItemsToCardKBinding:(NSArray<NSDictionary *> *) bindingItems {
+    NSArray<CardKBinding *> *cardKBindings = [super _convertBindingItemsToCardKBinding:bindingItems];
+    return  cardKBindings;
+  }
 @end

@@ -17,6 +17,7 @@
 
 - (void)didFinishPaymentFlow:(NSDictionary *) paymentInfo;
 - (void)didErrorPaymentFlow:(CardKPaymentError *) paymentError;
+- (void)didCancelPaymentFlow;
 
 @end
 

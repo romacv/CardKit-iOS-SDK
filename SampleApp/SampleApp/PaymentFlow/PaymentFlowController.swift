@@ -88,4 +88,8 @@ extension PaymentFlowController: CardKPaymentFlowDelegate {
   func didErrorPaymentFlow(_ paymentError: CardKPaymentError!) {
     Log.i(object: self, message: "didErrorPaymentFlow")
   }
+  
+  func didCancelPaymentFlow() {
+    Log.i(object: self, message: "didCancel")
+  }
 }

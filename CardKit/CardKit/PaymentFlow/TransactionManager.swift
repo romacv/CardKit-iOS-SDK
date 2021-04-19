@@ -12,8 +12,8 @@ import ThreeDSSDK
 
 @objc public protocol TransactionManagerDelegate {
   func errorEventReceived()
-  func cancelled()
-  func completed(transactionStatus: NSString)
+  func didCancel()
+  func didComplete(transactionStatus: NSString)
 }
 
 @objc public class TransactionManager: NSObject, ChallengeStatusReceiver {
@@ -127,9 +127,6 @@ import ThreeDSSDK
       
   }
 
-    func testFinished() {
-    }
-
     @objc public func handleResponse (responseObject: NSObject){
       self._isChallengeTransaction = false
       let aRes = responseObject as! ARes
@@ -174,26 +171,22 @@ extension TransactionManager {
   public func completed(completionEvent e: CompletionEvent) {
     let transactionStatus: NSString = e.getTransactionStatus() as NSString
     
-    delegate?.completed(transactionStatus: transactionStatus)
+    delegate?.didComplete(transactionStatus: transactionStatus)
   }
   
   public func cancelled() {
-    testFinished()
-    delegate?.cancelled()
+    delegate?.didCancel()
   }
 
   public func timedout() {
     delegate?.errorEventReceived()
-    testFinished()
   }
 
   public func protocolError(protocolErrorEvent e: ProtocolErrorEvent) {
     delegate?.errorEventReceived()
-    testFinished()
   }
   
   public func runtimeError(runtimeErrorEvent: RuntimeErrorEvent) {
     delegate?.errorEventReceived()
-    testFinished()
   }
 }

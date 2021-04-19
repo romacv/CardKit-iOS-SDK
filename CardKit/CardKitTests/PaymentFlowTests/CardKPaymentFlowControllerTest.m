@@ -18,8 +18,14 @@ const NSInteger __resendSMSButtonTag = 10001;
 const NSInteger __cancelButtonTag = 10002;
 const NSInteger __SMSCodeTextFieldTag = 20000;
 
+typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
+  ActionTypeInFormCancelFlow = 0,
+  ActionTypeInFormFillOTPForm = 1 << 0
+};
+
 @implementation CardKPaymentFlowControllerTest {
   PaymentFlowController *payment;
+  int actionTypeInForm;
 }
 
 - (void)setUp {
@@ -57,12 +63,14 @@ const NSInteger __SMSCodeTextFieldTag = 20000;
 }
 
 - (void)testPaymentFlowWithNewCard {
+  actionTypeInForm = ActionTypeInFormFillOTPForm;
   payment.delegate = self;
   payment.userName = @"3ds2-api";
   payment.password = @"testPwd";
   payment.doUseNewCard = YES;
 
   payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
+  payment.runChallangeExpectation = [self expectationWithDescription:@"runChallangeExpectation"];
   payment.completedWithTransactionStatusExpectation = [self expectationWithDescription:@"completedWithTransactionStatusExpectation"];
   payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
   payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
@@ -110,12 +118,14 @@ const NSInteger __SMSCodeTextFieldTag = 20000;
   
   [self waitForExpectations:@[
       payment.moveChoosePaymentMethodControllerExpectation,
+      payment.runChallangeExpectation,
       payment.completedWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
       payment.getFinishedPaymentInfoExpectation] timeout:20];
 }
 
 - (void)testPaymentFlowWithBinding {
+  actionTypeInForm = ActionTypeInFormFillOTPForm;
   payment.delegate = self;
   payment.userName = @"3ds2-api";
   payment.password = @"testPwd";
@@ -126,6 +136,8 @@ const NSInteger __SMSCodeTextFieldTag = 20000;
   payment.processBindingFormRequestExpectation = [self expectationWithDescription:@"processBindingFormRequestExpectation"];
   
   payment.processBindingFormRequestStep2Expectation = [self expectationWithDescription:@"processBindingFormRequestStep2Expectation"];
+  
+  payment.runChallangeExpectation = [self expectationWithDescription:@"runChallangeExpectation"];
   
   payment.completedWithTransactionStatusExpectation = [self expectationWithDescription:@"completedWithTransactionStatusExpectation"];
   
@@ -178,21 +190,106 @@ const NSInteger __SMSCodeTextFieldTag = 20000;
       payment.moveChoosePaymentMethodControllerExpectation,
       payment.processBindingFormRequestExpectation,
       payment.processBindingFormRequestStep2Expectation,
+      payment.runChallangeExpectation,
       payment.completedWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
       payment.getFinishedPaymentInfoExpectation] timeout:20];
 }
 
+- (void)testCancelFlowWithBinding {
+  actionTypeInForm = ActionTypeInFormCancelFlow;
+  payment.delegate = self;
+  payment.userName = @"3ds2-api";
+  payment.password = @"testPwd";
+  payment.doUseNewCard = NO;
+  
+  payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
+  
+  payment.processBindingFormRequestExpectation = [self expectationWithDescription:@"processBindingFormRequestExpectation"];
+  
+  payment.processBindingFormRequestStep2Expectation = [self expectationWithDescription:@"processBindingFormRequestStep2Expectation"];
+  
+  payment.didCancelExpectation = [self expectationWithDescription:@"didCancelExpectation"];
+  
+  NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"2000"];
+  NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
+  NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
+  NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"returnUrl"];
+  NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
+  NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
+  NSString *clientId = [NSString stringWithFormat:@"%@%@", @"clientId=", @"clientId"];
+  
+  NSString *parameters = [NSString stringWithFormat:@"%@&%@&%@&%@&%@&%@&%@", amount, userName, password, returnUrl, failUrl, email, clientId];
+
+  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+  
+  NSString *url = @"https://web.rbsdev.com/soyuzpayment";
+  
+  NSString *URL = [NSString stringWithFormat:@"%@%@", url, @"/rest/register.do"];
+
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+
+  request.HTTPMethod = @"POST";
+  [request setHTTPBody:postData];
+
+  NSURLSession *session = [NSURLSession sharedSession];
+
+  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+      if(httpResponse.statusCode == 200) {
+        NSError *parseError = nil;
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+        
+        CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
+        
+        
+        [self->payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
+          
+        }];
+      }
+  }];
+  [dataTask resume];
+  
+  [self waitForExpectations:@[
+      payment.moveChoosePaymentMethodControllerExpectation,
+      payment.processBindingFormRequestExpectation,
+      payment.processBindingFormRequestStep2Expectation,
+      payment.didCancelExpectation] timeout:20];
+}
+
+
+- (void)_fillOTPForm {
+  UIWindow *window = UIApplication.sharedApplication.windows[1];
+  UITextField *textField = (UITextField *)[window.rootViewController.view viewWithTag:__SMSCodeTextFieldTag];
+
+  [textField insertText:@"123456"];
+  
+  UIButton *confirmButton = (UIButton *)[window.rootViewController.view viewWithTag:__doneButtonTag];
+  
+  [confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)_cancelPaymentFlow {
+  UIWindow *window = UIApplication.sharedApplication.windows[1];
+ 
+  UIButton *confirmButton = (UIButton *)[window.rootViewController.view viewWithTag:__cancelButtonTag];
+  
+  [confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+}
+
 - (void)fillForm {
   dispatch_async(dispatch_get_main_queue(), ^{
-    UIWindow *window = UIApplication.sharedApplication.windows[1];
-    UITextField *textField = (UITextField *)[window.rootViewController.view viewWithTag:__SMSCodeTextFieldTag];
-
-    [textField insertText:@"123456"];
-    
-    UIButton *confirmButton = (UIButton *)[window.rootViewController.view viewWithTag:__doneButtonTag];
-    
-    [confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    switch (self->actionTypeInForm) {
+      case ActionTypeInFormCancelFlow:
+        [self _cancelPaymentFlow];
+        break;
+      case ActionTypeInFormFillOTPForm:
+        [self _fillOTPForm];
+        break;
+      default:
+        break;
+    }
   });
 }
 @end

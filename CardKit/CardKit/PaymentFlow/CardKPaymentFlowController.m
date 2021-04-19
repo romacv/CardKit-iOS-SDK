@@ -617,11 +617,11 @@
   
 }
 
-- (void)cancelled {
-  
+- (void)didCancel {
+  [self.cardKPaymentFlowDelegate didCancelPaymentFlow];
 }
 
-- (void)completedWithTransactionStatus:(NSString *) transactionStatus {
+- (void)didCompleteWithTransactionStatus:(NSString *) transactionStatus {
   NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
 
   NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/finish3dsVer2PaymentAnonymous.do"];

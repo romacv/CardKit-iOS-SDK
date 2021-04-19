@@ -41,9 +41,11 @@
 
   @property (nullable) XCTestExpectation* processBindingFormRequestStep2Expectation;
 
-  - (void)_initSDK:(CardKCardView *_Nonnull) cardView cardOwner:(NSString *_Nonnull) cardOwner seToken:(NSString *_Nonnull) seToken callback: (void (^_Nonnull)(NSDictionary *_Nonnull)) handler;
+  @property (nullable) XCTestExpectation* didCancelExpectation;
 
-  - (void) _runChallange:(NSDictionary *_Nonnull) responseDictionary;
+  @property (nullable) XCTestExpectation* runChallangeExpectation;
+
+  - (void)_initSDK:(CardKCardView *_Nonnull) cardView cardOwner:(NSString *_Nonnull) cardOwner seToken:(NSString *_Nonnull) seToken callback: (void (^_Nonnull)(NSDictionary *_Nonnull)) handler;
 
   - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *_Nonnull)) handler;
 
