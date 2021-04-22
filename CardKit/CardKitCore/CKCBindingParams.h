@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable) NSString * cvc;
 @property NSString * mdOrder;
 @property NSString * pubKey;
+@property (nullable) NSString * seTokenTimestamp;
 @end
 
 NS_ASSUME_NONNULL_END

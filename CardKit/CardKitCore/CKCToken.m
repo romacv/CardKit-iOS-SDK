@@ -142,7 +142,7 @@
   return nil;
 }
 
-+ (NSString *) _getTimeStampWithDate:(NSDate *) date {
++ (NSString *) timestampForDate:(NSDate *) date {
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
   [dateFormatter setLocale:enUSPOSIXLocale];
@@ -152,10 +152,8 @@
   return [dateFormatter stringFromDate:date];
 }
 
-+ (NSString *) _getTimeStamp {
-  NSDate *currentDate = [NSDate date];
-  
-  return [self _getTimeStampWithDate:currentDate];
++ (NSString *) _getTimestamp {
+  return [self timestampForDate:[NSDate date]];
 }
 
 + (CKCTokenResult *) generateWithBinding: (CKCBindingParams *) params  {
@@ -196,7 +194,7 @@
     return tokenResult;
   }
 
-  NSString *timeStamp = [self _getTimeStamp];
+  NSString *timeStamp = params.seTokenTimestamp ? params.seTokenTimestamp : [self _getTimestamp];
   NSString *uuid = [[NSUUID UUID] UUIDString];
   NSString *cardData = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", timeStamp, uuid, params.cvc, params.mdOrder, params.bindingID];
 
@@ -257,7 +255,7 @@
     return tokenResult;
   }
 
-  NSString *timeStamp = [self _getTimeStamp];
+  NSString *timeStamp = params.seTokenTimestamp ? params.seTokenTimestamp : [self _getTimestamp];
   NSString *uuid = [[NSUUID UUID] UUIDString];
   NSString *cardNumber = params.pan;
   NSString *secureCode = params.cvc;

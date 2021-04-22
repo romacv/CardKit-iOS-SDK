@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) init NS_UNAVAILABLE;
 + (CKCTokenResult *) generateWithBinding: (CKCBindingParams *) params;
 + (CKCTokenResult *) generateWithCard: (CKCCardParams *) params;
-
++ (NSString *) timestampForDate:(NSDate *) date;
 @end
 
 NS_ASSUME_NONNULL_END

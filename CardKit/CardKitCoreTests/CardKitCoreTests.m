@@ -254,5 +254,16 @@
     XCTAssertTrue([result isEqualToString:pubKey]);
 }
 
+- (void)testTimestampforDate {
+    
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    [dateComponents setDay:1];
+    [dateComponents setMonth:1];
+    [dateComponents setYear:2021];
+    NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
+    
+    NSString *timestamp = [CKCToken timestampForDate:date];
+    XCTAssertTrue([timestamp isEqual:@"2021-01-01T00:00:00+03:00"]);
+}
 
 @end
