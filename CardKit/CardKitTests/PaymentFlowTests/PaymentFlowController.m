@@ -45,6 +45,10 @@
     [super _getSessionStatusRequest:handler];
   }
 
+  - (void)viewDidAppear:(BOOL)animated {
+    
+  }
+
   - (void)_sendError {
     [super _sendError];
     [self.sendErrorExpectation fulfill];
@@ -63,13 +67,9 @@
   - (void) _runChallange:(NSDictionary *) responseDictionary {
     [super _runChallange:(NSDictionary *) responseDictionary];
     
-    double delayInSeconds = 10.0;
-    dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(timer, dispatch_get_main_queue(), ^(void){
-      [self _fillForm];
-    });
-    
     [self.runChallangeExpectation fulfill];
+    [NSThread  sleepForTimeInterval:7.0f];
+    [self _fillForm];
   }
 
   - (void) _fillForm {

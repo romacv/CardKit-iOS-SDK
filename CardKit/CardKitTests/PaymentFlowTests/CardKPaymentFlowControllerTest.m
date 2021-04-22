@@ -32,7 +32,6 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 };
 
 @implementation CardKPaymentFlowControllerTest {
-  PaymentFlowController *payment;
   int actionTypeInForm;
 }
 
@@ -44,15 +43,13 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   CardKConfig.shared.mrBinApiURL = @"https://mrbin.io/bins/display";
   CardKConfig.shared.mrBinURL = @"https://mrbin.io/bins/";
   CardKConfig.shared.pubKey = @"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAws0r6I8emCsURXfuQcU2c9mwUlOiDjuCZ/f+EdadA4vq/kYt3w6kC5TUW97Fm/HTikkHd0bt8wJvOzz3T0O4so+vBaC0xjE8JuU1eCd+zUX/plw1REVVii1RNh9gMWW1fRNu6KDNSZyfftY2BTcP1dbE1itpXMGUPW+TOk3U9WP4vf7pL/xIHxCsHzb0zgmwShm3D46w7dPW+HO3PEHakSWV9bInkchOvh/vJBiRw6iadAjtNJ4+EkgNjHwZJDuo/0bQV+r9jeOe+O1aXLYK/s1UjRs5T4uGeIzmdLUKnu4eTOQ16P6BHWAjyqPnXliYIKfi+FjZxyWEAlYUq+CRqQIDAQAB-----END PUBLIC KEY-----";
-
-  payment = [[PaymentFlowController alloc] init];  
-  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
 }
 
 - (void)tearDown {
 }
 
 - (void)testConvertBindingItemToCardKBinding {
+  PaymentFlowController *payment = [[PaymentFlowController alloc] init];
   NSDictionary *binding = @{@"cardHolder": @"Alex", @"createdDate": @"1618475680663", @"id": @"17900526-aaf8-7672-8d99-288600c305c8", @"isMaestro": @"0", @"label": @"577777**7775 12/24", @"payerEmail": @"test@test.ru", @"payerPhone": @"", @"paymentSystem": @"MASTERCARD"};
   
   CardKBinding *cardKBinding = [[CardKBinding alloc] init];
@@ -71,7 +68,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)testPaymentFlowWithNewCard {
-  payment = [[PaymentFlowController alloc] init];
+  PaymentFlowController *payment = [[PaymentFlowController alloc] init];
   UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
   
   actionTypeInForm = ActionTypeFillOTPForm;
@@ -120,7 +117,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
         CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
         
         
-        [self->payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
+        [payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
           
         }];
       }
@@ -136,7 +133,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)testPaymentFlowWithBinding {
-  payment = [[PaymentFlowController alloc] init];
+  PaymentFlowController *payment = [[PaymentFlowController alloc] init];
   UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
   
   actionTypeInForm = ActionTypeFillOTPForm;
@@ -193,7 +190,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
         CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
         
         
-        [self->payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
+        [payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
           
         }];
       }
@@ -211,7 +208,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)testCancelFlowWithBinding {
-  payment = [[PaymentFlowController alloc] init];
+  PaymentFlowController *payment = [[PaymentFlowController alloc] init];
   UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
   
   actionTypeInForm = ActionTypeCancelFlow;
@@ -261,7 +258,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
         CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
         
         
-        [self->payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
+        [payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
           
         }];
       }
@@ -276,9 +273,9 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)testMultiSelectFlowWithNewCard{
-  payment = [[PaymentFlowController alloc] init];
+  PaymentFlowController *payment = [[PaymentFlowController alloc] init];
   UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
-  
+
   actionTypeInForm = ActionTypeFillMultiSelectForm;
   payment.delegate = self;
   payment.userName = @"3ds2-api";
@@ -290,8 +287,8 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   payment.didCompleteWithTransactionStatusExpectation = [self expectationWithDescription:@"didCompleteWithTransactionStatusExpectation"];
   payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
   payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
-  
-  
+
+
   NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"222"];
   NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
   NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
@@ -299,13 +296,13 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
   NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
   NSString *clientId = [NSString stringWithFormat:@"%@%@", @"clientId=", @"clientId"];
-  
+
   NSString *parameters = [NSString stringWithFormat:@"%@&%@&%@&%@&%@&%@&%@", amount, userName, password, returnUrl, failUrl, email, clientId];
 
   NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-  
+
   NSString *url = @"https://web.rbsdev.com/soyuzpayment";
-  
+
   NSString *URL = [NSString stringWithFormat:@"%@%@", url, @"/rest/register.do"];
 
   NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
@@ -321,17 +318,17 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       if(httpResponse.statusCode == 200) {
         NSError *parseError = nil;
         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-        
+
         CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
-        
-        
-        [self->payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
-          
+
+
+        [payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
+
         }];
       }
   }];
   [dataTask resume];
-  
+
   [self waitForExpectations:@[
       payment.moveChoosePaymentMethodControllerExpectation,
       payment.runChallangeExpectation,
@@ -341,7 +338,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)testSingleSelectFlowWithNewCard{
-  payment = [[PaymentFlowController alloc] init];
+  PaymentFlowController *payment = [[PaymentFlowController alloc] init];
   UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
   
   actionTypeInForm = ActionTypeFillMultiSelectForm;
@@ -389,7 +386,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
         CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
         
         
-        [self->payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
+        [payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
           
         }];
       }

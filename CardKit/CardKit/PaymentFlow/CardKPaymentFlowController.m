@@ -63,7 +63,7 @@
 
   - (void)viewDidAppear:(BOOL)animated {
     [self _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
-      
+
     }];
   }
 
