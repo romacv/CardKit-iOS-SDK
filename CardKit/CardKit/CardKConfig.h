@@ -51,7 +51,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property NSString *bindingsSectionTitle;
 
+@property (nullable) NSString *seTokenTimestamp;
+
 + (void) fetchKeys:(NSString *)url;
+
++ (NSString *) timestampForDate:(NSDate *) date;
 @end
 
 NS_ASSUME_NONNULL_END
