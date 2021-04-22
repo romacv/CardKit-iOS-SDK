@@ -106,7 +106,9 @@
   - (void)_moveChoosePaymentMethodController {
     _kindPaymentController = [[CardKKindPaymentViewController alloc] init];
     _kindPaymentController.cKitDelegate = self;
-
+    
+    self.navigationItem.rightBarButtonItem = _kindPaymentController.navigationItem.rightBarButtonItem;
+    
     [self addChildViewController:_kindPaymentController];
     _kindPaymentController.view.frame = self.view.frame;
     [self.view addSubview:_kindPaymentController.view];
@@ -541,9 +543,9 @@
   [dataTask resume];
 }
 
-- (void)_unbindСardAnon {
-  NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"orderId=", CardKConfig.shared.mdOrder];
-  NSString *bindingId = [NSString stringWithFormat:@"%@%@", @"bindingId=", _cardKBinding.bindingId];
+- (void)_unbindСardAnon:(CardKBinding *) binding {
+  NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"mdOrder=", CardKConfig.shared.mdOrder];
+  NSString *bindingId = [NSString stringWithFormat:@"%@%@", @"bindingId=", binding.bindingId];
   
   NSString *parameters = [self _urlParameters:@[mdOrder, bindingId]];
   NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/binding/unbindcardanon.do", parameters];
@@ -557,8 +559,23 @@
   NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
-    if(httpResponse.statusCode == 200) {
+    if (httpResponse.statusCode != 200) {
+      self->_cardKPaymentError.massage = @"Ошибка запроса данных формы";
+      [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
 
+      return;
+    }
+    
+    NSError *parseError = nil;
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+
+    NSString *errorMessage = [responseDictionary objectForKey:@"error"];
+    NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
+    
+    if (errorCode != 0) {
+      self->_cardKPaymentError.massage = errorMessage;
+      [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
+      [self->_transactionManager closeProgressDialog];
     }
   }];
   [dataTask resume];
@@ -595,7 +612,9 @@
 }
 
 - (void)didRemoveBindings:(nonnull NSArray<CardKBinding *> *)removedBindings {
-  
+  for (CardKBinding *removedBinding in removedBindings) {
+    [self _unbindСardAnon: removedBinding];
+  }
 }
 
 - (void)willShowPaymentView:(nonnull CardKPaymentView *)paymentView {
