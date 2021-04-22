@@ -263,7 +263,8 @@
     NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
     
     NSString *timestamp = [CKCToken timestampForDate:date];
-    XCTAssertTrue([timestamp isEqual:@"2021-01-01T00:00:00+03:00"]);
+    
+    XCTAssertEqualObjects(timestamp, @"2021-01-01T00:00:00+03:00", @"timestamp: %@ is not Equal 2021-01-01T00:00:00+03:00", timestamp);
 }
 
 @end
