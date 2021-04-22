@@ -6,6 +6,7 @@ SDK contains two classes and one delegate.
 [Apple pay integration tutorial](TutorialApplePay.md) <br/>
 [CardKitCore integration tutorial](TutorialCardKitCore.md)<br/>
 [3DS2 integration tutorial](Tutorial3DS2_ru.md)
+
 ## Configuring SDK Settings
 
 ### 1. Theme selection
@@ -30,21 +31,24 @@ SDK contains two classes and one delegate.
 
 ### 3. CardKConfig object properties
 
-|  Property name       |   Data type    |   Defaul value            |   Optional   | Description                                                            |
-| :------------------: | :------------: | :-----------------------: | :----------: | ---------------------------------------------------------------------- |
-|        theme         |   CardKTheme   | CardKTheme.defaultTheme() |      Yes     | UI color theme                                                         |
-|       language       |     String     |            nil            |      Yes     | UI Language                                                            |
-|  bindingCVCRequired  |      BOOL      |          `false`          |      Yes     | Required entry of CVC when paying with a previously saved card               |
-|      isTestMod       |      BOOL      |          `false`          |      Yes     | Run in test mode, to select test keys.                                 |
-|       mdOrder        |     String     |             -             |      No      | order identifier to be paid with cryptogram                            |
-|       bindings       | [CardKBinding] |             -             |      No      | Array of bindings                                                      |
-|     cardKProdKey     |     String     |    `<Public key>`         |      Yes     | Public key for production                                              |
-|     cardKTestKey     |     String     |    `<Public key>`         |      Yes     | Public key for testing                                                 |
-|       testURL        |     String     |          `<URL>`          |      Yes     | Test Key Request URL                                                   |
-|       prodURL        |     String     |          `<URL>`          |      Yes     | Production Key Request URL                                             |
-|       mrBinURL       |     String     |            nil            |      No      | URL root for image display example: `https://mrbin.io/bins/`           |
-|     mrBinApiURL      |     String     |            nil            |      No      | Bank identification URL                                                |
-| bindingsSectionTitle |     String     |            nil            |      Yes     | Title text of the bindings list section                                |
+|    Property name     |   Data type    |       Defaul value        | Optional | Description                                                    |
+| :------------------: | :------------: | :-----------------------: | :------: | -------------------------------------------------------------- |
+|        theme         |   CardKTheme   | CardKTheme.defaultTheme() |   Yes    | UI color theme                                                 |
+|       language       |     String     |            nil            |   Yes    | UI Language                                                    |
+|  bindingCVCRequired  |      BOOL      |          `false`          |   Yes    | Required entry of CVC when paying with a previously saved card |
+|      isTestMod       |      BOOL      |          `false`          |   Yes    | Run in test mode, to select test keys.                         |
+|       mdOrder        |     String     |             -             |    No    | order identifier to be paid with cryptogram                    |
+|       bindings       | [CardKBinding] |             -             |    No    | Array of bindings                                              |
+|     cardKProdKey     |     String     |      `<Public key>`       |   Yes    | Public key for production                                      |
+|     cardKTestKey     |     String     |      `<Public key>`       |   Yes    | Public key for testing                                         |
+|       testURL        |     String     |          `<URL>`          |   Yes    | Test Key Request URL                                           |
+|       prodURL        |     String     |          `<URL>`          |   Yes    | Production Key Request URL                                     |
+|       mrBinURL       |     String     |            nil            |    No    | URL root for image display example: `https://mrbin.io/bins/`   |
+|     mrBinApiURL      |     String     |            nil            |    No    | Bank identification URL                                        |
+| bindingsSectionTitle |     String     |            nil            |   Yes    | Title text of the bindings list section                        |
+|      fetchKeys       |    Function    |             -             |    -     | The function for requesting a public key                       |
+|   seTokenTimestamp   |     String     |            nil            |   Yes    | Time will use for generating a token                           |
+|   timestampForDate   |    Function    |             -             |    -     | The function formats NSDate to timestamp with type String      |
 
 ### 4. Example
 
@@ -61,14 +65,14 @@ SDK contains two classes and one delegate.
 
 ## CardKViewController object properties
 
-|   Property name        |               Data type         |  Defaul value           | Optional     |         Description                        |
-| :--------------------: | :-----------------------------: | :---------------------: | :----------: | ------------------------------------------ |
-|      cKitDelegate      | id<CardKViewControllerDelegate> |          `nil`          |      No      | -                                          |
-|   allowedCardScaner    |              BOOL               |         `false`         |      Yes     | Allow the use of the card scanner.         |
-|  purchaseButtonTitle   |             String              | `Purchase` / `Pay`      |      Yes     | Overriding the button text.                |
-|    allowSaveBinding    |              BOOL               |         `false`         |      Yes     | Show the "Save card" switch                |
-|     isSaveBinding      |              BOOL               |         `false`         |              | Switch default value                       |
-| displayCardHolderField |              BOOL               |         `false`         |              | Show cardholder input field                |
+|     Property name      |            Data type            |    Defaul value    | Optional | Description                        |
+| :--------------------: | :-----------------------------: | :----------------: | :------: | ---------------------------------- |
+|      cKitDelegate      | id<CardKViewControllerDelegate> |       `nil`        |    No    | -                                  |
+|   allowedCardScaner    |              BOOL               |      `false`       |   Yes    | Allow the use of the card scanner. |
+|  purchaseButtonTitle   |             String              | `Purchase` / `Pay` |   Yes    | Overriding the button text.        |
+|    allowSaveBinding    |              BOOL               |      `false`       |   Yes    | Show the "Save card" switch        |
+|     isSaveBinding      |              BOOL               |      `false`       |          | Switch default value               |
+| displayCardHolderField |              BOOL               |      `false`       |          | Show cardholder input field        |
 
 ## Controller initialization
 
@@ -77,11 +81,11 @@ SDK contains two classes and one delegate.
 To show sdk, you need to call the static method `create` of the CardKViewController class.
 Function Arguments `create`:
 
-|   Argument name      |         Data type      | Defaul value          | Optional     |      Description                              |
-| :------------------: | :--------------------: | :-------------------: | :----------: | --------------------------------------------- |
-|         self         |    UIViewController    |         `nil`         |     No       | main controller link                          |
-| navigationController | UINavigationController |         `nil`         |     Yes      | navigation controller                         |
-|      controller      |  CardKViewController   |         `nil`         |     No       | initialized CardKViewController object        |
+|    Argument name     |       Data type        | Defaul value | Optional | Description                            |
+| :------------------: | :--------------------: | :----------: | :------: | -------------------------------------- |
+|         self         |    UIViewController    |    `nil`     |    No    | main controller link                   |
+| navigationController | UINavigationController |    `nil`     |   Yes    | navigation controller                  |
+|      controller      |  CardKViewController   |    `nil`     |    No    | initialized CardKViewController object |
 
 Function result `create` - class object `UIViewController`
 
@@ -101,17 +105,17 @@ Function result `create` - class object `UIViewController`
 
 ### 1. Bindings display
 
-A controller with the list of bindings will be displayed if the `bindings` array in `CardKConfing` is not an empty array. 
+A controller with the list of bindings will be displayed if the `bindings` array in `CardKConfing` is not an empty array.
 If the array is empty, the form for creating a new card will be displayed.
 
 Object Properties `CardKBinding`:
 
-| Property name     | Data type  | Defaul value          | Optional    | Description         |
-| :---------------: | :--------: | :-------------------: | :----------:| ------------------- |
-|     bindingId     |   Number   |           -           |     No      | Id bindings         |
-|   paymentSystem   |   String   |           -           |     No      | Payment system      |
-|    cardNumber     |   String   |           -           |     No      | Card number         |
-|    expireDate     |   String   |           -           |     No      | Card expiry date    |
+| Property name | Data type | Defaul value | Optional | Description      |
+| :-----------: | :-------: | :----------: | :------: | ---------------- |
+|   bindingId   |  Number   |      -       |    No    | Id bindings      |
+| paymentSystem |  String   |      -       |    No    | Payment system   |
+|  cardNumber   |  String   |      -       |    No    | Card number      |
+|  expireDate   |  String   |      -       |    No    | Card expiry date |
 
 <div align="center">
    <img src="./images/list_bindings.png" width="300"/>
@@ -341,13 +345,13 @@ cardKPaymentView.frame = CGReact(x: 0, y: 0, width: 100, height: 100);
 
 2. Setting up PKPaymentView
 
-| Argument name      |      Data type       | Default value         | Optiona;     | Description                         |
-| :----------------: | :------------------: | :-------------------: | :----------: | ----------------------------------- |
-|     merchantId     |        String        |         `nil`         |     No       | `merchantId` for apple pay          |
-|   paymentRequest   |   PKPaymentRequest   |         `nil`         |     No       | Object to describe payment data     |
-| paymentButtonType  | PKPaymentButtonType  |         `nil`         |     No       | ApplePay button type                |
-| paymentButtonStyle | PKPaymentButtonStyle |         `nil`         |     No       | ApplePay button style               |
-|   cardPaybutton    |       UIButton       |         `nil`         |     Yes      | Setting up the "Pay by card" button"|
+|   Argument name    |      Data type       | Default value | Optiona; | Description                          |
+| :----------------: | :------------------: | :-----------: | :------: | ------------------------------------ |
+|     merchantId     |        String        |     `nil`     |    No    | `merchantId` for apple pay           |
+|   paymentRequest   |   PKPaymentRequest   |     `nil`     |    No    | Object to describe payment data      |
+| paymentButtonType  | PKPaymentButtonType  |     `nil`     |    No    | ApplePay button type                 |
+| paymentButtonStyle | PKPaymentButtonStyle |     `nil`     |    No    | ApplePay button style                |
+|   cardPaybutton    |       UIButton       |     `nil`     |   Yes    | Setting up the "Pay by card" button" |
 
 ```swift
 func willShow(_ paymentView: CardKPaymentView) {
@@ -453,15 +457,15 @@ func _openController() {
 
 Theme Properties:
 
-| Number| Property name        |
-| :---: | :------------------- |
-|   1   | colorLabel           |
-|   2   | colorPlaceholder     |
-|   3   | colorErrorLabel      |
-|   4   | colorCellBackground  |
-|   5   | colorTableBackground |
-|   6   | colorSeparatar       |
-|   7   | colorButtonText      |
+| Number | Property name        |
+| :----: | :------------------- |
+|   1    | colorLabel           |
+|   2    | colorPlaceholder     |
+|   3    | colorErrorLabel      |
+|   4    | colorCellBackground  |
+|   5    | colorTableBackground |
+|   6    | colorSeparatar       |
+|   7    | colorButtonText      |
 
 <div align="center">
   <img src="./images/custom_theme.png" width="600"/>

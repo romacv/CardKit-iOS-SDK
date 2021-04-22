@@ -11,27 +11,16 @@
 #import "RSA.h"
 #import "CardKBinding.h"
 #import "CardKCardView.h"
+#import "CKCToken.h"
 
 @implementation SeTokenGenerator
 
-+ (NSString *) getTimeStampWithDate:(NSDate *) date {
-  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-  NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-  [dateFormatter setLocale:enUSPOSIXLocale];
-  [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-  [dateFormatter setCalendar:[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian]];
-  
-  return [dateFormatter stringFromDate:date];
-}
-
 + (NSString *) getTimeStamp {
-  NSDate *currentDate = [NSDate date];
-  
-  return [self getTimeStampWithDate:currentDate];
+  return CardKConfig.shared.seTokenTimestamp ? CardKConfig.shared.seTokenTimestamp : [CKCToken timestampForDate:[NSDate date]];
 }
 
 + (NSString *) generateSeTokenWithBinding:(CardKBinding *) cardKBinding; {
-    NSString *timeStamp = [self getTimeStamp];
+  NSString *timeStamp = [self getTimeStamp];
     NSString *uuid = [[NSUUID UUID] UUIDString];
     NSString *cardData = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", timeStamp, uuid, cardKBinding.secureCode, CardKConfig.shared.mdOrder, cardKBinding.bindingId];
 

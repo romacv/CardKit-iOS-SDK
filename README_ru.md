@@ -45,7 +45,10 @@ SDK содержит два класса и один делегат.
 |       mrBinURL       |     String     |            nil            |     Нет      | URL корень для отображения картинки например: `https://mrbin.io/bins/` |
 |     mrBinApiURL      |     String     |            nil            |     Нет      | URL для определения банка                                              |
 | bindingsSectionTitle |     String     |            nil            |      Да      | Текст загаловка секции списка связок                                   |
-| fetchKeys            |  Function      |              -            |       -      | Функция для запроса публичного ключа                                   |
+|      fetchKeys       |    Function    |             -             |      -       | Функция для запроса публичного ключа                                   |
+|   seTokenTimestamp   |     String     |            nil            |      Да      | Время которое будет использовано в генерации токен                     |
+|   timestampForDate   |    Function    |             -             |      -       | Функция форматирует NSDate в timestamp c типом String                  |
+
 ### 4. Пример
 
 ```swift
