@@ -548,7 +548,7 @@
   NSString *bindingId = [NSString stringWithFormat:@"%@%@", @"bindingId=", binding.bindingId];
   
   NSString *parameters = [self _urlParameters:@[mdOrder, bindingId]];
-  NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/binding/unbindcardanon.do", parameters];
+  NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/unbindcardanon.do", parameters];
 
   NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
 
