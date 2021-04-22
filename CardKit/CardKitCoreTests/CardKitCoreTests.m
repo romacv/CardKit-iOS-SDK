@@ -264,7 +264,7 @@
     
     NSString *timestamp = [CKCToken timestampForDate:date];
     
-    XCTAssertEqualObjects(timestamp, @"2021-01-01T00:00:00+03:00", @"timestamp: %@ is not Equal 2021-01-01T00:00:00+03:00", timestamp);
+    XCTAssertEqualObjects([timestamp substringToIndex:19], @"2021-01-01T00:00:00", @"timestamp: %@ is not Equal 2021-01-01T00:00:00+03:00", timestamp);
 }
 
 @end
