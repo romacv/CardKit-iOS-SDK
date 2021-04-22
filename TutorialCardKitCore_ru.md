@@ -8,19 +8,17 @@ type CKCCardParams = {
   cvc: string
   expiryMMYY: string        // дата в формате ММ/ГГ или ММГГ
   cardholder: string | null // если null - не валидируется
-  
   mdOrder: string
-  
   pubKey: string
+  seTokenTimestamp: string | null // если null - используется локальное время на телефоне
 }
 
 type CKCBindingParams = {
   bindingID: string
   cvc: string | null // если null, то не валидируется
-
   mdOrder: string
-  
   pubKey: string
+  seTokenTimestamp: string | null // если null - используется локальное время на телефоне
 }
 
 type CKCError = 
@@ -52,6 +50,7 @@ class CKCPubKey {
 class CKCToken {
   static generateWithBinding(params: CKCBindingParams): CKCTokenResult
   static generateWithCard(params: CKCCardParams): CKCTokenResult
+  static timestampForDate(NSDate: date): string
 }
 
 ```
