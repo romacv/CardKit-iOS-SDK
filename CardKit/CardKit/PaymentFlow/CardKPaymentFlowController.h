@@ -26,4 +26,7 @@
 
   @property NSString* userName;
   @property NSString* password;
+
+  @property CardKPaymentView* cardKPaymentView;
+  @property NSString* url;
 @end

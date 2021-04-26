@@ -24,7 +24,6 @@
 
 @implementation CardKPaymentFlowController {
   CardKKindPaymentViewController *_kindPaymentController;
-  NSString *_url;
   UIActivityIndicatorView *_spinner;
   CardKTheme *_theme;
   CardKBinding *_cardKBinding;
@@ -47,8 +46,6 @@
       [_spinner startAnimating];
       
       _cardKPaymentError = [[CardKPaymentError alloc] init];
-
-      _url = @"https://web.rbsdev.com/soyuzpayment";
       
       _transactionManager = [[TransactionManager alloc] init];
       _transactionManager.delegate = self;
@@ -62,9 +59,7 @@
   }
 
   - (void)viewDidAppear:(BOOL)animated {
-    [self _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
-
-    }];
+    [self _getSessionStatusRequest];
   }
 
   - (void)viewDidLoad {
@@ -177,7 +172,7 @@
     return bindings;
   }
 
-  - (void) _getSessionStatusRequest:(void (^)(CardKPaymentSessionStatus *)) handler {
+  - (void) _getSessionStatusRequest {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
     NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/getSessionStatus.do", mdOrder];
 
@@ -188,37 +183,34 @@
     NSURLSession *session = [NSURLSession sharedSession];
     
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      
       dispatch_async(dispatch_get_main_queue(), ^{
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-  
-      if(httpResponse.statusCode != 200) {
-        [self _sendError];
-        return;
-      }
-      
-      NSError *parseError = nil;
-      NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-      
-      self->_sessionStatus = [[CardKPaymentSessionStatus alloc] init];
+    
+        if(httpResponse.statusCode != 200) {
+          [self _sendError];
+          return;
+        }
         
-      NSArray<NSDictionary *> *bindingItems = (NSArray<NSDictionary *> *) responseDictionary[@"bindingItems"];
+        NSError *parseError = nil;
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+        
+        self->_sessionStatus = [[CardKPaymentSessionStatus alloc] init];
+          
+        NSArray<NSDictionary *> *bindingItems = (NSArray<NSDictionary *> *) responseDictionary[@"bindingItems"];
 
-      self->_sessionStatus.bindingItems = [self _convertBindingItemsToCardKBinding: bindingItems];
-      self->_sessionStatus.bindingEnabled = (BOOL)[responseDictionary[@"bindingEnabled"] boolValue];
-      self->_sessionStatus.cvcNotRequired = (BOOL)[responseDictionary[@"cvcNotRequired"] boolValue];
-      self-> _sessionStatus.redirect = [responseDictionary objectForKey:@"redirect"];
-      
-      CardKConfig.shared.bindings = [[NSArray alloc] initWithArray:self->_sessionStatus.bindingItems];
-      CardKConfig.shared.bindingCVCRequired = !self->_sessionStatus.cvcNotRequired;
-      
-      if (self->_sessionStatus.redirect != nil) {
-        [self _sendRedirectError];
-      } else {
-        [self _moveChoosePaymentMethodController];
-      }
+        self->_sessionStatus.bindingItems = [self _convertBindingItemsToCardKBinding: bindingItems];
+        self->_sessionStatus.bindingEnabled = (BOOL)[responseDictionary[@"bindingEnabled"] boolValue];
+        self->_sessionStatus.cvcNotRequired = (BOOL)[responseDictionary[@"cvcNotRequired"] boolValue];
+        self-> _sessionStatus.redirect = [responseDictionary objectForKey:@"redirect"];
         
-        handler(self->_sessionStatus);
+        CardKConfig.shared.bindings = [[NSArray alloc] initWithArray:self->_sessionStatus.bindingItems];
+        CardKConfig.shared.bindingCVCRequired = !self->_sessionStatus.cvcNotRequired;
+        
+        if (self->_sessionStatus.redirect != nil) {
+          [self _sendRedirectError];
+        } else {
+          [self _moveChoosePaymentMethodController];
+        }
       });
     }];
     [dataTask resume];
@@ -581,12 +573,60 @@
   [dataTask resume];
 }
 
+- (void)_applePay:(NSString *) paymentToken {
+  NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
+  NSString *paymentTokenParameerr = [NSString stringWithFormat:@"%@%@", @"paymentToken=", paymentToken];
+  
+  NSString *parameters = [self _urlParameters:@[mdOrder, paymentTokenParameerr]];
+
+  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+  NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/applepay/payment.do"];
+
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+
+  request.HTTPMethod = @"POST";
+  [request setHTTPBody:postData];
+
+  NSURLSession *session = [NSURLSession sharedSession];
+
+  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+    if (httpResponse.statusCode != 200) {
+      self->_cardKPaymentError.massage = @"Ошибка запроса данных формы";
+      [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
+
+      return;
+    }
+    
+    NSError *parseError = nil;
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+
+    NSString *redirect = [responseDictionary objectForKey:@"redirect"];
+    BOOL is3DSVer2 = (BOOL)[responseDictionary[@"is3DSVer2"] boolValue];
+    NSString *errorMessage = [responseDictionary objectForKey:@"error"];
+    NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
+    
+    if (errorCode != 0) {
+      self->_cardKPaymentError.massage = errorMessage;
+      [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
+      [self->_transactionManager closeProgressDialog];
+    } else if (redirect != nil) {
+      self->_cardKPaymentError.massage = redirect;
+      [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
+      [self->_transactionManager closeProgressDialog];
+    } else if (is3DSVer2){
+      [self _runChallange: responseDictionary];
+    }
+  }];
+  [dataTask resume];
+}
 // CardKDelegate
 - (void)cardKPaymentView:(nonnull CardKPaymentView *)paymentView didAuthorizePayment:(nonnull PKPayment *)pKPayment {
+
 }
 
 - (void)cardKitViewController:(nonnull UIViewController *)controller didCreateSeToken:(nonnull NSString *)seToken allowSaveBinding:(BOOL)allowSaveBinding isNewCard:(BOOL)isNewCard {
-  
   _seToken = seToken;
   if (isNewCard) {
     CardKViewController *cardKViewController = (CardKViewController *) controller;
@@ -595,7 +635,6 @@
                 seToken:seToken
      allowSaveBinding: allowSaveBinding
                 callback:^(NSDictionary * sessionStatus) {}];
-    
   } else {
     ConfirmChoosedCard *confirmChoosedCardController = (ConfirmChoosedCard *) controller;
     _cardKBinding = confirmChoosedCardController.cardKBinding;
@@ -618,9 +657,9 @@
 }
 
 - (void)willShowPaymentView:(nonnull CardKPaymentView *)paymentView {
-  NSArray *paymentNetworks = @[PKPaymentNetworkAmex, PKPaymentNetworkDiscover, PKPaymentNetworkMasterCard, PKPaymentNetworkVisa];
+  NSArray *paymentNetworks = @[PKPaymentNetworkMasterCard, PKPaymentNetworkVisa];
  
-  PKPaymentSummaryItem *paymentItem = [PKPaymentSummaryItem summaryItemWithLabel:@"Коробка" amount:[[NSDecimalNumber alloc] initWithString:@"0.1"]];
+  PKPaymentSummaryItem *paymentItem = [PKPaymentSummaryItem summaryItemWithLabel:@"Коробка" amount:[[NSDecimalNumber alloc] initWithString:@"1"]];
   
   NSString *merchandId = @"merchant.cardkit";
   paymentView.merchantId = merchandId;
