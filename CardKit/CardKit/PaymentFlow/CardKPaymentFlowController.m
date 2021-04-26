@@ -657,17 +657,10 @@
 }
 
 - (void)willShowPaymentView:(nonnull CardKPaymentView *)paymentView {
-  NSArray *paymentNetworks = @[PKPaymentNetworkMasterCard, PKPaymentNetworkVisa];
- 
   PKPaymentSummaryItem *paymentItem = [PKPaymentSummaryItem summaryItemWithLabel:@"Коробка" amount:[[NSDecimalNumber alloc] initWithString:@"1"]];
-  
-  NSString *merchandId = @"merchant.cardkit";
-  paymentView.merchantId = merchandId;
-  paymentView.paymentRequest.currencyCode = @"RUB";
-  paymentView.paymentRequest.countryCode = @"RU";
-  paymentView.paymentRequest.merchantIdentifier = merchandId;
-  paymentView.paymentRequest.merchantCapabilities = PKMerchantCapability3DS;
-  paymentView.paymentRequest.supportedNetworks = paymentNetworks;
+
+  paymentView.merchantId = _cardKPaymentView.merchantId;
+  paymentView.paymentRequest = _cardKPaymentView.paymentRequest;
   paymentView.paymentRequest.paymentSummaryItems = @[paymentItem];
 }
 

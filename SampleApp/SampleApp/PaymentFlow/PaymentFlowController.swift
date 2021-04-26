@@ -70,11 +70,21 @@ class PaymentFlowController: UIViewController {
       CardKConfig.shared.mdOrder = data.orderId ?? ""
       
       DispatchQueue.main.async {
+        let cardKPaymentView = CardKPaymentView();
+        
+        cardKPaymentView.paymentRequest.currencyCode = "RUB";
+        cardKPaymentView.paymentRequest.countryCode = "RU";
+        cardKPaymentView.paymentRequest.merchantIdentifier = "merchant.cardkit";
+        cardKPaymentView.paymentRequest.merchantCapabilities = PKMerchantCapability.capability3DS
+        cardKPaymentView.paymentRequest.supportedNetworks = [.visa, .masterCard];
+        
         self._paymentFlowController.userName = "3ds2-api";
         self._paymentFlowController.password = "testPwd";
         self._paymentFlowController.url = "https://web.rbsdev.com/soyuzpayment";
-
+        self._paymentFlowController.cardKPaymentView = cardKPaymentView;
+        
         let navController = UINavigationController(rootViewController: self._paymentFlowController)
+        
         
         self.present(navController, animated: true, completion: nil)
       }
