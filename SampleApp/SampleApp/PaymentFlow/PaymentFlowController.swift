@@ -72,6 +72,7 @@ class PaymentFlowController: UIViewController {
       DispatchQueue.main.async {
         self._paymentFlowController.userName = "3ds2-api";
         self._paymentFlowController.password = "testPwd";
+        self._paymentFlowController.url = "https://web.rbsdev.com/soyuzpayment";
 
         let navController = UINavigationController(rootViewController: self._paymentFlowController)
         
