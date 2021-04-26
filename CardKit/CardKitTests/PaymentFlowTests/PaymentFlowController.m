@@ -45,9 +45,9 @@
     [super _getSessionStatusRequest];
   }
 
-  - (void)viewDidAppear:(BOOL)animated {
-    
-  }
+//  - (void)viewDidAppear:(BOOL)animated {
+//
+//  }
 
   - (void)_sendError {
     [super _sendError];

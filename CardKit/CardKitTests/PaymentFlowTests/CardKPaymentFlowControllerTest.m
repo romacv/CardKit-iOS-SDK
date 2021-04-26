@@ -45,7 +45,6 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 
 - (void)setUp {
   payment = [[PaymentFlowController alloc] init];
-  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
   
   payment.delegate = self;
   payment.userName = @"3ds2-api";
@@ -92,7 +91,9 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
   
   [self _registerOrderWithAmount: @"2000" callback:^() {
-    [self->payment _getSessionStatusRequest];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self _runCardKPaymentFlow];
+    });
   }];
   
   [self waitForExpectations:@[
@@ -116,7 +117,9 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
   
   [self _registerOrderWithAmount: @"2000" callback:^() {
-    [self->payment _getSessionStatusRequest];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self _runCardKPaymentFlow];
+    });
   }];
   
   [self waitForExpectations:@[
@@ -139,7 +142,9 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   payment.didCancelExpectation = [self expectationWithDescription:@"didCancelExpectation"];
   
   [self _registerOrderWithAmount: @"2000" callback:^() {
-    [self->payment _getSessionStatusRequest];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self _runCardKPaymentFlow];
+    });
   }];
   
   [self waitForExpectations:@[
@@ -160,7 +165,9 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
 
   [self _registerOrderWithAmount: @"222" callback:^() {
-    [self->payment _getSessionStatusRequest];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self _runCardKPaymentFlow];
+    });
   }];
   
   [self waitForExpectations:@[
@@ -182,7 +189,9 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
 
   [self _registerOrderWithAmount: @"111" callback:^() {
-    [self->payment _getSessionStatusRequest];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self _runCardKPaymentFlow];
+    });
   }];
 
   [self waitForExpectations:@[
@@ -204,7 +213,9 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
 
   [self _registerOrderWithAmount: @"333" callback:^() {
-    [self->payment _getSessionStatusRequest];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self _runCardKPaymentFlow];
+    });
   }];
 
   [self waitForExpectations:@[
@@ -214,7 +225,6 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.getFinishSessionStatusRequestExpectation,
       payment.getFinishedPaymentInfoExpectation] timeout:20];
 }
-
 
 - (void)_fillOTPForm {
   UIWindow *window = UIApplication.sharedApplication.windows[1];
@@ -324,4 +334,9 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   }];
   [dataTask resume];
 };
+
+- (void)_runCardKPaymentFlow {
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self->payment];
+    UIApplication.sharedApplication.windows.firstObject.rootViewController = navController;
+}
 @end
