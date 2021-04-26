@@ -29,10 +29,15 @@ class PaymentFlowController: UIViewController {
     super.viewDidLoad()
     ThreeDS2ViewController.logs.removeAllObjects()
     if #available(iOS 13.0, *) {
+      self.view.backgroundColor = .systemGray6
       CardKConfig.shared.theme = CardKTheme.system()
     } else {
+      self.view.backgroundColor = .white
       CardKConfig.shared.theme = CardKTheme.light()
     };
+
+    _button.setTitleColor(.systemBlue, for: .normal)
+    
     CardKConfig.shared.language = "ru";
     CardKConfig.shared.bindingCVCRequired = true;
     CardKConfig.shared.isTestMod = true;
