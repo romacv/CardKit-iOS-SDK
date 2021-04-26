@@ -17,6 +17,11 @@
   - (void) handleTapWithSender:(UITapGestureRecognizer *) sender;
 @end
 
+@interface WKWebViewTest: NSObject
+- (void)evaluateJavaScript:(NSString *)javaScriptString
+         completionHandler:(void (^)(id, NSError *error))completionHandler;
+@end
+
 const NSInteger __doneButtonTag = 10000;
 const NSInteger __resendSMSButtonTag = 10001;
 const NSInteger __cancelButtonTag = 10002;
@@ -24,11 +29,13 @@ const NSInteger __doneButtonInGroupFlowTag = 10003;
 
 const NSInteger __SMSCodeTextFieldTag = 20000;
 const NSInteger __optionGroupViewTag = 20001;
+const NSInteger __webViewTag = 20002;
 
 typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   ActionTypeCancelFlow = 0,
   ActionTypeFillOTPForm = 1,
-  ActionTypeFillMultiSelectForm = 2
+  ActionTypeFillMultiSelectForm = 2,
+  ActionTypeFillWebViewForm = 3
 };
 
 @implementation CardKPaymentFlowControllerTest {
@@ -186,6 +193,29 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.getFinishedPaymentInfoExpectation] timeout:20];
 }
 
+- (void)testWebViewFlowWithNewCard{
+  actionTypeInForm = ActionTypeFillWebViewForm;
+  payment.doUseNewCard = YES;
+
+  payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
+  payment.runChallangeExpectation = [self expectationWithDescription:@"runChallangeExpectation"];
+  payment.didCompleteWithTransactionStatusExpectation = [self expectationWithDescription:@"didCompleteWithTransactionStatusExpectation"];
+  payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
+  payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
+
+  [self _registerOrderWithAmount: @"333" callback:^() {
+    [self->payment _getSessionStatusRequest];
+  }];
+
+  [self waitForExpectations:@[
+      payment.moveChoosePaymentMethodControllerExpectation,
+      payment.runChallangeExpectation,
+      payment.didCompleteWithTransactionStatusExpectation,
+      payment.getFinishSessionStatusRequestExpectation,
+      payment.getFinishedPaymentInfoExpectation] timeout:20];
+}
+
+
 - (void)_fillOTPForm {
   UIWindow *window = UIApplication.sharedApplication.windows[1];
   UITextField *textField = (UITextField *)[window.rootViewController.view viewWithTag:__SMSCodeTextFieldTag];
@@ -216,6 +246,18 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   [confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)_fillWebViewForm {
+  UIWindow *window = UIApplication.sharedApplication.windows[1];
+  WKWebViewTest *wkWebView = (WKWebViewTest *)[window.rootViewController.view viewWithTag:__webViewTag];
+  
+  [wkWebView evaluateJavaScript:@"document.getElementsByTagName('input')[0].value = 123456;document.getElementsByTagName('button')[0].click();" completionHandler:^(NSString *result, NSError *error)
+  {
+      NSLog(@"Error %@",error);
+      NSLog(@"Result %@",result);
+  }];
+}
+
+
 - (void)_cancelPaymentFlow {
   UIWindow *window = UIApplication.sharedApplication.windows[1];
  
@@ -236,6 +278,8 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       case ActionTypeFillMultiSelectForm:
         [self _fillMultiSelectForm];
         break;
+      case ActionTypeFillWebViewForm:
+        [self _fillWebViewForm];
       default:
         break;
     }
