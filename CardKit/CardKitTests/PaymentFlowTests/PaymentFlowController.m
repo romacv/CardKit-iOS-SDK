@@ -32,7 +32,7 @@
   - (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler;
   - (void) _runChallange:(NSDictionary *) responseDictionary;
 
-  - (void)_getSessionStatusRequest:(void (^_Nullable)(CardKPaymentSessionStatus *)) handler;
+  - (void)_getSessionStatusRequest;
 
   - (NSArray<CardKBinding *> *) _convertBindingItemsToCardKBinding:(NSArray<NSDictionary *> *) bindingItems;
 
@@ -41,8 +41,8 @@
 @end
 
 @implementation PaymentFlowController: CardKPaymentFlowController
-  - (void) _getSessionStatusRequest:(void (^)(CardKPaymentSessionStatus *)) handler {
-    [super _getSessionStatusRequest:handler];
+  - (void) _getSessionStatusRequest {
+    [super _getSessionStatusRequest];
   }
 
   - (void)viewDidAppear:(BOOL)animated {

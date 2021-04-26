@@ -33,9 +33,18 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 
 @implementation CardKPaymentFlowControllerTest {
   int actionTypeInForm;
+  PaymentFlowController *payment;
 }
 
 - (void)setUp {
+  payment = [[PaymentFlowController alloc] init];
+  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
+  
+  payment.delegate = self;
+  payment.userName = @"3ds2-api";
+  payment.password = @"testPwd";
+  payment.url = @"https://web.rbsdev.com/soyuzpayment";
+  
   CardKConfig.shared.language = @"ru";
   CardKConfig.shared.bindingCVCRequired = YES;
   CardKConfig.shared.bindings = @[];
@@ -49,7 +58,6 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)testConvertBindingItemToCardKBinding {
-  PaymentFlowController *payment = [[PaymentFlowController alloc] init];
   NSDictionary *binding = @{@"cardHolder": @"Alex", @"createdDate": @"1618475680663", @"id": @"17900526-aaf8-7672-8d99-288600c305c8", @"isMaestro": @"0", @"label": @"577777**7775 12/24", @"payerEmail": @"test@test.ru", @"payerPhone": @"", @"paymentSystem": @"MASTERCARD"};
   
   CardKBinding *cardKBinding = [[CardKBinding alloc] init];
@@ -68,61 +76,17 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)testPaymentFlowWithNewCard {
-  PaymentFlowController *payment = [[PaymentFlowController alloc] init];
-  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
-  
   actionTypeInForm = ActionTypeFillOTPForm;
-  payment.delegate = self;
-  payment.userName = @"3ds2-api";
-  payment.password = @"testPwd";
   payment.doUseNewCard = YES;
-
   payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
   payment.runChallangeExpectation = [self expectationWithDescription:@"runChallangeExpectation"];
   payment.didCompleteWithTransactionStatusExpectation = [self expectationWithDescription:@"didCompleteWithTransactionStatusExpectation"];
   payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
   payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
   
-  
-  NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"2000"];
-  NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
-  NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
-  NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"returnUrl"];
-  NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
-  NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
-  NSString *clientId = [NSString stringWithFormat:@"%@%@", @"clientId=", @"clientId"];
-  
-  NSString *parameters = [NSString stringWithFormat:@"%@&%@&%@&%@&%@&%@&%@", amount, userName, password, returnUrl, failUrl, email, clientId];
-
-  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-  
-  NSString *url = @"https://web.rbsdev.com/soyuzpayment";
-  
-  NSString *URL = [NSString stringWithFormat:@"%@%@", url, @"/rest/register.do"];
-
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
-
-  request.HTTPMethod = @"POST";
-  [request setHTTPBody:postData];
-
-  NSURLSession *session = [NSURLSession sharedSession];
-
-  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-      if(httpResponse.statusCode == 200) {
-        NSError *parseError = nil;
-        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-        
-        CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
-        
-        
-        [payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
-          
-        }];
-      }
+  [self _registerOrderWithAmount: @"2000" callback:^() {
+    [self->payment _getSessionStatusRequest];
   }];
-  [dataTask resume];
   
   [self waitForExpectations:@[
       payment.moveChoosePaymentMethodControllerExpectation,
@@ -133,69 +97,20 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)testPaymentFlowWithBinding {
-  PaymentFlowController *payment = [[PaymentFlowController alloc] init];
-  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
-  
   actionTypeInForm = ActionTypeFillOTPForm;
-  payment.delegate = self;
-  payment.userName = @"3ds2-api";
-  payment.password = @"testPwd";
   payment.doUseNewCard = NO;
   
   payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
-  
   payment.processBindingFormRequestExpectation = [self expectationWithDescription:@"processBindingFormRequestExpectation"];
-  
   payment.processBindingFormRequestStep2Expectation = [self expectationWithDescription:@"processBindingFormRequestStep2Expectation"];
-  
   payment.runChallangeExpectation = [self expectationWithDescription:@"runChallangeExpectation"];
-  
   payment.didCompleteWithTransactionStatusExpectation = [self expectationWithDescription:@"didCompleteWithTransactionStatusExpectation"];
-  
   payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
-  
   payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
   
-  
-  NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"2000"];
-  NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
-  NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
-  NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"returnUrl"];
-  NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
-  NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
-  NSString *clientId = [NSString stringWithFormat:@"%@%@", @"clientId=", @"clientId"];
-  
-  NSString *parameters = [NSString stringWithFormat:@"%@&%@&%@&%@&%@&%@&%@", amount, userName, password, returnUrl, failUrl, email, clientId];
-
-  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-  
-  NSString *url = @"https://web.rbsdev.com/soyuzpayment";
-  
-  NSString *URL = [NSString stringWithFormat:@"%@%@", url, @"/rest/register.do"];
-
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
-
-  request.HTTPMethod = @"POST";
-  [request setHTTPBody:postData];
-
-  NSURLSession *session = [NSURLSession sharedSession];
-
-  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-      if(httpResponse.statusCode == 200) {
-        NSError *parseError = nil;
-        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-        
-        CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
-        
-        
-        [payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
-          
-        }];
-      }
+  [self _registerOrderWithAmount: @"2000" callback:^() {
+    [self->payment _getSessionStatusRequest];
   }];
-  [dataTask resume];
   
   [self waitForExpectations:@[
       payment.moveChoosePaymentMethodControllerExpectation,
@@ -208,62 +123,17 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)testCancelFlowWithBinding {
-  PaymentFlowController *payment = [[PaymentFlowController alloc] init];
-  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
-  
   actionTypeInForm = ActionTypeCancelFlow;
-  payment.delegate = self;
-  payment.userName = @"3ds2-api";
-  payment.password = @"testPwd";
   payment.doUseNewCard = NO;
   
   payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
-  
   payment.processBindingFormRequestExpectation = [self expectationWithDescription:@"processBindingFormRequestExpectation"];
-  
   payment.processBindingFormRequestStep2Expectation = [self expectationWithDescription:@"processBindingFormRequestStep2Expectation"];
-  
   payment.didCancelExpectation = [self expectationWithDescription:@"didCancelExpectation"];
   
-  NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"2000"];
-  NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
-  NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
-  NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"returnUrl"];
-  NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
-  NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
-  NSString *clientId = [NSString stringWithFormat:@"%@%@", @"clientId=", @"clientId"];
-  
-  NSString *parameters = [NSString stringWithFormat:@"%@&%@&%@&%@&%@&%@&%@", amount, userName, password, returnUrl, failUrl, email, clientId];
-
-  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-  
-  NSString *url = @"https://web.rbsdev.com/soyuzpayment";
-  
-  NSString *URL = [NSString stringWithFormat:@"%@%@", url, @"/rest/register.do"];
-
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
-
-  request.HTTPMethod = @"POST";
-  [request setHTTPBody:postData];
-
-  NSURLSession *session = [NSURLSession sharedSession];
-
-  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-      if(httpResponse.statusCode == 200) {
-        NSError *parseError = nil;
-        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-        
-        CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
-        
-        
-        [payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
-          
-        }];
-      }
+  [self _registerOrderWithAmount: @"2000" callback:^() {
+    [self->payment _getSessionStatusRequest];
   }];
-  [dataTask resume];
   
   [self waitForExpectations:@[
       payment.moveChoosePaymentMethodControllerExpectation,
@@ -273,13 +143,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)testMultiSelectFlowWithNewCard{
-  PaymentFlowController *payment = [[PaymentFlowController alloc] init];
-  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
-
   actionTypeInForm = ActionTypeFillMultiSelectForm;
-  payment.delegate = self;
-  payment.userName = @"3ds2-api";
-  payment.password = @"testPwd";
   payment.doUseNewCard = YES;
 
   payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
@@ -288,47 +152,10 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
   payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
 
-
-  NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"222"];
-  NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
-  NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
-  NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"returnUrl"];
-  NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
-  NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
-  NSString *clientId = [NSString stringWithFormat:@"%@%@", @"clientId=", @"clientId"];
-
-  NSString *parameters = [NSString stringWithFormat:@"%@&%@&%@&%@&%@&%@&%@", amount, userName, password, returnUrl, failUrl, email, clientId];
-
-  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-
-  NSString *url = @"https://web.rbsdev.com/soyuzpayment";
-
-  NSString *URL = [NSString stringWithFormat:@"%@%@", url, @"/rest/register.do"];
-
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
-
-  request.HTTPMethod = @"POST";
-  [request setHTTPBody:postData];
-
-  NSURLSession *session = [NSURLSession sharedSession];
-
-  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-      if(httpResponse.statusCode == 200) {
-        NSError *parseError = nil;
-        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-
-        CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
-
-
-        [payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
-
-        }];
-      }
+  [self _registerOrderWithAmount: @"222" callback:^() {
+    [self->payment _getSessionStatusRequest];
   }];
-  [dataTask resume];
-
+  
   [self waitForExpectations:@[
       payment.moveChoosePaymentMethodControllerExpectation,
       payment.runChallangeExpectation,
@@ -338,13 +165,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)testSingleSelectFlowWithNewCard{
-  PaymentFlowController *payment = [[PaymentFlowController alloc] init];
-  UIApplication.sharedApplication.windows.firstObject.rootViewController = payment;
-  
   actionTypeInForm = ActionTypeFillMultiSelectForm;
-  payment.delegate = self;
-  payment.userName = @"3ds2-api";
-  payment.password = @"testPwd";
   payment.doUseNewCard = YES;
 
   payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
@@ -352,47 +173,11 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   payment.didCompleteWithTransactionStatusExpectation = [self expectationWithDescription:@"didCompleteWithTransactionStatusExpectation"];
   payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
   payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
-  
-  NSString *amount = [NSString stringWithFormat:@"%@%@", @"amount=", @"111"];
-  NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
-  NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
-  NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"returnUrl"];
-  NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
-  NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
-  NSString *clientId = [NSString stringWithFormat:@"%@%@", @"clientId=", @"clientId"];
-  
-  NSString *parameters = [NSString stringWithFormat:@"%@&%@&%@&%@&%@&%@&%@", amount, userName, password, returnUrl, failUrl, email, clientId];
 
-  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-  
-  NSString *url = @"https://web.rbsdev.com/soyuzpayment";
-  
-  NSString *URL = [NSString stringWithFormat:@"%@%@", url, @"/rest/register.do"];
-
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
-
-  request.HTTPMethod = @"POST";
-  [request setHTTPBody:postData];
-
-  NSURLSession *session = [NSURLSession sharedSession];
-
-  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-      if(httpResponse.statusCode == 200) {
-        NSError *parseError = nil;
-        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-        
-        CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
-        
-        
-        [payment _getSessionStatusRequest:^(CardKPaymentSessionStatus * sessionStatus) {
-          
-        }];
-      }
+  [self _registerOrderWithAmount: @"111" callback:^() {
+    [self->payment _getSessionStatusRequest];
   }];
-  [dataTask resume];
-  
+
   [self waitForExpectations:@[
       payment.moveChoosePaymentMethodControllerExpectation,
       payment.runChallangeExpectation,
@@ -400,7 +185,6 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.getFinishSessionStatusRequestExpectation,
       payment.getFinishedPaymentInfoExpectation] timeout:20];
 }
-
 
 - (void)_fillOTPForm {
   UIWindow *window = UIApplication.sharedApplication.windows[1];
@@ -427,6 +211,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   [checkbox handleTapWithSender:gesture];
   
   UIButton *confirmButton = (UIButton *)[window.rootViewController.view viewWithTag:__doneButtonInGroupFlowTag];
+  
   
   [confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
@@ -456,4 +241,43 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
     }
   });
 }
+
+- (void)_registerOrderWithAmount:(NSString*) amount callback:(void (^)(void)) handler {
+  NSString *amountParameter = [NSString stringWithFormat:@"%@%@", @"amount=", amount];
+  NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
+  NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
+  NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"returnUrl"];
+  NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
+  NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
+  NSString *clientId = [NSString stringWithFormat:@"%@%@", @"clientId=", @"clientId"];
+  
+  NSString *parameters = [NSString stringWithFormat:@"%@&%@&%@&%@&%@&%@&%@", amountParameter, userName, password, returnUrl, failUrl, email, clientId];
+
+  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+  
+  NSString *url = @"https://web.rbsdev.com/soyuzpayment";
+  
+  NSString *URL = [NSString stringWithFormat:@"%@%@", url, @"/rest/register.do"];
+
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+
+  request.HTTPMethod = @"POST";
+  [request setHTTPBody:postData];
+
+  NSURLSession *session = [NSURLSession sharedSession];
+
+  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+      if(httpResponse.statusCode == 200) {
+        NSError *parseError = nil;
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+        
+        CardKConfig.shared.mdOrder = responseDictionary[@"orderId"];
+        
+        handler();
+      }
+  }];
+  [dataTask resume];
+};
 @end
