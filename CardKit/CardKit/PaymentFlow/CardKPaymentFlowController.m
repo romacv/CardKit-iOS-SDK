@@ -602,21 +602,13 @@
     NSError *parseError = nil;
     NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
 
-    NSString *redirect = [responseDictionary objectForKey:@"redirect"];
-    BOOL is3DSVer2 = (BOOL)[responseDictionary[@"is3DSVer2"] boolValue];
-    NSString *errorMessage = [responseDictionary objectForKey:@"error"];
-    NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
+    BOOL success = (BOOL)[responseDictionary[@"success"] boolValue];
     
-    if (errorCode != 0) {
+    if (success) {
+      [self _getFinishSessionStatusRequest];
+    } else {
       self->_cardKPaymentError.massage = errorMessage;
       [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
-      [self->_transactionManager closeProgressDialog];
-    } else if (redirect != nil) {
-      self->_cardKPaymentError.massage = redirect;
-      [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
-      [self->_transactionManager closeProgressDialog];
-    } else if (is3DSVer2){
-      [self _runChallange: responseDictionary];
     }
   }];
   [dataTask resume];
