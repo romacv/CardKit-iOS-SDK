@@ -16,6 +16,7 @@
 #import "CardKPaymentSessionStatus.h"
 #import "CardKCardView.h"
 #import "ConfirmChoosedCard.h"
+#import "CardKSwitchView.h"
 
 @interface CardKPaymentFlowController (Test)
   - (void)_sePayment;
@@ -79,36 +80,67 @@
   - (void)_moveChoosePaymentMethodController {
     [super _moveChoosePaymentMethodController];
     
-    if (_doUseNewCard) {
-      [self _runNewCardFlow];
-    } else {
-      [self _runBindingFlow];
-    }
-    
-    [self.moveChoosePaymentMethodControllerExpectation fulfill];
+    double delayInSeconds = 1.0;
+
+    dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+
+    dispatch_after(timer, dispatch_get_main_queue(), ^(void){
+      if (self->_doUseNewCard) {
+        [self _runNewCardFlow];
+      } else {
+        [self _runBindingFlow];
+      }
+      
+      [self.moveChoosePaymentMethodControllerExpectation fulfill];
+    });
   }
 
   - (void) _runNewCardFlow {
-    CardKCardView *cardView = [[CardKCardView alloc] init];
+    NSInteger newCardButtonTag = 20000;
+    NSInteger cardNumberTextFieldTag = 30000;
+    NSInteger expireDateTextFieldTag = 30001;
+    NSInteger secureCodeTextFieldTag = 30002;
+    NSInteger cardOwnerTextFieldTag = 30003;
+    NSInteger switchViewTag = 30004;
+    NSInteger payButtonTag = 30005;
     
-    cardView.number = @"5777777777777775";
-    cardView.secureCode = @"123";
-    cardView.expirationDate = @"1224";
+    UIWindow *window = UIApplication.sharedApplication.windows[0];
+    UIButton *confirmButton = (UIButton *)[window.rootViewController.view viewWithTag:newCardButtonTag];
     
-    NSString *seToken = [SeTokenGenerator generateSeTokenWithCardView: cardView];
+    [confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     
-    CardKViewControllerInher *cardKViewController = [[CardKViewControllerInher alloc] init];
     
-    UITextField *ownetTextField = [[UITextField alloc] init];
-    ownetTextField.text = @"Alex";
-    cardKViewController.cardView = cardView;
-    cardKViewController.ownerTextField = ownetTextField;
-    
-    self.cKitDelegate = self;
+    double delayInSeconds = 2.0;
 
-    if (_doUseNewCard) {
-      [_cKitDelegate cardKitViewController:cardKViewController didCreateSeToken:seToken allowSaveBinding:YES isNewCard: YES];
-    }
+    dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+
+    dispatch_after(timer, dispatch_get_main_queue(), ^(void){
+      UIWindow *window = UIApplication.sharedApplication.windows[0];
+      
+      UITextField *cardNumberTextField = (UITextField *)[window.rootViewController.view viewWithTag:cardNumberTextFieldTag];
+      
+      [cardNumberTextField setText:@"5777777777777775"];
+      
+      UITextField *expireDateTextField = (UITextField *)[window.rootViewController.view viewWithTag:expireDateTextFieldTag];
+      
+      [expireDateTextField setText:@"1224"];
+      
+      UITextField *secureCodeTextField = (UITextField *)[window.rootViewController.view viewWithTag:secureCodeTextFieldTag];
+      
+      [secureCodeTextField setText:@"123"];
+      
+      UITextField *cardOwnerTextField = (UITextField *)[window.rootViewController.view viewWithTag:cardOwnerTextFieldTag];
+      
+      [cardOwnerTextField setText:@"Alex Korotkov"];
+      
+      CardKSwitchView *switchView = (CardKSwitchView *)[window.rootViewController.view viewWithTag:switchViewTag];
+      
+      switchView.isSaveBinding = YES;
+      
+      UIButton *payButton = (UIButton *)[window.rootViewController.view viewWithTag:payButtonTag];
+
+      [payButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    });
   }
 
   - (void) _runBindingFlow {
