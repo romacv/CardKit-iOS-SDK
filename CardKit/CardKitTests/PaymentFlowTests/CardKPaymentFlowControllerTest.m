@@ -226,6 +226,26 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.getFinishedPaymentInfoExpectation] timeout:20];
 }
 
+- (void)testUnbindCard {
+  CardKConfig.shared.isEditBindingListMode = YES;
+  payment.unbindCard = YES;
+  payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
+  
+  payment.unbindCardExpectation = [self expectationWithDescription:@"unbindCardExpectation"];
+
+
+  [self _registerOrderWithAmount: @"333" callback:^() {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self _runCardKPaymentFlow];
+    });
+  }];
+
+  [self waitForExpectations:@[
+      payment.moveChoosePaymentMethodControllerExpectation,
+      payment.unbindCardExpectation
+  ] timeout:20];
+}
+
 - (void)_fillOTPForm {
   UIWindow *window = UIApplication.sharedApplication.windows[1];
   UITextField *textField = (UITextField *)[window.rootViewController.view viewWithTag:__SMSCodeTextFieldTag];

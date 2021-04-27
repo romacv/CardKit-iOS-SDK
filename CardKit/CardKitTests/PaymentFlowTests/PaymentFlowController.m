@@ -35,6 +35,7 @@
   - (void)_getFinishSessionStatusRequest;
   - (void)_getFinishedPaymentInfo;
   - (void)didCancel;
+  - (void)_unbindСardAnon:(CardKBinding *) binding;
 
   - (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler;
   - (void) _runChallange:(NSDictionary *) responseDictionary;
@@ -87,7 +88,9 @@
     dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 
     dispatch_after(timer, dispatch_get_main_queue(), ^(void){
-      if (self->_doUseNewCard) {
+      if (self->_unbindCard) {
+        [self _runUnbindFlow];
+      } else if (self->_doUseNewCard) {
         [self _runNewCardFlow];
       } else {
         [self _runBindingFlow];
@@ -181,6 +184,27 @@
       [payButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     });
   }
+
+- (void)_runUnbindFlow {
+  UIWindow *window = UIApplication.sharedApplication.windows[0];
+  
+  UINavigationController *navController = (UINavigationController *)window.rootViewController;
+  
+  PaymentFlowController *paymentFlowController = navController.viewControllers.firstObject;
+  
+  CardKKindPaymentViewController *kindPaymentViewController =  paymentFlowController.childViewControllers.firstObject;
+  
+  UITableView *tableView = (UITableView *)[navController.view viewWithTag:40001];
+  
+  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+
+  [kindPaymentViewController tableView:tableView commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:indexPath];
+}
+
+- (void)_unbindСardAnon:(CardKBinding *) binding {
+  [super _unbindСardAnon:binding];
+  [self.unbindCardExpectation fulfill];
+}
 
   - (void)didCompleteWithTransactionStatus:(NSString *) transactionStatus{
     [super didCompleteWithTransactionStatus:transactionStatus];

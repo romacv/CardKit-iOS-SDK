@@ -567,7 +567,6 @@
     if (errorCode != 0) {
       self->_cardKPaymentError.massage = errorMessage;
       [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
-      [self->_transactionManager closeProgressDialog];
     }
   }];
   [dataTask resume];

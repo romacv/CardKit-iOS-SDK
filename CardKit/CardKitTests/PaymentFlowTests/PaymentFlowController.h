@@ -24,6 +24,7 @@
   @property (weak, nonatomic, nullable) id<PaymentFlowControllerDelegate> delegate;
   @property (weak, nonatomic, nullable) id<CardKDelegate> cKitDelegate;
   @property BOOL doUseNewCard;
+  @property BOOL unbindCard;
 
   @property (nullable) XCTestExpectation* sendErrorExpectation;
 
@@ -44,6 +45,8 @@
   @property (nullable) XCTestExpectation* didCancelExpectation;
 
   @property (nullable) XCTestExpectation* runChallangeExpectation;
+
+  @property (nullable) XCTestExpectation* unbindCardExpectation;
 
   - (void)_initSDK:(CardKCardView *_Nonnull) cardView cardOwner:(NSString *_Nonnull) cardOwner seToken:(NSString *_Nonnull) seToken callback: (void (^_Nonnull)(NSDictionary *_Nonnull)) handler;
 
