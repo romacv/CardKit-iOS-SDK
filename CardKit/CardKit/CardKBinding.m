@@ -49,6 +49,8 @@
 
     _paymentSystemImageView = [[UIImageView alloc] init];
     _secureCodeTextField = [[CardKTextField alloc] init];
+    _secureCodeTextField.tag = 30006;
+    
     _secureCodeTextField.pattern = CardKTextFieldPatternSecureCode;
     _secureCodeTextField.placeholder = NSLocalizedStringFromTableInBundle(@"CVC", nil, _languageBundle, @"CVC placeholder");
     _secureCodeTextField.secureTextEntry = YES;

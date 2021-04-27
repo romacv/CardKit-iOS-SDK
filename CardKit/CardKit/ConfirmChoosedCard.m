@@ -33,7 +33,8 @@ NSString *CardKConfirmChoosedCardFooterID = @"footer";
 
   if (self) {
     _button =  [UIButton buttonWithType:UIButtonTypeSystem];
-
+    _button.tag = 30007;
+    
     _bundle = [NSBundle bundleForClass:[ConfirmChoosedCard class]];
      
      NSString *language = CardKConfig.shared.language;

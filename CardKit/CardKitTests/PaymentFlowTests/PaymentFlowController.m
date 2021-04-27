@@ -18,6 +18,12 @@
 #import "ConfirmChoosedCard.h"
 #import "CardKSwitchView.h"
 
+@interface CardKKindPaymentViewControllerTest: CardKKindPaymentViewController
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+@end
+
+
+
 @interface CardKPaymentFlowController (Test)
   - (void)_sePayment;
   - (void)_sendError;
@@ -45,10 +51,6 @@
   - (void) _getSessionStatusRequest {
     [super _getSessionStatusRequest];
   }
-
-//  - (void)viewDidAppear:(BOOL)animated {
-//
-//  }
 
   - (void)_sendError {
     [super _sendError];
@@ -144,20 +146,40 @@
   }
 
   - (void) _runBindingFlow {
-    ConfirmChoosedCard *confirmChoosedCardController = [[ConfirmChoosedCard alloc] init];
-    confirmChoosedCardController.cKitDelegate = self;
-    CardKBinding *cardKBinding = CardKConfig.shared.bindings[0];
+    NSInteger secureCodeTextFieldTag = 30006;
+    NSInteger payButtonTag = 30007;
     
-    if (CardKConfig.shared.bindingCVCRequired) {
-      cardKBinding.secureCode = @"123";
-    }
+    UIWindow *window = UIApplication.sharedApplication.windows[0];
     
-    self.cKitDelegate = self;
-    NSString *seToken = [SeTokenGenerator generateSeTokenWithBinding:cardKBinding];
+    UINavigationController *navController = (UINavigationController *)window.rootViewController;
     
-    confirmChoosedCardController.cardKBinding = cardKBinding;
+    PaymentFlowController *paymentFlowController = navController.viewControllers.firstObject;
     
-    [_cKitDelegate cardKitViewController:confirmChoosedCardController didCreateSeToken:seToken allowSaveBinding:NO isNewCard: NO];
+    CardKKindPaymentViewController *kindPaymentViewController =  paymentFlowController.childViewControllers.firstObject;
+    
+    UITableView *tableView = (UITableView *)[navController.view viewWithTag:40001];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    
+    [kindPaymentViewController tableView:tableView didSelectRowAtIndexPath:indexPath];
+    
+    double delayInSeconds = 1.0;
+
+    dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+
+    dispatch_after(timer, dispatch_get_main_queue(), ^(void){
+      UIWindow *window = UIApplication.sharedApplication.windows[0];
+      
+      if (CardKConfig.shared.bindingCVCRequired) {
+        UITextField *secureCodeTextField = (UITextField *)[window.rootViewController.view viewWithTag:secureCodeTextFieldTag];
+        
+        [secureCodeTextField setText:@"123"];
+      }
+      
+      UIButton *payButton = (UIButton *)[window.rootViewController.view viewWithTag:payButtonTag];
+
+      [payButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    });
   }
 
   - (void)didCompleteWithTransactionStatus:(NSString *) transactionStatus{

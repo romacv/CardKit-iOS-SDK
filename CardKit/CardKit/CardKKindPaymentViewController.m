@@ -126,6 +126,8 @@ const NSString *CardKKindPayRows = @"rows";
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.tableView.tag = 40001;
+  
   for (NSString *cellID in @[CardKSavedCardsCellID, CardKPayCardButtonCellID]) {
    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellID];
   }
