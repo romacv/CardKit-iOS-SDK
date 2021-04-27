@@ -128,10 +128,13 @@ NSString *CardKFooterID = @"footer";
     [_ownerTextField addTarget:self action:@selector(_clearOwnerError) forControlEvents:UIControlEventValueChanged];
     [_ownerTextField addTarget:self action:@selector(_buttonPressed:) forControlEvents:UIControlEventEditingDidEndOnExit];
     _ownerTextField.stripRegexp = @"[^a-zA-Z' .]";
+    _ownerTextField.tag = 30003;
+      
     _ownerTextField.keyboardType = UIKeyboardTypeASCIICapable;
     _ownerTextField.returnKeyType = UIReturnKeyContinue;
 
     _doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _doneButton.tag = 30005;
     [_doneButton
       setTitle: NSLocalizedStringFromTableInBundle(@"doneButton", nil, _languageBundle, "Submit payment button")
       forState: UIControlStateNormal];
@@ -141,7 +144,7 @@ NSString *CardKFooterID = @"footer";
     forControlEvents:UIControlEventTouchUpInside];
 
     _switchView = [[CardKSwitchView alloc] init];
-
+    _switchView.tag = 30004;
     _sections = [self _defaultSections];
   }
   

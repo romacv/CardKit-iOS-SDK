@@ -243,13 +243,13 @@
 		D245AB3C231C435E00369747 /* CardKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKit.h; sourceTree = "<group>"; };
 		D245AB3D231C435E00369747 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D245ABBA231C449F00369747 /* CardKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKViewController.h; sourceTree = "<group>"; };
-		D245ABBB231C449F00369747 /* CardKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKViewController.m; sourceTree = "<group>"; };
+		D245ABBB231C449F00369747 /* CardKViewController.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKViewController.m; sourceTree = "<group>"; tabWidth = 2; };
 		D245ABC6231C529D00369747 /* CardKTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKTheme.h; sourceTree = "<group>"; };
 		D245ABC7231C529D00369747 /* CardKTheme.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKTheme.m; sourceTree = "<group>"; };
 		D269080B231FA894001CB863 /* CardKTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKTextField.h; sourceTree = "<group>"; };
 		D269080C231FA894001CB863 /* CardKTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKTextField.m; sourceTree = "<group>"; };
 		D269080F231FB000001CB863 /* CardKCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKCardView.h; sourceTree = "<group>"; };
-		D2690810231FB000001CB863 /* CardKCardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKCardView.m; sourceTree = "<group>"; };
+		D2690810231FB000001CB863 /* CardKCardView.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKCardView.m; sourceTree = "<group>"; tabWidth = 2; };
 		D2D0B35C2320E3AC0007B3B9 /* CardKBankLogoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKBankLogoView.h; sourceTree = "<group>"; };
 		D2D0B35D2320E3AC0007B3B9 /* CardKBankLogoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKBankLogoView.m; sourceTree = "<group>"; };
 		D2D0B3632320F3A60007B3B9 /* banks-info */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "banks-info"; sourceTree = "<group>"; };

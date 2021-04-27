@@ -28,6 +28,7 @@
 
     _cardPaybutton =  [UIButton buttonWithType:UIButtonTypeSystem];
     _cardPaybutton.layer.cornerRadius = 4;
+    _cardPaybutton.tag = 20000;
     [_cardPaybutton setBackgroundColor: UIColor.whiteColor];
     [_cardPaybutton setTitleColor: UIColor.blackColor forState:UIControlStateNormal];
     _cardPaybutton.titleLabel.minimumScaleFactor = 0.5;
