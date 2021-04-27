@@ -75,13 +75,15 @@ class PaymentFlowController: UIViewController {
       CardKConfig.shared.mdOrder = data.orderId ?? ""
       
       DispatchQueue.main.async {
-        let cardKPaymentView = CardKPaymentView();
+        let paymentRequest = PKPaymentRequest();
+        paymentRequest.currencyCode = "RUB";
+        paymentRequest.countryCode = "RU";
+        paymentRequest.merchantCapabilities = PKMerchantCapability.capability3DS
+        paymentRequest.supportedNetworks = [.visa, .masterCard];
         
-        cardKPaymentView.paymentRequest.currencyCode = "RUB";
-        cardKPaymentView.paymentRequest.countryCode = "RU";
-        cardKPaymentView.paymentRequest.merchantIdentifier = "merchant.cardkit";
-        cardKPaymentView.paymentRequest.merchantCapabilities = PKMerchantCapability.capability3DS
-        cardKPaymentView.paymentRequest.supportedNetworks = [.visa, .masterCard];
+        let cardKPaymentView = CardKPaymentView();
+        cardKPaymentView.merchantId = "merchant.cardkit";
+        cardKPaymentView.paymentRequest = paymentRequest;
         
         self._paymentFlowController.userName = "3ds2-api";
         self._paymentFlowController.password = "testPwd";
