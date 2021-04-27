@@ -623,7 +623,13 @@
 }
 // CardKDelegate
 - (void)cardKPaymentView:(nonnull CardKPaymentView *)paymentView didAuthorizePayment:(nonnull PKPayment *)pKPayment {
+  NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:pKPayment.token.paymentData options:kNilOptions error:nil];
 
+  if (dict == nil) {
+    return;
+  }
+  
+  [self _applePay:dict[@"data"]];
 }
 
 - (void)cardKitViewController:(nonnull UIViewController *)controller didCreateSeToken:(nonnull NSString *)seToken allowSaveBinding:(BOOL)allowSaveBinding isNewCard:(BOOL)isNewCard {
