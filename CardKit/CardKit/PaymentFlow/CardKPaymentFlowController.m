@@ -607,7 +607,7 @@
     if (success) {
       [self _getFinishSessionStatusRequest];
     } else {
-      self->_cardKPaymentError.massage = errorMessage;
+      self->_cardKPaymentError.massage = @"Ошибка регистрации apple pay токена";
       [self->_cardKPaymentFlowDelegate didErrorPaymentFlow: self->_cardKPaymentError];
     }
   }];
