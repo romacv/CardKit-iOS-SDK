@@ -49,7 +49,7 @@ import ThreeDSSDK
       let indigoColor = UIColor(red: 0.25, green: 0.32, blue: 0.71, alpha: 1.00)
       
       var toolbarColor: UIColor = indigoColor
-      var textColor: UIColor = .white
+      var textColor: UIColor = CardKConfig.shared.theme.colorLabel
       var buttonDone: UIColor = indigoColor
       var buttonResend: UIColor = indigoColor
       
