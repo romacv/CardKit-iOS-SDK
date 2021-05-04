@@ -108,7 +108,7 @@ public class TransactionManager: NSObject, ChallengeStatusReceiver {
           
           let locale = "en"
         
-          try self._service!.initialize(configParameters: config, locale: locale, uiCustomization: _uiConfig)
+          try self._service!.initialize(configParameters: config, locale: Locale.current.languageCode, uiCustomization: UiCustomization())
           self._isSdkInitialized = true
       } catch _ {
         Log.e(object: self, message: "Error initializing SDK")

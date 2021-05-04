@@ -45,13 +45,13 @@ import ThreeDSSDK
       }
     }
   
-    @objc public func setUpUICustomization(isDarkMode: Bool) throws {
+  @objc public func setUpUICustomization(isDarkMode: Bool, primaryColor: UIColor, secondaryColor: UIColor, buttonTextColor: UIColor, textColor: UIColor) throws {
       let indigoColor = UIColor(red: 0.25, green: 0.32, blue: 0.71, alpha: 1.00)
       
-      var toolbarColor: UIColor = indigoColor
-      var textColor: UIColor = CardKConfig.shared.theme.colorLabel
-      var buttonDone: UIColor = indigoColor
-      var buttonResend: UIColor = indigoColor
+      var toolbarColor: UIColor = primaryColor
+      var textColor: UIColor = textColor
+      var buttonDone: UIColor = secondaryColor
+      var buttonResend: UIColor = toolbarColor
       
       if #available(iOS 11.0, *) {
         toolbarColor = UIColor(named: "toolbarColor") ?? toolbarColor
@@ -63,7 +63,7 @@ import ThreeDSSDK
       let toolbarCustomization = ToolbarCustomization()
       try toolbarCustomization.setHeaderText(HEADER_LABEL)
       toolbarCustomization.setBackgroundColor(toolbarColor)
-      toolbarCustomization.setTextColor(.white)
+      toolbarCustomization.setTextColor(buttonTextColor)
       
       let textBoxCustomization = TextBoxCustomization()
       try textBoxCustomization.setBorderWidth(1)
@@ -72,11 +72,11 @@ import ThreeDSSDK
       
       let buttonDoneCustomization = ButtonCustomization()
       buttonDoneCustomization.setBackgroundColor(buttonDone)
-      buttonDoneCustomization.setTextColor(.white)
+      buttonDoneCustomization.setTextColor(buttonTextColor)
       
       let buttonCancelCustomization = ButtonCustomization()
       buttonCancelCustomization.setBackgroundColor(.clear)
-      buttonCancelCustomization.setTextColor(.white)
+      buttonCancelCustomization.setTextColor(buttonTextColor)
       
       let buttonResendCustomization = ButtonCustomization()
       buttonResendCustomization.setBackgroundColor(.clear)

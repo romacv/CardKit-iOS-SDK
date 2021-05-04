@@ -28,5 +28,11 @@
   @property NSString* password;
 
   @property CardKPaymentView* cardKPaymentView;
+  
   @property NSString* url;
+
+  @property UIColor* primaryColor;
+  @property UIColor* secondaryColor;
+  @property UIColor* textColor;
+  @property UIColor* buttonTextColor;
 @end
