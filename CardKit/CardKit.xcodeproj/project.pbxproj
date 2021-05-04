@@ -24,10 +24,8 @@
 		922431F4262DC3AF0059EA2D /* ThreeDSSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 922431EE262DC3AA0059EA2D /* ThreeDSSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		922A91D726270F2300B6FC4F /* CardKitCoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 922A91D626270F2300B6FC4F /* CardKitCoreTests.m */; };
 		922A91D926270F2300B6FC4F /* CardKitCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924290B7255D5FE200378C68 /* CardKitCore.framework */; platformFilter = ios; };
-		922A920F262716BC00B6FC4F /* CardKViewControllerInher.h in Headers */ = {isa = PBXBuildFile; fileRef = 922FE281261D9EB7005EE6A3 /* CardKViewControllerInher.h */; };
 		922A9213262716C100B6FC4F /* PaymentFlowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 9204815F261B05F300026C1F /* PaymentFlowController.h */; };
 		922D6CA6262990EB0092E078 /* CardKPaymentFlowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92365726260E073000913228 /* CardKPaymentFlowController.m */; };
-		922FE283261D9EB7005EE6A3 /* CardKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE282261D9EB7005EE6A3 /* CardKViewController.m */; };
 		922FE328261DFAAC005EE6A3 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922FE327261DFAAC005EE6A3 /* TransactionManager.swift */; };
 		922FE33D261ED515005EE6A3 /* ARes.h in Headers */ = {isa = PBXBuildFile; fileRef = 922FE33B261ED515005EE6A3 /* ARes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		922FE33E261ED515005EE6A3 /* ARes.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE33C261ED515005EE6A3 /* ARes.m */; };
@@ -171,8 +169,6 @@
 		922A91D426270F2300B6FC4F /* CardKitCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardKitCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		922A91D626270F2300B6FC4F /* CardKitCoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKitCoreTests.m; sourceTree = "<group>"; };
 		922A91D826270F2300B6FC4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		922FE281261D9EB7005EE6A3 /* CardKViewControllerInher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKViewControllerInher.h; sourceTree = "<group>"; };
-		922FE282261D9EB7005EE6A3 /* CardKViewController.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKViewController.m; sourceTree = "<group>"; tabWidth = 2; };
 		922FE327261DFAAC005EE6A3 /* TransactionManager.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; tabWidth = 2; };
 		922FE33B261ED515005EE6A3 /* ARes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARes.h; sourceTree = "<group>"; };
 		922FE33C261ED515005EE6A3 /* ARes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARes.m; sourceTree = "<group>"; };
@@ -338,8 +334,6 @@
 				92048132261B04FB00026C1F /* CardKPaymentFlowControllerTest.m */,
 				9204814E261B056900026C1F /* PaymentFlowController.m */,
 				9204815F261B05F300026C1F /* PaymentFlowController.h */,
-				922FE281261D9EB7005EE6A3 /* CardKViewControllerInher.h */,
-				922FE282261D9EB7005EE6A3 /* CardKViewController.m */,
 			);
 			path = PaymentFlowTests;
 			sourceTree = "<group>";
@@ -497,7 +491,6 @@
 			files = (
 				92E247F6247676A900C2EF6C /* ConfirmChoosedCard.h in Headers */,
 				92985C85246A96F4009B7392 /* CardKSwitchView.h in Headers */,
-				922A920F262716BC00B6FC4F /* CardKViewControllerInher.h in Headers */,
 				927EEFB2261F2B1900250EA0 /* API-Bridging-Header.h in Headers */,
 				9234CC4E247BC315009E3034 /* CardKValidation.h in Headers */,
 				92E247F22475481700C2EF6C /* CardKBinding.h in Headers */,
@@ -730,7 +723,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				922FE283261D9EB7005EE6A3 /* CardKViewController.m in Sources */,
 				92048133261B04FB00026C1F /* CardKPaymentFlowControllerTest.m in Sources */,
 				9204814F261B056900026C1F /* PaymentFlowController.m in Sources */,
 				922FE3A7261EF221005EE6A3 /* RequestParams.m in Sources */,

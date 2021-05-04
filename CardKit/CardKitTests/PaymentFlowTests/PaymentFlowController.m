@@ -12,7 +12,6 @@
 #import "PaymentFlowController.h"
 #import "CardKPaymentSessionStatus.h"
 #import "SeTokenGenerator.h"
-#import "CardKViewControllerInher.h"
 #import "CardKPaymentSessionStatus.h"
 #import "CardKCardView.h"
 #import "ConfirmChoosedCard.h"
