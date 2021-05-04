@@ -29,7 +29,6 @@
 		922FE328261DFAAC005EE6A3 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922FE327261DFAAC005EE6A3 /* TransactionManager.swift */; };
 		922FE33D261ED515005EE6A3 /* ARes.h in Headers */ = {isa = PBXBuildFile; fileRef = 922FE33B261ED515005EE6A3 /* ARes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		922FE33E261ED515005EE6A3 /* ARes.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE33C261ED515005EE6A3 /* ARes.m */; };
-		922FE389261ED95C005EE6A3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922FE388261ED95C005EE6A3 /* API.swift */; };
 		922FE3A5261EF220005EE6A3 /* RequestParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 922FE3A3261EF220005EE6A3 /* RequestParams.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		922FE3A6261EF220005EE6A3 /* RequestParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE3A4261EF220005EE6A3 /* RequestParams.m */; };
 		922FE3A7261EF221005EE6A3 /* RequestParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 922FE3A4261EF220005EE6A3 /* RequestParams.m */; };
@@ -53,7 +52,6 @@
 		9245F8DD25B19A150065AF9E /* Luhn.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD8F92255D1AE9001E1ECF /* Luhn.h */; };
 		9248868E251885FB00CA81D5 /* SeTokenGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 9248868C251885FB00CA81D5 /* SeTokenGenerator.h */; };
 		9248868F251885FB00CA81D5 /* SeTokenGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9248868D251885FB00CA81D5 /* SeTokenGenerator.m */; };
-		927EEFB2261F2B1900250EA0 /* API-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 927EEFB1261F2B1900250EA0 /* API-Bridging-Header.h */; };
 		9291BF9626315D3B00F6ECF1 /* CKCToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD900F255D204A001E1ECF /* CKCToken.m */; };
 		9291BFA526315D8500F6ECF1 /* CKCTokenResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9023255D2315001E1ECF /* CKCTokenResult.m */; };
 		9292CED5255E611F00053EC3 /* CKCPubKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD9006255D202E001E1ECF /* CKCPubKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -172,7 +170,6 @@
 		922FE327261DFAAC005EE6A3 /* TransactionManager.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; tabWidth = 2; };
 		922FE33B261ED515005EE6A3 /* ARes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARes.h; sourceTree = "<group>"; };
 		922FE33C261ED515005EE6A3 /* ARes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARes.m; sourceTree = "<group>"; };
-		922FE388261ED95C005EE6A3 /* API.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; tabWidth = 2; };
 		922FE3A3261EF220005EE6A3 /* RequestParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RequestParams.h; sourceTree = "<group>"; };
 		922FE3A4261EF220005EE6A3 /* RequestParams.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RequestParams.m; sourceTree = "<group>"; };
 		9234CC4C247BC315009E3034 /* CardKValidation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKValidation.h; sourceTree = "<group>"; };
@@ -186,7 +183,6 @@
 		924290B7255D5FE200378C68 /* CardKitCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CardKitCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9248868C251885FB00CA81D5 /* SeTokenGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeTokenGenerator.h; sourceTree = "<group>"; };
 		9248868D251885FB00CA81D5 /* SeTokenGenerator.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = SeTokenGenerator.m; sourceTree = "<group>"; tabWidth = 2; };
-		927EEFB1261F2B1900250EA0 /* API-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "API-Bridging-Header.h"; sourceTree = "<group>"; };
 		9292CF47255E9B2F00053EC3 /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9292CF49255E9B2F00053EC3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9292CF4A255E9B2F00053EC3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -310,8 +306,6 @@
 				922FE327261DFAAC005EE6A3 /* TransactionManager.swift */,
 				922FE33B261ED515005EE6A3 /* ARes.h */,
 				922FE33C261ED515005EE6A3 /* ARes.m */,
-				922FE388261ED95C005EE6A3 /* API.swift */,
-				927EEFB1261F2B1900250EA0 /* API-Bridging-Header.h */,
 				922FE3A3261EF220005EE6A3 /* RequestParams.h */,
 				922FE3A4261EF220005EE6A3 /* RequestParams.m */,
 			);
@@ -491,7 +485,6 @@
 			files = (
 				92E247F6247676A900C2EF6C /* ConfirmChoosedCard.h in Headers */,
 				92985C85246A96F4009B7392 /* CardKSwitchView.h in Headers */,
-				927EEFB2261F2B1900250EA0 /* API-Bridging-Header.h in Headers */,
 				9234CC4E247BC315009E3034 /* CardKValidation.h in Headers */,
 				92E247F22475481700C2EF6C /* CardKBinding.h in Headers */,
 				92365727260E073000913228 /* CardKPaymentFlowController.h in Headers */,
@@ -774,7 +767,6 @@
 				D2D0B35F2320E3AC0007B3B9 /* CardKBankLogoView.m in Sources */,
 				9219F466232B8EF100841B98 /* CardKFooterView.m in Sources */,
 				92E247F7247676A900C2EF6C /* ConfirmChoosedCard.m in Sources */,
-				922FE389261ED95C005EE6A3 /* API.swift in Sources */,
 				922FE33E261ED515005EE6A3 /* ARes.m in Sources */,
 				D269080E231FA894001CB863 /* CardKTextField.m in Sources */,
 				9234CC5B247FBCDD009E3034 /* CardKPaymentView.m in Sources */,
