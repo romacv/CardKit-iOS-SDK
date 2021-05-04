@@ -47,8 +47,6 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   payment = [[PaymentFlowController alloc] init];
   
   payment.delegate = self;
-  payment.userName = @"3ds2-api";
-  payment.password = @"testPwd";
   payment.url = @"https://web.rbsdev.com/soyuzpayment";
   
   

@@ -24,9 +24,6 @@
 @interface CardKPaymentFlowController: UIViewController<CardKDelegate>
   @property (weak, nonatomic) id<CardKPaymentFlowDelegate> cardKPaymentFlowDelegate;
 
-  @property NSString* userName;
-  @property NSString* password;
-
   @property CardKPaymentView* cardKPaymentView;
   
   @property NSString* url;

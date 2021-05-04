@@ -84,9 +84,7 @@ class PaymentFlowController: UIViewController {
         let cardKPaymentView = CardKPaymentView();
         cardKPaymentView.merchantId = "merchant.cardkit";
         cardKPaymentView.paymentRequest = paymentRequest;
-        
-        self._paymentFlowController.userName = "3ds2-api";
-        self._paymentFlowController.password = "testPwd";
+
         self._paymentFlowController.url = "https://web.rbsdev.com/soyuzpayment";
         self._paymentFlowController.cardKPaymentView = cardKPaymentView;
         
