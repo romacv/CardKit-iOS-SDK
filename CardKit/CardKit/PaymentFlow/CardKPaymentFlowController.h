@@ -32,6 +32,6 @@
   @property UIColor* secondaryColor;
   @property UIColor* textColor;
   @property UIColor* buttonTextColor;
-  @property (nullable) BOOL *allowedCardScaner;
+  @property BOOL allowedCardScaner;
 
 @end

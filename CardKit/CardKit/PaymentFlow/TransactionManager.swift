@@ -46,8 +46,6 @@ import ThreeDSSDK
     }
   
   @objc public func setUpUICustomization(isDarkMode: Bool, primaryColor: UIColor, secondaryColor: UIColor, buttonTextColor: UIColor, textColor: UIColor) throws {
-      let indigoColor = UIColor(red: 0.25, green: 0.32, blue: 0.71, alpha: 1.00)
-      
       var toolbarColor: UIColor = primaryColor
       var textColor: UIColor = textColor
       var buttonDone: UIColor = secondaryColor

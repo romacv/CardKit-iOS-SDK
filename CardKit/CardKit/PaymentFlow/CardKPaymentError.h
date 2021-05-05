@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CardKPaymentError: NSObject
 
-@property NSString *massage;
+@property NSString *message;
 
 @end
 
