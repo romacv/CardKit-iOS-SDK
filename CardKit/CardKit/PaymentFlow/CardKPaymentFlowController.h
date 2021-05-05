@@ -18,7 +18,7 @@
 - (void)didFinishPaymentFlow:(NSDictionary *) paymentInfo;
 - (void)didErrorPaymentFlow:(CardKPaymentError *) paymentError;
 - (void)didCancelPaymentFlow;
-
+- (void)scanCardRequest:(CardKViewController *)controller;
 @end
 
 @interface CardKPaymentFlowController: UIViewController<CardKDelegate>
@@ -32,4 +32,6 @@
   @property UIColor* secondaryColor;
   @property UIColor* textColor;
   @property UIColor* buttonTextColor;
+  @property (nullable) BOOL *allowedCardScaner;
+
 @end

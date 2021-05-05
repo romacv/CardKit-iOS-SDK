@@ -10,6 +10,7 @@ import Foundation
 import CardKit
 
 class PaymentFlowController: UIViewController {
+  var sampleAppCardIO: SampleAppCardIO? = nil
   static var requestParams: RequestParams = RequestParams();
   let _paymentFlowController: CardKPaymentFlowController = CardKPaymentFlowController();
   var _button: UIButton = UIButton();
@@ -84,9 +85,10 @@ class PaymentFlowController: UIViewController {
         let cardKPaymentView = CardKPaymentView();
         cardKPaymentView.merchantId = "merchant.cardkit";
         cardKPaymentView.paymentRequest = paymentRequest;
-
+        
         self._paymentFlowController.url = "https://web.rbsdev.com/soyuzpayment";
         self._paymentFlowController.cardKPaymentView = cardKPaymentView;
+        self._paymentFlowController.allowedCardScaner = CardIOUtilities.canReadCardWithCamera();
         
         let indigoColor = UIColor(red: 0.25, green: 0.32, blue: 0.71, alpha: 1.00)
         
@@ -121,5 +123,18 @@ extension PaymentFlowController: CardKPaymentFlowDelegate {
   
   func didCancelPaymentFlow() {
     Log.i(object: self, message: "didCancel")
+  }
+  
+  func scanCardRequest(_ controller: CardKViewController) {
+    let cardIO = CardIOView(frame: controller.view.bounds)
+    cardIO.hideCardIOLogo = true
+    cardIO.scanExpiry = false
+    cardIO.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    
+    sampleAppCardIO = SampleAppCardIO()
+    sampleAppCardIO?.cardKController = controller
+    cardIO.delegate = sampleAppCardIO
+    
+    controller.showScanCardView(cardIO, animated: true)
   }
 }

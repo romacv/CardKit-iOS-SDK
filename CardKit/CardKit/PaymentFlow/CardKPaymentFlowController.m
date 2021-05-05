@@ -651,6 +651,10 @@
 }
 
 - (void)didLoadController:(nonnull CardKViewController *)controller {
+  if (self.allowedCardScaner != nil) {
+    controller.allowedCardScaner = self.allowedCardScaner;
+  }
+  
   controller.purchaseButtonTitle = @"Custom purchase button";
   controller.allowSaveBinding = self->_sessionStatus.bindingEnabled;
   controller.isSaveBinding = false;
@@ -724,6 +728,10 @@
 
 - (void)errorEventReceived {
   
+}
+
+- (void)cardKitViewControllerScanCardRequest:(CardKViewController *)controller {
+  [self.cardKPaymentFlowDelegate scanCardRequest:controller];
 }
 
 @end
