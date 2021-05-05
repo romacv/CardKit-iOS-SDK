@@ -66,18 +66,8 @@
     [super viewDidLoad];
   }
 
-  - (NSString *) _urlParameters:(NSArray<NSString *> *) parameters {
-    NSString *url = @"";
-
-    for(NSString *parameter in parameters) {
-      if ([parameters.lastObject isEqual:parameter]) {
-        url = [NSString stringWithFormat:@"%@%@", url, parameter];
-      } else {
-        url = [NSString stringWithFormat:@"%@%@&", url, parameter];
-      }
-    }
-    
-    return url;
+  - (NSString *) _joinParametersInString:(NSArray<NSString *> *) parameters {
+    return [parameters componentsJoinedByString:@"&"];
   }
 
   - (void)callPaymentErrorDelegate {
@@ -226,9 +216,9 @@
     NSString *parameters = @"";
     
     if (CardKConfig.shared.bindingCVCRequired) {
-      parameters = [self _urlParameters:@[mdOrder, bindingId, cvc, language, threeDSSDK]];
+      parameters = [self _joinParametersInString:@[mdOrder, bindingId, cvc, language, threeDSSDK]];
     } else {
-      parameters = [self _urlParameters:@[mdOrder, bindingId, language, threeDSSDK]];
+      parameters = [self _joinParametersInString:@[mdOrder, bindingId, language, threeDSSDK]];
     }
     
     NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processBindingForm.do"];
@@ -316,9 +306,9 @@
     NSString *parameters = @"";
     
     if (CardKConfig.shared.bindingCVCRequired) {
-      parameters = [self _urlParameters:@[mdOrder, bindingId, cvc, threeDSSDK, language, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId]];
+      parameters = [self _joinParametersInString:@[mdOrder, bindingId, cvc, threeDSSDK, language, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId]];
     } else {
-      parameters = [self _urlParameters:@[mdOrder, bindingId, threeDSSDK, language, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId]];
+      parameters = [self _joinParametersInString:@[mdOrder, bindingId, threeDSSDK, language, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId]];
     }
     
     NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processBindingForm.do"];
@@ -395,7 +385,7 @@
   NSString *seTokenParam = [NSString stringWithFormat:@"%@%@", @"seToken=", [seToken stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]];
   NSString *bindingNotNeeded = [NSString stringWithFormat:@"%@%@", @"bindingNotNeeded=", allowSaveBinding ? @"false" : @"true"];
 
-  NSString *parameters = [self _urlParameters:@[mdOrder, seTokenParam, language, owner, bindingNotNeeded, threeDSSDK]];
+  NSString *parameters = [self _joinParametersInString:@[mdOrder, seTokenParam, language, owner, bindingNotNeeded, threeDSSDK]];
   NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];
   NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
   request.HTTPMethod = @"POST";
@@ -467,7 +457,7 @@
     NSString *threeDSSDKTransId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKTransId=", RequestParams.shared.threeDSSDKTransId];
     NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
   
-    NSString *parameters = [self _urlParameters:@[mdOrder, threeDSSDK, language, owner, bindingNotNeeded, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId, seTokenParam]];
+    NSString *parameters = [self _joinParametersInString:@[mdOrder, threeDSSDK, language, owner, bindingNotNeeded, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId, seTokenParam]];
 
     NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];
@@ -517,7 +507,7 @@
   NSString *withCart = [NSString stringWithFormat:@"%@%@", @"withCart=", @"false"];
   NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
 
-  NSString *parameters = [self _urlParameters:@[mdOrder, withCart, language]];
+  NSString *parameters = [self _joinParametersInString:@[mdOrder, withCart, language]];
 
   NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/getFinishedPaymentInfo.do", parameters];
 
@@ -549,7 +539,7 @@
   NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"mdOrder=", CardKConfig.shared.mdOrder];
   NSString *bindingId = [NSString stringWithFormat:@"%@%@", @"bindingId=", binding.bindingId];
   
-  NSString *parameters = [self _urlParameters:@[mdOrder, bindingId]];
+  NSString *parameters = [self _joinParametersInString:@[mdOrder, bindingId]];
   NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/unbindcardanon.do", parameters];
 
   NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
@@ -586,7 +576,7 @@
   NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
   NSString *paymentTokenParameerr = [NSString stringWithFormat:@"%@%@", @"paymentToken=", paymentToken];
   
-  NSString *parameters = [self _urlParameters:@[mdOrder, paymentTokenParameerr]];
+  NSString *parameters = [self _joinParametersInString:@[mdOrder, paymentTokenParameerr]];
 
   NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
   NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/applepay/payment.do"];
