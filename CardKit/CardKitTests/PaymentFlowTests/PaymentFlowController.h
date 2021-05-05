@@ -25,6 +25,7 @@
   @property (weak, nonatomic, nullable) id<CardKDelegate> cKitDelegate;
   @property BOOL doUseNewCard;
   @property BOOL unbindCard;
+  @property (nullable) NSString *bindingSecureCode;
 
   @property (nullable) XCTestExpectation* sendErrorExpectation;
 

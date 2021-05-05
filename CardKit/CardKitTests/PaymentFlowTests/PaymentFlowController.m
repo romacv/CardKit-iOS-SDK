@@ -174,8 +174,14 @@
       
       if (CardKConfig.shared.bindingCVCRequired) {
         UITextField *secureCodeTextField = (UITextField *)[window.rootViewController.view viewWithTag:secureCodeTextFieldTag];
+
+        if (self.bindingSecureCode != nil) {
+          [secureCodeTextField setText: self.bindingSecureCode];
+          self.bindingSecureCode = nil;
+        } else {
+          [secureCodeTextField setText: @"123"];
+        }
         
-        [secureCodeTextField setText:@"123"];
       }
       
       UIButton *payButton = (UIButton *)[window.rootViewController.view viewWithTag:payButtonTag];

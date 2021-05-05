@@ -143,6 +143,48 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.getFinishedPaymentInfoExpectation] timeout:20];
 }
 
+- (void)testPaymentFlowWithBindingWithIncorrectSecureCode {
+  actionTypeInForm = ActionTypeFillOTPForm;
+  payment.doUseNewCard = NO;
+  payment.bindingSecureCode = @"666";
+  
+  payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
+  payment.moveChoosePaymentMethodControllerExpectation.expectedFulfillmentCount = 2;
+  
+  payment.processBindingFormRequestExpectation = [self expectationWithDescription:@"processBindingFormRequestExpectation"];
+  payment.processBindingFormRequestExpectation.expectedFulfillmentCount = 2;
+  
+  payment.processBindingFormRequestStep2Expectation = [self expectationWithDescription:@"processBindingFormRequestStep2Expectation"];
+  payment.processBindingFormRequestStep2Expectation.expectedFulfillmentCount = 2;
+  
+  payment.runChallangeExpectation = [self expectationWithDescription:@"runChallangeExpectation"];
+  payment.runChallangeExpectation.expectedFulfillmentCount = 2;
+  
+  payment.didCompleteWithTransactionStatusExpectation = [self expectationWithDescription:@"didCompleteWithTransactionStatusExpectation"];
+  payment.didCompleteWithTransactionStatusExpectation.expectedFulfillmentCount = 2;
+  
+  payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
+  payment.getFinishSessionStatusRequestExpectation.expectedFulfillmentCount = 2;
+  
+  payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
+  payment.getFinishedPaymentInfoExpectation.expectedFulfillmentCount = 1;
+  
+  [self _registerOrderWithAmount: @"2000" callback:^() {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self _runCardKPaymentFlow];
+    });
+  }];
+  
+  [self waitForExpectations:@[
+      payment.moveChoosePaymentMethodControllerExpectation,
+      payment.processBindingFormRequestExpectation,
+      payment.processBindingFormRequestStep2Expectation,
+      payment.runChallangeExpectation,
+      payment.didCompleteWithTransactionStatusExpectation,
+      payment.getFinishSessionStatusRequestExpectation,
+      payment.getFinishedPaymentInfoExpectation] timeout:40];
+}
+
 - (void)testCancelFlowWithBinding {
   actionTypeInForm = ActionTypeCancelFlow;
   payment.doUseNewCard = NO;
