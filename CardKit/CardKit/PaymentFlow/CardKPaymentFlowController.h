@@ -33,5 +33,5 @@
   @property UIColor* textColor;
   @property UIColor* buttonTextColor;
   @property BOOL allowedCardScaner;
-
+  @property NSString *headerLabel;
 @end

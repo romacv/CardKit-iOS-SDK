@@ -89,17 +89,13 @@ class PaymentFlowController: UIViewController {
         self._paymentFlowController.url = "https://web.rbsdev.com/soyuzpayment";
         self._paymentFlowController.cardKPaymentView = cardKPaymentView;
         self._paymentFlowController.allowedCardScaner = CardIOUtilities.canReadCardWithCamera();
-        
-        let indigoColor = UIColor(red: 0.25, green: 0.32, blue: 0.71, alpha: 1.00)
-        
-        let toolbarColor: UIColor = indigoColor
+        self._paymentFlowController.headerLabel = "Custom header label";
+      
         let textColor: UIColor = .white
-        let buttonDone: UIColor = indigoColor
-        
         if #available(iOS 11.0, *) {
-          self._paymentFlowController.primaryColor = UIColor(named: "toolbarColor") ?? toolbarColor
+          self._paymentFlowController.primaryColor = .systemBlue
           self._paymentFlowController.textColor = UIColor(named: "textColor") ?? textColor
-          self._paymentFlowController.secondaryColor = UIColor(named: "buttonDone") ?? buttonDone
+          self._paymentFlowController.secondaryColor = UIColor(named: "textColor") ?? textColor
           self._paymentFlowController.buttonTextColor = .white
         }
         

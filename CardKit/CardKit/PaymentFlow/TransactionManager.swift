@@ -21,13 +21,14 @@ import ThreeDSSDK
     static var sdkProgressDialog: ProgressDialog? = nil
 
     @objc public var pubKey: String = ""
+    @objc public var headerLabel: String = ""
+  
     var _service: ThreeDS2Service? = nil
     var _sdkTransaction: Transaction?
     var _isSdkInitialized: Bool = false
     var _isChallengeTransaction : Bool? = false
     
     let _notificationCenter = NotificationCenter.default
-    let HEADER_LABEL = "SECURE CHECKOUT"
     let _logo:String = ""
     let _uiConfig = UiCustomization()
     let _rootKey: String = """
@@ -46,46 +47,26 @@ import ThreeDSSDK
     }
   
   @objc public func setUpUICustomization(isDarkMode: Bool, primaryColor: UIColor, secondaryColor: UIColor, buttonTextColor: UIColor, textColor: UIColor) throws {
-      var toolbarColor: UIColor = primaryColor
-      var textColor: UIColor = textColor
-      var buttonDone: UIColor = secondaryColor
-      var buttonResend: UIColor = toolbarColor
-      
-      if #available(iOS 11.0, *) {
-        toolbarColor = UIColor(named: "toolbarColor") ?? toolbarColor
-        textColor = UIColor(named: "textColor") ?? textColor
-        buttonDone = UIColor(named: "buttonDone") ?? buttonDone
-        buttonResend = UIColor(named: "buttonResend") ?? buttonResend
-      }
-      
       let toolbarCustomization = ToolbarCustomization()
-      try toolbarCustomization.setHeaderText(HEADER_LABEL)
-      toolbarCustomization.setBackgroundColor(toolbarColor)
-      toolbarCustomization.setTextColor(buttonTextColor)
-      
-      let textBoxCustomization = TextBoxCustomization()
-      try textBoxCustomization.setBorderWidth(1)
-      textBoxCustomization.setBorderColor(.gray)
-      textBoxCustomization.setTextColor(textColor)
+      try toolbarCustomization.setHeaderText(headerLabel)
       
       let buttonDoneCustomization = ButtonCustomization()
-      buttonDoneCustomization.setBackgroundColor(buttonDone)
+      buttonDoneCustomization.setBackgroundColor(primaryColor)
       buttonDoneCustomization.setTextColor(buttonTextColor)
       
       let buttonCancelCustomization = ButtonCustomization()
       buttonCancelCustomization.setBackgroundColor(.clear)
-      buttonCancelCustomization.setTextColor(buttonTextColor)
+      buttonCancelCustomization.setTextColor(primaryColor)
       
       let buttonResendCustomization = ButtonCustomization()
       buttonResendCustomization.setBackgroundColor(.clear)
-      buttonResendCustomization.setTextColor(buttonResend)
+      buttonResendCustomization.setTextColor(secondaryColor)
       
       let titleCustomization = LabelCustomization()
       titleCustomization.setTextColor(textColor)
       titleCustomization.setHeadingTextColor(textColor)
 
       _uiConfig.setToolbarCustomization(toolbarCustomization)
-      _uiConfig.setTextBoxCustomization(textBoxCustomization)
       _uiConfig.setLabelCustomization(titleCustomization)
       try _uiConfig.setButtonCustomization(buttonDoneCustomization, .submit)
       try _uiConfig.setButtonCustomization(buttonCancelCustomization, .cancel)

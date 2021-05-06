@@ -274,7 +274,7 @@
         RequestParams.shared.threeDSSDKKey = [responseDictionary objectForKey:@"threeDSSDKKey"];
 
         self->_transactionManager.pubKey = RequestParams.shared.threeDSSDKKey;
-        
+        self->_transactionManager.headerLabel = self.headerLabel;
         [self->_transactionManager
           setUpUICustomizationWithIsDarkMode:NO
           primaryColor: self.primaryColor
@@ -366,6 +366,7 @@
 
 - (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler {
   dispatch_async(dispatch_get_main_queue(), ^{
+    self->_transactionManager.headerLabel = self.headerLabel;
     [self->_transactionManager
       setUpUICustomizationWithIsDarkMode:NO
       primaryColor: self.primaryColor
