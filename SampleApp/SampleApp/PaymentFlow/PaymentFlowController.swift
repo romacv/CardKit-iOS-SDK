@@ -13,6 +13,15 @@ class PaymentFlowController: UIViewController {
   var sampleAppCardIO: SampleAppCardIO? = nil
   static var requestParams: RequestParams = RequestParams();
   let _paymentFlowController: CardKPaymentFlowController = CardKPaymentFlowController();
+  var amount: String {
+      get {
+        return PaymentFlowController.requestParams.amount ?? ""
+      }
+      set(newAmount) {
+        PaymentFlowController.requestParams.amount = newAmount
+      }
+  } 
+  
   var _button: UIButton = UIButton();
 
   init() {
@@ -50,7 +59,6 @@ class PaymentFlowController: UIViewController {
   """
     CardKConfig.shared.isEditBindingListMode = true
     
-    PaymentFlowController.requestParams.amount = "2000"
     PaymentFlowController.requestParams.userName = "3ds2-api"
     PaymentFlowController.requestParams.password = "testPwd"
     PaymentFlowController.requestParams.returnUrl = "returnUrl"

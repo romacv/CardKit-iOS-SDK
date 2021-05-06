@@ -33,7 +33,10 @@ struct SectionItem {
     case threeDS
     case threeDSCustomColors
     case editMode
-    case paymentFlow
+    case paymentFlowOTP
+    case paymentFlowSSP
+    case paymentFlowMSP
+    case paymentFlowWV
   }
 }
 
@@ -359,8 +362,10 @@ class ViewController: UITableViewController {
     self.navigationController?.pushViewController(controller, animated: true)
   }
   
-  func _openPaymentFlow() {
-    self.navigationController?.pushViewController(PaymentFlowController(), animated: true)
+  func _openPaymentFlow(amount: String) {
+    let paymentFlowController = PaymentFlowController();
+    paymentFlowController.amount = amount;
+    self.navigationController?.pushViewController(paymentFlowController, animated: true)
   }
   
   func _callFunctionByKindOfButton(kind: SectionItem.Kind, language: String) {
@@ -377,7 +382,10 @@ class ViewController: UITableViewController {
       case .paymentView: _openPaymentView()
       case .threeDS: _open3DSView()
       case .threeDSCustomColors: _open3DSViewCustom()
-      case .paymentFlow: _openPaymentFlow()
+      case .paymentFlowOTP: _openPaymentFlow(amount: "2000")
+      case .paymentFlowSSP: _openPaymentFlow(amount: "111")
+      case .paymentFlowMSP: _openPaymentFlow(amount: "222")
+      case .paymentFlowWV: _openPaymentFlow(amount: "333")
     }
   }
   
@@ -400,8 +408,11 @@ class ViewController: UITableViewController {
       SectionItem(title: "Apple Pay", kind: .paymentView, isShowChevron: true, language: ""),
     ]),
     
-    Section(title: "PaymentFlow", items: [
-      SectionItem(title: "Payment flow", kind: .paymentFlow, isShowChevron: true, language: ""),
+    Section(title: "Payment Flow", items: [
+      SectionItem(title: "One time passcode", kind: .paymentFlowOTP, isShowChevron: true, language: ""),
+      SectionItem(title: "Single Select", kind: .paymentFlowSSP, isShowChevron: true, language: ""),
+      SectionItem(title: "Multi-Select", kind: .paymentFlowMSP, isShowChevron: true, language: ""),
+      SectionItem(title: "WebView", kind: .paymentFlowWV, isShowChevron: true, language: ""),
     ]),
     
     Section(title: "ThreeDSSample", items: [
