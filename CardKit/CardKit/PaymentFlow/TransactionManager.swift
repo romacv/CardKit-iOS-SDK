@@ -57,15 +57,11 @@ import ThreeDSSDK
       let buttonCancelCustomization = ButtonCustomization()
       buttonCancelCustomization.setBackgroundColor(.clear)
       buttonCancelCustomization.setTextColor(primaryColor)
-      
-//      let titleCustomization = LabelCustomization()
-//      titleCustomization.setTextColor(primaryColor)
-//      titleCustomization.setHeadingTextColor(textColor)
 
       _uiConfig.setToolbarCustomization(toolbarCustomization)
-//      _uiConfig.setLabelCustomization(titleCustomization)
       try _uiConfig.setButtonCustomization(buttonDoneCustomization, .submit)
       try _uiConfig.setButtonCustomization(buttonCancelCustomization, .cancel)
+      try _uiConfig.setButtonCustomization(buttonDoneCustomization, .next)
     }
 
     private func _initSdkOnce(){
