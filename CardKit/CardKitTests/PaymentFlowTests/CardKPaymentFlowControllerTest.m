@@ -50,9 +50,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   payment.url = @"https://web.rbsdev.com/soyuzpayment";
   
   payment.primaryColor = UIColor.systemBlueColor;
-  payment.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.00];
-  payment.secondaryColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.00];
-  payment.buttonTextColor = [UIColor colorWithRed:1.00 green:1.00 blue:1.00 alpha:1.00];
+  payment.textDoneButtonColor = [UIColor colorWithRed:1.00 green:1.00 blue:1.00 alpha:1.00];
   payment.headerLabel = @"Custom header label";
   
   CardKConfig.shared.language = @"ru";

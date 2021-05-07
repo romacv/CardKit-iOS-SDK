@@ -275,12 +275,7 @@
 
         self->_transactionManager.pubKey = RequestParams.shared.threeDSSDKKey;
         self->_transactionManager.headerLabel = self.headerLabel;
-        [self->_transactionManager
-          setUpUICustomizationWithIsDarkMode:NO
-          primaryColor: self.primaryColor
-          secondaryColor: self.secondaryColor
-          buttonTextColor: self.buttonTextColor
-          textColor: self.textColor error:nil];
+        [self->_transactionManager setUpUICustomizationWithPrimaryColor:self.primaryColor textDoneButtonColor:self.textDoneButtonColor error:nil];
         [self->_transactionManager initializeSdk];
         [self->_transactionManager showProgressDialog];
         NSDictionary *reqParams = [self->_transactionManager getAuthRequestParameters];
@@ -367,12 +362,7 @@
 - (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler {
   dispatch_async(dispatch_get_main_queue(), ^{
     self->_transactionManager.headerLabel = self.headerLabel;
-    [self->_transactionManager
-      setUpUICustomizationWithIsDarkMode:NO
-      primaryColor: self.primaryColor
-      secondaryColor: self.secondaryColor
-      buttonTextColor: self.buttonTextColor
-      textColor: self.textColor error:nil];
+    [self->_transactionManager setUpUICustomizationWithPrimaryColor:self.primaryColor textDoneButtonColor:self.textDoneButtonColor error:nil];
     [self->_transactionManager initializeSdk];
     [self->_transactionManager showProgressDialog];
     NSDictionary *reqParams = [self->_transactionManager getAuthRequestParameters];

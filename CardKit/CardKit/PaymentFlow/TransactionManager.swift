@@ -46,31 +46,26 @@ import ThreeDSSDK
       }
     }
   
-  @objc public func setUpUICustomization(isDarkMode: Bool, primaryColor: UIColor, secondaryColor: UIColor, buttonTextColor: UIColor, textColor: UIColor) throws {
+  @objc public func setUpUICustomization(primaryColor: UIColor, textDoneButtonColor: UIColor) throws {
       let toolbarCustomization = ToolbarCustomization()
       try toolbarCustomization.setHeaderText(headerLabel)
       
       let buttonDoneCustomization = ButtonCustomization()
       buttonDoneCustomization.setBackgroundColor(primaryColor)
-      buttonDoneCustomization.setTextColor(buttonTextColor)
+      buttonDoneCustomization.setTextColor(textDoneButtonColor)
       
       let buttonCancelCustomization = ButtonCustomization()
       buttonCancelCustomization.setBackgroundColor(.clear)
       buttonCancelCustomization.setTextColor(primaryColor)
       
-      let buttonResendCustomization = ButtonCustomization()
-      buttonResendCustomization.setBackgroundColor(.clear)
-      buttonResendCustomization.setTextColor(secondaryColor)
-      
-      let titleCustomization = LabelCustomization()
-      titleCustomization.setTextColor(textColor)
-      titleCustomization.setHeadingTextColor(textColor)
+//      let titleCustomization = LabelCustomization()
+//      titleCustomization.setTextColor(primaryColor)
+//      titleCustomization.setHeadingTextColor(textColor)
 
       _uiConfig.setToolbarCustomization(toolbarCustomization)
-      _uiConfig.setLabelCustomization(titleCustomization)
+//      _uiConfig.setLabelCustomization(titleCustomization)
       try _uiConfig.setButtonCustomization(buttonDoneCustomization, .submit)
       try _uiConfig.setButtonCustomization(buttonCancelCustomization, .cancel)
-      try _uiConfig.setButtonCustomization(buttonResendCustomization, .resend)
     }
 
     private func _initSdkOnce(){

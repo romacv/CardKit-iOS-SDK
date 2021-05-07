@@ -29,9 +29,7 @@
   @property NSString* url;
 
   @property UIColor* primaryColor;
-  @property UIColor* secondaryColor;
-  @property UIColor* textColor;
-  @property UIColor* buttonTextColor;
+  @property UIColor* textDoneButtonColor;
   @property BOOL allowedCardScaner;
   @property NSString *headerLabel;
 @end

@@ -99,12 +99,10 @@ class PaymentFlowController: UIViewController {
         self._paymentFlowController.allowedCardScaner = CardIOUtilities.canReadCardWithCamera();
         self._paymentFlowController.headerLabel = "Custom header label";
       
-        let textColor: UIColor = .white
-        if #available(iOS 11.0, *) {
-          self._paymentFlowController.primaryColor = .systemBlue
-          self._paymentFlowController.textColor = UIColor(named: "textColor") ?? textColor
-          self._paymentFlowController.secondaryColor = UIColor(named: "textColor") ?? textColor
-          self._paymentFlowController.buttonTextColor = .white
+        self._paymentFlowController.textDoneButtonColor = .white
+        self._paymentFlowController.primaryColor = .systemBlue
+        if #available(iOS 13.0, *) {
+          self._paymentFlowController.textDoneButtonColor = .label
         }
         
         let navController = UINavigationController(rootViewController: self._paymentFlowController)
