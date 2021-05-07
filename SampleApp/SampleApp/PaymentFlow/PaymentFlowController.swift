@@ -11,8 +11,9 @@ import CardKit
 
 class PaymentFlowController: UIViewController {
   var sampleAppCardIO: SampleAppCardIO? = nil
+  var navController: UINavigationController!
   static var requestParams: RequestParams = RequestParams();
-  let _paymentFlowController: CardKPaymentFlowController = CardKPaymentFlowController();
+  var _paymentFlowController: CardKPaymentFlowController!;
   var amount: String {
       get {
         return PaymentFlowController.requestParams.amount ?? ""
@@ -27,7 +28,10 @@ class PaymentFlowController: UIViewController {
   init() {
     super.init(nibName: nil, bundle: nil)
 
+    _paymentFlowController = CardKPaymentFlowController();
     _paymentFlowController.cardKPaymentFlowDelegate = self;
+
+    navController = UINavigationController(rootViewController: _paymentFlowController)
     self.view.addSubview(_button)
   }
   
@@ -79,6 +83,9 @@ class PaymentFlowController: UIViewController {
   }
 
   func _registerOrder() {
+    _paymentFlowController = CardKPaymentFlowController();
+    _paymentFlowController.cardKPaymentFlowDelegate = self;
+    
     API.registerNewOrder(params: PaymentFlowController.requestParams) {(data, response) in
       PaymentFlowController.requestParams.orderId = data.orderId
       CardKConfig.shared.mdOrder = data.orderId ?? ""
@@ -105,10 +112,10 @@ class PaymentFlowController: UIViewController {
           self._paymentFlowController.textDoneButtonColor = .label
         }
         
-        let navController = UINavigationController(rootViewController: self._paymentFlowController)
+        self.navController = UINavigationController(rootViewController: self._paymentFlowController)
         
         
-        self.present(navController, animated: true, completion: nil)
+        self.present(self.navController, animated: true, completion: nil)
       }
     }
   }
@@ -117,14 +124,27 @@ class PaymentFlowController: UIViewController {
 extension PaymentFlowController: CardKPaymentFlowDelegate {
   func didFinishPaymentFlow(_ paymentInfo: [AnyHashable : Any]!) {
     Log.i(object: self, message: "didFinishPaymentFlow")
+    let alert = UIAlertController(title: "Success", message: "\(paymentInfo.count)", preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
+      self.dismiss(animated: true, completion: nil)
+    }))
+    
+    self.navController.present(alert, animated: true, completion: nil)
   }
   
   func didErrorPaymentFlow(_ paymentError: CardKPaymentError!) {
-    Log.i(object: self, message: "didErrorPaymentFlow")
+    let alert = UIAlertController(title: "Error", message: paymentError.message, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+    self.navController.present(alert, animated: true, completion: nil)
   }
   
   func didCancelPaymentFlow() {
-    Log.i(object: self, message: "didCancel")
+    let alert = UIAlertController(title: "Cancel", message: "Action was canceled", preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
+      self.dismiss(animated: true, completion: nil)
+    }))
+    
+    self.navController.present(alert, animated: true, completion: nil)
   }
   
   func scanCardRequest(_ controller: CardKViewController) {
