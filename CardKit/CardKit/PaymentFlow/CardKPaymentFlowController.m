@@ -82,7 +82,20 @@
     }
   }
 
-  - (void)_sendError {
+  - (void) _sendSuccessMessage:(NSDictionary *) responseDictionary {
+    if (self.cardKPaymentFlowDelegate != nil) {
+      [self.cardKPaymentFlowDelegate didFinishPaymentFlow:responseDictionary];
+      
+      return;
+    }
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Оплата успешна завершена" message:@"Оплата успешна завершена" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+      [self.navigationController presentViewController:alert animated:YES completion:nil];
+    }]];
+  }
+
+  - (void) _sendError {
     self->_cardKPaymentError.message = @"Ошибка запроса";
     [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
 
@@ -527,7 +540,7 @@
         NSError *parseError = nil;
         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
         
-        [self->_cardKPaymentFlowDelegate didFinishPaymentFlow:responseDictionary];
+        [self _sendSuccessMessage:responseDictionary];
     });
   }];
   [dataTask resume];
