@@ -59,7 +59,7 @@
   }
 
   - (void)viewDidAppear:(BOOL)animated {
-    [self _getSessionStatusRequest];
+      [self _getSessionStatusRequest];
   }
 
   - (void)viewDidLoad {
@@ -274,13 +274,15 @@
       NSString *redirect = [responseDictionary objectForKey:@"redirect"];
       BOOL is3DSVer2 = (BOOL)[responseDictionary[@"is3DSVer2"] boolValue];
       NSString *errorMessage = [responseDictionary objectForKey:@"error"];
+      NSString *info = [responseDictionary objectForKey:@"info"];
       NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
-      
+      NSString *message = errorMessage ? errorMessage : info;
+        
       if (errorCode != 0) {
-        self->_cardKPaymentError.message = errorMessage;
+        self->_cardKPaymentError.message = message;
         [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
       } else if (redirect != nil) {
-        self->_cardKPaymentError.message = errorMessage;
+        self->_cardKPaymentError.message = message;
         [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
       } else if (is3DSVer2){
         RequestParams.shared.threeDSServerTransId = [responseDictionary objectForKey:@"threeDSServerTransId"];

@@ -109,7 +109,7 @@ class PaymentFlowController: UIViewController {
         self._paymentFlowController.textDoneButtonColor = .white
         self._paymentFlowController.primaryColor = .systemBlue
         if #available(iOS 13.0, *) {
-          self._paymentFlowController.textDoneButtonColor = .label
+          self._paymentFlowController.textDoneButtonColor = .white
         }
         
         self.navController = UINavigationController(rootViewController: self._paymentFlowController)
