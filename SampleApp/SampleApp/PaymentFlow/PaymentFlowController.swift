@@ -124,7 +124,12 @@ class PaymentFlowController: UIViewController {
 extension PaymentFlowController: CardKPaymentFlowDelegate {
   func didFinishPaymentFlow(_ paymentInfo: [AnyHashable : Any]!) {
     Log.i(object: self, message: "didFinishPaymentFlow")
-    let alert = UIAlertController(title: "Success", message: "\(paymentInfo.count)", preferredStyle: .alert)
+    var message = ""
+    for key in paymentInfo.keys {
+      message = "\(message) \n \(key) = \(paymentInfo[key] ?? "")"
+    }
+
+    let alert = UIAlertController(title: "Success", message: message, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
       self.dismiss(animated: true, completion: nil)
     }))
