@@ -39,7 +39,6 @@ const NSString *CardKKindPayRows = @"rows";
   self = [super initWithStyle:UITableViewStyleGrouped];
 
   if (self) {
-    _button =  [UIButton buttonWithType:UIButtonTypeSystem];
     _bundle = [NSBundle bundleForClass:[CardKKindPaymentViewController class]];
     _removedBindings = [[NSMutableArray alloc] init];
     _currentBindings = [[NSMutableArray alloc] initWithArray:CardKConfig.shared.bindings];
@@ -50,12 +49,6 @@ const NSString *CardKKindPayRows = @"rows";
      } else {
        _languageBundle = _bundle;
      }
-
-    [_button
-      setTitle: NSLocalizedStringFromTableInBundle(@"payByCard", nil, _languageBundle,  @"Pay by card")
-      forState: UIControlStateNormal];
-    [_button addTarget:self action:@selector(_buttonPressed:)
-    forControlEvents:UIControlEventTouchUpInside];
     
     _sections = [self _defaultSections];
     
@@ -84,19 +77,12 @@ const NSString *CardKKindPayRows = @"rows";
   
   _applePayButton.cardKPaymentViewDelegate = self;
   _applePayButton.controller = self;
+  _applePayButton.verticalButtonsRendered = self.verticalButtonsRendered;
   _cKitDelegate = cKitDelegate;
 }
 
 - (id<CardKDelegate>)cKitDelegate {
   return _cKitDelegate;
-}
-
-- (void)_buttonPressed:(UIButton *)button {
-  
-  CardKViewController *controller = [[CardKViewController alloc] init];
-  controller.cKitDelegate = _cKitDelegate;
-
-  [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)_editMode:(UIButton *)button {
@@ -120,7 +106,7 @@ const NSString *CardKKindPayRows = @"rows";
 }
 
 - (NSArray *)_defaultSections {
-  return @[@{CardKKindPayRows: @[@{CardKPayCardButtonCellID: @[]}]}, @{CardKKindPayRows: @[ @{CardKSavedCardsCellID:  _currentBindings}] }];
+  return @[@{CardKKindPayRows: @[ @{CardKSavedCardsCellID:  _currentBindings}] }, @{CardKKindPayRows: @[@{CardKPayCardButtonCellID: @[]}]}];
 }
 
 - (void)viewDidLoad {
@@ -134,7 +120,6 @@ const NSString *CardKKindPayRows = @"rows";
   
   CardKTheme *theme = CardKConfig.shared.theme;
 
-
   self.tableView.separatorColor = theme.colorSeparatar;
   self.tableView.backgroundColor = theme.colorTableBackground;
   self.tableView.sectionFooterHeight = UITableViewAutomaticDimension;
@@ -143,9 +128,6 @@ const NSString *CardKKindPayRows = @"rows";
   UINavigationBar *bar = [self.navigationController navigationBar];
   bar.barTintColor = theme.colorCellBackground;
 
-  [_button addTarget:self action:@selector(_buttonPressed:)
-  forControlEvents:UIControlEventTouchUpInside];
-
   _bankLogoView.frame = CGRectMake(self.view.bounds.size.width * 2, 0, 0, 0);
 }
 
@@ -153,19 +135,15 @@ const NSString *CardKKindPayRows = @"rows";
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   
-  CGRect bounds = _applePayButton.superview.bounds;
-  _button.center = CGPointMake(bounds.size.width * 0.5, bounds.size.height * 0.5);
+  NSInteger width = self.tableView.frame.size.width;
   
-  CardKTheme *theme = CardKConfig.shared.theme;
-
-  _button.tintColor = theme.colorButtonText;
-  _button.frame = CGRectMake(0, 0, bounds.size.width, 44);
-  
-  _applePayButton.frame = CGRectMake(0, 0, bounds.size.width < 500 ? bounds.size.width : 500, 44);
-  _applePayButton.center = CGPointMake(bounds.size.width * 0.5, 100 * 0.5);
-
-  [_button addTarget:self action:@selector(_buttonPressed:)
-  forControlEvents:UIControlEventTouchUpInside];
+  if (self.verticalButtonsRendered) {
+    _applePayButton.frame = CGRectMake(0, 0, width < 500 ? width : 500, 110);
+    _applePayButton.center = CGPointMake(width * 0.5, 150 * 0.5);
+  } else {
+    _applePayButton.frame = CGRectMake(0, 0, width < 500 ? width : 500, 44);
+    _applePayButton.center = CGPointMake(width * 0.5, 100 * 0.5);
+  }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -238,7 +216,7 @@ const NSString *CardKKindPayRows = @"rows";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-  if (section == 1) {
+  if (section == 0) {
     return CardKConfig.shared.bindingsSectionTitle;
   }
   
@@ -262,7 +240,9 @@ const NSString *CardKKindPayRows = @"rows";
 {
   NSString *cellID = [_sections[indexPath.section][CardKKindPayRows][0] allKeys][0];
 
-  if ([CardKPayCardButtonCellID isEqual:cellID]) {
+  if ([CardKPayCardButtonCellID isEqual:cellID] && self.verticalButtonsRendered) {
+    return 150;
+  } else if ([CardKPayCardButtonCellID isEqual:cellID]) {
     return 100;
   }
 

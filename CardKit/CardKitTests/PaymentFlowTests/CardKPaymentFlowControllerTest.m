@@ -48,7 +48,6 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   
   payment.delegate = self;
   payment.url = @"https://web.rbsdev.com/soyuzpayment";
-  
   payment.primaryColor = UIColor.systemBlueColor;
   payment.textDoneButtonColor = [UIColor colorWithRed:1.00 green:1.00 blue:1.00 alpha:1.00];
   payment.headerLabel = @"Custom header label";

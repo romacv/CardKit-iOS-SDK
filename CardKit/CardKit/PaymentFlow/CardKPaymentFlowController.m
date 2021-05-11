@@ -111,6 +111,7 @@
 
   - (void)_moveChoosePaymentMethodController {
     _kindPaymentController = [[CardKKindPaymentViewController alloc] init];
+    _kindPaymentController.verticalButtonsRendered = YES;
     _kindPaymentController.cKitDelegate = self;
     
     self.navigationItem.rightBarButtonItem = _kindPaymentController.navigationItem.rightBarButtonItem;
@@ -669,9 +670,23 @@
 - (void)willShowPaymentView:(nonnull CardKPaymentView *)paymentView {
   PKPaymentSummaryItem *paymentItem = [PKPaymentSummaryItem summaryItemWithLabel:@"Коробка" amount:[[NSDecimalNumber alloc] initWithString:@"1"]];
 
-  paymentView.merchantId = _cardKPaymentView.merchantId;
   paymentView.paymentRequest = _cardKPaymentView.paymentRequest;
   paymentView.paymentRequest.paymentSummaryItems = @[paymentItem];
+  paymentView.paymentButtonType =_cardKPaymentView.paymentButtonType;
+  paymentView.paymentButtonStyle =_cardKPaymentView.paymentButtonStyle;
+  
+  if (_cardKPaymentView.cardPaybutton == nil) {
+    return;
+  }
+  
+  paymentView.cardPaybutton.backgroundColor = _cardKPaymentView.cardPaybutton.backgroundColor;
+  paymentView.cardPaybutton.tintColor = _cardKPaymentView.cardPaybutton.tintColor;
+  [paymentView.cardPaybutton setTitleColor:_cardKPaymentView.cardPaybutton.currentTitleColor forState:UIControlStateNormal];
+  
+  if (![_cardKPaymentView.cardPaybutton.titleLabel.text isEqual:@""] || _cardKPaymentView.cardPaybutton.titleLabel != nil) {
+    NSString * title = _cardKPaymentView.cardPaybutton.titleLabel.text;
+    [paymentView.cardPaybutton setTitle:title forState:UIControlStateNormal];
+  }
 }
 
 - (void)encodeWithCoder:(nonnull NSCoder *)coder {

@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 /*! Делегат контроллера*/
 @property (weak, nonatomic) id<CardKDelegate> cKitDelegate;
 
+/*! Управление расположеним кнопок оплаты вертикально/горизонтально */
+@property BOOL verticalButtonsRendered;
+
 @end
 
 NS_ASSUME_NONNULL_END

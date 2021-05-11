@@ -101,6 +101,17 @@ class PaymentFlowController: UIViewController {
         cardKPaymentView.merchantId = "merchant.cardkit";
         cardKPaymentView.paymentRequest = paymentRequest;
         
+        cardKPaymentView.paymentButtonStyle = .black;
+        cardKPaymentView.paymentButtonType = .buy;
+        
+        let cardPayButton = UIButton();
+        
+        cardPayButton.backgroundColor = .systemBlue;
+        cardPayButton.setTitleColor(.white, for: .normal)
+        cardPayButton.setTitle("Custom title", for: .normal)
+        
+        cardKPaymentView.cardPaybutton = cardPayButton
+        
         self._paymentFlowController.url = "https://web.rbsdev.com/soyuzpayment";
         self._paymentFlowController.cardKPaymentView = cardKPaymentView;
         self._paymentFlowController.allowedCardScaner = CardIOUtilities.canReadCardWithCamera();
