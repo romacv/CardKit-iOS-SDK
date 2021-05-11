@@ -161,7 +161,7 @@
     
     UITableView *tableView = (UITableView *)[navController.view viewWithTag:40001];
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
     [kindPaymentViewController tableView:tableView didSelectRowAtIndexPath:indexPath];
     
