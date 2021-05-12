@@ -24,7 +24,7 @@
 "incorrectCardholder" = "The card holder is incorrect";
 
 "switchViewTitle" = "Save card";
-"payByCard" = "New card";
+"newCard" = "New card";
 
 "edit" = "Edit";
 "save" = "Save";

@@ -50,7 +50,7 @@
      }
     
     [_cardPaybutton
-      setTitle: NSLocalizedStringFromTableInBundle(@"payByCard", nil, _languageBundle,  @"Pay by card")
+      setTitle: NSLocalizedStringFromTableInBundle(@"newCard", nil, _languageBundle,  @"New card")
       forState: UIControlStateNormal];
     
     [cKitDelegate willShowPaymentView:self];

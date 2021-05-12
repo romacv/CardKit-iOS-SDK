@@ -24,7 +24,7 @@
 "incorrectCardholder" = "Nom incorrect";
 
 "switchViewTitle" = "Enregistrer la carte";
-"payByCard" = "Nouvelle carte";
+"newCard" = "Nouvelle carte";
 
 "edit" = "Éditer";
 "save" = "Sauvegarder";
