@@ -31,11 +31,22 @@
   CardKPaymentError *_cardKPaymentError;
   NSString *_seToken;
   TransactionManager *_transactionManager;
+  NSBundle *_languageBundle;
+  NSBundle *_bundle;
 }
 - (instancetype)init
   {
     self = [super init];
     if (self) {
+      _bundle = [NSBundle bundleForClass:[CardKViewController class]];
+      
+      NSString *language = CardKConfig.shared.language;
+      if (language != nil) {
+        _languageBundle = [NSBundle bundleWithPath:[_bundle pathForResource:language ofType:@"lproj"]];
+      } else {
+        _languageBundle = _bundle;
+      }
+      
       _theme = CardKConfig.shared.theme;
       self.view.backgroundColor = CardKConfig.shared.theme.colorTableBackground;
       
@@ -655,7 +666,7 @@
 
 - (void)didLoadController:(nonnull CardKViewController *)controller {
   controller.allowedCardScaner = self.allowedCardScaner;
-  controller.purchaseButtonTitle = @"Custom purchase button";
+  controller.purchaseButtonTitle = NSLocalizedStringFromTableInBundle(@"doneButton", nil, _languageBundle, @"Submit payment");
   controller.allowSaveBinding = self->_sessionStatus.bindingEnabled;
   controller.isSaveBinding = false;
   controller.displayCardHolderField = true;
