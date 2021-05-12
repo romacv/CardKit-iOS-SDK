@@ -133,6 +133,40 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.getFinishedPaymentInfoExpectation] timeout:20];
 }
 
+- (void)testPaymentFlowWithNewCardWithIncorrectSecureCode {
+  actionTypeInForm = ActionTypeFillOTPForm;
+  payment.doUseNewCard = YES;
+  payment.bindingSecureCode = @"666";
+  
+  payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
+  payment.moveChoosePaymentMethodControllerExpectation.expectedFulfillmentCount = 2;
+  
+  payment.runChallangeExpectation = [self expectationWithDescription:@"runChallangeExpectation"];
+  payment.runChallangeExpectation.expectedFulfillmentCount = 2;
+  
+  payment.didCompleteWithTransactionStatusExpectation = [self expectationWithDescription:@"didCompleteWithTransactionStatusExpectation"];
+  payment.didCompleteWithTransactionStatusExpectation.expectedFulfillmentCount = 2;
+  
+  payment.getFinishSessionStatusRequestExpectation = [self expectationWithDescription:@"getFinishSessionStatusRequestExpectation"];
+  payment.getFinishSessionStatusRequestExpectation.expectedFulfillmentCount = 2;
+  
+  payment.getFinishedPaymentInfoExpectation = [self expectationWithDescription:@"getFinishedPaymentInfoExpectation"];
+  payment.getFinishedPaymentInfoExpectation.expectedFulfillmentCount = 1;
+  
+  [self _registerOrderWithAmount: @"2000" callback:^() {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self _runCardKPaymentFlow];
+    });
+  }];
+  
+  [self waitForExpectations:@[
+      payment.moveChoosePaymentMethodControllerExpectation,
+      payment.runChallangeExpectation,
+      payment.didCompleteWithTransactionStatusExpectation,
+      payment.getFinishSessionStatusRequestExpectation,
+      payment.getFinishedPaymentInfoExpectation] timeout:40];
+}
+
 - (void)testPaymentFlowWithBindingWithIncorrectSecureCode {
   actionTypeInForm = ActionTypeFillOTPForm;
   payment.doUseNewCard = NO;

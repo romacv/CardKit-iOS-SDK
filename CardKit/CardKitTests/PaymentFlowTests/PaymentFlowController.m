@@ -129,9 +129,18 @@
       
       [expireDateTextField setText:@"1224"];
       
-      UITextField *secureCodeTextField = (UITextField *)[window.rootViewController.view viewWithTag:secureCodeTextFieldTag];
       
-      [secureCodeTextField setText:@"123"];
+      if (CardKConfig.shared.bindingCVCRequired) {
+        UITextField *secureCodeTextField = (UITextField *)[window.rootViewController.view viewWithTag:secureCodeTextFieldTag];
+
+        if (self.bindingSecureCode != nil) {
+          [secureCodeTextField setText: self.bindingSecureCode];
+          self.bindingSecureCode = nil;
+        } else {
+          [secureCodeTextField setText: @"123"];
+        }
+        
+      }
       
       UITextField *cardOwnerTextField = (UITextField *)[window.rootViewController.view viewWithTag:cardOwnerTextFieldTag];
       
