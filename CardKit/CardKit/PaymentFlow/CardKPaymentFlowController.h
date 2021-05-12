@@ -14,7 +14,6 @@
 #import "RequestParams.h"
 
 @protocol CardKPaymentFlowDelegate <NSObject>
-
 - (void)didFinishPaymentFlow:(NSDictionary *) paymentInfo;
 - (void)didErrorPaymentFlow:(CardKPaymentError *) paymentError;
 - (void)didCancelPaymentFlow;
@@ -25,9 +24,7 @@
   @property (weak, nonatomic) id<CardKPaymentFlowDelegate> cardKPaymentFlowDelegate;
 
   @property CardKPaymentView* cardKPaymentView;
-  
   @property NSString* url;
-
   @property UIColor* primaryColor;
   @property UIColor* textDoneButtonColor;
   @property BOOL allowedCardScaner;
