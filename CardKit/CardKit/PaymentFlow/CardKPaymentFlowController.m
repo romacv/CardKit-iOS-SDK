@@ -460,12 +460,13 @@
 
 - (void) _runChallange:(NSDictionary *) responseDictionary {
   ARes *aRes = [[ARes alloc] init];
+ 
   aRes.acsTransID = [responseDictionary objectForKey:@"threeDSAcsTransactionId"];
   aRes.acsReferenceNumber = [responseDictionary objectForKey:@"threeDSAcsRefNumber"];
   aRes.acsSignedContent = [responseDictionary objectForKey:@"threeDSAcsSignedContent"];
   aRes.threeDSServerTransID = RequestParams.shared.threeDSServerTransId;
 
-  [self->_transactionManager handleResponseWithResponseObject:aRes];
+  [self->_transactionManager handleResponseWithARes:aRes];
 }
 
 - (void) _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler {
