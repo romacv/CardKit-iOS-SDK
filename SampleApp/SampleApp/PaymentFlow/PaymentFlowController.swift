@@ -131,7 +131,7 @@ class PaymentFlowController: UIViewController {
 
 extension PaymentFlowController: CardKPaymentFlowDelegate {
   func didFinishPaymentFlow(_ paymentInfo: [AnyHashable : Any]!) {
-    Log.i(object: self, message: "didFinishPaymentFlow")
+    print("didFinishPaymentFlow")
     var message = ""
     for key in paymentInfo.keys {
       message = "\(message) \n \(key) = \(paymentInfo[key] ?? "")"

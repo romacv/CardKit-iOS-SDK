@@ -45,7 +45,7 @@ public class TransactionManager: NSObject, ChallengeStatusReceiver {
 
         TransactionManager.sdkProgressDialog = try self._sdkTransaction!.getProgressView()
       } catch _ {
-        Log.e(object: self, message: "Error initializing SDK")
+        print("Error initializing SDK")
       }
     }
   
@@ -106,61 +106,36 @@ public class TransactionManager: NSObject, ChallengeStatusReceiver {
           
           self._service = Ecom3DS2Service()
           
-          let locale = "en"
-        
-          try self._service!.initialize(configParameters: config, locale: Locale.current.languageCode, uiCustomization: UiCustomization())
+          try self._service!.initialize(configParameters: config, locale: Locale.current.languageCode, uiCustomization: _uiConfig)
           self._isSdkInitialized = true
       } catch _ {
-        Log.e(object: self, message: "Error initializing SDK")
+        print("Error initializing SDK")
       }
     }
     
     func getAuthRequestParameters() throws -> ThreeDSSDK.AuthenticationRequestParameters {
       let authRequestParams = try self._sdkTransaction!.getAuthenticationRequestParameters()
       
-      print("encoded device info \(authRequestParams.getDeviceData())")
-      print("ephem pub key \(authRequestParams.getSDKEphemeralPublicKey())")
-      print("App id \(authRequestParams.getSDKAppID())")
-      print("Transaction Id \(authRequestParams.getSDKTransactionID())")
-      
       return authRequestParams;
     }
 
-    func testFinished() {
-      Log.i(object: self, message: "Test has finished")
-    }
-
-    func handleResponse (responseObject: NSObject){
-      Log.i(object: self, message: "11. handle response")
-      
+    func handleResponse (responseObject: [String : String]){
       self._isChallengeTransaction = false
-      let aRes = responseObject as! ARes
-
-      if (aRes.transStatus != nil){
-          Log.i(object: self, message: "handle response for transStatus= \(aRes.transStatus!)")
-      }
-
-      Log.i(object: self, message: "12. create challenge parameters")
-      let challengeParameters = _createChallengeParameters(aRes: aRes)
-      self._isChallengeTransaction = true
-      let timeout : Int32 =  5
-      _executeChallenge(delegate: self, challengeParameters: challengeParameters , timeout: timeout)
-    }
-
-    private func _createChallengeParameters(aRes: ARes) -> ChallengeParameters{
+  
       let challengeParameters = ChallengeParameters()
-      challengeParameters.setAcsSignedContent(aRes.acsSignedContent!)
-      challengeParameters.setAcsRefNumber(aRes.acsReferenceNumber!)
-      challengeParameters.setAcsTransactionID(aRes.acsTransID!)
-      challengeParameters.set3DSServerTransactionID(aRes.threeDSServerTransID!)
+      challengeParameters.setAcsSignedContent(responseObject["acsSignedContent"]!)
+      challengeParameters.setAcsRefNumber(responseObject["acsReferenceNumber"]!)
+      challengeParameters.setAcsTransactionID(responseObject["acsTransID"]!)
+      challengeParameters.set3DSServerTransactionID(responseObject["threeDSServerTransID"]!)
+      
+      self._isChallengeTransaction = true
 
-      return challengeParameters
+      _executeChallenge(delegate: self, challengeParameters: challengeParameters , timeout: 5)
     }
 
     private func _executeChallenge(delegate: ChallengeStatusReceiver ,challengeParameters: ChallengeParameters, timeout : Int32) {
       DispatchQueue.main.async(){
         do {
-            Log.s(object: self, message: "Execute challenge")
             try self._sdkTransaction?.doChallenge(challengeParameters: challengeParameters, challengeStatusReceiver: delegate, timeOut: Int(timeout))
         } catch {
             dump(error)
@@ -208,37 +183,25 @@ public class TransactionManager: NSObject, ChallengeStatusReceiver {
     private func _reloadTable() {
       self._notificationCenter.post(name: Notification.Name("_reloadTable"), object: nil)
     }
-
 }
 
 extension TransactionManager {
   public func cancelled() {
-    Log.w (object: self, message:  "TransactionManager - Cancelled")
-    
     self._reloadTable()
-    testFinished()
   }
 
   public func timedout() {
-    Log.e(object: self, message: "TransactionManager - timedOut")
-    
     delegate?.errorEventReceived()
     self._reloadTable()
-    testFinished()
   }
 
   public func protocolError(protocolErrorEvent e: ProtocolErrorEvent) {
-    Log.e(object: self, message: "TransactionManager - Protocol error")
-
     delegate?.errorEventReceived()
     self._reloadTable()
-    testFinished()
   }
   
   public func runtimeError(runtimeErrorEvent: RuntimeErrorEvent) {
-    Log.e(object: self, message: "TransactionManager - run time error")
     delegate?.errorEventReceived()
     self._reloadTable()
-    testFinished()
   }
 }

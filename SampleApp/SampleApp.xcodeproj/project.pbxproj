@@ -16,9 +16,6 @@
 		926876CD2613153C0080D65B /* PaymentFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926876CC2613153C0080D65B /* PaymentFlowController.swift */; };
 		926A717825B969D800C72A92 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926A717725B969D800C72A92 /* Utils.swift */; };
 		927F3701259CA52A0019DE21 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927F3700259CA5290019DE21 /* TransactionManager.swift */; };
-		927F3704259CA54E0019DE21 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927F3703259CA54E0019DE21 /* Log.swift */; };
-		927F3707259CA5600019DE21 /* ARes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927F3706259CA5600019DE21 /* ARes.swift */; };
-		927F370A259CA5780019DE21 /* LogDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927F3709259CA5780019DE21 /* LogDelegate.swift */; };
 		927F370D259CA5970019DE21 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927F370C259CA5970019DE21 /* API.swift */; };
 		927F3711259CA6E80019DE21 /* ThreeDS2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927F3710259CA6E80019DE21 /* ThreeDS2ViewController.swift */; };
 		9291BFE92632BB0B00F6ECF1 /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9291BFE62632BAFC00F6ECF1 /* ThreeDSSDK.xcframework */; };
@@ -69,9 +66,6 @@
 		926876CC2613153C0080D65B /* PaymentFlowController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = PaymentFlowController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		926A717725B969D800C72A92 /* Utils.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; tabWidth = 2; };
 		927F3700259CA5290019DE21 /* TransactionManager.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; tabWidth = 2; };
-		927F3703259CA54E0019DE21 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		927F3706259CA5600019DE21 /* ARes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARes.swift; sourceTree = "<group>"; };
-		927F3709259CA5780019DE21 /* LogDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDelegate.swift; sourceTree = "<group>"; };
 		927F370C259CA5970019DE21 /* API.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; tabWidth = 2; };
 		927F3710259CA6E80019DE21 /* ThreeDS2ViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ThreeDS2ViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		9291BFE62632BAFC00F6ECF1 /* ThreeDSSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThreeDSSDK.xcframework; path = ../../../sdk_3ds2_ios/build/ThreeDSSDK/ThreeDSSDK.xcframework; sourceTree = "<group>"; };
@@ -139,9 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				927F3700259CA5290019DE21 /* TransactionManager.swift */,
-				927F3703259CA54E0019DE21 /* Log.swift */,
-				927F3709259CA5780019DE21 /* LogDelegate.swift */,
-				927F3706259CA5600019DE21 /* ARes.swift */,
 				927F370C259CA5970019DE21 /* API.swift */,
 				927F3710259CA6E80019DE21 /* ThreeDS2ViewController.swift */,
 				9245F89425B190FB0065AF9E /* ReqResDetailsController.swift */,
@@ -360,11 +351,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				926876CD2613153C0080D65B /* PaymentFlowController.swift in Sources */,
-				927F370A259CA5780019DE21 /* LogDelegate.swift in Sources */,
-				927F3707259CA5600019DE21 /* ARes.swift in Sources */,
 				927F3701259CA52A0019DE21 /* TransactionManager.swift in Sources */,
 				D245AB99231C444600369747 /* ViewController.swift in Sources */,
-				927F3704259CA54E0019DE21 /* Log.swift in Sources */,
 				9234CC5D247FDA8F009E3034 /* SampleCardKPaymentView.swift in Sources */,
 				9245F89525B190FB0065AF9E /* ReqResDetailsController.swift in Sources */,
 				926A717825B969D800C72A92 /* Utils.swift in Sources */,

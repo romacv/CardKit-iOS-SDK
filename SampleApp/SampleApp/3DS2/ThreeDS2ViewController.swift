@@ -336,15 +336,13 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
         self._transactionManager.close()
         return
       }
-                  
+            
       self._aRes["threeDSServerTransID"] = ThreeDS2ViewController.requestParams.threeDSServerTransId ?? ""
       self._aRes["acsTransID"] = data.acsTransID
       self._aRes["acsReferenceNumber"] = data.acsReferenceNumber
       self._aRes["acsSignedContent"] = data.acsSignedContent
-
-      let _aRes: ARes = ARes(JSON: self._aRes)!;
       
-      self._transactionManager.handleResponse(responseObject: _aRes)
+      self._transactionManager.handleResponse(responseObject: self._aRes)
     }
   }
   
