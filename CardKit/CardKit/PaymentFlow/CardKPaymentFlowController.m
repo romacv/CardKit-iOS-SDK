@@ -65,24 +65,20 @@
   }
 
   - (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
     _spinner.frame = CGRectMake(0, 0, 100, 100);
     _spinner.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height / 2);
   }
 
   - (void)viewDidAppear:(BOOL)animated {
-      [self _getSessionStatusRequest];
-  }
+    [super viewDidAppear: animated];
 
-  - (void)viewDidLoad {
-    [super viewDidLoad];
+    [self _getSessionStatusRequest];
   }
 
   - (NSString *) _joinParametersInString:(NSArray<NSString *> *) parameters {
     return [parameters componentsJoinedByString:@"&"];
-  }
-
-  - (void)callPaymentErrorDelegate {
-    
   }
 
   - (void) _sendErrorWithCardPaymentError:(CardKPaymentError *) cardKPaymentError {
@@ -178,7 +174,6 @@
   }
   
   - (NSArray<CardKBinding *> *) _convertBindingItemsToCardKBinding:(NSArray<NSDictionary *> *) bindingItems {
-    
     NSMutableArray<CardKBinding *> *bindings = [[NSMutableArray alloc] init];
     
     for (NSDictionary *binding in bindingItems) {
@@ -265,12 +260,9 @@
     NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     [request setHTTPBody:postData];
 
-
     NSURLSession *session = [NSURLSession sharedSession];
 
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
-      
       dispatch_async(dispatch_get_main_queue(), ^{
         
       NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
@@ -386,128 +378,54 @@
     [dataTask resume];
   }
 
-- (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler {
-  dispatch_async(dispatch_get_main_queue(), ^{
-    self->_transactionManager.headerLabel = self.headerLabel;
-    [self->_transactionManager setUpUICustomizationWithPrimaryColor:self.primaryColor textDoneButtonColor:self.textDoneButtonColor error:nil];
-    [self->_transactionManager initializeSdk];
-    [self->_transactionManager showProgressDialog];
-    NSDictionary *reqParams = [self->_transactionManager getAuthRequestParameters];
-    
-    RequestParams.shared.threeDSSDKEncData = reqParams[@"threeDSSDKEncData"];
-    RequestParams.shared.threeDSSDKEphemPubKey = reqParams[@"threeDSSDKEphemPubKey"];
-    RequestParams.shared.threeDSSDKAppId = reqParams[@"threeDSSDKAppId"];
-    RequestParams.shared.threeDSSDKTransId = reqParams[@"threeDSSDKTransId"];
-
-    [self _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler];
-  });
-}
-
-- (void) _processFormRequest:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler {
-  NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
-  NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
-  NSString *owner = [NSString stringWithFormat:@"%@%@", @"TEXT=", cardOwner];
-  NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"true"];
-  NSString *seTokenParam = [NSString stringWithFormat:@"%@%@", @"seToken=", [seToken stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]];
-  NSString *bindingNotNeeded = [NSString stringWithFormat:@"%@%@", @"bindingNotNeeded=", allowSaveBinding ? @"false" : @"true"];
-
-  NSString *parameters = [self _joinParametersInString:@[mdOrder, seTokenParam, language, owner, bindingNotNeeded, threeDSSDK]];
-  NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
-  request.HTTPMethod = @"POST";
-
-  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-  [request setHTTPBody:postData];
-
-  NSURLSession *session = [NSURLSession sharedSession];
-
-  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+  - (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler {
     dispatch_async(dispatch_get_main_queue(), ^{
+      self->_transactionManager.headerLabel = self.headerLabel;
+      [self->_transactionManager setUpUICustomizationWithPrimaryColor:self.primaryColor textDoneButtonColor:self.textDoneButtonColor error:nil];
+      [self->_transactionManager initializeSdk];
+      [self->_transactionManager showProgressDialog];
+      NSDictionary *reqParams = [self->_transactionManager getAuthRequestParameters];
       
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+      RequestParams.shared.threeDSSDKEncData = reqParams[@"threeDSSDKEncData"];
+      RequestParams.shared.threeDSSDKEphemPubKey = reqParams[@"threeDSSDKEphemPubKey"];
+      RequestParams.shared.threeDSSDKAppId = reqParams[@"threeDSSDKAppId"];
+      RequestParams.shared.threeDSSDKTransId = reqParams[@"threeDSSDKTransId"];
 
-    if(httpResponse.statusCode != 200) {
-      [self _sendError];
-      return;
-    }
-    
-    NSError *parseError = nil;
-    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-    
-    NSString *redirect = [responseDictionary objectForKey:@"redirect"];
-    BOOL is3DSVer2 = (BOOL)[responseDictionary[@"is3DSVer2"] boolValue];
-    NSString *errorMessage = [responseDictionary objectForKey:@"error"];
-    NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
-    
-    if (errorCode != 0) {
-      self->_cardKPaymentError.message = errorMessage;
-      [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
-    } else if (redirect != nil) {
-      self->_cardKPaymentError.message = errorMessage;
-      [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
-    } else if (is3DSVer2){
-      RequestParams.shared.threeDSServerTransId = [responseDictionary objectForKey:@"threeDSServerTransId"];
-      RequestParams.shared.threeDSSDKKey = [responseDictionary objectForKey:@"threeDSSDKKey"];
+      [self _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler];
+    });
+  }
 
-      self->_transactionManager.pubKey = RequestParams.shared.threeDSSDKKey;
-     
-      [self _initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler];
-    }
-  });
-  }];
-  [dataTask resume];
-}
-
-- (void) _runChallange:(NSDictionary *) responseDictionary {
-  ARes *aRes = [[ARes alloc] init];
- 
-  aRes.acsTransID = [responseDictionary objectForKey:@"threeDSAcsTransactionId"];
-  aRes.acsReferenceNumber = [responseDictionary objectForKey:@"threeDSAcsRefNumber"];
-  aRes.acsSignedContent = [responseDictionary objectForKey:@"threeDSAcsSignedContent"];
-  aRes.threeDSServerTransID = RequestParams.shared.threeDSServerTransId;
-
-  [self->_transactionManager handleResponseWithARes:aRes];
-}
-
-- (void) _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler {
+  - (void) _processFormRequest:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler {
     NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
-    NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"true"];
     NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
     NSString *owner = [NSString stringWithFormat:@"%@%@", @"TEXT=", cardOwner];
-    NSString *bindingNotNeeded = [NSString stringWithFormat:@"%@%@", @"bindingNotNeeded=", allowSaveBinding ? @"false" : @"true"];
+    NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"true"];
     NSString *seTokenParam = [NSString stringWithFormat:@"%@%@", @"seToken=", [seToken stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]];
-  
-    NSString *threeDSSDKEncData = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEncData=", RequestParams.shared.threeDSSDKEncData];
-    NSString *threeDSSDKEphemPubKey = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEphemPubKey=", RequestParams.shared.threeDSSDKEphemPubKey];
-    NSString *threeDSSDKAppId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKAppId=", RequestParams.shared.threeDSSDKAppId];
-    NSString *threeDSSDKTransId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKTransId=", RequestParams.shared.threeDSSDKTransId];
-    NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
-  
-    NSString *parameters = [self _joinParametersInString:@[mdOrder, threeDSSDK, language, owner, bindingNotNeeded, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId, seTokenParam]];
+    NSString *bindingNotNeeded = [NSString stringWithFormat:@"%@%@", @"bindingNotNeeded=", allowSaveBinding ? @"false" : @"true"];
+
+    NSString *parameters = [self _joinParametersInString:@[mdOrder, seTokenParam, language, owner, bindingNotNeeded, threeDSSDK]];
+    NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+    request.HTTPMethod = @"POST";
 
     NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];
-  
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
-
-    request.HTTPMethod = @"POST";
     [request setHTTPBody:postData];
-  
+
     NSURLSession *session = [NSURLSession sharedSession];
 
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        
       NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
-      if (httpResponse.statusCode != 200) {
-        self->_cardKPaymentError.message = @"Ошибка запроса данных формы";
-        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
-
+      if(httpResponse.statusCode != 200) {
+        [self _sendError];
         return;
       }
       
       NSError *parseError = nil;
       NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-
+      
       NSString *redirect = [responseDictionary objectForKey:@"redirect"];
       BOOL is3DSVer2 = (BOOL)[responseDictionary[@"is3DSVer2"] boolValue];
       NSString *errorMessage = [responseDictionary objectForKey:@"error"];
@@ -516,34 +434,290 @@
       if (errorCode != 0) {
         self->_cardKPaymentError.message = errorMessage;
         [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
-        [self->_transactionManager closeProgressDialog];
       } else if (redirect != nil) {
         self->_cardKPaymentError.message = errorMessage;
         [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
-        [self->_transactionManager closeProgressDialog];
       } else if (is3DSVer2){
-        [self _runChallange: responseDictionary];
+        RequestParams.shared.threeDSServerTransId = [responseDictionary objectForKey:@"threeDSServerTransId"];
+        RequestParams.shared.threeDSSDKKey = [responseDictionary objectForKey:@"threeDSSDKKey"];
+
+        self->_transactionManager.pubKey = RequestParams.shared.threeDSSDKKey;
+       
+        [self _initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler];
+      }
+    });
+    }];
+    [dataTask resume];
+  }
+
+  - (void) _runChallange:(NSDictionary *) responseDictionary {
+    ARes *aRes = [[ARes alloc] init];
+   
+    aRes.acsTransID = [responseDictionary objectForKey:@"threeDSAcsTransactionId"];
+    aRes.acsReferenceNumber = [responseDictionary objectForKey:@"threeDSAcsRefNumber"];
+    aRes.acsSignedContent = [responseDictionary objectForKey:@"threeDSAcsSignedContent"];
+    aRes.threeDSServerTransID = RequestParams.shared.threeDSServerTransId;
+
+    [self->_transactionManager handleResponseWithARes:aRes];
+  }
+
+  - (void) _processFormRequestStep2:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken allowSaveBinding:(BOOL) allowSaveBinding callback: (void (^)(NSDictionary *)) handler {
+      NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
+      NSString *threeDSSDK = [NSString stringWithFormat:@"%@%@", @"threeDSSDK=", @"true"];
+      NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
+      NSString *owner = [NSString stringWithFormat:@"%@%@", @"TEXT=", cardOwner];
+      NSString *bindingNotNeeded = [NSString stringWithFormat:@"%@%@", @"bindingNotNeeded=", allowSaveBinding ? @"false" : @"true"];
+      NSString *seTokenParam = [NSString stringWithFormat:@"%@%@", @"seToken=", [seToken stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"]];
+    
+      NSString *threeDSSDKEncData = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEncData=", RequestParams.shared.threeDSSDKEncData];
+      NSString *threeDSSDKEphemPubKey = [NSString stringWithFormat:@"%@%@", @"threeDSSDKEphemPubKey=", RequestParams.shared.threeDSSDKEphemPubKey];
+      NSString *threeDSSDKAppId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKAppId=", RequestParams.shared.threeDSSDKAppId];
+      NSString *threeDSSDKTransId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKTransId=", RequestParams.shared.threeDSSDKTransId];
+      NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
+    
+      NSString *parameters = [self _joinParametersInString:@[mdOrder, threeDSSDK, language, owner, bindingNotNeeded, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId, seTokenParam]];
+
+      NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+      NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];
+    
+      NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+
+      request.HTTPMethod = @"POST";
+      [request setHTTPBody:postData];
+    
+      NSURLSession *session = [NSURLSession sharedSession];
+
+      NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+        if (httpResponse.statusCode != 200) {
+          self->_cardKPaymentError.message = @"Ошибка запроса данных формы";
+          [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
+
+          return;
+        }
+        
+        NSError *parseError = nil;
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+
+        NSString *redirect = [responseDictionary objectForKey:@"redirect"];
+        BOOL is3DSVer2 = (BOOL)[responseDictionary[@"is3DSVer2"] boolValue];
+        NSString *errorMessage = [responseDictionary objectForKey:@"error"];
+        NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
+        
+        if (errorCode != 0) {
+          self->_cardKPaymentError.message = errorMessage;
+          [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
+          [self->_transactionManager closeProgressDialog];
+        } else if (redirect != nil) {
+          self->_cardKPaymentError.message = errorMessage;
+          [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
+          [self->_transactionManager closeProgressDialog];
+        } else if (is3DSVer2){
+          [self _runChallange: responseDictionary];
+        }
+      }];
+      [dataTask resume];
+    }
+
+  - (void)_getFinishedPaymentInfo {
+    NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"orderId=", CardKConfig.shared.mdOrder];
+    NSString *withCart = [NSString stringWithFormat:@"%@%@", @"withCart=", @"false"];
+    NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
+
+    NSString *parameters = [self _joinParametersInString:@[mdOrder, withCart, language]];
+
+    NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/getFinishedPaymentInfo.do", parameters];
+
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+
+    request.HTTPMethod = @"GET";
+
+    NSURLSession *session = [NSURLSession sharedSession];
+
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+          NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            
+          if(httpResponse.statusCode != 200) {
+            [self _sendError];
+            return;
+          }
+          
+          NSError *parseError = nil;
+          NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+          
+          [self _sendSuccessMessage:responseDictionary];
+      });
+    }];
+    [dataTask resume];
+  }
+
+  - (void)_unbindСardAnon:(CardKBinding *) binding {
+    NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"mdOrder=", CardKConfig.shared.mdOrder];
+    NSString *bindingId = [NSString stringWithFormat:@"%@%@", @"bindingId=", binding.bindingId];
+    
+    NSString *parameters = [self _joinParametersInString:@[mdOrder, bindingId]];
+    NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/unbindcardanon.do", parameters];
+
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+
+    request.HTTPMethod = @"GET";
+
+    NSURLSession *session = [NSURLSession sharedSession];
+
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+      if (httpResponse.statusCode != 200) {
+        [self _sendError];
+
+        return;
+      }
+      
+      NSError *parseError = nil;
+      NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+
+      NSString *errorMessage = [responseDictionary objectForKey:@"error"];
+      NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
+      
+      if (errorCode != 0) {
+        self->_cardKPaymentError.message = errorMessage;
+        [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
       }
     }];
     [dataTask resume];
   }
 
-- (void)_getFinishedPaymentInfo {
-  NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"orderId=", CardKConfig.shared.mdOrder];
-  NSString *withCart = [NSString stringWithFormat:@"%@%@", @"withCart=", @"false"];
-  NSString *language = [NSString stringWithFormat:@"%@%@", @"language=", CardKConfig.shared.language];
+  - (void)_applePay:(NSString *) paymentToken {
+    NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
+    NSString *paymentTokenParameerr = [NSString stringWithFormat:@"%@%@", @"paymentToken=", paymentToken];
+    
+    NSString *parameters = [self _joinParametersInString:@[mdOrder, paymentTokenParameerr]];
 
-  NSString *parameters = [self _joinParametersInString:@[mdOrder, withCart, language]];
+    NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/applepay/payment.do"];
 
-  NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/getFinishedPaymentInfo.do", parameters];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
 
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+    request.HTTPMethod = @"POST";
+    [request setHTTPBody:postData];
 
-  request.HTTPMethod = @"GET";
+    NSURLSession *session = [NSURLSession sharedSession];
 
-  NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
-  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      if (httpResponse.statusCode != 200) {
+        [self _sendError];
+
+        return;
+      }
+      
+      NSError *parseError = nil;
+      NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+
+      BOOL success = (BOOL)[responseDictionary[@"success"] boolValue];
+      
+      if (success) {
+        [self _getFinishSessionStatusRequest];
+      } else {
+        self->_cardKPaymentError.message = @"Ошибка регистрации apple pay токена";
+        [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
+      }
+    }];
+    [dataTask resume];
+  }
+
+  // CardKDelegate
+  - (void)cardKPaymentView:(nonnull CardKPaymentView *)paymentView didAuthorizePayment:(nonnull PKPayment *)pKPayment {
+    if (pKPayment == nil) {
+      self->_cardKPaymentError.message = @"Оплата applepay завершилась с ошибкой";
+      [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
+
+      return;
+    }
+    
+    NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:pKPayment.token.paymentData options:kNilOptions error:nil];
+
+    if (dict == nil) {
+      return;
+    }
+    
+    [self _applePay:dict[@"data"]];
+  }
+
+  - (void)cardKitViewController:(nonnull UIViewController *)controller didCreateSeToken:(nonnull NSString *)seToken allowSaveBinding:(BOOL)allowSaveBinding isNewCard:(BOOL)isNewCard {
+    _seToken = seToken;
+    if (isNewCard) {
+      CardKViewController *cardKViewController = (CardKViewController *) controller;
+      [self _processFormRequest: [cardKViewController getCardKView]
+                 cardOwner:[cardKViewController getCardOwner]
+                  seToken:seToken
+       allowSaveBinding: allowSaveBinding
+                  callback:^(NSDictionary * sessionStatus) {}];
+    } else {
+      ConfirmChoosedCard *confirmChoosedCardController = (ConfirmChoosedCard *) controller;
+      _cardKBinding = confirmChoosedCardController.cardKBinding;
+      [self _processBindingFormRequest:confirmChoosedCardController
+                          callback:^(NSDictionary * sessionStatus) {}];
+    }
+  }
+
+  - (void)didLoadController:(nonnull CardKViewController *)controller {
+    controller.allowedCardScaner = self.allowedCardScaner;
+    controller.purchaseButtonTitle = NSLocalizedStringFromTableInBundle(@"doneButton", nil, _languageBundle, @"Submit payment");
+    controller.allowSaveBinding = self->_sessionStatus.bindingEnabled;
+    controller.isSaveBinding = false;
+    controller.displayCardHolderField = true;
+  }
+
+  - (void)didRemoveBindings:(nonnull NSArray<CardKBinding *> *)removedBindings {
+    for (CardKBinding *removedBinding in removedBindings) {
+      [self _unbindСardAnon: removedBinding];
+    }
+  }
+
+  - (void)willShowPaymentView:(nonnull CardKPaymentView *)paymentView {
+    PKPaymentSummaryItem *paymentItem = [PKPaymentSummaryItem summaryItemWithLabel:@"Коробка" amount:[[NSDecimalNumber alloc] initWithString:@"1"]];
+
+    paymentView.paymentRequest = _cardKPaymentView.paymentRequest;
+    paymentView.paymentRequest.paymentSummaryItems = @[paymentItem];
+    paymentView.paymentButtonType =_cardKPaymentView.paymentButtonType;
+    paymentView.paymentButtonStyle =_cardKPaymentView.paymentButtonStyle;
+    
+    if (_cardKPaymentView.cardPaybutton == nil) {
+      return;
+    }
+    
+    paymentView.cardPaybutton.backgroundColor = _cardKPaymentView.cardPaybutton.backgroundColor;
+    paymentView.cardPaybutton.tintColor = _cardKPaymentView.cardPaybutton.tintColor;
+    [paymentView.cardPaybutton setTitleColor:_cardKPaymentView.cardPaybutton.currentTitleColor forState:UIControlStateNormal];
+    
+    if (![_cardKPaymentView.cardPaybutton.titleLabel.text isEqual:@""] || _cardKPaymentView.cardPaybutton.titleLabel != nil) {
+      NSString * title = _cardKPaymentView.cardPaybutton.titleLabel.text;
+      [paymentView.cardPaybutton setTitle:title forState:UIControlStateNormal];
+    }
+  }
+
+  - (void)didCancel {
+    [self.cardKPaymentFlowDelegate didCancelPaymentFlow];
+  }
+
+  - (void)didCompleteWithTransactionStatus:(NSString *) transactionStatus {
+    NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
+
+    NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/finish3dsVer2PaymentAnonymous.do"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
+    request.HTTPMethod = @"POST";
+
+    NSData *postData = [threeDSServerTransId dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    [request setHTTPBody:postData];
+
+    NSURLSession *session = [NSURLSession sharedSession];
+
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      
       dispatch_async(dispatch_get_main_queue(), ^{
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
           
@@ -551,216 +725,30 @@
           [self _sendError];
           return;
         }
-        
+
         NSError *parseError = nil;
         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+
+        NSString *errorMessage = [responseDictionary objectForKey:@"error"];
+        NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
+          
+        if (errorCode != 0) {
+          self->_cardKPaymentError.message = errorMessage;
+          [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
+        }
         
-        [self _sendSuccessMessage:responseDictionary];
-    });
-  }];
-  [dataTask resume];
-}
+        [self _getFinishSessionStatusRequest];
+      });
+    }];
+    [dataTask resume];
+  }
 
-- (void)_unbindСardAnon:(CardKBinding *) binding {
-  NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"mdOrder=", CardKConfig.shared.mdOrder];
-  NSString *bindingId = [NSString stringWithFormat:@"%@%@", @"bindingId=", binding.bindingId];
-  
-  NSString *parameters = [self _joinParametersInString:@[mdOrder, bindingId]];
-  NSString *URL = [NSString stringWithFormat:@"%@%@?%@", _url, @"/rest/unbindcardanon.do", parameters];
-
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
-
-  request.HTTPMethod = @"GET";
-
-  NSURLSession *session = [NSURLSession sharedSession];
-
-  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-    if (httpResponse.statusCode != 200) {
-      [self _sendError];
-
-      return;
-    }
+  - (void)errorEventReceived {
     
-    NSError *parseError = nil;
-    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-
-    NSString *errorMessage = [responseDictionary objectForKey:@"error"];
-    NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
-    
-    if (errorCode != 0) {
-      self->_cardKPaymentError.message = errorMessage;
-      [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
-    }
-  }];
-  [dataTask resume];
-}
-
-- (void)_applePay:(NSString *) paymentToken {
-  NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
-  NSString *paymentTokenParameerr = [NSString stringWithFormat:@"%@%@", @"paymentToken=", paymentToken];
-  
-  NSString *parameters = [self _joinParametersInString:@[mdOrder, paymentTokenParameerr]];
-
-  NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-  NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/applepay/payment.do"];
-
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
-
-  request.HTTPMethod = @"POST";
-  [request setHTTPBody:postData];
-
-  NSURLSession *session = [NSURLSession sharedSession];
-
-  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-    if (httpResponse.statusCode != 200) {
-      [self _sendError];
-
-      return;
-    }
-    
-    NSError *parseError = nil;
-    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-
-    BOOL success = (BOOL)[responseDictionary[@"success"] boolValue];
-    
-    if (success) {
-      [self _getFinishSessionStatusRequest];
-    } else {
-      self->_cardKPaymentError.message = @"Ошибка регистрации apple pay токена";
-      [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
-    }
-  }];
-  [dataTask resume];
-}
-
-// CardKDelegate
-- (void)cardKPaymentView:(nonnull CardKPaymentView *)paymentView didAuthorizePayment:(nonnull PKPayment *)pKPayment {
-  if (pKPayment == nil) {
-    self->_cardKPaymentError.message = @"Оплата applepay завершилась с ошибкой";
-    [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
-
-    return;
   }
-  
-  NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:pKPayment.token.paymentData options:kNilOptions error:nil];
 
-  if (dict == nil) {
-    return;
+  - (void)cardKitViewControllerScanCardRequest:(CardKViewController *)controller {
+    [self.cardKPaymentFlowDelegate scanCardRequest:controller];
   }
-  
-  [self _applePay:dict[@"data"]];
-}
-
-- (void)cardKitViewController:(nonnull UIViewController *)controller didCreateSeToken:(nonnull NSString *)seToken allowSaveBinding:(BOOL)allowSaveBinding isNewCard:(BOOL)isNewCard {
-  _seToken = seToken;
-  if (isNewCard) {
-    CardKViewController *cardKViewController = (CardKViewController *) controller;
-    [self _processFormRequest: [cardKViewController getCardKView]
-               cardOwner:[cardKViewController getCardOwner]
-                seToken:seToken
-     allowSaveBinding: allowSaveBinding
-                callback:^(NSDictionary * sessionStatus) {}];
-  } else {
-    ConfirmChoosedCard *confirmChoosedCardController = (ConfirmChoosedCard *) controller;
-    _cardKBinding = confirmChoosedCardController.cardKBinding;
-    [self _processBindingFormRequest:confirmChoosedCardController
-                        callback:^(NSDictionary * sessionStatus) {}];
-  }
-}
-
-- (void)didLoadController:(nonnull CardKViewController *)controller {
-  controller.allowedCardScaner = self.allowedCardScaner;
-  controller.purchaseButtonTitle = NSLocalizedStringFromTableInBundle(@"doneButton", nil, _languageBundle, @"Submit payment");
-  controller.allowSaveBinding = self->_sessionStatus.bindingEnabled;
-  controller.isSaveBinding = false;
-  controller.displayCardHolderField = true;
-}
-
-- (void)didRemoveBindings:(nonnull NSArray<CardKBinding *> *)removedBindings {
-  for (CardKBinding *removedBinding in removedBindings) {
-    [self _unbindСardAnon: removedBinding];
-  }
-}
-
-- (void)willShowPaymentView:(nonnull CardKPaymentView *)paymentView {
-  PKPaymentSummaryItem *paymentItem = [PKPaymentSummaryItem summaryItemWithLabel:@"Коробка" amount:[[NSDecimalNumber alloc] initWithString:@"1"]];
-
-  paymentView.paymentRequest = _cardKPaymentView.paymentRequest;
-  paymentView.paymentRequest.paymentSummaryItems = @[paymentItem];
-  paymentView.paymentButtonType =_cardKPaymentView.paymentButtonType;
-  paymentView.paymentButtonStyle =_cardKPaymentView.paymentButtonStyle;
-  
-  if (_cardKPaymentView.cardPaybutton == nil) {
-    return;
-  }
-  
-  paymentView.cardPaybutton.backgroundColor = _cardKPaymentView.cardPaybutton.backgroundColor;
-  paymentView.cardPaybutton.tintColor = _cardKPaymentView.cardPaybutton.tintColor;
-  [paymentView.cardPaybutton setTitleColor:_cardKPaymentView.cardPaybutton.currentTitleColor forState:UIControlStateNormal];
-  
-  if (![_cardKPaymentView.cardPaybutton.titleLabel.text isEqual:@""] || _cardKPaymentView.cardPaybutton.titleLabel != nil) {
-    NSString * title = _cardKPaymentView.cardPaybutton.titleLabel.text;
-    [paymentView.cardPaybutton setTitle:title forState:UIControlStateNormal];
-  }
-}
-
-- (void)encodeWithCoder:(nonnull NSCoder *)coder {
-  
-}
-
-- (void)didCancel {
-  [self.cardKPaymentFlowDelegate didCancelPaymentFlow];
-}
-
-- (void)didCompleteWithTransactionStatus:(NSString *) transactionStatus {
-  NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
-
-  NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/finish3dsVer2PaymentAnonymous.do"];
-  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
-  request.HTTPMethod = @"POST";
-
-  NSData *postData = [threeDSServerTransId dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-  [request setHTTPBody:postData];
-
-  NSURLSession *session = [NSURLSession sharedSession];
-
-  NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        
-      if(httpResponse.statusCode != 200) {
-        [self _sendError];
-        return;
-      }
-
-      NSError *parseError = nil;
-      NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-
-      NSString *errorMessage = [responseDictionary objectForKey:@"error"];
-      NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
-        
-      if (errorCode != 0) {
-        self->_cardKPaymentError.message = errorMessage;
-        [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
-      }
-      
-      [self _getFinishSessionStatusRequest];
-    });
-  }];
-  [dataTask resume];
-}
-
-- (void)errorEventReceived {
-  
-}
-
-- (void)cardKitViewControllerScanCardRequest:(CardKViewController *)controller {
-  [self.cardKPaymentFlowDelegate scanCardRequest:controller];
-}
 
 @end
