@@ -638,6 +638,13 @@
 
 // CardKDelegate
 - (void)cardKPaymentView:(nonnull CardKPaymentView *)paymentView didAuthorizePayment:(nonnull PKPayment *)pKPayment {
+  if (pKPayment == nil) {
+    self->_cardKPaymentError.message = @"Оплата applepay завершилась с ошибкой";
+    [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
+
+    return;
+  }
+  
   NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:pKPayment.token.paymentData options:kNilOptions error:nil];
 
   if (dict == nil) {
