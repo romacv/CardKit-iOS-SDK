@@ -35,7 +35,8 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   ActionTypeCancelFlow = 0,
   ActionTypeFillOTPForm = 1,
   ActionTypeFillMultiSelectForm = 2,
-  ActionTypeFillWebViewForm = 3
+  ActionTypeFillWebViewForm = 3,
+  ActionTypeFillOTPFormWithIncorrectCode = 4
 };
 
 @implementation CardKPaymentFlowControllerTest {
@@ -144,6 +145,8 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   payment.runChallangeExpectation = [self expectationWithDescription:@"runChallangeExpectation"];
   payment.runChallangeExpectation.expectedFulfillmentCount = 2;
   
+  payment.sendErrorWithCardPaymentErrorExpectation = [self expectationWithDescription:@"sendErrorWithCardPaymentErrorExpectation"];
+  
   payment.didCompleteWithTransactionStatusExpectation = [self expectationWithDescription:@"didCompleteWithTransactionStatusExpectation"];
   payment.didCompleteWithTransactionStatusExpectation.expectedFulfillmentCount = 2;
   
@@ -164,7 +167,8 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.runChallangeExpectation,
       payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
-      payment.getFinishedPaymentInfoExpectation] timeout:40];
+      payment.getFinishedPaymentInfoExpectation,
+      payment.sendErrorWithCardPaymentErrorExpectation] timeout:40];
 }
 
 - (void)testPaymentFlowWithBindingWithIncorrectSecureCode {
@@ -177,6 +181,8 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   
   payment.processBindingFormRequestExpectation = [self expectationWithDescription:@"processBindingFormRequestExpectation"];
   payment.processBindingFormRequestExpectation.expectedFulfillmentCount = 2;
+  
+  payment.sendErrorWithCardPaymentErrorExpectation = [self expectationWithDescription:@"sendErrorWithCardPaymentErrorExpectation"];
   
   payment.processBindingFormRequestStep2Expectation = [self expectationWithDescription:@"processBindingFormRequestStep2Expectation"];
   payment.processBindingFormRequestStep2Expectation.expectedFulfillmentCount = 2;
@@ -206,7 +212,8 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.runChallangeExpectation,
       payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
-      payment.getFinishedPaymentInfoExpectation] timeout:40];
+      payment.getFinishedPaymentInfoExpectation,
+      payment.sendErrorWithCardPaymentErrorExpectation] timeout:40];
 }
 
 - (void)testCancelFlowWithBinding {
@@ -229,6 +236,28 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.processBindingFormRequestExpectation,
       payment.processBindingFormRequestStep2Expectation,
       payment.didCancelExpectation] timeout:20];
+}
+
+- (void)testCancelFlowWhenSendIncorrectCodeFreeTimes {
+  actionTypeInForm = ActionTypeFillOTPFormWithIncorrectCode;
+  payment.doUseNewCard = NO;
+  
+  payment.moveChoosePaymentMethodControllerExpectation = [self expectationWithDescription:@"moveChoosePaymentMethodControllerExpectation"];
+  payment.processBindingFormRequestExpectation = [self expectationWithDescription:@"processBindingFormRequestExpectation"];
+  payment.processBindingFormRequestStep2Expectation = [self expectationWithDescription:@"processBindingFormRequestStep2Expectation"];
+  payment.didCancelExpectation = [self expectationWithDescription:@"didCancelExpectation"];
+  
+  [self _registerOrderWithAmount: @"2000" callback:^() {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self _runCardKPaymentFlow];
+    });
+  }];
+  
+  [self waitForExpectations:@[
+      payment.moveChoosePaymentMethodControllerExpectation,
+      payment.processBindingFormRequestExpectation,
+      payment.processBindingFormRequestStep2Expectation,
+      payment.didCancelExpectation] timeout:50];
 }
 
 - (void)testMultiSelectFlowWithNewCard{
@@ -334,6 +363,27 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   [confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)_fillOTPFormWithIncorrectCode {
+  UIWindow *window = UIApplication.sharedApplication.windows[1];
+  UITextField *textField = (UITextField *)[window.rootViewController.view viewWithTag:__SMSCodeTextFieldTag];
+
+  [textField insertText:@"1"];
+  
+  UIButton *confirmButton = (UIButton *)[window.rootViewController.view viewWithTag:__doneButtonTag];
+  
+  [confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+  
+  if (confirmButton == nil) {
+    return;
+  }
+  
+  dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC));
+
+  dispatch_after(timer, dispatch_get_main_queue(), ^(void){
+    [self _fillOTPFormWithIncorrectCode];
+  });
+}
+
 - (void)_fillMultiSelectForm {
   UIWindow *window = UIApplication.sharedApplication.windows[1];
   UIView *uiStackView = (UIView *)[window.rootViewController.view viewWithTag:__optionGroupViewTag];
@@ -387,6 +437,8 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
         break;
       case ActionTypeFillWebViewForm:
         [self _fillWebViewForm];
+      case ActionTypeFillOTPFormWithIncorrectCode:
+        [self _fillOTPFormWithIncorrectCode];
       default:
         break;
     }

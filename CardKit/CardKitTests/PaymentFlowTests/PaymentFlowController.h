@@ -49,6 +49,8 @@
 
   @property (nullable) XCTestExpectation* unbindCardExpectation;
 
+  @property (nullable) XCTestExpectation* sendErrorWithCardPaymentErrorExpectation;
+
   - (void)_initSDK:(CardKCardView *_Nonnull) cardView cardOwner:(NSString *_Nonnull) cardOwner seToken:(NSString *_Nonnull) seToken callback: (void (^_Nonnull)(NSDictionary *_Nonnull)) handler;
 
   - (void)_getSessionStatusRequest;

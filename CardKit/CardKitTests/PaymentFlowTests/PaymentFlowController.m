@@ -16,6 +16,7 @@
 #import "CardKCardView.h"
 #import "ConfirmChoosedCard.h"
 #import "CardKSwitchView.h"
+#import "CardKPaymentError.h"
 
 @interface CardKKindPaymentViewControllerTest: CardKKindPaymentViewController
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -35,6 +36,7 @@
   - (void)_getFinishedPaymentInfo;
   - (void)didCancel;
   - (void)_unbindСardAnon:(CardKBinding *) binding;
+  - (void) _sendErrorWithCardPaymentError:(CardKPaymentError *) cardKPaymentError;
 
   - (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler;
   - (void) _runChallange:(NSDictionary *) responseDictionary;
@@ -54,12 +56,17 @@
 
   - (void)_sendError {
     [super _sendError];
-    [self.sendErrorExpectation fulfill];
+  
+    if (self.sendErrorExpectation != nil) {
+      [self.sendErrorExpectation fulfill];
+    }
   }
 
   - (void)_sendRedirectError {
     [super _sendRedirectError];
-    [self.sendRedirectErrorExpectation fulfill];
+    if (self.sendRedirectErrorExpectation != nil) {
+      [self.sendRedirectErrorExpectation fulfill];
+    }
   }
 
   - (void)_initSDK:(CardKCardView *) cardView cardOwner:(NSString *) cardOwner seToken:(NSString *) seToken callback: (void (^)(NSDictionary *)) handler {
@@ -70,7 +77,10 @@
   - (void) _runChallange:(NSDictionary *) responseDictionary {
     [super _runChallange:(NSDictionary *) responseDictionary];
     
-    [self.runChallangeExpectation fulfill];
+    if (self.runChallangeExpectation != nil) {
+      [self.runChallangeExpectation fulfill];
+    }
+    
     [NSThread  sleepForTimeInterval:7.0f];
     [self _fillForm];
   }
@@ -95,7 +105,9 @@
         [self _runBindingFlow];
       }
       
-      [self.moveChoosePaymentMethodControllerExpectation fulfill];
+      if (self.moveChoosePaymentMethodControllerExpectation != nil) {
+        [self.moveChoosePaymentMethodControllerExpectation fulfill];
+      }
     });
   }
 
@@ -112,7 +124,6 @@
     UIButton *confirmButton = (UIButton *)[window.rootViewController.view viewWithTag:newCardButtonTag];
     
     [confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-    
     
     double delayInSeconds = 2.0;
 
@@ -199,56 +210,82 @@
     });
   }
 
-- (void)_runUnbindFlow {
-  UIWindow *window = UIApplication.sharedApplication.windows[0];
-  
-  UINavigationController *navController = (UINavigationController *)window.rootViewController;
-  
-  PaymentFlowController *paymentFlowController = navController.viewControllers.firstObject;
-  
-  CardKKindPaymentViewController *kindPaymentViewController =  paymentFlowController.childViewControllers.firstObject;
-  
-  UITableView *tableView = (UITableView *)[navController.view viewWithTag:40001];
-  
-  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+  - (void)_runUnbindFlow {
+    UIWindow *window = UIApplication.sharedApplication.windows[0];
+    
+    UINavigationController *navController = (UINavigationController *)window.rootViewController;
+    
+    PaymentFlowController *paymentFlowController = navController.viewControllers.firstObject;
+    
+    CardKKindPaymentViewController *kindPaymentViewController =  paymentFlowController.childViewControllers.firstObject;
+    
+    UITableView *tableView = (UITableView *)[navController.view viewWithTag:40001];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
 
-  [kindPaymentViewController tableView:tableView commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:indexPath];
-}
+    [kindPaymentViewController tableView:tableView commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:indexPath];
+  }
 
-- (void)_unbindСardAnon:(CardKBinding *) binding {
-  [super _unbindСardAnon:binding];
-  [self.unbindCardExpectation fulfill];
-}
+  - (void)_unbindСardAnon:(CardKBinding *) binding {
+    [super _unbindСardAnon:binding];
+
+    if (self.unbindCardExpectation != nil) {
+      [self.unbindCardExpectation fulfill];
+    }
+  }
 
   - (void)didCompleteWithTransactionStatus:(NSString *) transactionStatus{
     [super didCompleteWithTransactionStatus:transactionStatus];
-    [self.didCompleteWithTransactionStatusExpectation fulfill];
+
+    if (self.didCompleteWithTransactionStatusExpectation != nil) {
+      [self.didCompleteWithTransactionStatusExpectation fulfill];
+    }
   }
 
   - (void)_getFinishSessionStatusRequest {
     [super _getFinishSessionStatusRequest];
-    [self.getFinishSessionStatusRequestExpectation fulfill];
+
+    if (self.getFinishSessionStatusRequestExpectation != nil) {
+      [self.getFinishSessionStatusRequestExpectation fulfill];
+    }
   }
 
   - (void)_getFinishedPaymentInfo {
     [super _getFinishedPaymentInfo];
-    [self.getFinishedPaymentInfoExpectation fulfill];
+
+    if (self.getFinishedPaymentInfoExpectation != nil) {
+      [self.getFinishedPaymentInfoExpectation fulfill];
+    }
   }
 
   - (void) _processBindingFormRequest:(ConfirmChoosedCard *) choosedCard callback: (void (^)(NSDictionary *)) handler {
     [super _processBindingFormRequest:choosedCard callback:handler];
-    [self.processBindingFormRequestExpectation fulfill];
+    
+    if (self.processBindingFormRequestExpectation != nil) {
+      [self.processBindingFormRequestExpectation fulfill];
+    }
   }
 
   - (void) _processBindingFormRequestStep2:(ConfirmChoosedCard *) choosedCard callback: (void (^)(NSDictionary *)) handler {
     [super _processBindingFormRequestStep2:choosedCard callback:handler];
-    [self.processBindingFormRequestStep2Expectation fulfill];
+    
+    if (self.processBindingFormRequestStep2Expectation != nil) {
+      [self.processBindingFormRequestStep2Expectation fulfill];
+    }
   }
 
   - (void)didCancel {
     [super didCancel];
     
     [self.didCancelExpectation fulfill];
+  }
+
+  - (void) _sendErrorWithCardPaymentError:(CardKPaymentError *) cardKPaymentError {
+    [super _sendErrorWithCardPaymentError: cardKPaymentError];
+    
+    if (self.sendErrorWithCardPaymentErrorExpectation != nil) {
+      [self.sendErrorWithCardPaymentErrorExpectation fulfill];
+    }
   }
 
   - (NSArray<CardKBinding *> *) _convertBindingItemsToCardKBinding:(NSArray<NSDictionary *> *) bindingItems {
