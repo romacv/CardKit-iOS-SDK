@@ -73,7 +73,7 @@ XCUIApplication *_app;
   
   [textField tap];
   
-  [textField typeText:@"12345"];
+  [textField typeText:@"111111"];
 }
 
 - (void) testRunThreeDSSDKFlowWithBinding {
