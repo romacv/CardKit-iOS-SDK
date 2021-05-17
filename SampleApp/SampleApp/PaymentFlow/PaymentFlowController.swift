@@ -95,7 +95,10 @@ class PaymentFlowController: UIViewController {
         paymentRequest.currencyCode = "RUB";
         paymentRequest.countryCode = "RU";
         paymentRequest.merchantCapabilities = PKMerchantCapability.capability3DS
-        paymentRequest.supportedNetworks = [.visa, .masterCard];
+        paymentRequest.supportedNetworks = [.visa, .amex, .masterCard];
+        paymentRequest.paymentSummaryItems = [
+          PKPaymentSummaryItem(label: "Коробка", amount: 0.1)
+        ];
         
         let cardPayButton = UIButton();
         cardPayButton.backgroundColor = .systemBlue;
@@ -107,7 +110,8 @@ class PaymentFlowController: UIViewController {
         cardKPaymentView.paymentRequest = paymentRequest;
         cardKPaymentView.paymentButtonStyle = .black;
         cardKPaymentView.paymentButtonType = .buy;
-        cardKPaymentView.cardPaybutton = cardPayButton
+        cardKPaymentView.cardPaybutton = cardPayButton;
+        cardKPaymentView.paymentRequest.merchantIdentifier = "merchant.cardkit";
         
         self._paymentFlowController.url = "https://web.rbsdev.com/soyuzpayment";
         self._paymentFlowController.cardKPaymentView = cardKPaymentView;

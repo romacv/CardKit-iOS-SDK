@@ -195,8 +195,8 @@
 
 -(void)paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller
 {
-    [_cKitDelegate cardKPaymentView:self didAuthorizePayment:_pKPayment];
-    [_controller dismissViewControllerAnimated:YES completion:nil];
+  [_controller dismissViewControllerAnimated:YES completion:nil];
+  [_cKitDelegate cardKPaymentView:self didAuthorizePayment:_pKPayment];
 }
 
 -(void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller didAuthorizePayment:(PKPayment *)payment completion:(void (^)(PKPaymentAuthorizationStatus))completion

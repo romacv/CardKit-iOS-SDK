@@ -641,6 +641,9 @@
     NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:pKPayment.token.paymentData options:kNilOptions error:nil];
 
     if (dict == nil) {
+      self->_cardKPaymentError.message = @"Оплата applepay завершилась не успешно";
+      [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
+      
       return;
     }
     
@@ -679,10 +682,7 @@
   }
 
   - (void)willShowPaymentView:(nonnull CardKPaymentView *)paymentView {
-    PKPaymentSummaryItem *paymentItem = [PKPaymentSummaryItem summaryItemWithLabel:@"Коробка" amount:[[NSDecimalNumber alloc] initWithString:@"1"]];
-
     paymentView.paymentRequest = _cardKPaymentView.paymentRequest;
-    paymentView.paymentRequest.paymentSummaryItems = @[paymentItem];
     paymentView.paymentButtonType =_cardKPaymentView.paymentButtonType;
     paymentView.paymentButtonStyle =_cardKPaymentView.paymentButtonStyle;
     
