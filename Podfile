@@ -5,5 +5,11 @@ target 'SampleApp' do
 
   use_frameworks!
   pod 'CardIO'
-  pod 'ObjectMapper'
+end
+
+target 'SampleAppUITests' do
+  project 'SampleApp/SampleApp.xcodeproj'
+
+  use_frameworks!
+  pod 'CardIO'
 end

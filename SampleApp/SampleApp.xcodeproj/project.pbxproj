@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		119E9AFF40A36E1EE3FBC691 /* Pods_SampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B616F87CB22C36459150EF5F /* Pods_SampleApp.framework */; };
+		5475DF1B0B98BC23D66E0C0B /* Pods_SampleAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3982329686EEDDAB5989B65E /* Pods_SampleAppUITests.framework */; };
+		922CA4CE2652531000B40F8F /* SampleAppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 922CA4CD2652531000B40F8F /* SampleAppUITests.m */; };
+		922CA4E02652538400B40F8F /* SampleAppNewCardUITest.m in Sources */ = {isa = PBXBuildFile; fileRef = 922CA4DF2652538400B40F8F /* SampleAppNewCardUITest.m */; };
 		9234CC56247D2157009E3034 /* bindings.json in Resources */ = {isa = PBXBuildFile; fileRef = 9234CC55247D2157009E3034 /* bindings.json */; };
 		9234CC5D247FDA8F009E3034 /* SampleCardKPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234CC5C247FDA8F009E3034 /* SampleCardKPaymentView.swift */; };
 		9239893C25AC461800DB1682 /* CardKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9239890A25AC348100DB1682 /* CardKit.framework */; };
@@ -29,6 +33,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		922CA4D02652531000B40F8F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D245AB8B231C444600369747 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D245AB92231C444600369747;
+			remoteInfo = SampleApp;
+		};
 		D245ABA8231C444700369747 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D245AB8B231C444600369747 /* Project object */;
@@ -54,8 +65,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3982329686EEDDAB5989B65E /* Pods_SampleAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		547AE47F17B068B145C06A2D /* Pods-SampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleApp.debug.xcconfig"; path = "Target Support Files/Pods-SampleApp/Pods-SampleApp.debug.xcconfig"; sourceTree = "<group>"; };
+		5F9672D217940747A6CA845C /* Pods-SampleAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-SampleAppUITests/Pods-SampleAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		747C8D3F93DB09475EB327A9 /* Pods-SampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleApp.release.xcconfig"; path = "Target Support Files/Pods-SampleApp/Pods-SampleApp.release.xcconfig"; sourceTree = "<group>"; };
+		922CA4CB2652531000B40F8F /* SampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		922CA4CD2652531000B40F8F /* SampleAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleAppUITests.m; sourceTree = "<group>"; };
+		922CA4CF2652531000B40F8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		922CA4DF2652538400B40F8F /* SampleAppNewCardUITest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleAppNewCardUITest.m; sourceTree = "<group>"; };
 		9234CC55247D2157009E3034 /* bindings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bindings.json; sourceTree = "<group>"; };
 		9234CC57247E90AB009E3034 /* SampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SampleApp.entitlements; sourceTree = "<group>"; };
 		9234CC5C247FDA8F009E3034 /* SampleCardKPaymentView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SampleCardKPaymentView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -72,6 +89,8 @@
 		92E0D90224AF3D6800F7846E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		92E0D90F24AF4EB000F7846E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		92E0D91124AF4EC300F7846E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A1BA8318CD1CEC01F6D40507 /* Pods-SampleAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleAppUITests.release.xcconfig"; path = "Target Support Files/Pods-SampleAppUITests/Pods-SampleAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		B616F87CB22C36459150EF5F /* Pods_SampleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D245AB93231C444600369747 /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D245AB96231C444600369747 /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 2; };
 		D245AB98231C444600369747 /* ViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -84,12 +103,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		922CA4C82652531000B40F8F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5475DF1B0B98BC23D66E0C0B /* Pods_SampleAppUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D245AB90231C444600369747 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				9291BFE92632BB0B00F6ECF1 /* ThreeDSSDK.xcframework in Frameworks */,
 				9239893C25AC461800DB1682 /* CardKit.framework in Frameworks */,
+				119E9AFF40A36E1EE3FBC691 /* Pods_SampleApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,15 +136,29 @@
 			children = (
 				547AE47F17B068B145C06A2D /* Pods-SampleApp.debug.xcconfig */,
 				747C8D3F93DB09475EB327A9 /* Pods-SampleApp.release.xcconfig */,
+				5F9672D217940747A6CA845C /* Pods-SampleAppUITests.debug.xcconfig */,
+				A1BA8318CD1CEC01F6D40507 /* Pods-SampleAppUITests.release.xcconfig */,
 			);
 			name = Pods;
 			path = ../Pods;
+			sourceTree = "<group>";
+		};
+		922CA4CC2652531000B40F8F /* SampleAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				922CA4CD2652531000B40F8F /* SampleAppUITests.m */,
+				922CA4CF2652531000B40F8F /* Info.plist */,
+				922CA4DF2652538400B40F8F /* SampleAppNewCardUITest.m */,
+			);
+			path = SampleAppUITests;
 			sourceTree = "<group>";
 		};
 		9239897125AC517000DB1682 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				9291BFE62632BAFC00F6ECF1 /* ThreeDSSDK.xcframework */,
+				B616F87CB22C36459150EF5F /* Pods_SampleApp.framework */,
+				3982329686EEDDAB5989B65E /* Pods_SampleAppUITests.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -153,6 +195,7 @@
 		D245AB8A231C444600369747 = {
 			isa = PBXGroup;
 			children = (
+				922CA4CC2652531000B40F8F /* SampleAppUITests */,
 				9239897125AC517000DB1682 /* Frameworks */,
 				9262A63C24C5CAE600042DDC /* CardKit.podspec */,
 				9234CC55247D2157009E3034 /* bindings.json */,
@@ -170,6 +213,7 @@
 			children = (
 				D245AB93231C444600369747 /* SampleApp.app */,
 				D245ABA7231C444700369747 /* SampleAppTests.xctest */,
+				922CA4CB2652531000B40F8F /* SampleAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -203,6 +247,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		922CA4CA2652531000B40F8F /* SampleAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 922CA4D42652531000B40F8F /* Build configuration list for PBXNativeTarget "SampleAppUITests" */;
+			buildPhases = (
+				66906458B7B751AB4745ACD9 /* [CP] Check Pods Manifest.lock */,
+				922CA4C72652531000B40F8F /* Sources */,
+				922CA4C82652531000B40F8F /* Frameworks */,
+				922CA4C92652531000B40F8F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				922CA4D12652531000B40F8F /* PBXTargetDependency */,
+			);
+			name = SampleAppUITests;
+			productName = SampleAppUITests;
+			productReference = 922CA4CB2652531000B40F8F /* SampleAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		D245AB92231C444600369747 /* SampleApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D245ABB0231C444700369747 /* Build configuration list for PBXNativeTarget "SampleApp" */;
@@ -211,7 +274,6 @@
 				D245AB8F231C444600369747 /* Sources */,
 				D245AB90231C444600369747 /* Frameworks */,
 				D245AB91231C444600369747 /* Resources */,
-				CF27E85EE60A2679F556878E /* [CP] Embed Pods Frameworks */,
 				923988F025AC336100DB1682 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -251,6 +313,10 @@
 				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = AnjLab;
 				TargetAttributes = {
+					922CA4CA2652531000B40F8F = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = D245AB92231C444600369747;
+					};
 					D245AB92231C444600369747 = {
 						CreatedOnToolsVersion = 10.3;
 						LastSwiftMigration = 1100;
@@ -277,11 +343,19 @@
 			targets = (
 				D245AB92231C444600369747 /* SampleApp */,
 				D245ABA6231C444700369747 /* SampleAppTests */,
+				922CA4CA2652531000B40F8F /* SampleAppUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		922CA4C92652531000B40F8F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D245AB91231C444600369747 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -304,6 +378,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		66906458B7B751AB4745ACD9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SampleAppUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		75A2228A779F293DB5F841C5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -326,26 +422,18 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CF27E85EE60A2679F556878E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SampleApp/Pods-SampleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SampleApp/Pods-SampleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SampleApp/Pods-SampleApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		922CA4C72652531000B40F8F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				922CA4E02652538400B40F8F /* SampleAppNewCardUITest.m in Sources */,
+				922CA4CE2652531000B40F8F /* SampleAppUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D245AB8F231C444600369747 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -373,6 +461,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		922CA4D12652531000B40F8F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D245AB92231C444600369747 /* SampleApp */;
+			targetProxy = 922CA4D02652531000B40F8F /* PBXContainerItemProxy */;
+		};
 		D245ABA9231C444700369747 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D245AB92231C444600369747 /* SampleApp */;
@@ -401,6 +494,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		922CA4D22652531000B40F8F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F9672D217940747A6CA845C /* Pods-SampleAppUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FD6ZML48V9;
+				INFOPLIST_FILE = SampleAppUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.anjlab.SampleAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SampleApp;
+			};
+			name = Debug;
+		};
+		922CA4D32652531000B40F8F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1BA8318CD1CEC01F6D40507 /* Pods-SampleAppUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FD6ZML48V9;
+				INFOPLIST_FILE = SampleAppUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.anjlab.SampleAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SampleApp;
+			};
+			name = Release;
+		};
 		D245ABAE231C444700369747 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -629,6 +766,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		922CA4D42652531000B40F8F /* Build configuration list for PBXNativeTarget "SampleAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				922CA4D22652531000B40F8F /* Debug */,
+				922CA4D32652531000B40F8F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D245AB8E231C444600369747 /* Build configuration list for PBXProject "SampleApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

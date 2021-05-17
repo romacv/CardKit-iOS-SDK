@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import ObjectMapper
 import ThreeDSSDK
 
 
