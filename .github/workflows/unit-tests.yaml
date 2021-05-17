@@ -23,3 +23,5 @@ jobs:
         shell: bash
       - name: Testing CardKit
         run: exec ./.github/scripts/test-card-kit.sh
+      - name: Testing SampleApp
+        run: exec ./.github/scripts/test-sample-app-ui.sh
