@@ -39,6 +39,52 @@
   XCTAssertTrue([_app.alerts.element.label isEqualToString:@"SeToken"]);
 }
 
+- (void)testRemoveBindingBySwipe {
+  [_app.cells.allElementsBoundByAccessibilityElement[5] tap];
+
+  [_app.cells.firstMatch swipeLeft];
+  
+  [_app.buttons[@"Delete"] tap];
+
+  XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Removed bindings"]);
+}
+
+- (void)testRemoveAllBindingsByOne {
+  [_app.cells.allElementsBoundByAccessibilityElement[5] tap];
+
+  [_app.cells.firstMatch swipeLeft];
+  
+  [_app.buttons[@"Delete"] tap];
+  
+  [_app.alerts.firstMatch.buttons.firstMatch tap];
+
+  [_app.cells.firstMatch swipeLeft];
+
+  [_app.buttons[@"Delete"] tap];
+  
+  [_app.alerts.firstMatch.buttons.firstMatch tap];
+  
+  XCTAssertFalse([_app.buttons[@"Edit"] isEnabled]);
+}
+
+- (void)testRemoveAllBindingsOnEditMode {
+  [_app.cells.allElementsBoundByAccessibilityElement[5] tap];
+
+  [_app.buttons[@"Edit"] tap];
+  
+  [_app.otherElements.allElementsBoundByIndex[9] tap];
+  
+  [_app.buttons[@"Delete"] tap];
+  
+  [_app.otherElements.allElementsBoundByIndex[9] tap];
+
+  [_app.buttons[@"Delete"] tap];
+  
+  [_app.buttons[@"Save"] tap];
+  
+  XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Removed bindings"]);
+}
+
 - (void)testChooseBindingAndGenerateSeToken {
   [_app.cells.allElementsBoundByAccessibilityElement[5] tap];
 
