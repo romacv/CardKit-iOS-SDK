@@ -57,7 +57,7 @@
   [_app.buttons[@"New card"] tap];
 
   [_app.textFields[@"Number"] tap];
-  [_app.textFields[@"Number"] typeText:@"22222222222222222"];
+  [_app.textFields[@"Number"] typeText:@"5777777777777775"];
 
   [_app.textFields[@"MM/YY"] tap];
   [_app.textFields[@"MM/YY"] typeText:@"1224"];
