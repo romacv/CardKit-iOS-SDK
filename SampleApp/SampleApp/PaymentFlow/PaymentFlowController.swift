@@ -52,7 +52,7 @@ class PaymentFlowController: UIViewController {
 
     _button.setTitleColor(.systemBlue, for: .normal)
     
-    CardKConfig.shared.language = "ru";
+    CardKConfig.shared.language = "en";
     CardKConfig.shared.bindingCVCRequired = true;
     CardKConfig.shared.isTestMod = true;
     CardKConfig.shared.mrBinApiURL = "https://mrbin.io/bins/display";
@@ -103,7 +103,7 @@ class PaymentFlowController: UIViewController {
         let cardPayButton = UIButton();
         cardPayButton.backgroundColor = .systemBlue;
         cardPayButton.setTitleColor(.white, for: .normal)
-        cardPayButton.setTitle("Custom title", for: .normal)
+        cardPayButton.setTitle("New card", for: .normal)
         
         let cardKPaymentView = CardKPaymentView();
         cardKPaymentView.merchantId = "merchant.cardkit";

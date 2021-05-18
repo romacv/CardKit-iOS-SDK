@@ -13,15 +13,26 @@
 @end
 
 @implementation SampleAppBinding3DSSDKTest {
-XCUIApplication *_app;
+  XCUIApplication *_app;
+  NSBundle *_bundle;
+  NSBundle *_languageBundle;
 }
 
 - (void)setUp {
   self.continueAfterFailure = NO;
 
   _app = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.anjlab.SampleApp"];
-
   [_app launch];
+  
+  _bundle = [NSBundle bundleForClass:[SampleAppBinding3DSSDKTest class]];
+
+  NSString *language = _app.accessibilityLanguage;
+  
+  if (language != nil) {
+    _languageBundle = [NSBundle bundleWithPath:[_bundle pathForResource:language ofType:@"lproj"]];
+  } else {
+    _languageBundle = _bundle;
+  }
 }
 
 - (void)tearDown {
@@ -40,6 +51,48 @@ XCUIApplication *_app;
   XCUIElement *cell = [_app.cells elementBoundByIndex:1];
 
   [cell tap];
+}
+
+- (void) _fillNewCardForm {
+  [_app.buttons[@"New card"] tap];
+
+  [_app.textFields[@"Number"] tap];
+  [_app.textFields[@"Number"] typeText:@"22222222222222222"];
+
+  [_app.textFields[@"MM/YY"] tap];
+  [_app.textFields[@"MM/YY"] typeText:@"1224"];
+
+  [_app.secureTextFields[@"CVC"] tap];
+  [_app.secureTextFields[@"CVC"] typeText:@"123"];
+
+  [_app.textFields[@"NAME"].firstMatch tap];
+  [_app.textFields[@"NAME"] typeText:@"ALEX KOROTKOV"];
+
+  [_app.buttons[@"Submit payment"] tap];
+}
+
+- (void) _runFlow {
+  [[_app.buttons elementBoundByIndex:1] tap];
+
+  [self _fillNewCardForm];
+}
+
+- (void) _openPassCodeFlowWithNewCard {
+  [_app.cells.allElementsBoundByAccessibilityElement[9] tap];
+  
+  [self _sleep];
+  
+  [self _runFlow];
+}
+
+- (void) _runFlowWithCheckBoxsWithNewCard {
+  [_app.cells.allElementsBoundByAccessibilityElement[11] tap];
+  [self _runFlow];
+}
+
+- (void) _runFlowWithRadioButtonsWithNewCard {
+  [_app.cells.allElementsBoundByAccessibilityElement[10] tap];
+  [self _runFlow];
 }
 
 - (void) _runPassCodeFlow {
@@ -183,7 +236,7 @@ XCUIApplication *_app;
   XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
 }
 
-- (void) testRunSingleSelectFlowNoSelectButtons{
+- (void) testRunSingleSelectFlowWithBindingNoSelectButtons{
   [self _runFlowWithRadioButtons];
   
   [self _sleep];
@@ -209,11 +262,25 @@ XCUIApplication *_app;
   XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
 }
 
-- (void) testRunMultiSelectFlowNoSelectCheckBoxs{
+- (void) testRunMultiSelectFlowWithBindingNoSelectCheckBoxs{
   [self _runFlowWithCheckBoxs];
   
   [self _sleep];
 
+  [self _pressConfirmButton];
+  
+  [self _sleep];
+  
+  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
+}
+
+- (void)testFillNewCardForm {
+  [self _openPassCodeFlowWithNewCard];
+  
+  [self _sleep];
+  
+  [self _fillTextFieldCorrectCode];
+  
   [self _pressConfirmButton];
   
   [self _sleep];
