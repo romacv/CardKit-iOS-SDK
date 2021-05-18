@@ -103,7 +103,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.runChallangeExpectation,
       payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
-      payment.getFinishedPaymentInfoExpectation] timeout:20];
+      payment.getFinishedPaymentInfoExpectation] timeout:30];
 }
 
 - (void)testPaymentFlowWithBinding {
@@ -213,7 +213,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
       payment.getFinishedPaymentInfoExpectation,
-      payment.sendErrorWithCardPaymentErrorExpectation] timeout:40];
+      payment.sendErrorWithCardPaymentErrorExpectation] timeout:60];
 }
 
 - (void)testCancelFlowWithBinding {

@@ -38,6 +38,21 @@
 - (void)tearDown {
 }
 
+- (void) _runFlowWithBindingWithCVC:(NSString *) cvc {
+  [[_app.buttons elementBoundByIndex:1] tap];
+  
+  [_app.cells.firstMatch tap];
+
+  XCUIElement *cellWithBindingInfo = [_app.cells elementBoundByIndex:0];
+
+  [cellWithBindingInfo tap];
+  [cellWithBindingInfo typeText:cvc];
+
+  XCUIElement *cell = [_app.cells elementBoundByIndex:1];
+
+  [cell tap];
+}
+
 - (void) _runFlowWithBinding {
   [[_app.buttons elementBoundByIndex:1] tap];
   
@@ -71,28 +86,54 @@
   [_app.buttons[@"Submit payment"] tap];
 }
 
-- (void) _runFlow {
-  [[_app.buttons elementBoundByIndex:1] tap];
+- (void) _fillNewCardFormWithIncorrectCVC {
+  [_app.buttons[@"New card"] tap];
 
-  [self _fillNewCardForm];
+  [_app.textFields[@"Number"] tap];
+  [_app.textFields[@"Number"] typeText:@"5777777777777775"];
+
+  [_app.textFields[@"MM/YY"] tap];
+  [_app.textFields[@"MM/YY"] typeText:@"1224"];
+
+  [_app.secureTextFields[@"CVC"] tap];
+  [_app.secureTextFields[@"CVC"] typeText:@"666"];
+
+  [_app.textFields[@"NAME"].firstMatch tap];
+  [_app.textFields[@"NAME"] typeText:@"ALEX KOROTKOV"];
+
+  [_app.buttons[@"Submit payment"] tap];
+}
+
+- (void) _openKindPaymentController {
+  [[_app.buttons elementBoundByIndex:1] tap];
 }
 
 - (void) _openPassCodeFlowWithNewCard {
   [_app.cells.allElementsBoundByAccessibilityElement[9] tap];
-  
-  [self _sleep];
-  
-  [self _runFlow];
+  [self _openKindPaymentController];
+  [self _fillNewCardForm];
 }
 
 - (void) _runFlowWithCheckBoxsWithNewCard {
   [_app.cells.allElementsBoundByAccessibilityElement[11] tap];
-  [self _runFlow];
+  [self _openKindPaymentController];
+  [self _fillNewCardForm];
 }
 
 - (void) _runFlowWithRadioButtonsWithNewCard {
   [_app.cells.allElementsBoundByAccessibilityElement[10] tap];
-  [self _runFlow];
+  [self _openKindPaymentController];
+  [self _fillNewCardForm];
+}
+
+- (void) _openPassCodeFlowWithIncorrectNewCard {
+  [_app.cells.allElementsBoundByAccessibilityElement[9] tap];
+  
+  [self _sleep];
+  
+  [[_app.buttons elementBoundByIndex:1] tap];
+
+  [self _fillNewCardFormWithIncorrectCVC];
 }
 
 - (void) _runPassCodeFlow {
@@ -108,6 +149,11 @@
 - (void) _runFlowWithRadioButtons {
   [_app.cells.allElementsBoundByAccessibilityElement[10] tap];
   [self _runFlowWithBinding];
+}
+
+- (void) _runPassCodeFlowWithIncorrectCVC {
+  [_app.cells.allElementsBoundByAccessibilityElement[9] tap];
+  [self _runFlowWithBindingWithCVC: @"666"];
 }
 
 - (void) _pressConfirmButton {
@@ -172,7 +218,21 @@
   XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
 }
 
-- (void)testRunThreeDSSDKFlowWithBindingWithIncorrectSMSCode {
+- (void) testRunThreeDSSDKFlowWithBindingWithIncorrectCVC {
+  [self _runPassCodeFlowWithIncorrectCVC];
+  
+  [self _sleep];
+  
+  [self _fillTextFieldCorrectCode];
+  
+  [self _pressConfirmButton];
+  
+  [self _sleep];
+  
+  XCTAssertTrue([[self _alertLable] isEqualToString:@"Error"]);
+}
+
+- (void) testRunThreeDSSDKFlowWithBindingWithIncorrectSMSCode {
   [self _runPassCodeFlow];
   
   [self _sleep];
@@ -287,4 +347,21 @@
   
   XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
 }
+
+- (void)testFillNewCardFormWithIncorrectCVC {
+  [self _openPassCodeFlowWithIncorrectNewCard];
+  
+  [self _sleep];
+  
+  [self _fillTextFieldCorrectCode];
+
+  [self _pressConfirmButton];
+
+  [self _sleep];
+  
+  XCTAssertTrue([[self _alertLable] isEqualToString:@"Error"]);
+}
+
+
+
 @end
