@@ -76,67 +76,83 @@ XCUIApplication *_app;
   [textField typeText:@"111111"];
 }
 
+- (void) _sleep:(NSTimeInterval) timeInterval {
+  [NSThread sleepForTimeInterval:timeInterval];
+}
+
+- (void) _sleep {
+  [NSThread sleepForTimeInterval:3];
+}
+
+- (NSString *) _alertLable {
+  return _app.alerts.element.label;
+}
+
+- (NSString *) _textDescrition {
+  return[_app.staticTexts elementBoundByIndex:3].label;
+}
+
 - (void) testRunThreeDSSDKFlowWithBinding {
   [self _run3DSSDKWithFirstBinding];
   
-  [NSThread sleepForTimeInterval:2];
+  [self _sleep];
   
   [self _fillTextFieldCorrectCode];
   
   [self _pressConfirmButton];
   
-  [NSThread sleepForTimeInterval:3];
+  [self _sleep];
   
-  XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Success"]);
+  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
 }
 
 - (void)testRunThreeDSSDKFlowWithBindingWithIncorrectSMSCode {
   [self _run3DSSDKWithFirstBinding];
   
-  [NSThread sleepForTimeInterval:2];
+  [self _sleep];
   
   [self _fillTextFieldIncorrectCode];
   
-  NSString *textDescrition = [_app.staticTexts elementBoundByIndex:3].label;
+  NSString *textDescritionBeforeError = [self _textDescrition];
   
-  [_app.buttons[@"Confirm"] tap];
+  [self _pressConfirmButton];
   
-  [NSThread sleepForTimeInterval:3];
+  [self _sleep];
   
-  XCTAssertFalse([textDescrition isEqualToString:[_app.staticTexts elementBoundByIndex:3].label]);
+  XCTAssertFalse([textDescritionBeforeError isEqualToString:[self _textDescrition]]);
 }
 
 - (void) testRunThreeDSSDKFlowWithBindingWithFillIncorrectCodeUntilCancelFlow {
   [self _run3DSSDKWithFirstBinding];
   
-  [NSThread sleepForTimeInterval:2];
+  [self _sleep];
   
   for (NSInteger i = 0; i < 3; i++) {
     [self _fillTextFieldIncorrectCode];
-    [_app.buttons[@"Confirm"] tap];
-    [NSThread sleepForTimeInterval:3];
+    [self _pressConfirmButton];
+    [self _sleep];
   }
   
-  XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Cancel"]);
+  XCTAssertTrue([[self _alertLable] isEqualToString:@"Cancel"]);
 }
 
 - (void) testRunResendMessageFlow {
   [self _run3DSSDKWithFirstBinding];
   
-  [NSThread sleepForTimeInterval:2];
+  [self _sleep];
   
   [self _fillTextFieldIncorrectCode];
   
   [self _pressResendSMSButton];
   
-  [NSThread sleepForTimeInterval:3];
+  [self _sleep];
   
   [self _fillTextFieldResentCode];
   
   [self _pressConfirmButton];
   
-  [NSThread sleepForTimeInterval:3];
+  [self _sleep];
   
-  XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Success"]);
+  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
 }
 @end
