@@ -27,9 +27,7 @@ XCUIApplication *_app;
 - (void)tearDown {
 }
 
-- (void) _run3DSSDKWithFirstBinding {
-  [_app.cells.allElementsBoundByAccessibilityElement[9] tap];
-
+- (void) _runFlowWithBinding {
   [[_app.buttons elementBoundByIndex:1] tap];
   
   [_app.cells.firstMatch tap];
@@ -42,6 +40,21 @@ XCUIApplication *_app;
   XCUIElement *cell = [_app.cells elementBoundByIndex:1];
 
   [cell tap];
+}
+
+- (void) _runPassCodeFlow {
+  [_app.cells.allElementsBoundByAccessibilityElement[9] tap];
+  [self _runFlowWithBinding];
+}
+
+- (void) _runFlowWithCheckBoxs {
+  [_app.cells.allElementsBoundByAccessibilityElement[11] tap];
+  [self _runFlowWithBinding];
+}
+
+- (void) _runFlowWithRadioButtons {
+  [_app.cells.allElementsBoundByAccessibilityElement[10] tap];
+  [self _runFlowWithBinding];
 }
 
 - (void) _pressConfirmButton {
@@ -93,7 +106,7 @@ XCUIApplication *_app;
 }
 
 - (void) testRunThreeDSSDKFlowWithBinding {
-  [self _run3DSSDKWithFirstBinding];
+  [self _runPassCodeFlow];
   
   [self _sleep];
   
@@ -107,7 +120,7 @@ XCUIApplication *_app;
 }
 
 - (void)testRunThreeDSSDKFlowWithBindingWithIncorrectSMSCode {
-  [self _run3DSSDKWithFirstBinding];
+  [self _runPassCodeFlow];
   
   [self _sleep];
   
@@ -123,7 +136,7 @@ XCUIApplication *_app;
 }
 
 - (void) testRunThreeDSSDKFlowWithBindingWithFillIncorrectCodeUntilCancelFlow {
-  [self _run3DSSDKWithFirstBinding];
+  [self _runPassCodeFlow];
   
   [self _sleep];
   
@@ -137,7 +150,7 @@ XCUIApplication *_app;
 }
 
 - (void) testRunResendMessageFlow {
-  [self _run3DSSDKWithFirstBinding];
+  [self _runPassCodeFlow];
   
   [self _sleep];
   
@@ -149,6 +162,58 @@ XCUIApplication *_app;
   
   [self _fillTextFieldResentCode];
   
+  [self _pressConfirmButton];
+  
+  [self _sleep];
+  
+  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
+}
+
+- (void) testRunSingleSelectFlowWithBinding{
+  [self _runFlowWithRadioButtons];
+  
+  [self _sleep];
+
+  [[_app.otherElements elementBoundByIndex:10] tap];
+
+  [self _pressConfirmButton];
+  
+  [self _sleep];
+  
+  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
+}
+
+- (void) testRunSingleSelectFlowNoSelectButtons{
+  [self _runFlowWithRadioButtons];
+  
+  [self _sleep];
+
+  [self _pressConfirmButton];
+  
+  [self _sleep];
+  
+  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
+}
+
+- (void) testRunMultiSelectFlowWithBinding{
+  [self _runFlowWithCheckBoxs];
+  
+  [self _sleep];
+
+  [[_app.otherElements elementBoundByIndex:10] tap];
+
+  [self _pressConfirmButton];
+  
+  [self _sleep];
+  
+  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
+}
+
+- (void) testRunMultiSelectFlowNoSelectCheckBoxs{
+  [self _runFlowWithCheckBoxs];
+  
+  [self _sleep];
+
   [self _pressConfirmButton];
   
   [self _sleep];
