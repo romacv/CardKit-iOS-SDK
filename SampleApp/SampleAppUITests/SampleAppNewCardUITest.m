@@ -180,6 +180,32 @@
   XCTAssertTrue([errorMassage.label isEqualToString: @"The card holder is incorrect"]);
 }
 
+- (void)testFillNewCardAndMarkSaveCard {
+    [_app.cells.allElementsBoundByAccessibilityElement[4] tap];
+    
+    [_app.buttons[@"New card"] tap];
+
+    [_app.textFields[@"Number"] tap];
+    [_app.textFields[@"Number"] typeText:@"22222222222222222"];
+    
+    [_app.textFields[@"MM/YY"] tap];
+    [_app.textFields[@"MM/YY"] typeText:@"1224"];
+    
+    [_app.secureTextFields[@"CVC"] tap];
+    [_app.secureTextFields[@"CVC"] typeText:@"123"];
+    
+    [_app.textFields[@"NAME"].firstMatch tap];
+    [_app.textFields[@"NAME"] typeText:@"ALEX KOROTKOV"];
+    
+    [_app.switches.firstMatch tap];
+    
+    [_app.buttons[@"Custom purchase button"] tap];
+    
+    XCUIElement *element = [_app.alerts.element.staticTexts elementBoundByIndex:1];
+    
+    XCTAssertTrue([element.label containsString:@"allowSaveCard = true"]);
+}
+
 
 
 @end
