@@ -26,6 +26,8 @@ struct SectionItem {
     case systemTheme
     case customTheme
     case navLightTheme
+    case navNewCardWithoutSaveCard
+    case navNewCardWithoutCardholder
     case navDarkTheme
     case navSystemTheme
     case language
@@ -60,10 +62,20 @@ class ViewController: UITableViewController {
         MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAws0r6I8emCsURXfuQcU2c9mwUlOiDjuCZ/f+EdadA4vq/kYt3w6kC5TUW97Fm/HTikkHd0bt8wJvOzz3T0O4so+vBaC0xjE8JuU1eCd+zUX/plw1REVVii1RNh9gMWW1fRNu6KDNSZyfftY2BTcP1dbE1itpXMGUPW+TOk3U9WP4vf7pL/xIHxCsHzb0zgmwShm3D46w7dPW+HO3PEHakSWV9bInkchOvh/vJBiRw6iadAjtNJ4+EkgNjHwZJDuo/0bQV+r9jeOe+O1aXLYK/s1UjRs5T4uGeIzmdLUKnu4eTOQ16P6BHWAjyqPnXliYIKfi+FjZxyWEAlYUq+CRqQIDAQAB-----END PUBLIC KEY-----
   """
   
+  var allowSaveBinding = true
+  var isSaveBinding = false
+  var displayCardholderField = true
+  
   @objc func _close(sender:UIButton){
     self.navigationController?.dismiss(animated: true, completion: nil)
   }
 
+  func _setDefaultParams() {
+    allowSaveBinding = true
+    isSaveBinding = false
+    displayCardholderField = true
+  }
+  
   func _openController() {
     CardKConfig.shared.language = "";
     CardKConfig.shared.theme = CardKTheme.light();
@@ -244,6 +256,51 @@ class ViewController: UITableViewController {
     self.navigationController?.pushViewController(createdUiController, animated: true);
   }
   
+  func _openNewCardFormWithoutSaveCard() {
+    allowSaveBinding = false;
+    
+    CardKConfig.shared.bindings = [];
+    CardKConfig.shared.theme = CardKTheme.light();
+    CardKConfig.shared.language = "";
+    CardKConfig.shared.isTestMod = true;
+    CardKConfig.shared.mdOrder = "mdOrder";
+    CardKConfig.shared.mrBinApiURL = "https://mrbin.io/bins/display";
+    CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
+    CardKConfig.shared.bindingsSectionTitle = "Your cards";
+    CardKConfig.shared.isEditBindingListMode = false;
+    
+    
+    let controller = CardKViewController();
+    controller.cKitDelegate = self
+
+    let createdUiController = CardKViewController.create(self, controller: controller);
+    
+    self.navigationController?.pushViewController(createdUiController, animated: true);
+  }
+  
+  func _openNewCardFormWithoutCardholder() {
+    displayCardholderField = false;
+    isSaveBinding = true;
+    
+    CardKConfig.shared.bindings = [];
+    CardKConfig.shared.theme = CardKTheme.light();
+    CardKConfig.shared.language = "";
+    CardKConfig.shared.isTestMod = true;
+    CardKConfig.shared.mdOrder = "mdOrder";
+    CardKConfig.shared.mrBinApiURL = "https://mrbin.io/bins/display";
+    CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
+    CardKConfig.shared.bindingsSectionTitle = "Your cards";
+    CardKConfig.shared.isEditBindingListMode = false;
+    
+    let controller = CardKViewController();
+    controller.cKitDelegate = self
+
+    let createdUiController = CardKViewController.create(self, controller: controller);
+    
+    self.navigationController?.pushViewController(createdUiController, animated: true);
+  }
+  
+  
   func _openEditBindingsMode() {
     CardKConfig.shared.theme = CardKTheme.light();
     CardKConfig.shared.language = "";
@@ -369,6 +426,8 @@ class ViewController: UITableViewController {
   }
   
   func _callFunctionByKindOfButton(kind: SectionItem.Kind, language: String) {
+    _setDefaultParams();
+
     switch kind {
       case .lightTheme: _openController()
       case .darkTheme: _openDark()
@@ -376,6 +435,8 @@ class ViewController: UITableViewController {
       case .customTheme: _openCustomTheme()
       case .navLightTheme: _openLightUINavigation()
       case .editMode: _openEditBindingsMode()
+      case .navNewCardWithoutSaveCard: _openNewCardFormWithoutSaveCard()
+      case .navNewCardWithoutCardholder: _openNewCardFormWithoutCardholder()
       case .navDarkTheme: _openDarkUINavigation()
       case .navSystemTheme: _openSystemUINavigation()
       case .language: _openWitchChooseLanguage(language: language)
@@ -401,7 +462,9 @@ class ViewController: UITableViewController {
       SectionItem(title: "Open Light with bindings", kind: .navLightTheme, isShowChevron: true, language: ""),
       SectionItem(title: "Light theme with edit mode", kind: .editMode, isShowChevron: true, language: ""),
       SectionItem(title: "Dark theme", kind: .navDarkTheme, isShowChevron: true, language: ""),
-      SectionItem(title: "System theme", kind: .navSystemTheme, isShowChevron: true, language: "")
+      SectionItem(title: "System theme", kind: .navSystemTheme, isShowChevron: true, language: ""),
+      SectionItem(title: "The New Card form without save card", kind: .navNewCardWithoutSaveCard, isShowChevron: true, language: ""),
+      SectionItem(title: "The New Card form without card holder", kind: .navNewCardWithoutCardholder, isShowChevron: true, language: "")
     ]),
     
     Section(title: "CardKPaymentView", items: [
@@ -546,9 +609,9 @@ extension ViewController: CardKDelegate {
   func didLoad(_ controller: CardKViewController) {
     controller.allowedCardScaner = CardIOUtilities.canReadCardWithCamera();
     controller.purchaseButtonTitle = "Custom purchase button";
-    controller.allowSaveBinding = true;
-    controller.isSaveBinding = false;
-    controller.displayCardHolderField = true;
+    controller.allowSaveBinding = allowSaveBinding;
+    controller.isSaveBinding = isSaveBinding;
+    controller.displayCardHolderField = displayCardholderField;
   }
   
   func cardKitViewController(_ controller: UIViewController, didCreateSeToken seToken: String, allowSaveBinding: Bool, isNewCard: Bool) {
