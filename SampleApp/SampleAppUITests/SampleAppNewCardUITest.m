@@ -206,6 +206,20 @@
     XCTAssertTrue([element.label containsString:@"allowSaveCard = true"]);
 }
 
+- (void) testStaticTextWichAreSetInClientApp {
+    [_app.cells.allElementsBoundByAccessibilityElement[4] tap];
+    
+    BOOL isExistBindingSectionText = _app.staticTexts[@"Your cards"].exists;
+    BOOL isExistNewCardButtonText = _app.buttons[@"New card"].exists;
+    
+    [_app.buttons[@"New card"] tap];
+    
+    BOOL isExistPurchaseButtonText = _app.buttons[@"Custom purchase button"].exists;
+    
+    XCTAssertTrue(isExistBindingSectionText);
+    XCTAssertTrue(isExistNewCardButtonText);
+    XCTAssertTrue(isExistPurchaseButtonText);
+}
 
 
 @end
