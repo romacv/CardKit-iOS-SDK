@@ -109,25 +109,25 @@
 }
 
 - (void) _openPassCodeFlowWithNewCard {
-  [_app.cells.allElementsBoundByAccessibilityElement[9] tap];
-  [self _openKindPaymentController];
-  [self _fillNewCardForm];
-}
-
-- (void) _runFlowWithCheckBoxsWithNewCard {
   [_app.cells.allElementsBoundByAccessibilityElement[11] tap];
   [self _openKindPaymentController];
   [self _fillNewCardForm];
 }
 
+- (void) _runFlowWithCheckBoxsWithNewCard {
+  [_app.cells.allElementsBoundByAccessibilityElement[13] tap];
+  [self _openKindPaymentController];
+  [self _fillNewCardForm];
+}
+
 - (void) _runFlowWithRadioButtonsWithNewCard {
-  [_app.cells.allElementsBoundByAccessibilityElement[10] tap];
+  [_app.cells.allElementsBoundByAccessibilityElement[12] tap];
   [self _openKindPaymentController];
   [self _fillNewCardForm];
 }
 
 - (void) _openPassCodeFlowWithIncorrectNewCard {
-  [_app.cells.allElementsBoundByAccessibilityElement[9] tap];
+  [_app.cells.allElementsBoundByAccessibilityElement[11] tap];
   
   [self _sleep];
   
@@ -137,22 +137,22 @@
 }
 
 - (void) _runPassCodeFlow {
-  [_app.cells.allElementsBoundByAccessibilityElement[9] tap];
-  [self _runFlowWithBinding];
-}
-
-- (void) _runFlowWithCheckBoxs {
   [_app.cells.allElementsBoundByAccessibilityElement[11] tap];
   [self _runFlowWithBinding];
 }
 
+- (void) _runFlowWithCheckBoxs {
+  [_app.cells.allElementsBoundByAccessibilityElement[13] tap];
+  [self _runFlowWithBinding];
+}
+
 - (void) _runFlowWithRadioButtons {
-  [_app.cells.allElementsBoundByAccessibilityElement[10] tap];
+  [_app.cells.allElementsBoundByAccessibilityElement[12] tap];
   [self _runFlowWithBinding];
 }
 
 - (void) _runPassCodeFlowWithIncorrectCVC {
-  [_app.cells.allElementsBoundByAccessibilityElement[9] tap];
+  [_app.cells.allElementsBoundByAccessibilityElement[11] tap];
   [self _runFlowWithBindingWithCVC: @"666"];
 }
 
