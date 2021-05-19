@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface SampleAppBinding3DSSDKTest : XCTestCase
+@interface SampleApp3DSSDKTest : XCTestCase
 
 @end
 
-@implementation SampleAppBinding3DSSDKTest {
+@implementation SampleApp3DSSDKTest {
   XCUIApplication *_app;
   NSBundle *_bundle;
   NSBundle *_languageBundle;
@@ -24,7 +24,7 @@
   _app = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.anjlab.SampleApp"];
   [_app launch];
   
-  _bundle = [NSBundle bundleForClass:[SampleAppBinding3DSSDKTest class]];
+  _bundle = [NSBundle bundleForClass:[SampleApp3DSSDKTest class]];
 
   NSString *language = _app.accessibilityLanguage;
   

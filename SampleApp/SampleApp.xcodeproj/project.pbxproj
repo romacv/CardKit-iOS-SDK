@@ -13,7 +13,7 @@
 		922CA4E02652538400B40F8F /* SampleAppNewCardUITest.m in Sources */ = {isa = PBXBuildFile; fileRef = 922CA4DF2652538400B40F8F /* SampleAppNewCardUITest.m */; };
 		922CA526265262E200B40F8F /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922CA525265262E200B40F8F /* ThreeDSSDK.xcframework */; };
 		922CA527265262E200B40F8F /* ThreeDSSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 922CA525265262E200B40F8F /* ThreeDSSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		922CA558265294BE00B40F8F /* SampleAppBinding3DSSDKTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 922CA557265294BE00B40F8F /* SampleAppBinding3DSSDKTest.m */; };
+		922CA558265294BE00B40F8F /* SampleApp3DSSDKTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 922CA557265294BE00B40F8F /* SampleApp3DSSDKTest.m */; };
 		9234CC56247D2157009E3034 /* bindings.json in Resources */ = {isa = PBXBuildFile; fileRef = 9234CC55247D2157009E3034 /* bindings.json */; };
 		9234CC5D247FDA8F009E3034 /* SampleCardKPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234CC5C247FDA8F009E3034 /* SampleCardKPaymentView.swift */; };
 		9239893C25AC461800DB1682 /* CardKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9239890A25AC348100DB1682 /* CardKit.framework */; };
@@ -75,7 +75,7 @@
 		922CA4CF2652531000B40F8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		922CA4DF2652538400B40F8F /* SampleAppNewCardUITest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleAppNewCardUITest.m; sourceTree = "<group>"; };
 		922CA525265262E200B40F8F /* ThreeDSSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ThreeDSSDK.xcframework; path = ../../CardKit/ThreeDSSDK.xcframework; sourceTree = "<group>"; };
-		922CA557265294BE00B40F8F /* SampleAppBinding3DSSDKTest.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = SampleAppBinding3DSSDKTest.m; sourceTree = "<group>"; tabWidth = 2; };
+		922CA557265294BE00B40F8F /* SampleApp3DSSDKTest.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = SampleApp3DSSDKTest.m; sourceTree = "<group>"; tabWidth = 2; };
 		9234CC55247D2157009E3034 /* bindings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bindings.json; sourceTree = "<group>"; };
 		9234CC57247E90AB009E3034 /* SampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SampleApp.entitlements; sourceTree = "<group>"; };
 		9234CC5C247FDA8F009E3034 /* SampleCardKPaymentView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SampleCardKPaymentView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -151,7 +151,7 @@
 				922CA4CD2652531000B40F8F /* SampleAppUITests.m */,
 				922CA4CF2652531000B40F8F /* Info.plist */,
 				922CA4DF2652538400B40F8F /* SampleAppNewCardUITest.m */,
-				922CA557265294BE00B40F8F /* SampleAppBinding3DSSDKTest.m */,
+				922CA557265294BE00B40F8F /* SampleApp3DSSDKTest.m */,
 			);
 			path = SampleAppUITests;
 			sourceTree = "<group>";
@@ -433,7 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				922CA4E02652538400B40F8F /* SampleAppNewCardUITest.m in Sources */,
-				922CA558265294BE00B40F8F /* SampleAppBinding3DSSDKTest.m in Sources */,
+				922CA558265294BE00B40F8F /* SampleApp3DSSDKTest.m in Sources */,
 				922CA4CE2652531000B40F8F /* SampleAppUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
