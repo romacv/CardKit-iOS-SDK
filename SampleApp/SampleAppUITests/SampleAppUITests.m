@@ -90,6 +90,8 @@
 
   [_app.cells.firstMatch tap];
   
+  XCTAssertFalse(_app.textFields[@"CVC"].exists);
+  
   XCUIElement *cell = [_app.cells elementBoundByIndex:1];
   
   [cell tap];
