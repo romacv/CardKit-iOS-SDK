@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 #import "CardKViewController.h"
-#import "CardKPaymentInfo.h"
 #import "CardKPaymentError.h"
 #import "RequestParams.h"
 

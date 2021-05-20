@@ -35,8 +35,6 @@
 		9234CC5A247FBCDD009E3034 /* CardKPaymentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9234CC58247FBCDD009E3034 /* CardKPaymentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9234CC5B247FBCDD009E3034 /* CardKPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9234CC59247FBCDD009E3034 /* CardKPaymentView.m */; };
 		92365727260E073000913228 /* CardKPaymentFlowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 92365725260E073000913228 /* CardKPaymentFlowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9236573A260E0E0200913228 /* API.h in Headers */ = {isa = PBXBuildFile; fileRef = 92365738260E0E0200913228 /* API.h */; };
-		9236573B260E0E0200913228 /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 92365739260E0E0200913228 /* API.m */; };
 		924290D4255D5FF600378C68 /* CKCPubKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9007255D202E001E1ECF /* CKCPubKey.m */; };
 		924290D5255D5FF600378C68 /* CKCTokenResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9023255D2315001E1ECF /* CKCTokenResult.m */; };
 		924290D6255D5FF600378C68 /* CKCBindingParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD903F255D24B4001E1ECF /* CKCBindingParams.m */; };
@@ -67,8 +65,7 @@
 		929BA32525591CFC00AB0526 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 929BA32325591CFC00AB0526 /* TextField.m */; };
 		92A1461A23435C6B002FBCC3 /* CardKConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A1461823435C6B002FBCC3 /* CardKConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		92A1461B23435C6B002FBCC3 /* CardKConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 92A1461923435C6B002FBCC3 /* CardKConfig.m */; };
-		92CB792D2616FCB600BE41E4 /* CardKPaymentInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CB792B2616FCB600BE41E4 /* CardKPaymentInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		92CB792E2616FCB600BE41E4 /* CardKPaymentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CB792C2616FCB600BE41E4 /* CardKPaymentInfo.m */; };
+		92B718AD26569B5200D33E83 /* CardKValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9234CC4D247BC315009E3034 /* CardKValidation.m */; };
 		92CB794E2617001D00BE41E4 /* CardKPaymentError.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CB794C2617001D00BE41E4 /* CardKPaymentError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		92CB794F2617001D00BE41E4 /* CardKPaymentError.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CB794D2617001D00BE41E4 /* CardKPaymentError.m */; };
 		92D85548255D63DA0002936B /* CardKitCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D85547255D63DA0002936B /* CardKitCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -143,7 +140,7 @@
 		920072D82615E43F0014F864 /* CardKPaymentSessionStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKPaymentSessionStatus.m; sourceTree = "<group>"; };
 		920312C2255D6562006FBED7 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		920480E8261B034F00026C1F /* CardKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		920480EA261B034F00026C1F /* CardKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKitTests.m; sourceTree = "<group>"; };
+		920480EA261B034F00026C1F /* CardKitTests.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKitTests.m; sourceTree = "<group>"; tabWidth = 2; };
 		920480EC261B034F00026C1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92048132261B04FB00026C1F /* CardKPaymentFlowControllerTest.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKPaymentFlowControllerTest.m; sourceTree = "<group>"; tabWidth = 2; };
 		9204814E261B056900026C1F /* PaymentFlowController.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = PaymentFlowController.m; sourceTree = "<group>"; tabWidth = 2; };
@@ -165,8 +162,6 @@
 		9234CC59247FBCDD009E3034 /* CardKPaymentView.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKPaymentView.m; sourceTree = "<group>"; tabWidth = 2; };
 		92365725260E073000913228 /* CardKPaymentFlowController.h */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.h; path = CardKPaymentFlowController.h; sourceTree = "<group>"; tabWidth = 2; };
 		92365726260E073000913228 /* CardKPaymentFlowController.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = CardKPaymentFlowController.m; sourceTree = "<group>"; tabWidth = 2; wrapsLines = 0; };
-		92365738260E0E0200913228 /* API.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = API.h; sourceTree = "<group>"; };
-		92365739260E0E0200913228 /* API.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = API.m; sourceTree = "<group>"; };
 		924290B7255D5FE200378C68 /* CardKitCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CardKitCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9248868C251885FB00CA81D5 /* SeTokenGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeTokenGenerator.h; sourceTree = "<group>"; };
 		9248868D251885FB00CA81D5 /* SeTokenGenerator.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = SeTokenGenerator.m; sourceTree = "<group>"; tabWidth = 2; };
@@ -204,8 +199,6 @@
 		92BD9033255D241D001E1ECF /* CKCCardParams.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CKCCardParams.m; sourceTree = "<group>"; };
 		92BD903E255D24B4001E1ECF /* CKCBindingParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKCBindingParams.h; sourceTree = "<group>"; };
 		92BD903F255D24B4001E1ECF /* CKCBindingParams.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CKCBindingParams.m; sourceTree = "<group>"; };
-		92CB792B2616FCB600BE41E4 /* CardKPaymentInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKPaymentInfo.h; sourceTree = "<group>"; };
-		92CB792C2616FCB600BE41E4 /* CardKPaymentInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKPaymentInfo.m; sourceTree = "<group>"; };
 		92CB794C2617001D00BE41E4 /* CardKPaymentError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardKPaymentError.h; sourceTree = "<group>"; };
 		92CB794D2617001D00BE41E4 /* CardKPaymentError.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardKPaymentError.m; sourceTree = "<group>"; };
 		92D85547255D63DA0002936B /* CardKitCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardKitCore.h; sourceTree = "<group>"; };
@@ -287,8 +280,6 @@
 				92365726260E073000913228 /* CardKPaymentFlowController.m */,
 				920072D72615E43F0014F864 /* CardKPaymentSessionStatus.h */,
 				920072D82615E43F0014F864 /* CardKPaymentSessionStatus.m */,
-				92CB792B2616FCB600BE41E4 /* CardKPaymentInfo.h */,
-				92CB792C2616FCB600BE41E4 /* CardKPaymentInfo.m */,
 				92CB794C2617001D00BE41E4 /* CardKPaymentError.h */,
 				92CB794D2617001D00BE41E4 /* CardKPaymentError.m */,
 				922FE327261DFAAC005EE6A3 /* TransactionManager.swift */,
@@ -444,8 +435,6 @@
 				9234CC4D247BC315009E3034 /* CardKValidation.m */,
 				9234CC58247FBCDD009E3034 /* CardKPaymentView.h */,
 				9234CC59247FBCDD009E3034 /* CardKPaymentView.m */,
-				92365738260E0E0200913228 /* API.h */,
-				92365739260E0E0200913228 /* API.m */,
 			);
 			path = CardKit;
 			sourceTree = "<group>";
@@ -476,7 +465,6 @@
 				9234CC4E247BC315009E3034 /* CardKValidation.h in Headers */,
 				92E247F22475481700C2EF6C /* CardKBinding.h in Headers */,
 				92365727260E073000913228 /* CardKPaymentFlowController.h in Headers */,
-				92CB792D2616FCB600BE41E4 /* CardKPaymentInfo.h in Headers */,
 				D245ABC8231C529D00369747 /* CardKTheme.h in Headers */,
 				92985C89246BEE1E009B7392 /* CardKKindPaymentViewController.h in Headers */,
 				D2D0B367232122620007B3B9 /* PaymentSystemProvider.h in Headers */,
@@ -492,7 +480,6 @@
 				D269080D231FA894001CB863 /* CardKTextField.h in Headers */,
 				D2D0B35E2320E3AC0007B3B9 /* CardKBankLogoView.h in Headers */,
 				922FE33D261ED515005EE6A3 /* ARes.h in Headers */,
-				9236573A260E0E0200913228 /* API.h in Headers */,
 				D245ABBC231C449F00369747 /* CardKViewController.h in Headers */,
 				92CB794E2617001D00BE41E4 /* CardKPaymentError.h in Headers */,
 				D245AB4A231C435E00369747 /* CardKit.h in Headers */,
@@ -707,6 +694,7 @@
 				9204814F261B056900026C1F /* PaymentFlowController.m in Sources */,
 				922FE3A7261EF221005EE6A3 /* RequestParams.m in Sources */,
 				920480EB261B034F00026C1F /* CardKitTests.m in Sources */,
+				92B718AD26569B5200D33E83 /* CardKValidation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -750,7 +738,6 @@
 				92CB794F2617001D00BE41E4 /* CardKPaymentError.m in Sources */,
 				9291BF9626315D3B00F6ECF1 /* CKCToken.m in Sources */,
 				92985C86246A96F4009B7392 /* CardKSwitchView.m in Sources */,
-				9236573B260E0E0200913228 /* API.m in Sources */,
 				D2D0B35F2320E3AC0007B3B9 /* CardKBankLogoView.m in Sources */,
 				9219F466232B8EF100841B98 /* CardKFooterView.m in Sources */,
 				92E247F7247676A900C2EF6C /* ConfirmChoosedCard.m in Sources */,
@@ -760,7 +747,6 @@
 				92985C8A246BEE1E009B7392 /* CardKKindPaymentViewController.m in Sources */,
 				D2690812231FB000001CB863 /* CardKCardView.m in Sources */,
 				9248868F251885FB00CA81D5 /* SeTokenGenerator.m in Sources */,
-				92CB792E2616FCB600BE41E4 /* CardKPaymentInfo.m in Sources */,
 				9245F8D125B19A0D0065AF9E /* Luhn.m in Sources */,
 				920072DA2615E43F0014F864 /* CardKPaymentSessionStatus.m in Sources */,
 				922FE3A6261EF220005EE6A3 /* RequestParams.m in Sources */,
