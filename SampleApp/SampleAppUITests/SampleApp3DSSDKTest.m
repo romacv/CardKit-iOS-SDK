@@ -41,6 +41,8 @@
 - (void) _runFlowWithBindingWithCVC:(NSString *) cvc {
   [[_app.buttons elementBoundByIndex:1] tap];
   
+  [self _sleep];
+  
   [_app.cells.firstMatch tap];
 
   XCUIElement *cellWithBindingInfo = [_app.cells elementBoundByIndex:0];
