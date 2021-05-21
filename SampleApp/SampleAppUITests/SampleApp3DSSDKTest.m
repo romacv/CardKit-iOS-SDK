@@ -58,6 +58,8 @@
 - (void) _runFlowWithBinding {
   [[_app.buttons elementBoundByIndex:1] tap];
   
+  [self _sleep];
+  
   [_app.cells.firstMatch tap];
 
   XCUIElement *cellWithBindingInfo = [_app.cells elementBoundByIndex:0];
@@ -113,18 +115,21 @@
 - (void) _openPassCodeFlowWithNewCard {
   [_app.cells.allElementsBoundByAccessibilityElement[11] tap];
   [self _openKindPaymentController];
+  [self _sleep];
   [self _fillNewCardForm];
 }
 
 - (void) _runFlowWithCheckBoxsWithNewCard {
   [_app.cells.allElementsBoundByAccessibilityElement[13] tap];
   [self _openKindPaymentController];
+  [self _sleep];
   [self _fillNewCardForm];
 }
 
 - (void) _runFlowWithRadioButtonsWithNewCard {
   [_app.cells.allElementsBoundByAccessibilityElement[12] tap];
   [self _openKindPaymentController];
+  [self _sleep];
   [self _fillNewCardForm];
 }
 
