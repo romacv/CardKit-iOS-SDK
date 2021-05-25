@@ -590,18 +590,19 @@
   }
 
   - (void)_applePay:(NSString *) paymentToken {
-    NSString *mdOrder = [NSString stringWithFormat:@"%@%@", @"MDORDER=", CardKConfig.shared.mdOrder];
-    NSString *paymentTokenParameerr = [NSString stringWithFormat:@"%@%@", @"paymentToken=", paymentToken];
-    
-    NSString *parameters = [self _joinParametersInString:@[mdOrder, paymentTokenParameerr]];
+    NSDictionary *jsonBodyDict = @{@"mdOrder":CardKConfig.shared.mdOrder, @"paymentToken":paymentToken};
+    NSData *jsonBodyData = [NSJSONSerialization dataWithJSONObject:jsonBodyDict options:kNilOptions error:nil];
 
-    NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/applepay/payment.do"];
+    NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/applepay/paymentOrder.do"];
 
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:URL]];
 
     request.HTTPMethod = @"POST";
-    [request setHTTPBody:postData];
+    
+    [request setHTTPBody:jsonBodyData];
+    
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
 
     NSURLSession *session = [NSURLSession sharedSession];
 
@@ -618,11 +619,12 @@
       NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
 
       BOOL success = (BOOL)[responseDictionary[@"success"] boolValue];
+      NSString *message = responseDictionary[@"error"][@"description"];
       
       if (success) {
         [self _getFinishSessionStatusRequest];
       } else {
-        self->_cardKPaymentError.message = @"Ошибка регистрации apple pay токена";
+        self->_cardKPaymentError.message = message;
         [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
       }
     }];
@@ -637,9 +639,9 @@
 
       return;
     }
-    
+  
     NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:pKPayment.token.paymentData options:kNilOptions error:nil];
-
+    
     if (dict == nil) {
       self->_cardKPaymentError.message = @"Оплата applepay завершилась не успешно";
       [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
@@ -647,7 +649,11 @@
       return;
     }
     
-    [self _applePay:dict[@"data"]];
+    NSData * jsonData = [NSJSONSerialization  dataWithJSONObject:dict options:0 error:nil];
+   
+    NSString *base64Encoded = [jsonData base64EncodedStringWithOptions:0];
+
+    [self _applePay: base64Encoded];
   }
 
   - (void)cardKitViewController:(nonnull UIViewController *)controller didCreateSeToken:(nonnull NSString *)seToken allowSaveBinding:(BOOL)allowSaveBinding isNewCard:(BOOL)isNewCard {
