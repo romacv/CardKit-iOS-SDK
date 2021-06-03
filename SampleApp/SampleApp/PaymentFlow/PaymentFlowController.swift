@@ -90,6 +90,8 @@ class PaymentFlowController: UIViewController {
       PaymentFlowController.requestParams.orderId = data.orderId
       CardKConfig.shared.mdOrder = data.orderId ?? ""
       
+      let amountDecimal = NSDecimalNumber (string: PaymentFlowController.requestParams.amount)
+      
       DispatchQueue.main.async {
         let paymentRequest = PKPaymentRequest();
         paymentRequest.currencyCode = "RUB";
@@ -97,7 +99,7 @@ class PaymentFlowController: UIViewController {
         paymentRequest.merchantCapabilities = PKMerchantCapability.capability3DS
         paymentRequest.supportedNetworks = [.visa, .amex, .masterCard];
         paymentRequest.paymentSummaryItems = [
-          PKPaymentSummaryItem(label: "Коробка", amount: 0.1)
+          PKPaymentSummaryItem(label: "Коробка", amount: amountDecimal)
         ];
         
         let cardPayButton = UIButton();
