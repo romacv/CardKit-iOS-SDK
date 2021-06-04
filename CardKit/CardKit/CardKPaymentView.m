@@ -19,6 +19,7 @@
   PKPaymentAuthorizationViewController *_viewController;
   NSDictionary *_paymentData;
   PKPayment *_pKPayment;
+  BOOL _verticalButtonsRendered;
 }
 
 - (instancetype)initWithDelegate:(id<CardKDelegate>)cKitDelegate {
@@ -28,6 +29,7 @@
 
     _cardPaybutton =  [UIButton buttonWithType:UIButtonTypeSystem];
     _cardPaybutton.layer.cornerRadius = 4;
+    _cardPaybutton.tag = 20000;
     [_cardPaybutton setBackgroundColor: UIColor.whiteColor];
     [_cardPaybutton setTitleColor: UIColor.blackColor forState:UIControlStateNormal];
     _cardPaybutton.titleLabel.minimumScaleFactor = 0.5;
@@ -48,14 +50,14 @@
      }
     
     [_cardPaybutton
-      setTitle: NSLocalizedStringFromTableInBundle(@"payByCard", nil, _languageBundle,  @"Pay by card")
+      setTitle: NSLocalizedStringFromTableInBundle(@"newCard", nil, _languageBundle,  @"New card")
       forState: UIControlStateNormal];
     
     [cKitDelegate willShowPaymentView:self];
     
     _applePayButton = [[PKPaymentButton alloc] initWithPaymentButtonType: _paymentButtonType paymentButtonStyle: _paymentButtonStyle];
     
-    [_applePayButton addTarget:self action:@selector(onApplePayButtonPressed:)
+    [_applePayButton addTarget:self action:@selector(_applePayButtonPressed:)
     forControlEvents:UIControlEventTouchUpInside];
     [self addSubview: _applePayButton];
     
@@ -69,6 +71,74 @@
 }
 
 - (void)layoutSubviews {
+  if (self.verticalButtonsRendered) {
+    [self _renderButtonsVertical];
+  } else {
+    [self _renderButtonsHorizontal];
+  }
+}
+
+- (BOOL)verticalButtonsRendered {
+  return _verticalButtonsRendered;
+}
+
+- (void)setVerticalButtonsRendered:(BOOL)verticalButtonsRendered {
+  _verticalButtonsRendered = verticalButtonsRendered;
+  
+  if (verticalButtonsRendered) {
+    [self _renderButtonsVertical];
+  } else {
+    [self _renderButtonsHorizontal];
+  }
+}
+
+- (void) _renderButtonsHorizontal {
+  CGRect bounds = self.bounds;
+  
+  [_cardPaybutton.titleLabel setFont:_applePayButton.titleLabel.font];
+
+  NSInteger height = bounds.size.height;
+  NSInteger width = bounds.size.width;
+  NSInteger maxButtonWidth = 288;
+  NSInteger maxButtonHeight = 44;
+  NSInteger minButtonHeight = 30;
+  NSInteger minButtonWidth = 80;
+  NSInteger minMargin = 20;
+  
+  NSInteger buttonHeight = height;
+  
+  if (height > maxButtonHeight) {
+    buttonHeight = maxButtonHeight;
+  } else if (height < minButtonHeight) {
+    buttonHeight = minButtonHeight;
+  }
+  
+  NSInteger buttonWidth = width / 2;
+  
+  if (width / 2 >= maxButtonWidth) {
+    buttonWidth = maxButtonWidth;
+  } else if (width / 2 < minButtonWidth) {
+    buttonWidth = minButtonWidth;
+  }
+  
+  if (width > self.superview.bounds.size.width && self.traitCollection.userInterfaceIdiom != UIUserInterfaceIdiomPad) {
+    _cardPaybutton.frame = CGRectMake(minMargin, 0, self.superview.bounds.size.width / 2 - minMargin, buttonHeight);
+    _applePayButton.frame = CGRectMake(CGRectGetMaxX(_cardPaybutton.frame) + 8, 0, self.superview.bounds.size.width / 2 - minMargin - 8, buttonHeight);
+
+    return;
+  }
+  
+  if (width < buttonWidth * 2 + minMargin * 2) {
+    _cardPaybutton.frame = CGRectMake(minMargin, 0, buttonWidth - minMargin - 8, buttonHeight);
+    _applePayButton.frame = CGRectMake(CGRectGetMaxX(_cardPaybutton.frame) + 8, 0, buttonWidth - minMargin, buttonHeight);
+    return;
+  }
+  
+  _cardPaybutton.frame = CGRectMake(width * 0.5 - buttonWidth, 0, buttonWidth, buttonHeight);
+  _applePayButton.frame = CGRectMake(CGRectGetMaxX(_cardPaybutton.frame) + 8, 0, buttonWidth - minMargin, buttonHeight);
+}
+
+- (void) _renderButtonsVertical {
   CGRect bounds = self.bounds;
   
   [_cardPaybutton.titleLabel setFont:_applePayButton.titleLabel.font];
@@ -97,49 +167,36 @@
     buttonWidth = minButtonWidth;
   }
   
+  
   if (![PKPaymentAuthorizationViewController canMakePayments] || [[_merchantId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]  isEqual: @""]) {
     
     _applePayButton.hidden = YES;
     _cardPaybutton.frame = CGRectMake(width * 0.5 - buttonWidth / 2, 0, buttonWidth, buttonHeight);
-
+    
     return;
   }
   
-  if (width / 2 < minButtonWidth) {
-    _applePayButton.frame = CGRectMake(minMargin, 0, buttonWidth - minMargin, buttonHeight);
-    _cardPaybutton.frame = CGRectMake(minMargin, CGRectGetMaxY(_applePayButton.frame) + 8, buttonWidth - minMargin, buttonHeight);
-    return;
-  }
-  
-  if (width > self.superview.bounds.size.width && self.traitCollection.userInterfaceIdiom != UIUserInterfaceIdiomPad) {
-    _cardPaybutton.frame = CGRectMake(minMargin, 0, self.superview.bounds.size.width / 2 - minMargin, buttonHeight);
-    _applePayButton.frame = CGRectMake(CGRectGetMaxX(_cardPaybutton.frame) + 8, 0, self.superview.bounds.size.width / 2 - minMargin - 8, buttonHeight);
-
-    return;
-  }
-  
-  if (width < buttonWidth * 2 + minMargin * 2) {
-    _cardPaybutton.frame = CGRectMake(minMargin, 0, buttonWidth - minMargin - 8, buttonHeight);
-    _applePayButton.frame = CGRectMake(CGRectGetMaxX(_cardPaybutton.frame) + 8, 0, buttonWidth - minMargin, buttonHeight);
-    return;
-  }
-  
-  _cardPaybutton.frame = CGRectMake(width * 0.5 - buttonWidth, 0, buttonWidth, buttonHeight);
-  _applePayButton.frame = CGRectMake(CGRectGetMaxX(_cardPaybutton.frame) + 8, 0, buttonWidth - minMargin, buttonHeight);
+  _applePayButton.frame = CGRectMake(minMargin, 0, bounds.size.width - minMargin * 2, buttonHeight);
+  _cardPaybutton.frame = CGRectMake(minMargin, CGRectGetMaxY(_applePayButton.frame) + 15, bounds.size.width - minMargin * 2, buttonHeight);
 }
 
--(IBAction)onApplePayButtonPressed:(id)sender
+-(void)_applePayButtonPressed:(id)sender
 {
-    _viewController = [[PKPaymentAuthorizationViewController alloc] initWithPaymentRequest: _paymentRequest];
-    
-    _viewController.delegate = (id <PKPaymentAuthorizationViewControllerDelegate>)self;
+  _viewController = [[PKPaymentAuthorizationViewController alloc] initWithPaymentRequest: _paymentRequest];
+
+  _viewController.delegate = (id <PKPaymentAuthorizationViewControllerDelegate>)self;
+
+  if (self.cardKPaymentViewDelegate) {
+    [self.cardKPaymentViewDelegate pressedApplePayButton: _viewController];
+  } else {
     [_controller presentViewController:_viewController animated:YES completion:nil];
+  }
 }
 
 -(void)paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller
 {
-    [_cKitDelegate cardKPaymentView:self didAuthorizePayment:_pKPayment];
-    [_controller dismissViewControllerAnimated:YES completion:nil];
+  [_controller dismissViewControllerAnimated:YES completion:nil];
+  [_cKitDelegate cardKPaymentView:self didAuthorizePayment:_pKPayment];
 }
 
 -(void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller didAuthorizePayment:(PKPayment *)payment completion:(void (^)(PKPaymentAuthorizationStatus))completion
@@ -159,12 +216,16 @@
 }
 
 - (void)_cardPaybuttonPressed:(UIButton *)button {
-  CardKViewController *controller = [[CardKViewController alloc] init];
-  controller.cKitDelegate = _cKitDelegate;
-  
-  UIViewController *viewController = [CardKViewController create:_cKitDelegate controller: controller];
+  if (self.cardKPaymentViewDelegate) {
+    [self.cardKPaymentViewDelegate pressedCardPayButton];
+  } else {
+    CardKViewController *controller = [[CardKViewController alloc] init];
+    controller.cKitDelegate = _cKitDelegate;
+    
+    UIViewController *viewController = [CardKViewController create:_cKitDelegate controller: controller];
 
-  [_controller presentViewController:viewController animated:YES completion:nil];
+    [_controller presentViewController:viewController animated:YES completion:nil];
+  }
 }
 
 @end

@@ -24,7 +24,7 @@
 "incorrectCardholder" = "Власник картки вказаний невірно";
 
 "switchViewTitle" = "Зберегти карту";
-"payByCard" = "Нова картка";
+"newCard" = "Нова картка";
 
 "edit" = "Змінити";
 "save" = "Зберегти";

@@ -18,10 +18,12 @@
 
 const NSString *CardKSavedCardsCellID = @"savedCards";
 const NSString *CardKPayCardButtonCellID = @"button";
+const NSString *CardKApplePayButtonCellID = @"applePay";
 const NSString *CardKKindPayRows = @"rows";
 
 @implementation CardKKindPaymentViewController {
   UIButton *_button;
+  CardKPaymentView *_applePayButton;
   UIBarButtonItem *_editModeButton;
   NSBundle *_bundle;
   NSBundle *_languageBundle;
@@ -30,13 +32,13 @@ const NSString *CardKKindPayRows = @"rows";
   NSMutableArray *_removedBindings;
   NSMutableArray *_currentBindings;
   BOOL _isEditing;
+  id<CardKDelegate> _cKitDelegate;
 }
 
 - (instancetype)init {
   self = [super initWithStyle:UITableViewStyleGrouped];
 
   if (self) {
-    _button =  [UIButton buttonWithType:UIButtonTypeSystem];
     _bundle = [NSBundle bundleForClass:[CardKKindPaymentViewController class]];
     _removedBindings = [[NSMutableArray alloc] init];
     _currentBindings = [[NSMutableArray alloc] initWithArray:CardKConfig.shared.bindings];
@@ -47,20 +49,13 @@ const NSString *CardKKindPayRows = @"rows";
      } else {
        _languageBundle = _bundle;
      }
-
-    [_button
-      setTitle: NSLocalizedStringFromTableInBundle(@"payByCard", nil, _languageBundle,  @"Pay by card")
-      forState: UIControlStateNormal];
-    [_button addTarget:self action:@selector(_buttonPressed:)
-    forControlEvents:UIControlEventTouchUpInside];
     
     _sections = [self _defaultSections];
     
     _bankLogoView = [[CardKBankLogoView alloc] init];
     _bankLogoView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     _bankLogoView.title = NSLocalizedStringFromTableInBundle(@"title", nil, _languageBundle, @"Title");
-    
-    
+
     if (CardKConfig.shared.isEditBindingListMode) {
       _editModeButton = [[UIBarButtonItem alloc]
                          initWithTitle:NSLocalizedStringFromTableInBundle(@"edit", nil, _languageBundle, @"Edit")
@@ -75,12 +70,19 @@ const NSString *CardKKindPayRows = @"rows";
   return self;
 }
 
-- (void)_buttonPressed:(UIButton *)button {
-  
-  CardKViewController *controller = [[CardKViewController alloc] init];
-  controller.cKitDelegate = _cKitDelegate;
+- (void)setCKitDelegate:(id<CardKDelegate>)cKitDelegate {
+  _applePayButton = [[CardKPaymentView alloc] initWithDelegate: cKitDelegate];
 
-  [self.navigationController pushViewController:controller animated:YES];
+  _applePayButton.paymentButtonStyle = PKPaymentButtonStyleWhiteOutline;
+  
+  _applePayButton.cardKPaymentViewDelegate = self;
+  _applePayButton.controller = self;
+  _applePayButton.verticalButtonsRendered = self.verticalButtonsRendered;
+  _cKitDelegate = cKitDelegate;
+}
+
+- (id<CardKDelegate>)cKitDelegate {
+  return _cKitDelegate;
 }
 
 - (void)_editMode:(UIButton *)button {
@@ -104,11 +106,13 @@ const NSString *CardKKindPayRows = @"rows";
 }
 
 - (NSArray *)_defaultSections {
-  return @[@{CardKKindPayRows: @[@{CardKPayCardButtonCellID: @[]}]}, @{CardKKindPayRows: @[ @{CardKSavedCardsCellID:  _currentBindings}] }];
+  return @[@{CardKKindPayRows: @[ @{CardKSavedCardsCellID:  _currentBindings}] }, @{CardKKindPayRows: @[@{CardKPayCardButtonCellID: @[]}]}];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  self.tableView.tag = 40001;
   
   for (NSString *cellID in @[CardKSavedCardsCellID, CardKPayCardButtonCellID]) {
    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellID];
@@ -116,33 +120,30 @@ const NSString *CardKKindPayRows = @"rows";
   
   CardKTheme *theme = CardKConfig.shared.theme;
 
-
   self.tableView.separatorColor = theme.colorSeparatar;
   self.tableView.backgroundColor = theme.colorTableBackground;
   self.tableView.sectionFooterHeight = UITableViewAutomaticDimension;
   self.tableView.cellLayoutMarginsFollowReadableWidth = YES;
-  
+
   UINavigationBar *bar = [self.navigationController navigationBar];
   bar.barTintColor = theme.colorCellBackground;
-
-  [_button addTarget:self action:@selector(_buttonPressed:)
-  forControlEvents:UIControlEventTouchUpInside];
 
   _bankLogoView.frame = CGRectMake(self.view.bounds.size.width * 2, 0, 0, 0);
 }
 
+
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   
-  CGRect bounds = _button.superview.bounds;
-  _button.center = CGPointMake(bounds.size.width * 0.5, bounds.size.height * 0.5);
+  NSInteger width = self.tableView.frame.size.width;
   
-  CardKTheme *theme = CardKConfig.shared.theme;
-
-  _button.tintColor = theme.colorButtonText;
-  _button.frame = CGRectMake(0, 0, bounds.size.width, 44);
-  [_button addTarget:self action:@selector(_buttonPressed:)
-  forControlEvents:UIControlEventTouchUpInside];
+  if (self.verticalButtonsRendered) {
+    _applePayButton.frame = CGRectMake(0, 0, width < 500 ? width : 500, 110);
+    _applePayButton.center = CGPointMake(width * 0.5, 150 * 0.5);
+  } else {
+    _applePayButton.frame = CGRectMake(0, 0, width < 500 ? width : 500, 44);
+    _applePayButton.center = CGPointMake(width * 0.5, 100 * 0.5);
+  }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -153,7 +154,7 @@ const NSString *CardKKindPayRows = @"rows";
   NSArray *keys = [_sections[section][CardKKindPayRows][0] allKeys];
   NSString *keyName = keys[0];
   
-  if (keyName == CardKPayCardButtonCellID) {
+  if ([CardKPayCardButtonCellID isEqual:keyName]) {
     return 1;
   }
 
@@ -170,15 +171,10 @@ const NSString *CardKKindPayRows = @"rows";
   if([CardKSavedCardsCellID isEqual:cellID]) {
     CardKBinding *cardKBinding = _sections[indexPath.section][CardKKindPayRows][0][CardKSavedCardsCellID][indexPath.row];
 
-
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//    cell.imageView.image = cardKBinding.imagePath;
-//    tableView.separatorInset = UIEdgeInsetsZero;
-//    tableView.layoutMargins = UIEdgeInsetsZero;
-//    cell.layoutMargins = UIEdgeInsetsZero;
     [cell.contentView addSubview:cardKBinding];
   } else if ([CardKPayCardButtonCellID isEqual:cellID]) {
-    [cell.contentView addSubview:_button];
+    [cell.contentView addSubview:_applePayButton];
   }
    
   CardKTheme *theme = CardKConfig.shared.theme;
@@ -191,10 +187,9 @@ const NSString *CardKKindPayRows = @"rows";
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
   NSString *cellID = [_sections[indexPath.section][CardKKindPayRows][0] allKeys][0];
-  
+  CGRect r = tableView.readableContentGuide.layoutFrame;
+
   if ([CardKSavedCardsCellID isEqual:cellID]) {
-    CGRect r = tableView.readableContentGuide.layoutFrame;
-    
     cell.contentView.subviews.firstObject.frame = CGRectMake(r.origin.x, 0, r.size.width - r.origin.x, cell.contentView.bounds.size.height);
   }
 }
@@ -221,7 +216,7 @@ const NSString *CardKKindPayRows = @"rows";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-  if (section == 1) {
+  if (section == 0) {
     return CardKConfig.shared.bindingsSectionTitle;
   }
   
@@ -239,6 +234,19 @@ const NSString *CardKKindPayRows = @"rows";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
   return 38;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  NSString *cellID = [_sections[indexPath.section][CardKKindPayRows][0] allKeys][0];
+
+  if ([CardKPayCardButtonCellID isEqual:cellID] && self.verticalButtonsRendered) {
+    return 150;
+  } else if ([CardKPayCardButtonCellID isEqual:cellID]) {
+    return 100;
+  }
+
+  return 44;
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -286,5 +294,16 @@ const NSString *CardKKindPayRows = @"rows";
   }
   
   [self _disableRightBarButton];
+}
+
+- (void)pressedCardPayButton {
+  CardKViewController *controller = [[CardKViewController alloc] init];
+  controller.cKitDelegate = _cKitDelegate;
+  
+  [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)pressedApplePayButton:(PKPaymentAuthorizationViewController *) authController {
+  [self.navigationController presentViewController:authController animated:YES completion:nil];
 }
 @end

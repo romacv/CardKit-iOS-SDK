@@ -12,6 +12,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol CardKPaymentViewDelegate
+
+@optional - (void)pressedCardPayButton;
+@optional - (void)pressedApplePayButton:(PKPaymentAuthorizationViewController *) authController;
+
+@end
+
 @interface CardKPaymentView: UIView
 
 /*!
@@ -37,6 +44,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!  Управление стилем и название кнопки */
 @property UIButton *cardPaybutton;
+
+/*! Управление расположеним кнопок вертикально/горизонтально */
+@property BOOL verticalButtonsRendered;
+
+/*! Делегат CardKPaymentView*/
+@property (weak, nonatomic) id<CardKPaymentViewDelegate> cardKPaymentViewDelegate;
 
 @end
 

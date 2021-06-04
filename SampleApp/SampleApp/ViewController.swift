@@ -26,6 +26,8 @@ struct SectionItem {
     case systemTheme
     case customTheme
     case navLightTheme
+    case navNewCardWithoutSaveCard
+    case navNewCardWithoutCardholder
     case navDarkTheme
     case navSystemTheme
     case language
@@ -33,6 +35,10 @@ struct SectionItem {
     case threeDS
     case threeDSCustomColors
     case editMode
+    case paymentFlowOTP
+    case paymentFlowSSP
+    case paymentFlowMSP
+    case paymentFlowWV
   }
 }
 
@@ -56,10 +62,20 @@ class ViewController: UITableViewController {
         MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAws0r6I8emCsURXfuQcU2c9mwUlOiDjuCZ/f+EdadA4vq/kYt3w6kC5TUW97Fm/HTikkHd0bt8wJvOzz3T0O4so+vBaC0xjE8JuU1eCd+zUX/plw1REVVii1RNh9gMWW1fRNu6KDNSZyfftY2BTcP1dbE1itpXMGUPW+TOk3U9WP4vf7pL/xIHxCsHzb0zgmwShm3D46w7dPW+HO3PEHakSWV9bInkchOvh/vJBiRw6iadAjtNJ4+EkgNjHwZJDuo/0bQV+r9jeOe+O1aXLYK/s1UjRs5T4uGeIzmdLUKnu4eTOQ16P6BHWAjyqPnXliYIKfi+FjZxyWEAlYUq+CRqQIDAQAB-----END PUBLIC KEY-----
   """
   
+  var allowSaveBinding = true
+  var isSaveBinding = false
+  var displayCardholderField = true
+  
   @objc func _close(sender:UIButton){
     self.navigationController?.dismiss(animated: true, completion: nil)
   }
 
+  func _setDefaultParams() {
+    allowSaveBinding = true
+    isSaveBinding = false
+    displayCardholderField = true
+  }
+  
   func _openController() {
     CardKConfig.shared.language = "";
     CardKConfig.shared.theme = CardKTheme.light();
@@ -223,7 +239,7 @@ class ViewController: UITableViewController {
   func _openLightUINavigation() {
     CardKConfig.shared.theme = CardKTheme.light();
     CardKConfig.shared.language = "";
-    CardKConfig.shared.bindingCVCRequired = false;
+    CardKConfig.shared.bindingCVCRequired = true;
     CardKConfig.shared.bindings = self._fetchBindingCards();
     CardKConfig.shared.isTestMod = true;
     CardKConfig.shared.mdOrder = "mdOrder";
@@ -239,6 +255,51 @@ class ViewController: UITableViewController {
     
     self.navigationController?.pushViewController(createdUiController, animated: true);
   }
+  
+  func _openNewCardFormWithoutSaveCard() {
+    allowSaveBinding = false;
+    
+    CardKConfig.shared.bindings = [];
+    CardKConfig.shared.theme = CardKTheme.light();
+    CardKConfig.shared.language = "";
+    CardKConfig.shared.isTestMod = true;
+    CardKConfig.shared.mdOrder = "mdOrder";
+    CardKConfig.shared.mrBinApiURL = "https://mrbin.io/bins/display";
+    CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
+    CardKConfig.shared.bindingsSectionTitle = "Your cards";
+    CardKConfig.shared.isEditBindingListMode = false;
+    
+    
+    let controller = CardKViewController();
+    controller.cKitDelegate = self
+
+    let createdUiController = CardKViewController.create(self, controller: controller);
+    
+    self.navigationController?.pushViewController(createdUiController, animated: true);
+  }
+  
+  func _openNewCardFormWithoutCardholder() {
+    displayCardholderField = false;
+    isSaveBinding = true;
+    
+    CardKConfig.shared.bindings = [];
+    CardKConfig.shared.theme = CardKTheme.light();
+    CardKConfig.shared.language = "";
+    CardKConfig.shared.isTestMod = true;
+    CardKConfig.shared.mdOrder = "mdOrder";
+    CardKConfig.shared.mrBinApiURL = "https://mrbin.io/bins/display";
+    CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
+    CardKConfig.shared.bindingsSectionTitle = "Your cards";
+    CardKConfig.shared.isEditBindingListMode = false;
+    
+    let controller = CardKViewController();
+    controller.cKitDelegate = self
+
+    let createdUiController = CardKViewController.create(self, controller: controller);
+    
+    self.navigationController?.pushViewController(createdUiController, animated: true);
+  }
+  
   
   func _openEditBindingsMode() {
     CardKConfig.shared.theme = CardKTheme.light();
@@ -358,7 +419,15 @@ class ViewController: UITableViewController {
     self.navigationController?.pushViewController(controller, animated: true)
   }
   
+  func _openPaymentFlow(amount: String) {
+    let paymentFlowController = PaymentFlowController();
+    paymentFlowController.amount = amount;
+    self.navigationController?.pushViewController(paymentFlowController, animated: true)
+  }
+  
   func _callFunctionByKindOfButton(kind: SectionItem.Kind, language: String) {
+    _setDefaultParams();
+
     switch kind {
       case .lightTheme: _openController()
       case .darkTheme: _openDark()
@@ -366,12 +435,18 @@ class ViewController: UITableViewController {
       case .customTheme: _openCustomTheme()
       case .navLightTheme: _openLightUINavigation()
       case .editMode: _openEditBindingsMode()
+      case .navNewCardWithoutSaveCard: _openNewCardFormWithoutSaveCard()
+      case .navNewCardWithoutCardholder: _openNewCardFormWithoutCardholder()
       case .navDarkTheme: _openDarkUINavigation()
       case .navSystemTheme: _openSystemUINavigation()
       case .language: _openWitchChooseLanguage(language: language)
       case .paymentView: _openPaymentView()
       case .threeDS: _open3DSView()
       case .threeDSCustomColors: _open3DSViewCustom()
+      case .paymentFlowOTP: _openPaymentFlow(amount: "2000")
+      case .paymentFlowSSP: _openPaymentFlow(amount: "111")
+      case .paymentFlowMSP: _openPaymentFlow(amount: "222")
+      case .paymentFlowWV: _openPaymentFlow(amount: "333")
     }
   }
   
@@ -387,11 +462,20 @@ class ViewController: UITableViewController {
       SectionItem(title: "Open Light with bindings", kind: .navLightTheme, isShowChevron: true, language: ""),
       SectionItem(title: "Light theme with edit mode", kind: .editMode, isShowChevron: true, language: ""),
       SectionItem(title: "Dark theme", kind: .navDarkTheme, isShowChevron: true, language: ""),
-      SectionItem(title: "System theme", kind: .navSystemTheme, isShowChevron: true, language: "")
+      SectionItem(title: "System theme", kind: .navSystemTheme, isShowChevron: true, language: ""),
+      SectionItem(title: "The New Card form without save card", kind: .navNewCardWithoutSaveCard, isShowChevron: true, language: ""),
+      SectionItem(title: "The New Card form without card holder", kind: .navNewCardWithoutCardholder, isShowChevron: true, language: "")
     ]),
     
     Section(title: "CardKPaymentView", items: [
       SectionItem(title: "Apple Pay", kind: .paymentView, isShowChevron: true, language: ""),
+    ]),
+    
+    Section(title: "Payment Flow", items: [
+      SectionItem(title: "One time passcode", kind: .paymentFlowOTP, isShowChevron: true, language: ""),
+      SectionItem(title: "Single Select", kind: .paymentFlowSSP, isShowChevron: true, language: ""),
+      SectionItem(title: "Multi-Select", kind: .paymentFlowMSP, isShowChevron: true, language: ""),
+      SectionItem(title: "WebView", kind: .paymentFlowWV, isShowChevron: true, language: ""),
     ]),
     
     Section(title: "ThreeDSSample", items: [
@@ -505,15 +589,29 @@ extension ViewController: CardKDelegate {
   }
   
   func willShow(_ paymentView: CardKPaymentView) {
-    
+    let paymentNetworks = [PKPaymentNetwork.amex, .discover, .masterCard, .visa]
+    let paymentItem = PKPaymentSummaryItem.init(label: "Коробка", amount: NSDecimalNumber(value: 0.1))
+    let merchandId = "merchant.cardkit";
+    paymentView.merchantId = merchandId
+    paymentView.paymentRequest.currencyCode = "RUB"
+    paymentView.paymentRequest.countryCode = "RU"
+    paymentView.paymentRequest.merchantIdentifier = merchandId
+    paymentView.paymentRequest.merchantCapabilities = PKMerchantCapability.capability3DS
+    paymentView.paymentRequest.supportedNetworks = paymentNetworks
+    paymentView.paymentRequest.paymentSummaryItems = [paymentItem]
+    paymentView.paymentButtonStyle = .whiteOutline;
+
+    paymentView.cardPaybutton.backgroundColor = .systemBlue;
+    paymentView.cardPaybutton.setTitleColor(.white, for: .normal);
+    paymentView.cardPaybutton.setTitle("New card", for: .normal);
   }
   
   func didLoad(_ controller: CardKViewController) {
     controller.allowedCardScaner = CardIOUtilities.canReadCardWithCamera();
     controller.purchaseButtonTitle = "Custom purchase button";
-    controller.allowSaveBinding = true;
-    controller.isSaveBinding = false;
-    controller.displayCardHolderField = true;
+    controller.allowSaveBinding = allowSaveBinding;
+    controller.isSaveBinding = isSaveBinding;
+    controller.displayCardHolderField = displayCardholderField;
   }
   
   func cardKitViewController(_ controller: UIViewController, didCreateSeToken seToken: String, allowSaveBinding: Bool, isNewCard: Bool) {

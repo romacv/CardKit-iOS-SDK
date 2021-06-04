@@ -24,7 +24,7 @@
 "incorrectCardholder" = "Ungültiger Karteninhaber";
 
 "switchViewTitle" = "Karte speichern";
-"payByCard" = "Neue Karte";
+"newCard" = "Neue Karte";
 
 "edit" = "Bearbeiten";
 "save" = "Speichern";

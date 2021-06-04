@@ -128,10 +128,13 @@ NSString *CardKFooterID = @"footer";
     [_ownerTextField addTarget:self action:@selector(_clearOwnerError) forControlEvents:UIControlEventValueChanged];
     [_ownerTextField addTarget:self action:@selector(_buttonPressed:) forControlEvents:UIControlEventEditingDidEndOnExit];
     _ownerTextField.stripRegexp = @"[^a-zA-Z' .]";
+    _ownerTextField.tag = 30003;
+      
     _ownerTextField.keyboardType = UIKeyboardTypeASCIICapable;
     _ownerTextField.returnKeyType = UIReturnKeyContinue;
 
     _doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _doneButton.tag = 30005;
     [_doneButton
       setTitle: NSLocalizedStringFromTableInBundle(@"doneButton", nil, _languageBundle, "Submit payment button")
       forState: UIControlStateNormal];
@@ -141,7 +144,7 @@ NSString *CardKFooterID = @"footer";
     forControlEvents:UIControlEventTouchUpInside];
 
     _switchView = [[CardKSwitchView alloc] init];
-
+    _switchView.tag = 30004;
     _sections = [self _defaultSections];
   }
   
@@ -223,7 +226,6 @@ NSString *CardKFooterID = @"footer";
 - (void)_cardChanged {
   NSString *number = _cardView.number;
 
-  
   [_bankLogoView fetchBankInfo: CardKConfig.shared.mrBinApiURL cardNumber: number];
   [self _refreshErrors];
 }
@@ -462,6 +464,14 @@ NSString *CardKFooterID = @"footer";
   [_ownerTextField resignFirstResponder];
   
   [_cKitDelegate cardKitViewControllerScanCardRequest:self];
+}
+
+- (CardKCardView *)getCardKView {
+    return _cardView;
+}
+
+- (NSString *)getCardOwner {
+    return _ownerTextField.text;
 }
 
 - (void)setCardNumber:(nullable NSString *)number holderName:(nullable NSString *)holderName expirationDate:(nullable NSString *)date cvc:(nullable NSString *)cvc bindingId:(nullable NSString *)bindingId {

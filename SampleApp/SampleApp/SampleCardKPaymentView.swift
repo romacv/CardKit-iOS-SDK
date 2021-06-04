@@ -51,7 +51,6 @@ class SampleCardKPaymentView: UIViewController {
     let height = self.view.bounds.height;
     
     let buttonsCGRect = [
-      CGRect(x: 0, y: height * 0.5 - 300, width: 100, height: 100),
       CGRect(x: 0, y: height * 0.5 - 150, width: 200, height: 100),
       CGRect(x: 0, y: height * 0.5 - 50, width: 300, height: 30),
       CGRect(x: 0, y: height * 0.5 + 50, width: 350, height: 100),
@@ -97,7 +96,6 @@ extension SampleCardKPaymentView: CardKDelegate {
     controller.displayCardHolderField = true;
     controller.allowSaveBinding = true;
     controller.isSaveBinding = false;
-
   }
   
   func cardKitViewController(_ controller: UIViewController, didCreateSeToken seToken: String, allowSaveBinding: Bool, isNewCard: Bool) {

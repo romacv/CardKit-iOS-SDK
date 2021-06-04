@@ -60,18 +60,22 @@ NSInteger EXPIRE_YEARS_DIFF = 10;
     [self addSubview:_paymentSystemImageView];
 
     _numberTextField = [[CardKTextField alloc] init];
+    
+    _numberTextField.tag = 30000;
     _numberTextField.pattern = CardKTextFieldPatternCardNumber;
     _numberTextField.placeholder = NSLocalizedStringFromTableInBundle(@"Card Number", nil, _languageBundle, @"Card number placeholder");
     _numberTextField.accessibilityLabel = nil;
     [_numberTextField showCoverView];
     
     _expireDateTextField = [[CardKTextField alloc] init];
+    _expireDateTextField.tag = 30001;
     _expireDateTextField.pattern = CardKTextFieldPatternExpirationDate;
     _expireDateTextField.placeholder = NSLocalizedStringFromTableInBundle(@"MM/YY", nil, _languageBundle, @"Expiration date placeholder");
     _expireDateTextField.format = @"  /  ";
     _expireDateTextField.accessibilityLabel = NSLocalizedStringFromTableInBundle(@"expiry", nil, _languageBundle, @"Expiration date accessiblity label");
     
     _secureCodeTextField = [[CardKTextField alloc] init];
+    _secureCodeTextField.tag = 30002;
     _secureCodeTextField.pattern = CardKTextFieldPatternSecureCode;
     _secureCodeTextField.placeholder = NSLocalizedStringFromTableInBundle(@"CVC", nil, _languageBundle, @"CVC placeholder");
     _secureCodeTextField.secureTextEntry = YES;

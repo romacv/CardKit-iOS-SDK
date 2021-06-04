@@ -10,6 +10,7 @@
 #import <PassKit/PassKit.h>
 #import "CardKTheme.h"
 #import "CardKBinding.h"
+#import "CardKCardView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -57,6 +58,16 @@ NS_ASSUME_NONNULL_BEGIN
 @param cvc Код проверки подлинности карты.
 */
 - (void)setCardNumber:(nullable NSString *)number holderName:(nullable NSString *)holderName expirationDate:(nullable NSString *)date cvc:(nullable NSString *)cvc bindingId:(nullable NSString *)bindingId;
+
+/*!
+@brief Получить данные карты
+*/
+- (CardKCardView *)getCardKView;
+
+/*!
+@brief Получить имя владельца карты
+*/
+- (NSString *)getCardOwner;
 
 /*!
 @brief Отобразить сканера карты

@@ -24,7 +24,7 @@
 "incorrectCardholder" = "Falso tenedor indicado de la tarjeta";
 
 "switchViewTitle" = "Guardar tarjeta";
-"payByCard" = "Nueva tarjeta";
+"newCard" = "Nueva tarjeta";
 
 "edit" = "Editar";
 "save" = "Salvar";

@@ -24,6 +24,8 @@ struct RequestParams {
   var threeDSSDKKey: String?
   
   var authParams: ThreeDSSDK.AuthenticationRequestParameters?
+
+  var clientId: String?
 }
 
 struct ResponseParams {
@@ -55,6 +57,7 @@ class API {
         "returnUrl": params.returnUrl ?? "",
         "failUrl": params.failUrl ?? "",
         "email": params.email ?? "",
+        "clientId": params.clientId ?? "",
       ];
 
       var request = URLRequest(url: NSURL(string: "\(url)/rest/register.do")! as URL)
@@ -218,8 +221,6 @@ class API {
       "userName": params.userName ?? "",
       "password": params.password ?? "",
     ];
-
-    let orderId = params.orderId ?? ""
     
     var request: URLRequest = URLRequest(url: URL(string: "\(url)/rest/getOrderStatusExtended.do")!)
 
@@ -236,9 +237,8 @@ class API {
 
       if let responseJSON = responseJSON as? [String: Any] {
         print("fetchOrderStatus: \(responseJSON)")
+        completionHandler(responseJSON, data)
       }
-      var responseParams = ResponseParams()
-      completionHandler(responseJSON, data)
     }).resume()
   }
 }
