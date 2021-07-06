@@ -2,7 +2,13 @@
 
 Ниже описано настрой проетка. Framework можно установить вручную или через cocoapods или carthage.
 
-Для установки с использованием cocoapods в Podfile добавьте строчку `pod 'CardKit', :git => 'https://github.com/Runet-Business-Systems/CardKit.git'`.
+Для установки с использованием cocoapods в Podfile добавьте строчку <br/>
+
+`pod 'CardKit', :git => 'https://github.com/Runet-Business-Systems/CardKit.git'`
+<br/>
+
+`pod 'CardKitCore', :git => 'https://github.com/Runet-Business-Systems/CardKit.git`.
+
 Для установки с использованием carthage в Cartfile добавьте строчку `github "Runet-Business-Systems/CardKit"`
 
 ## 1. Настройка проекта
