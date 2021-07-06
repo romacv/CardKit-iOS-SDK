@@ -16,6 +16,6 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "https://github.com/Runet-Business-Systems/CardKit.git", :tag => "#{spec.version}" }
   spec.resources =  "CardKit/banks-info", "CardKit/**/*.lproj/*.strings", "CardKit/CardKit/Images.xcassets"
   spec.exclude_files = "CardKit/Carthage/*.{h,m}", "CardKit/Carthage/**/**/*.lproj/*.strings"
-  spec.source_files  = "CardKit/*"
+  spec.source_files  = "CardKit/CardKit/*.{h,m}", "CardKit/CardKitCore/*.{h,m}"
   spec.ios.deployment_target  = '10.0'
 end
