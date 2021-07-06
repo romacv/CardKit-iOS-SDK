@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "CardKit"
-  spec.version      = "0.0.3"
+  spec.version      = "0.0.4"
   spec.summary      = "CardKit SDK."
   spec.homepage     = "https://github.com/Runet-Business-Systems/CardKit"
   spec.license      = "MIT"
@@ -18,7 +18,7 @@ Pod::Spec.new do |spec|
   spec.exclude_files = "CardKit/Carthage/*.{h,m}", "CardKit/Carthage/**/**/*.lproj/*.strings"
 
   spec.subspec 'CardKit' do |subspec|
-    subspec.source_files = 'CardKit/CardKit/*.{h,m}'
+    subspec.source_files = 'CardKit/CardKit/*.{h,m}', 'CardKit/CardKit/PaymentFlow/*.{h,m}'
   end
 
   spec.subspec 'CardKitCore' do |subspec|
