@@ -8,22 +8,15 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "CardKit"
-  spec.version      = "0.0.4"
+  spec.version      = "0.0.5"
   spec.summary      = "CardKit SDK."
   spec.homepage     = "https://github.com/Runet-Business-Systems/CardKit"
   spec.license      = "MIT"
   spec.author             = { "RBS" => "rbssupport@bpc.ru" }
   spec.source       = { :git => "https://github.com/Runet-Business-Systems/CardKit.git", :tag => "#{spec.version}" }
-  spec.resources =  "CardKit/banks-info", "CardKit/**/*.lproj/*.strings", "CardKit/CardKit/Images.xcassets"
+  spec.resources =  "CardKit/banks-info", "CardKit/**/*.lproj/*.strings", "CardKit/CardKit/Images.xcassets", "CardKit/ThreeDSSDK.xcframework"
   spec.exclude_files = "CardKit/Carthage/*.{h,m}", "CardKit/Carthage/**/**/*.lproj/*.strings"
-
-  spec.subspec 'CardKit' do |subspec|
-    subspec.source_files = 'CardKit/CardKit/*.{h,m}', 'CardKit/CardKit/PaymentFlow/*.{h,m}'
-  end
-
-  spec.subspec 'CardKitCore' do |subspec|
-    subspec.source_files = 'CardKit/CardKitCore/*.{h,m}'
-  end
+  spec.source_files = 'CardKit/CardKit/*.{h,m}', 'CardKit/CardKit/PaymentFlow/*.{h,m}', 'CardKit/CardKitCore/*.{h,m}',
 
   spec.ios.deployment_target  = '10.0'
 end
