@@ -23,7 +23,7 @@ Pod::Spec.new do |spec|
 
   spec.subspec 'CardKit' do |subspec|
     subspec.exclude_files = 'CardKit/CardKit/CardKit.{h,m}'
-    subspec.source_files = 'CardKit/CardKit/*.{h,m}'
+    subspec.source_files = 'CardKit/CardKit/*.{h,m}', 'CardKit/CardKit/PaymentFlow/*.{h,m}'
   end
 
   spec.subspec 'CardKitCore' do |subspec|
