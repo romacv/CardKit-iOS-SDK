@@ -8,15 +8,28 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "CardKit"
-  spec.version      = "0.0.5"
+  spec.version      = "0.0.6"
   spec.summary      = "CardKit SDK."
   spec.homepage     = "https://github.com/Runet-Business-Systems/CardKit"
   spec.license      = "MIT"
   spec.author             = { "RBS" => "rbssupport@bpc.ru" }
   spec.source       = { :git => "https://github.com/Runet-Business-Systems/CardKit.git", :tag => "#{spec.version}" }
-  spec.resources =  "CardKit/banks-info", "CardKit/**/*.lproj/*.strings", "CardKit/CardKit/Images.xcassets", "CardKit/ThreeDSSDK.xcframework"
+
+  spec.resources =  "CardKit/banks-info", "CardKit/**/*.lproj/*.strings", "CardKit/CardKit/Images.xcassets"
+
   spec.exclude_files = "CardKit/Carthage/*.{h,m}", "CardKit/Carthage/**/**/*.lproj/*.strings"
-  spec.source_files = 'CardKit/CardKit/*.{h,m}', 'CardKit/CardKit/PaymentFlow/*.{h,m,swift}', 'CardKit/CardKitCore/*.{h,m}',
+
+  spec.source_files = 'CardKit/CardKit/CardKit.{h,m}', 'CardKit/CardKitCore/CardKitCore.{h,m}', "CardKit/ThreeDSSDK.xcframework"
+
+  spec.subspec 'CardKit' do |subspec|
+    subspec.exclude_files = 'CardKit/CardKit/CardKit.{h,m}'
+    subspec.source_files = 'CardKit/CardKit/*.{h,m}'
+  end
+
+  spec.subspec 'CardKitCore' do |subspec|
+    subspec.exclude_files = 'CardKit/CardKitCore/CardKitCore.{h,m}'
+    subspec.source_files = 'CardKit/CardKitCore/*.{h,m}'
+  end
 
   spec.ios.deployment_target  = '10.0'
 end
