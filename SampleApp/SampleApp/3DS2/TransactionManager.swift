@@ -99,14 +99,11 @@ public class TransactionManager: NSObject, ChallengeStatusReceiver {
 
     private func _initSdkOnce(){
       do {
-          let p = ConfigParameters()
-          try p.addParam(nil, ConfigParameters.Key.integrityReferenceValue.rawValue, "abc")
-          let config = p
-          
-          self._service = Ecom3DS2Service()
-          
-          try self._service!.initialize(configParameters: config, locale: Locale.current.languageCode, uiCustomization: _uiConfig)
-          self._isSdkInitialized = true
+        self._service = Ecom3DS2Service()
+
+        try self._service!.initialize(configParameters: ConfigParameters(), locale: Locale.current.languageCode, uiCustomization: _uiConfig)
+
+        self._isSdkInitialized = true
       } catch _ {
         print("Error initializing SDK")
       }
