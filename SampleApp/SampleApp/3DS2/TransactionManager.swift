@@ -9,11 +9,11 @@ import UIKit
 import ThreeDSSDK
 
 
-public protocol TransactionManagerDelegate: class {
+public protocol TransactionManagerDelegate: AnyObject {
     func errorEventReceived()
 }
 
-protocol AddLogDelegate: class {
+protocol AddLogDelegate: AnyObject {
   func addLog(title: String, request: String, response: String, isReload: Bool) -> Void
 }
 
