@@ -5,7 +5,7 @@ DEPENDENCIES:
   - CardIO
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - CardIO
 
 SPEC CHECKSUMS:
@@ -13,4 +13,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7e0ca0894ade38ce692cdae744a6576271193df7
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.1
