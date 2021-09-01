@@ -59,6 +59,7 @@
       _cardKPaymentError = [[CardKPaymentError alloc] init];
       
       _transactionManager = [[TransactionManager alloc] init];
+      _transactionManager.rootCertificate = CardKConfig.shared.rootCertificate;
       _transactionManager.delegate = self;
     }
     return self;

@@ -30,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 /*! Публичный ключ */
 @property NSString *pubKey;
 
+@property NSString *rootCertificate;
+
 /*! Идентификатор заказа*/
 @property NSString *mdOrder;
 
