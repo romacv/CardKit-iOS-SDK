@@ -345,36 +345,39 @@
 
     NSURLSession *session = [NSURLSession sharedSession];
 
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *dataTask = [session
+                                      dataTaskWithRequest:request
+                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      dispatch_async(dispatch_get_main_queue(), ^{
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
-      if (httpResponse.statusCode != 200) {
-        self->_cardKPaymentError.message = @"Ошибка запроса данных формы";
-        [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
+        if (httpResponse.statusCode != 200) {
+          self->_cardKPaymentError.message = @"Ошибка запроса данных формы";
+          [self->_cardKPaymentFlowDelegate didErrorPaymentFlow:self->_cardKPaymentError];
 
-        return;
-      }
-      
-      NSError *parseError = nil;
-      NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+          return;
+        }
+        
+        NSError *parseError = nil;
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
 
-      NSString *redirect = [responseDictionary objectForKey:@"redirect"];
-      BOOL is3DSVer2 = (BOOL)[responseDictionary[@"is3DSVer2"] boolValue];
-      NSString *errorMessage = [responseDictionary objectForKey:@"error"];
-      NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
-      
-      if (errorCode != 0) {
-        self->_cardKPaymentError.message = errorMessage;
-        [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
-        [self->_transactionManager closeProgressDialog];
-      } else if (redirect != nil) {
-        self->_cardKPaymentError.message = errorMessage;
-        [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
-        [self->_transactionManager closeProgressDialog];
-      } else if (is3DSVer2){
-        [self _runChallange: responseDictionary];
-      }
-      
+        NSString *redirect = [responseDictionary objectForKey:@"redirect"];
+        BOOL is3DSVer2 = (BOOL)[responseDictionary[@"is3DSVer2"] boolValue];
+        NSString *errorMessage = [responseDictionary objectForKey:@"error"];
+        NSInteger errorCode = [responseDictionary[@"errorCode"] integerValue];
+        
+        if (errorCode != 0) {
+          self->_cardKPaymentError.message = errorMessage;
+          [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
+          [self->_transactionManager closeProgressDialog];
+        } else if (redirect != nil) {
+          self->_cardKPaymentError.message = errorMessage;
+          [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
+          [self->_transactionManager closeProgressDialog];
+        } else if (is3DSVer2){
+          [self _runChallange: responseDictionary];
+        }
+      });
     }];
     [dataTask resume];
   }
