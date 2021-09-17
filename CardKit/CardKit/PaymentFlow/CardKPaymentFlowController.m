@@ -753,8 +753,10 @@
     [dataTask resume];
   }
 
-  - (void)errorEventReceived {
-    
+  - (void)errorEventReceivedWithMessage:(NSString * _Nonnull)message {
+    self->_cardKPaymentError.message = message;
+    [self _sendErrorWithCardPaymentError: self->_cardKPaymentError];
+    [self->_transactionManager closeProgressDialog];
   }
 
   - (void)cardKitViewControllerScanCardRequest:(CardKViewController *)controller {

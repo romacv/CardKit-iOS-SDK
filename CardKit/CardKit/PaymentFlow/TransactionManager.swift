@@ -11,7 +11,7 @@ import UIKit
 import ThreeDSSDK
 
 @objc public protocol TransactionManagerDelegate {
-  func errorEventReceived()
+  func errorEventReceived(message: NSString)
   func didCancel()
   func didComplete(transactionStatus: NSString)
 }
@@ -108,9 +108,9 @@ import ThreeDSSDK
   private func _executeChallenge(delegate: ChallengeStatusReceiver ,challengeParameters: ChallengeParameters, timeout : Int32) {
     DispatchQueue.main.async(){
       do {
-          try self._sdkTransaction?.doChallenge(challengeParameters: challengeParameters, challengeStatusReceiver: delegate, timeOut: Int(timeout))
+        try self._sdkTransaction?.doChallenge(challengeParameters: challengeParameters, challengeStatusReceiver: delegate, timeOut: Int(timeout))
       } catch {
-          dump(error)
+        self.delegate?.errorEventReceived(message: error.localizedDescription as NSString)
       }
     }
   }
@@ -136,14 +136,14 @@ extension TransactionManager {
   }
 
   public func timedout() {
-    delegate?.errorEventReceived()
+    delegate?.errorEventReceived(message: "Timedout error")
   }
 
   public func protocolError(protocolErrorEvent e: ProtocolErrorEvent) {
-    delegate?.errorEventReceived()
+    delegate?.errorEventReceived(message: e.getErrorMessage().getErrorDescription() as NSString)
   }
   
   public func runtimeError(runtimeErrorEvent: RuntimeErrorEvent) {
-    delegate?.errorEventReceived()
+    delegate?.errorEventReceived(message: runtimeErrorEvent.errorMessage as NSString)
   }
 }
