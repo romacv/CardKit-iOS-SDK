@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
 // swift-module-flags: -target arm64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ThreeDSSDK
 import AdSupport
 import CommonCrypto
@@ -262,10 +262,10 @@ public struct ImageDecompressor : ThreeDSSDK.ImageProcessing {
     case aspectFill
     case aspectFit
     public static func == (a: ThreeDSSDK.ImageDecompressor.ContentMode, b: ThreeDSSDK.ImageDecompressor.ContentMode) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
     public var hashValue: Swift.Int {
       get
     }
-    public func hash(into hasher: inout Swift.Hasher)
   }
   public static let MaximumSize: CoreGraphics.CGSize
   public init(targetSize: CoreGraphics.CGSize = MaximumSize, contentMode: ThreeDSSDK.ImageDecompressor.ContentMode = .aspectFill, upscale: Swift.Bool = false)
@@ -279,8 +279,8 @@ public enum ButtonType : Swift.String {
   case next
   case cancel
   case resend
-  public typealias RawValue = Swift.String
   public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
@@ -297,15 +297,15 @@ public enum JWKParameter : Swift.String, Swift.CodingKey {
   case X509CertificateSHA256Thumbprint
   public init?(stringValue: Swift.String)
   public init?(intValue: Swift.Int)
-  public typealias RawValue = Swift.String
   public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var intValue: Swift.Int? {
+    get
+  }
   public var rawValue: Swift.String {
     get
   }
   public var stringValue: Swift.String {
-    get
-  }
-  public var intValue: Swift.Int? {
     get
   }
 }
@@ -313,54 +313,54 @@ public enum RSAParameter : Swift.String, Swift.CodingKey {
   case modulus
   case exponent
   case privateExponent
-  public typealias RawValue = Swift.String
   public init?(rawValue: Swift.String)
+  public init?(stringValue: Swift.String)
+  public init?(intValue: Swift.Int)
+  public typealias RawValue = Swift.String
+  public var intValue: Swift.Int? {
+    get
+  }
   public var rawValue: Swift.String {
     get
   }
   public var stringValue: Swift.String {
     get
   }
-  public init?(stringValue: Swift.String)
-  public var intValue: Swift.Int? {
-    get
-  }
-  public init?(intValue: Swift.Int)
 }
 public enum SymmetricKeyParameter : Swift.String, Swift.CodingKey {
   case key
-  public typealias RawValue = Swift.String
   public init?(rawValue: Swift.String)
+  public init?(stringValue: Swift.String)
+  public init?(intValue: Swift.Int)
+  public typealias RawValue = Swift.String
+  public var intValue: Swift.Int? {
+    get
+  }
   public var rawValue: Swift.String {
     get
   }
   public var stringValue: Swift.String {
     get
   }
-  public init?(stringValue: Swift.String)
-  public var intValue: Swift.Int? {
-    get
-  }
-  public init?(intValue: Swift.Int)
 }
 public enum ECParameter : Swift.String, Swift.CodingKey {
   case curve
   case x
   case y
   case privateKey
-  public typealias RawValue = Swift.String
   public init?(rawValue: Swift.String)
+  public init?(stringValue: Swift.String)
+  public init?(intValue: Swift.Int)
+  public typealias RawValue = Swift.String
+  public var intValue: Swift.Int? {
+    get
+  }
   public var rawValue: Swift.String {
     get
   }
   public var stringValue: Swift.String {
     get
   }
-  public init?(stringValue: Swift.String)
-  public var intValue: Swift.Int? {
-    get
-  }
-  public init?(intValue: Swift.Int)
 }
 public struct RuntimeErrorEvent : Swift.Error {
   public let errorCode: Swift.String?
@@ -375,11 +375,11 @@ public enum JWKKeyType : Swift.String, Swift.Codable {
   case RSA
   case OCT
   case EC
+  public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
-  public init?(rawValue: Swift.String)
 }
 public protocol JWK : Swift.Decodable, Swift.Encodable {
   var keyType: ThreeDSSDK.JWKKeyType { get }
@@ -437,11 +437,11 @@ public enum ECCurveType : Swift.String, Swift.Codable {
   case P256
   case P384
   case P521
+  public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
-  public init?(rawValue: Swift.String)
 }
 public enum ECCompression : Swift.UInt8 {
   case CompressedYEven
@@ -449,11 +449,11 @@ public enum ECCompression : Swift.UInt8 {
   case Uncompressed
   case HybridYEven
   case HybridYOdd
+  public init?(rawValue: Swift.UInt8)
   public typealias RawValue = Swift.UInt8
   public var rawValue: Swift.UInt8 {
     get
   }
-  public init?(rawValue: Swift.UInt8)
 }
 public struct ImageRequest {
   public var urlRequest: Foundation.URLRequest {
@@ -476,8 +476,8 @@ public struct ImageRequest {
   public enum Priority : Swift.Int, Swift.Comparable {
     case veryLow, low, normal, high, veryHigh
     public static func < (lhs: ThreeDSSDK.ImageRequest.Priority, rhs: ThreeDSSDK.ImageRequest.Priority) -> Swift.Bool
-    public typealias RawValue = Swift.Int
     public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
     public var rawValue: Swift.Int {
       get
     }
@@ -517,21 +517,21 @@ public enum SecurityWarningIdentifier : Swift.String {
   case SW03
   case SW04
   case SW05
-  public typealias RawValue = Swift.String
   public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
 }
 extension SecurityWarningIdentifier : Swift.CodingKey, Swift.Encodable {
-  public var stringValue: Swift.String {
-    get
-  }
   public init?(stringValue: Swift.String)
+  public init?(intValue: Swift.Int)
   public var intValue: Swift.Int? {
     get
   }
-  public init?(intValue: Swift.Int)
+  public var stringValue: Swift.String {
+    get
+  }
 }
 final public class Ecom3DS2Service {
   public init()
@@ -859,11 +859,11 @@ final public class ConfigParameters {
 extension ConfigParameters {
   public enum Key : Swift.String {
     case integrityReferenceValue
+    public init?(rawValue: Swift.String)
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
       get
     }
-    public init?(rawValue: Swift.String)
   }
 }
 public protocol CommonHeaderParameterSpace {
@@ -1068,8 +1068,8 @@ extension JWKSet : Swift.Collection {
   }
   public func index(after index: ThreeDSSDK.JWKSet.Index) -> ThreeDSSDK.JWKSet.Index
   public func makeIterator() -> Swift.IndexingIterator<ThreeDSSDK.JWKSet.ArrayType>
-  public typealias SubSequence = Swift.Slice<ThreeDSSDK.JWKSet>
   public typealias Indices = Swift.DefaultIndices<ThreeDSSDK.JWKSet>
+  public typealias SubSequence = Swift.Slice<ThreeDSSDK.JWKSet>
 }
 extension JWKSet : Swift.ExpressibleByArrayLiteral {
   public typealias ArrayLiteralElement = ThreeDSSDK.JWKSet.Element
@@ -1080,10 +1080,10 @@ final public class ImagePreheater {
     case memoryCache
     case diskCache
     public static func == (a: ThreeDSSDK.ImagePreheater.Destination, b: ThreeDSSDK.ImagePreheater.Destination) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
     public var hashValue: Swift.Int {
       get
     }
-    public func hash(into hasher: inout Swift.Hasher)
   }
   public init(pipeline: ThreeDSSDK.ImagePipeline = ImagePipeline.shared, destination: ThreeDSSDK.ImagePreheater.Destination = .memoryCache, maxConcurrentRequestCount: Swift.Int = 2)
   final public func startPreheating(with urls: [Foundation.URL])
@@ -1205,11 +1205,11 @@ public enum SignatureAlgorithm : Swift.String {
   case ES256
   case ES384
   case ES512
+  public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
-  public init?(rawValue: Swift.String)
 }
 public enum KeyManagementAlgorithm : Swift.String, Swift.CaseIterable {
   case RSA1_5
@@ -1219,38 +1219,38 @@ public enum KeyManagementAlgorithm : Swift.String, Swift.CaseIterable {
   case A192KW
   case A256KW
   case direct
-  public typealias RawValue = Swift.String
-  public var rawValue: Swift.String {
-    get
-  }
   public init?(rawValue: Swift.String)
   public typealias AllCases = [ThreeDSSDK.KeyManagementAlgorithm]
+  public typealias RawValue = Swift.String
   public static var allCases: [ThreeDSSDK.KeyManagementAlgorithm] {
+    get
+  }
+  public var rawValue: Swift.String {
     get
   }
 }
 public enum ContentEncryptionAlgorithm : Swift.String {
   case A256CBCHS512
   case A128CBCHS256
+  public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
-  public init?(rawValue: Swift.String)
 }
 public enum HMACAlgorithm : Swift.String {
   case SHA512
   case SHA256
-  public typealias RawValue = Swift.String
   public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
 }
 public enum JWKThumbprintAlgorithm : Swift.String {
   case SHA256
-  public typealias RawValue = Swift.String
   public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
@@ -1258,8 +1258,8 @@ public enum JWKThumbprintAlgorithm : Swift.String {
 public enum CompressionAlgorithm : Swift.String {
   case DEFLATE
   case NONE
-  public typealias RawValue = Swift.String
   public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
@@ -1279,8 +1279,8 @@ public enum Severity : Swift.Int {
   case low
   case medium
   case high
-  public typealias RawValue = Swift.Int
   public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
@@ -1384,8 +1384,8 @@ public struct JOSESerializer {
 }
 public enum HashAlgorithm : Swift.String {
   case sha256
-  public typealias RawValue = Swift.String
   public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
