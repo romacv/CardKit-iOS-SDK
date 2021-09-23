@@ -175,7 +175,7 @@
   
   [_app.buttons[@"Custom purchase button"] tap];
   
-  XCUIElement *errorMassage = _app.staticTexts.allElementsBoundByAccessibilityElement[1];
+  XCUIElement *errorMassage = _app.staticTexts.allElementsBoundByAccessibilityElement[0];
 
   XCTAssertTrue([errorMassage.label isEqualToString: @"The card holder is incorrect"]);
 }
