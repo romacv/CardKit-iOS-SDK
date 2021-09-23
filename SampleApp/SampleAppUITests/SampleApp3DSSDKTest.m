@@ -87,7 +87,7 @@
   [_app.textFields[@"NAME"].firstMatch tap];
   [_app.textFields[@"NAME"] typeText:@"ALEX KOROTKOV"];
 
-  [_app.buttons[@"Submit payment"] tap];
+  [_app.buttons.allElementsBoundByIndex.lastObject tap];
 }
 
 - (void) _fillNewCardFormWithIncorrectCVC {
@@ -105,15 +105,19 @@
   [_app.textFields[@"NAME"].firstMatch tap];
   [_app.textFields[@"NAME"] typeText:@"ALEX KOROTKOV"];
 
-  [_app.buttons[@"Submit payment"] tap];
+  [_app.buttons.allElementsBoundByIndex.lastObject tap];
 }
 
 - (void) _openKindPaymentController {
   [[_app.buttons elementBoundByIndex:1] tap];
 }
 
+- (void) _tapOnCellWithOnePasscodeFlow {
+  [_app.cells.staticTexts[@"One time passcode (amount: 2000)"] tap];
+}
+
 - (void) _openPassCodeFlowWithNewCard {
-  [_app.cells.allElementsBoundByAccessibilityElement[11] tap];
+  [self _tapOnCellWithOnePasscodeFlow];
   [self _openKindPaymentController];
   [self _sleep];
   [self _fillNewCardForm];
@@ -134,17 +138,15 @@
 }
 
 - (void) _openPassCodeFlowWithIncorrectNewCard {
-  [_app.cells.allElementsBoundByAccessibilityElement[11] tap];
+  [self _tapOnCellWithOnePasscodeFlow];
   
-  [self _sleep];
+  [self _openKindPaymentController];
   
-  [[_app.buttons elementBoundByIndex:1] tap];
-
   [self _fillNewCardFormWithIncorrectCVC];
 }
 
 - (void) _runPassCodeFlow {
-  [_app.cells.allElementsBoundByAccessibilityElement[11] tap];
+  [self _tapOnCellWithOnePasscodeFlow];
   [self _runFlowWithBinding];
 }
 
@@ -159,7 +161,7 @@
 }
 
 - (void) _runPassCodeFlowWithIncorrectCVC {
-  [_app.cells.allElementsBoundByAccessibilityElement[11] tap];
+  [self _tapOnCellWithOnePasscodeFlow];
   [self _runFlowWithBindingWithCVC: @"666"];
 }
 
