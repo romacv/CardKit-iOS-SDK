@@ -71,17 +71,17 @@
   [_app.cells.allElementsBoundByAccessibilityElement[5] tap];
 
   [_app.buttons[@"Edit"] tap];
-  
-  [_app.otherElements.allElementsBoundByIndex[9] tap];
-  
-  [_app.buttons[@"Delete"] tap];
-  
-  [_app.otherElements.allElementsBoundByIndex[9] tap];
+
+  [_app.cells.firstMatch.buttons.firstMatch tap];
 
   [_app.buttons[@"Delete"] tap];
-  
+
+  [_app.cells.firstMatch.buttons.firstMatch tap];
+
+  [_app.buttons[@"Delete"] tap];
+
   [_app.buttons[@"Save"] tap];
-  
+
   XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Removed bindings"]);
 }
 
