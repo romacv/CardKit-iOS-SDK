@@ -45,23 +45,21 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 }
 
 - (void)setUp {
+  CardKConfig.shared.language = @"ru";
+  CardKConfig.shared.bindingCVCRequired = YES;
+  CardKConfig.shared.bindings = @[];
+  CardKConfig.shared.isTestMod = YES;
+  CardKConfig.shared.mrBinApiURL = @"https://mrbin.io/bins/display";
+  CardKConfig.shared.mrBinURL = @"https://mrbin.io/bins/";
+  CardKConfig.shared.pubKey = @"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAws0r6I8emCsURXfuQcU2c9mwUlOiDjuCZ/f+EdadA4vq/kYt3w6kC5TUW97Fm/HTikkHd0bt8wJvOzz3T0O4so+vBaC0xjE8JuU1eCd+zUX/plw1REVVii1RNh9gMWW1fRNu6KDNSZyfftY2BTcP1dbE1itpXMGUPW+TOk3U9WP4vf7pL/xIHxCsHzb0zgmwShm3D46w7dPW+HO3PEHakSWV9bInkchOvh/vJBiRw6iadAjtNJ4+EkgNjHwZJDuo/0bQV+r9jeOe+O1aXLYK/s1UjRs5T4uGeIzmdLUKnu4eTOQ16P6BHWAjyqPnXliYIKfi+FjZxyWEAlYUq+CRqQIDAQAB-----END PUBLIC KEY-----";
+  CardKConfig.shared.rootCertificate = @"MIICDTCCAbOgAwIBAgIUOO3a573khC9kCsQJGKj/PpKOSl8wCgYIKoZIzj0EAwIwXDELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEVMBMGA1UEAwwMZHVtbXkzZHNyb290MB4XDTIxMDkxNDA2NDQ1OVoXDTMxMDkxMjA2NDQ1OVowXDELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEVMBMGA1UEAwwMZHVtbXkzZHNyb290MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE//e+MhwdgWxkFpexkjBCx8FtJ24KznHRXMSWabTrRYwdSZMScgwdpG1QvDO/ErTtW8IwouvDRlR2ViheGr02bqNTMFEwHQYDVR0OBBYEFHK/QzMXw3kW9UzY5w9LVOXr+6YpMB8GA1UdIwQYMBaAFHK/QzMXw3kW9UzY5w9LVOXr+6YpMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0EAwIDSAAwRQIhAOPEiotH3HJPIjlrj9/0m3BjlgvME0EhGn+pBzoX7Z3LAiAOtAFtkipd9T5c9qwFAqpjqwS9sSm5odIzk7ug8wow4Q==";
+
   payment = [[PaymentFlowController alloc] init];
-  
   payment.delegate = self;
   payment.url = @"https://web.rbsdev.com/soyuzpayment";
   payment.primaryColor = UIColor.systemBlueColor;
   payment.textDoneButtonColor = [UIColor colorWithRed:1.00 green:1.00 blue:1.00 alpha:1.00];
   payment.headerLabel = @"Custom header label";
-  
-  CardKConfig.shared.language = @"ru";
-  CardKConfig.shared.bindingCVCRequired = YES;
-  CardKConfig.shared.bindings = @[];
-  CardKConfig.shared.isTestMod = true;
-  CardKConfig.shared.mrBinApiURL = @"https://mrbin.io/bins/display";
-  CardKConfig.shared.mrBinURL = @"https://mrbin.io/bins/";
-  CardKConfig.shared.pubKey = @"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAws0r6I8emCsURXfuQcU2c9mwUlOiDjuCZ/f+EdadA4vq/kYt3w6kC5TUW97Fm/HTikkHd0bt8wJvOzz3T0O4so+vBaC0xjE8JuU1eCd+zUX/plw1REVVii1RNh9gMWW1fRNu6KDNSZyfftY2BTcP1dbE1itpXMGUPW+TOk3U9WP4vf7pL/xIHxCsHzb0zgmwShm3D46w7dPW+HO3PEHakSWV9bInkchOvh/vJBiRw6iadAjtNJ4+EkgNjHwZJDuo/0bQV+r9jeOe+O1aXLYK/s1UjRs5T4uGeIzmdLUKnu4eTOQ16P6BHWAjyqPnXliYIKfi+FjZxyWEAlYUq+CRqQIDAQAB-----END PUBLIC KEY-----";
-  
-  CardKConfig.shared.rootCertificate = @"MIIF3jCCA8agAwIBAgIJAJMvvesjmDyhMA0GCSqGSIb3DQEBCwUAMHwxCzAJBgNVBAYTAk5MMSkwJwYDVQQKDCBVTCBUcmFuc2FjdGlvbiBTZWN1cml0eSBkaXZpc2lvbjEgMB4GA1UECwwXVUwgVFMgM0QtU2VjdXJlIFJPT1QgQ0ExIDAeBgNVBAMMF1VMIFRTIDNELVNlY3VyZSBST09UIENBMB4XDTE2MTIyMDEzNTAwNVoXDTM2MTIxNTEzNTAwNVowfDELMAkGA1UEBhMCTkwxKTAnBgNVBAoMIFVMIFRyYW5zYWN0aW9uIFNlY3VyaXR5IGRpdmlzaW9uMSAwHgYDVQQLDBdVTCBUUyAzRC1TZWN1cmUgUk9PVCBDQTEgMB4GA1UEAwwXVUwgVFMgM0QtU2VjdXJlIFJPT1QgQ0EwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQDEfY2xuLNjM8/3xrG6zd7FbuXHfCFieBERRuGQSLYMmES5khgjZteN59NeoDbIu3XNFCm4TR2TTpTdjmSFU8eD1E3+CXW9M6QczCoTu5OZh+h6yOYTMEkt+wDf3C0hZe/7jjy2PodiHHfue0SSZIJQ5Vm4sUkmEDbDbcSdRlFmxUe2ayX3tlYyxzmehZSGQ8jmVhnW0XWg36mQJNsvX2nLnBB58EE2GtGdX9bnKdXNfZTAPSrdSOnXMP97Gh+Rp1ud3YAncKO4ROziNSWjzDoa0OfwnaJWsx2I6dbWBPS5QHQZtn/w0iHaypXoTMeZUjIVSrKHx0ZAHr3v6pUH6oy+Q9B939ElOflOraFydalPk33i+txB6BzyLwlsDGZaeIm4Jblrqlx0QyzQZ/T0bafbflmFzodl6ZvAgSD4OnPo5AQ7Dl4E9XiIa85l0jlb71s+Xy/9pNBvspd3KHTt0b/J5j7szRkObtnikrFsEu55HcR9hz5fEofovcbkLBLvNCLcZrzmiDJhL6Wsrpo07UmY/9T/DBmjNOTiDKk3cy/N9sPjWeoauyCffsn6yLnNLZ4hsD+H7vCpoPMxyFxJaNOawv08ZF+17rqCcuRpfPU6UWLNCmCA1fSMYbctO28StS2o6acWF3nYdqgnVZCg0/H2M3b5TOeVmAuCQWDVAcoxgQIDAQABo2MwYTAdBgNVHQ4EFgQUmHZrhouCbMBgM5sAiDHv0vAbe/IwHwYDVR0jBBgwFoAUmHZrhouCbMBgM5sAiDHv0vAbe/IwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAYYwDQYJKoZIhvcNAQELBQADggIBAKRs5Voebxu4yzTMIc2nbwsoxe0ZdAiRU44An3j4gzwuqCic80K4YloiDOIAfRWG7HbF1bG37oSfQBhR0X2zvH/R8BVlSfaqovr78rGOyejNAstfGpmIaYT0zuE2jvjeR+YKmFCornhBojmALzYNQBbFpLUC45He8z5gB2jsnv7l0HRsXJGN11aUQvJgwjQTbc4FbAnWIWvAKcUtyeWiCBvFw/FTx23ZWMUW8jMrjdyiRan7dXc6n5vD/DV3tuM5rMWEA5x07D97DV/wvs/M8I8DL6mI2tEPfwVf/QIW4UONpnlAh6i9DevB+sKrqrilXE91pPOCmBXYXBxbAPW8M3Gh7k2VVW/jL4kqoB4HfH0IDHqIVeSXirSHxovK/fGIqjEuedLWzMMKTcEcYi7LVSqFvFYV/khimumAl8SFVpHQsQ7LvsKim1CsupkO+fUb44dkaUum6QC/iInk78KRgGV8XZA25yw4w/FJaWek0jnuCJk7V+77N6PGK0FxmSdrHRNzNSoTkma4PtZITnGNTGqXeTV0Hvr8ClbQfBWpqaZtKB8dTkhRCTUPasYZZLFtj2Y2WcXshMBAhEnBiCsoaIGz1xxcyFH4IoiC2GKbfi5pjXrHfRrtPIr1B4/uWMHxIttEFK3qK/3Vc1bjdX6H4IUWNV62P52kwdsMXNoQ55jw";
 }
 
 - (void)tearDown {
@@ -105,7 +103,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.runChallangeExpectation,
       payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
-      payment.getFinishedPaymentInfoExpectation] timeout:30];
+      payment.getFinishedPaymentInfoExpectation] timeout:50];
 }
 
 - (void)testPaymentFlowWithBinding {
@@ -133,7 +131,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.runChallangeExpectation,
       payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
-      payment.getFinishedPaymentInfoExpectation] timeout:20];
+      payment.getFinishedPaymentInfoExpectation] timeout:50];
 }
 
 - (void)testPaymentFlowWithNewCardWithIncorrectSecureCode {
@@ -170,7 +168,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
       payment.getFinishedPaymentInfoExpectation,
-      payment.sendErrorWithCardPaymentErrorExpectation] timeout:40];
+      payment.sendErrorWithCardPaymentErrorExpectation] timeout:100];
 }
 
 - (void)testPaymentFlowWithBindingWithIncorrectSecureCode {
@@ -215,7 +213,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
       payment.getFinishedPaymentInfoExpectation,
-      payment.sendErrorWithCardPaymentErrorExpectation] timeout:60];
+      payment.sendErrorWithCardPaymentErrorExpectation] timeout:100];
 }
 
 - (void)testCancelFlowWithBinding {
@@ -237,7 +235,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.moveChoosePaymentMethodControllerExpectation,
       payment.processBindingFormRequestExpectation,
       payment.processBindingFormRequestStep2Expectation,
-      payment.didCancelExpectation] timeout:20];
+      payment.didCancelExpectation] timeout:100];
 }
 
 - (void)testCancelFlowWhenSendIncorrectCodeFreeTimes {
@@ -259,7 +257,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.moveChoosePaymentMethodControllerExpectation,
       payment.processBindingFormRequestExpectation,
       payment.processBindingFormRequestStep2Expectation,
-      payment.didCancelExpectation] timeout:50];
+      payment.didCancelExpectation] timeout:100];
 }
 
 - (void)testMultiSelectFlowWithNewCard{
@@ -283,7 +281,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.runChallangeExpectation,
       payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
-      payment.getFinishedPaymentInfoExpectation] timeout:20];
+      payment.getFinishedPaymentInfoExpectation] timeout:50];
 }
 
 - (void)testSingleSelectFlowWithNewCard{
@@ -307,7 +305,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.runChallangeExpectation,
       payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
-      payment.getFinishedPaymentInfoExpectation] timeout:20];
+      payment.getFinishedPaymentInfoExpectation] timeout:50];
 }
 
 - (void)testWebViewFlowWithNewCard{
@@ -331,7 +329,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
       payment.runChallangeExpectation,
       payment.didCompleteWithTransactionStatusExpectation,
       payment.getFinishSessionStatusRequestExpectation,
-      payment.getFinishedPaymentInfoExpectation] timeout:20];
+      payment.getFinishedPaymentInfoExpectation] timeout:100];
 }
 
 - (void)testUnbindCard {
@@ -351,7 +349,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
   [self waitForExpectations:@[
       payment.moveChoosePaymentMethodControllerExpectation,
       payment.unbindCardExpectation
-  ] timeout:20];
+  ] timeout:100];
 }
 
 - (void)_fillOTPForm {

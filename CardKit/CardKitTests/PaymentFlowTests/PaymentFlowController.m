@@ -80,9 +80,12 @@
     if (self.runChallangeExpectation != nil) {
       [self.runChallangeExpectation fulfill];
     }
+  
+    dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(15 * NSEC_PER_SEC));
     
-    [NSThread  sleepForTimeInterval:7.0f];
-    [self _fillForm];
+    dispatch_after(timer, dispatch_get_main_queue(), ^(void){
+      [self _fillForm];
+    });
   }
 
   - (void) _fillForm {
@@ -93,7 +96,7 @@
     [super _moveChoosePaymentMethodController];
     
     double delayInSeconds = 1.0;
-
+ 
     dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 
     dispatch_after(timer, dispatch_get_main_queue(), ^(void){
@@ -141,16 +144,13 @@
       [expireDateTextField setText:@"1224"];
       
       
-      if (CardKConfig.shared.bindingCVCRequired) {
-        UITextField *secureCodeTextField = (UITextField *)[window.rootViewController.view viewWithTag:secureCodeTextFieldTag];
+      UITextField *secureCodeTextField = (UITextField *)[window.rootViewController.view viewWithTag:secureCodeTextFieldTag];
 
-        if (self.bindingSecureCode != nil) {
-          [secureCodeTextField setText: self.bindingSecureCode];
-          self.bindingSecureCode = nil;
-        } else {
-          [secureCodeTextField setText: @"123"];
-        }
-        
+      if (self.bindingSecureCode != nil) {
+        [secureCodeTextField setText: self.bindingSecureCode];
+        self.bindingSecureCode = nil;
+      } else {
+        [secureCodeTextField setText: @"123"];
       }
       
       UITextField *cardOwnerTextField = (UITextField *)[window.rootViewController.view viewWithTag:cardOwnerTextFieldTag];
@@ -185,7 +185,7 @@
     
     [kindPaymentViewController tableView:tableView didSelectRowAtIndexPath:indexPath];
     
-    double delayInSeconds = 1.0;
+    double delayInSeconds = 3.0;
 
     dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 
