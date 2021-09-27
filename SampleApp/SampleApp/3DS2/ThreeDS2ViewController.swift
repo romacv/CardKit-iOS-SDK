@@ -125,6 +125,9 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
     self._runSDK()
     self._registerOrder()
     
+    _transactionManager.rootCI = _textFieldRootCI.text ?? "";
+    _transactionManager.directoryServerId = _textFieldDirectoryServerId.text ?? "";
+
     let controller = CardKViewController();
     controller.cKitDelegate = self;
     
