@@ -18,10 +18,12 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
   
   let _notificationCenter = NotificationCenter.default
   let _headerView = UIView()
-  let _textFieldBaseUrl = UITextField()
-  let _textFieldCost = UITextField()
-  let _textFieldUserName = UITextField()
-  let _textFieldPassword = UITextField()
+  let _textFieldBaseUrl = TextField3DS2Example()
+  let _textFieldCost = TextField3DS2Example()
+  let _textFieldUserName = TextField3DS2Example()
+  let _textFieldPassword = TextField3DS2Example()
+  let _textFieldRootCI = TextField3DS2Example()
+  let _textFieldDirectoryServerId = TextField3DS2Example()
 
   let _transactionManager: TransactionManager = TransactionManager()
   let _reqResController = ReqResDetailsController()
@@ -58,8 +60,6 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
         MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAws0r6I8emCsURXfuQcU2c9mwUlOiDjuCZ/f+EdadA4vq/kYt3w6kC5TUW97Fm/HTikkHd0bt8wJvOzz3T0O4so+vBaC0xjE8JuU1eCd+zUX/plw1REVVii1RNh9gMWW1fRNu6KDNSZyfftY2BTcP1dbE1itpXMGUPW+TOk3U9WP4vf7pL/xIHxCsHzb0zgmwShm3D46w7dPW+HO3PEHakSWV9bInkchOvh/vJBiRw6iadAjtNJ4+EkgNjHwZJDuo/0bQV+r9jeOe+O1aXLYK/s1UjRs5T4uGeIzmdLUKnu4eTOQ16P6BHWAjyqPnXliYIKfi+FjZxyWEAlYUq+CRqQIDAQAB-----END PUBLIC KEY-----
     """
 
-    let theme = CardKConfig.shared.theme
-    
     _transactionManager.delegateAddLog = self
     _textFieldBaseUrl.text = url
     _textFieldBaseUrl.placeholder = "url"
@@ -75,35 +75,19 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
     _textFieldUserName.text = "3ds2-api"
     _textFieldUserName.placeholder = "Имя пользователя"
     
-    if #available(iOS 13.0, *) {
-      _textFieldBaseUrl.backgroundColor = .systemGray5
-      _textFieldCost.backgroundColor = .systemGray5
-      _textFieldPassword.backgroundColor = .systemGray5
-      _textFieldUserName.backgroundColor = .systemGray5
-    } else {
-      _textFieldBaseUrl.backgroundColor = theme.colorCellBackground
-      _textFieldCost.backgroundColor = theme.colorCellBackground
-      _textFieldPassword.backgroundColor = theme.colorCellBackground
-      _textFieldUserName.backgroundColor = theme.colorCellBackground
-    };
-    
-    _textFieldCost.layer.cornerRadius = 10
-    _textFieldCost.textAlignment = .center
-    
-    _textFieldBaseUrl.layer.cornerRadius = 10
-    _textFieldBaseUrl.textAlignment = .center
-    _textFieldBaseUrl.delegate = self
-    
-    _textFieldPassword.layer.cornerRadius = 10
-    _textFieldPassword.textAlignment = .center
-    
-    _textFieldUserName.layer.cornerRadius = 10
-    _textFieldUserName.textAlignment = .center
+    _textFieldRootCI.text = """
+    MIICDTCCAbOgAwIBAgIUOO3a573khC9kCsQJGKj/PpKOSl8wCgYIKoZIzj0EAwIwXDELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEVMBMGA1UEAwwMZHVtbXkzZHNyb290MB4XDTIxMDkxNDA2NDQ1OVoXDTMxMDkxMjA2NDQ1OVowXDELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEVMBMGA1UEAwwMZHVtbXkzZHNyb290MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE//e+MhwdgWxkFpexkjBCx8FtJ24KznHRXMSWabTrRYwdSZMScgwdpG1QvDO/ErTtW8IwouvDRlR2ViheGr02bqNTMFEwHQYDVR0OBBYEFHK/QzMXw3kW9UzY5w9LVOXr+6YpMB8GA1UdIwQYMBaAFHK/QzMXw3kW9UzY5w9LVOXr+6YpMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0EAwIDSAAwRQIhAOPEiotH3HJPIjlrj9/0m3BjlgvME0EhGn+pBzoX7Z3LAiAOtAFtkipd9T5c9qwFAqpjqwS9sSm5odIzk7ug8wow4Q==
+    """
+    _textFieldRootCI.placeholder = "Root CI"
 
-    _headerView.addSubview(_textFieldBaseUrl)
-    _headerView.addSubview(_textFieldCost)
-    _headerView.addSubview(_textFieldPassword)
-    _headerView.addSubview(_textFieldUserName)
+    _textFieldDirectoryServerId.text = "directoryServerId"
+    _textFieldDirectoryServerId.placeholder = "Directory server id"
+    
+    let textFields = [_textFieldBaseUrl, _textFieldCost, _textFieldPassword, _textFieldUserName, _textFieldDirectoryServerId, _textFieldRootCI]
+    
+    textFields.forEach({textField in
+      _headerView.addSubview(textField)
+    })
 
     self.tableView.tableHeaderView = _headerView
   
@@ -116,39 +100,12 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellIdentifier")
     self.tableView.autoresizingMask = .flexibleWidth
     
-    
     _notificationCenter.addObserver(self, selector: #selector(_reloadTableView), name: Notification.Name("ReloadTable"), object: nil)
-    
-    addDoneButtonOnKeyboard()
   }
   
   func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
     let urlString = String("\(textField.text ?? url)/se/keys.do")
     CardKConfig.fetchKeys(urlString)
-  }
-  
-  func addDoneButtonOnKeyboard(){
-    let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
-    doneToolbar.barStyle = .default
-
-    let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
-
-    let items = [flexSpace, done]
-    doneToolbar.items = items
-    doneToolbar.sizeToFit()
-
-    _textFieldBaseUrl.inputAccessoryView = doneToolbar
-    _textFieldCost.inputAccessoryView = doneToolbar
-    _textFieldPassword.inputAccessoryView = doneToolbar
-    _textFieldUserName.inputAccessoryView = doneToolbar
-  }
-  
-  @objc func doneButtonAction(){
-    _textFieldBaseUrl.resignFirstResponder()
-    _textFieldCost.resignFirstResponder()
-    _textFieldPassword.resignFirstResponder()
-    _textFieldUserName.resignFirstResponder()
   }
 
   @objc func dismissKeyboard() {
@@ -199,8 +156,12 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
     
     _textFieldUserName.frame = CGRect(x: 20, y: _textFieldCost.frame.maxY + 10, width: self.view.bounds.width / 2 - 30, height: 50)
     _textFieldPassword.frame = CGRect(x: _textFieldUserName.frame.maxX + 30, y: _textFieldCost.frame.maxY + 10, width: self.view.bounds.width / 2 - 40, height: 50)
+    
+    _textFieldDirectoryServerId.frame = CGRect(x: 20, y: _textFieldPassword.frame.maxY + 10, width: self.view.bounds.width - 40, height: 50)
 
-    _headerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: _textFieldPassword.frame.maxY + 20)
+    _textFieldRootCI.frame = CGRect(x: 20, y: _textFieldDirectoryServerId.frame.maxY + 10, width: self.view.bounds.width - 40, height: 50)
+
+    _headerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: _textFieldRootCI.frame.maxY + 20)
     
     self.tableView.tableHeaderView?.frame = _headerView.frame
     self.navigationController?.isNavigationBarHidden = false
