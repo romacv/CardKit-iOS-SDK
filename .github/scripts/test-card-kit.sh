@@ -4,5 +4,5 @@ set -eo pipefail
 
 xcodebuild -workspace CardKit.xcworkspace \
             -scheme CardKit \
-            -destination platform=iOS\ Simulator,OS=14.4,name=iPhone\ 12 \
+            -destination platform=iOS\ Simulator,OS=15.0,name=iPhone\ 13 \
             clean test | xcpretty
