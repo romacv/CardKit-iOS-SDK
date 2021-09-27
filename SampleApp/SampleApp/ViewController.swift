@@ -39,6 +39,10 @@ struct SectionItem {
     case paymentFlowSSP
     case paymentFlowMSP
     case paymentFlowWV
+    case paymentFlowTwoValidCerts
+    case paymentFlowThreeValidCerts
+    case paymentFlowTwoValidCertsWithoutRootCert
+    case paymentFlowInvalidCert
   }
 }
 
@@ -447,6 +451,10 @@ class ViewController: UITableViewController {
       case .paymentFlowSSP: _openPaymentFlow(amount: "111")
       case .paymentFlowMSP: _openPaymentFlow(amount: "222")
       case .paymentFlowWV: _openPaymentFlow(amount: "333")
+      case .paymentFlowTwoValidCerts: _openPaymentFlow(amount: "444")
+      case .paymentFlowThreeValidCerts: _openPaymentFlow(amount: "555")
+      case .paymentFlowTwoValidCertsWithoutRootCert: _openPaymentFlow(amount: "666")
+      case .paymentFlowInvalidCert: _openPaymentFlow(amount: "777")
     }
   }
   
@@ -472,10 +480,14 @@ class ViewController: UITableViewController {
     ]),
     
     Section(title: "Payment Flow", items: [
-      SectionItem(title: "One time passcode", kind: .paymentFlowOTP, isShowChevron: true, language: ""),
-      SectionItem(title: "Single Select", kind: .paymentFlowSSP, isShowChevron: true, language: ""),
-      SectionItem(title: "Multi-Select", kind: .paymentFlowMSP, isShowChevron: true, language: ""),
-      SectionItem(title: "WebView", kind: .paymentFlowWV, isShowChevron: true, language: ""),
+      SectionItem(title: "One time passcode (amount: 2000)", kind: .paymentFlowOTP, isShowChevron: true, language: ""),
+      SectionItem(title: "Single Select (amount: 111)", kind: .paymentFlowSSP, isShowChevron: true, language: ""),
+      SectionItem(title: "Multi-Select (amount: 222)", kind: .paymentFlowMSP, isShowChevron: true, language: ""),
+      SectionItem(title: "WebView (amount: 333)", kind: .paymentFlowWV, isShowChevron: true, language: ""),
+      SectionItem(title: "Two valid certs (amount: 444)", kind: .paymentFlowTwoValidCerts, isShowChevron: true, language: ""),
+      SectionItem(title: "Three valid certs (amount: 555)", kind: .paymentFlowThreeValidCerts, isShowChevron: true, language: ""),
+      SectionItem(title: "Two valid certs without roots (amount: 666)", kind: .paymentFlowTwoValidCertsWithoutRootCert, isShowChevron: true, language: ""),
+      SectionItem(title: "One invalid cert (amount: 777)", kind: .paymentFlowInvalidCert, isShowChevron: true, language: "")
     ]),
     
     Section(title: "ThreeDSSample", items: [
