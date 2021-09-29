@@ -44,7 +44,6 @@
 		924290DA255D5FF600378C68 /* CKCCardParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD9033255D241D001E1ECF /* CKCCardParams.m */; };
 		92429134255D610700378C68 /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD8FA9255D1B3A001E1ECF /* RSA.m */; };
 		9242BF4B26F382B80025F1D2 /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9242BF4926F382A90025F1D2 /* ThreeDSSDK.xcframework */; };
-		9242BF4C26F382B80025F1D2 /* ThreeDSSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9242BF4926F382A90025F1D2 /* ThreeDSSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9245F8D125B19A0D0065AF9E /* Luhn.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BD8F91255D1AE8001E1ECF /* Luhn.m */; };
 		9245F8D725B19A130065AF9E /* Luhn.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD8F92255D1AE9001E1ECF /* Luhn.h */; };
 		9245F8DD25B19A150065AF9E /* Luhn.h in Headers */ = {isa = PBXBuildFile; fileRef = 92BD8F92255D1AE9001E1ECF /* Luhn.h */; };
@@ -124,17 +123,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		9242BF4D26F382B80025F1D2 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				9242BF4C26F382B80025F1D2 /* ThreeDSSDK.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		927EEFF7261F2EB200250EA0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -584,7 +572,6 @@
 				D245AB35231C435E00369747 /* Sources */,
 				D245AB36231C435E00369747 /* Frameworks */,
 				D245AB37231C435E00369747 /* Resources */,
-				9242BF4D26F382B80025F1D2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
