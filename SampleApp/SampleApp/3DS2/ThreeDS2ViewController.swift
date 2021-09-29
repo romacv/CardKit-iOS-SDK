@@ -42,6 +42,16 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    let request: URLRequest = URLRequest(url: URL(string: "https://dummy3dsdev.intabia.ru/acs2/secret/cert")!)
+    
+    URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+      guard let data = data else { return }
+
+      DispatchQueue.main.async {
+        self._textFieldRootCI.text = String(data: data, encoding: .utf8) ?? ""
+      }
+    }).resume()
+    
     ThreeDS2ViewController.logs.removeAllObjects()
     if #available(iOS 13.0, *) {
       CardKConfig.shared.theme = CardKTheme.system()
@@ -75,9 +85,6 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
     _textFieldUserName.text = "3ds2-api"
     _textFieldUserName.placeholder = "Имя пользователя"
     
-    _textFieldRootCI.text = """
-    MIICDTCCAbOgAwIBAgIUOO3a573khC9kCsQJGKj/PpKOSl8wCgYIKoZIzj0EAwIwXDELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEVMBMGA1UEAwwMZHVtbXkzZHNyb290MB4XDTIxMDkxNDA2NDQ1OVoXDTMxMDkxMjA2NDQ1OVowXDELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEVMBMGA1UEAwwMZHVtbXkzZHNyb290MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE//e+MhwdgWxkFpexkjBCx8FtJ24KznHRXMSWabTrRYwdSZMScgwdpG1QvDO/ErTtW8IwouvDRlR2ViheGr02bqNTMFEwHQYDVR0OBBYEFHK/QzMXw3kW9UzY5w9LVOXr+6YpMB8GA1UdIwQYMBaAFHK/QzMXw3kW9UzY5w9LVOXr+6YpMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0EAwIDSAAwRQIhAOPEiotH3HJPIjlrj9/0m3BjlgvME0EhGn+pBzoX7Z3LAiAOtAFtkipd9T5c9qwFAqpjqwS9sSm5odIzk7ug8wow4Q==
-    """
     _textFieldRootCI.placeholder = "Root CI"
 
     _textFieldDirectoryServerId.text = "directoryServerId"
