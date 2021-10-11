@@ -103,7 +103,7 @@ NSString *CardKFooterID = @"footer";
 - (instancetype)init {
   if (self = [super initWithStyle:UITableViewStyleGrouped]) {
     _bundle = [NSBundle bundleForClass:[CardKViewController class]];
-    
+
     NSString *language = CardKConfig.shared.language;
     if (language != nil) {
       _languageBundle = [NSBundle bundleWithPath:[_bundle pathForResource:language ofType:@"lproj"]];

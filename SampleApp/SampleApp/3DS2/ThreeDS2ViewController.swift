@@ -73,6 +73,7 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
     _transactionManager.delegateAddLog = self
     _textFieldBaseUrl.text = url
     _textFieldBaseUrl.placeholder = "url"
+    _textFieldBaseUrl.delegate = self
     
     _textFieldCost.text = "2000"
     _textFieldCost.keyboardType = .numberPad
@@ -110,7 +111,7 @@ class ThreeDS2ViewController: UITableViewController, AddLogDelegate, UITextField
     _notificationCenter.addObserver(self, selector: #selector(_reloadTableView), name: Notification.Name("ReloadTable"), object: nil)
   }
   
-  func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+  func textFieldDidEndEditing(_ textField: UITextField) {
     let urlString = String("\(textField.text ?? url)/se/keys.do")
     CardKConfig.fetchKeys(urlString)
   }

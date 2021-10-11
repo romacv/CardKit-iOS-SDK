@@ -23,6 +23,7 @@ class ReqResDetailsController: UIViewController  {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+
     segmentControl = UISegmentedControl(items: tabs)
     segmentControl.selectedSegmentIndex = 0
     segmentControl.addTarget(self, action: #selector(_changeAction), for: .valueChanged)
