@@ -202,7 +202,7 @@
 }
 
 - (void) _sleep {
-  [NSThread sleepForTimeInterval:3];
+  [NSThread sleepForTimeInterval:5];
 }
 
 - (NSString *) _alertLable {

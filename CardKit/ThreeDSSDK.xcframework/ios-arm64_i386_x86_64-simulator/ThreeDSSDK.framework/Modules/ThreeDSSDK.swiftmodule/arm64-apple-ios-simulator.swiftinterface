@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
+// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.31.1 clang-1300.0.29.1)
 // swift-module-flags: -target arm64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ThreeDSSDK
 import AdSupport
 import CommonCrypto
@@ -13,13 +13,14 @@ import Swift
 import UIKit.UIImage
 import UIKit
 import WebKit
+import _Concurrency
 public typealias Image = UIKit.UIImage
 @objc public protocol ImageDisplaying {
   @objc func display(image: ThreeDSSDK.Image?)
 }
 public typealias ImageDisplayingView = UIKit.UIView & ThreeDSSDK.ImageDisplaying
-extension UIImageView : ThreeDSSDK.ImageDisplaying {
-  @objc dynamic open func display(image: ThreeDSSDK.Image?)
+extension UIKit.UIImageView : ThreeDSSDK.ImageDisplaying {
+  @_Concurrency.MainActor(unsafe) @objc dynamic open func display(image: ThreeDSSDK.Image?)
 }
 @discardableResult
 public func loadImage(with url: Foundation.URL, options: ThreeDSSDK.ImageLoadingOptions = ImageLoadingOptions.shared, into view: ThreeDSSDK.ImageDisplayingView, progress: ThreeDSSDK.ImageTask.ProgressHandler? = nil, completion: ThreeDSSDK.ImageTask.Completion? = nil) -> ThreeDSSDK.ImageTask?
@@ -51,7 +52,7 @@ public struct ImageLoadingOptions {
 }
 public struct AuthenticationRequestParameters {
 }
-extension AuthenticationRequestParameters {
+extension ThreeDSSDK.AuthenticationRequestParameters {
   public init(_ sdkTransactionID: Swift.String, _ deviceData: Swift.String, _ sdkEphemeralPublicKey: Swift.String, _ sdkAppID: Swift.String, _ sdkReferenceNumber: Swift.String, _ messageVersion: Swift.String) throws
   public func getDeviceData() -> Swift.String
   public func getSDKTransactionID() -> Swift.String
@@ -60,13 +61,13 @@ extension AuthenticationRequestParameters {
   public func getSDKEphemeralPublicKey() -> Swift.String
   public func getMessageVersion() -> Swift.String
 }
-extension Data {
+extension Foundation.Data {
   public init?(base64URLEncoded base64URLString: Swift.String)
   public init?(base64URLEncoded base64URLData: Foundation.Data)
   public func base64URLEncodedString() -> Swift.String
   public func base64URLEncodedData() -> Foundation.Data
 }
-extension Data : ThreeDSSDK.DataConvertible {
+extension Foundation.Data : ThreeDSSDK.DataConvertible {
   public init(_ data: Foundation.Data)
   public func data() -> Foundation.Data
 }
@@ -74,7 +75,7 @@ extension Data : ThreeDSSDK.DataConvertible {
   convenience public init()
   @objc deinit
 }
-extension ChallengeParameters {
+extension ThreeDSSDK.ChallengeParameters {
   final public func set3DSServerTransactionID(_ transactionID: Swift.String)
   final public func setAcsTransactionID(_ transactionID: Swift.String)
   final public func setAcsRefNumber(_ refNum: Swift.String)
@@ -86,10 +87,10 @@ extension ChallengeParameters {
   final public func getThreeDSRequestorAppURL() -> Swift.String
   final public func setThreeDSRequestorAppURL(_ threeDSRequestorAppURL: Swift.String)
 }
-extension SymmetricKey : Swift.Encodable {
+extension ThreeDSSDK.SymmetricKey : Swift.Encodable {
   public func encode(to encoder: Swift.Encoder) throws
 }
-extension SymmetricKey : Swift.Decodable {
+extension ThreeDSSDK.SymmetricKey : Swift.Decodable {
   public init(from decoder: Swift.Decoder) throws
 }
 public protocol CompactDeserializable {
@@ -109,7 +110,7 @@ public enum ComponentCompactSerializedIndex {
   convenience public init()
   @objc deinit
 }
-extension TextBoxCustomization {
+extension ThreeDSSDK.TextBoxCustomization {
   final public func getBorderWidth() -> Swift.Int
   final public func setBorderWidth(_ width: Swift.Int) throws
   final public func getBorderColor() -> Swift.String
@@ -122,7 +123,7 @@ public protocol ProgressDialog : AnyObject {
   func show()
   func close()
 }
-extension Data : ThreeDSSDK.ExpressibleAsECPublicKeyComponents {
+extension Foundation.Data : ThreeDSSDK.ExpressibleAsECPublicKeyComponents {
   public static func representing(ecPublicKeyComponents components: ThreeDSSDK.ECPublicKeyComponents) throws -> Foundation.Data
   public func ecPublicKeyComponents() throws -> ThreeDSSDK.ECPublicKeyComponents
 }
@@ -366,7 +367,7 @@ public struct RuntimeErrorEvent : Swift.Error {
   public let errorCode: Swift.String?
   public let errorMessage: Swift.String
 }
-extension RuntimeErrorEvent {
+extension ThreeDSSDK.RuntimeErrorEvent {
   public init(_ errorMessage: Swift.String, _ errorCode: Swift.String? = nil)
   public func getErrorCode() -> Swift.String?
   public func getErrorMessage() -> Swift.String
@@ -394,7 +395,7 @@ public protocol JWK : Swift.Decodable, Swift.Encodable {
   @available(iOS 11.0, *)
   func withThumbprintAsKeyId(algorithm: ThreeDSSDK.JWKThumbprintAlgorithm) throws -> Self
 }
-extension JWK {
+extension ThreeDSSDK.JWK {
   @available(iOS 11.0, *)
   public func thumbprint(algorithm: ThreeDSSDK.JWKThumbprintAlgorithm = .SHA256) throws -> Swift.String
 }
@@ -405,22 +406,22 @@ public protocol ChallengeStatusReceiver : AnyObject {
   func protocolError(protocolErrorEvent: ThreeDSSDK.ProtocolErrorEvent)
   func runtimeError(runtimeErrorEvent: ThreeDSSDK.RuntimeErrorEvent)
 }
-extension JWKSet : Swift.Encodable {
+extension ThreeDSSDK.JWKSet : Swift.Encodable {
   public func encode(to encoder: Swift.Encoder) throws
 }
-extension JWKSet : Swift.Decodable {
+extension ThreeDSSDK.JWKSet : Swift.Decodable {
   public init(from decoder: Swift.Decoder) throws
 }
 public struct ErrorMessage {
 }
-extension ErrorMessage {
+extension ThreeDSSDK.ErrorMessage {
   public init(_ transactionID: Swift.String, _ errorCode: Swift.String, _ errorDescription: Swift.String, _ errorDetail: Swift.String)
   public func getTransactionID() -> Swift.String
   public func getErrorCode() -> Swift.String
   public func getErrorDescription() -> Swift.String
   public func getErrorDetails() -> Swift.String
 }
-extension Data : ThreeDSSDK.ExpressibleAsSymmetricKeyComponents {
+extension Foundation.Data : ThreeDSSDK.ExpressibleAsSymmetricKeyComponents {
   public static func representing(symmetricKeyComponents components: ThreeDSSDK.SymmetricKeyComponents) throws -> Foundation.Data
   public func symmetricKeyComponents() throws -> ThreeDSSDK.SymmetricKeyComponents
 }
@@ -505,7 +506,7 @@ public struct ImageRequest {
   public init(url: Foundation.URL, targetSize: CoreGraphics.CGSize, contentMode: ThreeDSSDK.ImageDecompressor.ContentMode, upscale: Swift.Bool = false)
   public init(urlRequest: Foundation.URLRequest, targetSize: CoreGraphics.CGSize, contentMode: ThreeDSSDK.ImageDecompressor.ContentMode, upscale: Swift.Bool = false)
 }
-extension ImageRequest {
+extension ThreeDSSDK.ImageRequest {
   public mutating func process<P>(with processor: P) where P : ThreeDSSDK.ImageProcessing
   public func processed<P>(with processor: P) -> ThreeDSSDK.ImageRequest where P : ThreeDSSDK.ImageProcessing
   public mutating func process<Key>(key: Key, _ closure: @escaping (ThreeDSSDK.Image) -> ThreeDSSDK.Image?) where Key : Swift.Hashable
@@ -523,7 +524,7 @@ public enum SecurityWarningIdentifier : Swift.String {
     get
   }
 }
-extension SecurityWarningIdentifier : Swift.CodingKey, Swift.Encodable {
+extension ThreeDSSDK.SecurityWarningIdentifier : Swift.CodingKey, Swift.Encodable {
   public init?(stringValue: Swift.String)
   public init?(intValue: Swift.Int)
   public var intValue: Swift.Int? {
@@ -537,7 +538,7 @@ final public class Ecom3DS2Service {
   public init()
   @objc deinit
 }
-extension Ecom3DS2Service : ThreeDSSDK.ThreeDS2Service {
+extension ThreeDSSDK.Ecom3DS2Service : ThreeDSSDK.ThreeDS2Service {
   final public func initialize(configParameters: ThreeDSSDK.ConfigParameters, locale: Swift.String?, uiCustomization: ThreeDSSDK.UiCustomization?) throws
   final public func createTransaction(directoryServerID: Swift.String, messageVersion: Swift.String?, publicKeyBase64: Swift.String, rootCertificateBase64: Swift.String, logoBase64: Swift.String) throws -> ThreeDSSDK.Transaction
   final public func cleanup() throws
@@ -562,7 +563,7 @@ public struct ImageDecodingContext {
   public let request: ThreeDSSDK.ImageRequest
   public let data: Foundation.Data
 }
-extension UIImage {
+extension UIKit.UIImage {
   public var animatedImageData: Foundation.Data? {
     get
     set
@@ -572,7 +573,7 @@ public struct JWEHeader {
   public init(keyManagementAlgorithm: ThreeDSSDK.KeyManagementAlgorithm, contentEncryptionAlgorithm: ThreeDSSDK.ContentEncryptionAlgorithm)
   public init(parameters: [Swift.String : Any]) throws
 }
-extension JWEHeader {
+extension ThreeDSSDK.JWEHeader {
   public var keyManagementAlgorithm: ThreeDSSDK.KeyManagementAlgorithm? {
     get
   }
@@ -587,7 +588,7 @@ extension JWEHeader {
     set
   }
 }
-extension JWEHeader : ThreeDSSDK.CommonHeaderParameterSpace {
+extension ThreeDSSDK.JWEHeader : ThreeDSSDK.CommonHeaderParameterSpace {
   public var jku: Foundation.URL? {
     get
     set
@@ -633,7 +634,7 @@ extension JWEHeader : ThreeDSSDK.CommonHeaderParameterSpace {
     set
   }
 }
-extension JWEHeader {
+extension ThreeDSSDK.JWEHeader {
   @available(*, deprecated, message: "Use `JWEHeader.keyManagementAlgorithm` instead")
   public var algorithm: ThreeDSSDK.AsymmetricKeyAlgorithm? {
     get
@@ -711,7 +712,7 @@ public struct SymmetricKey : ThreeDSSDK.JWK {
 @_hasMissingDesignatedInitializers final public class ButtonCustomization : ThreeDSSDK.Customization {
   @objc deinit
 }
-extension ButtonCustomization {
+extension ThreeDSSDK.ButtonCustomization {
   convenience public init()
   final public func getBackgroundColor() -> Swift.String
   final public func setBackgroundColor(_ hexColorCode: Swift.String) throws
@@ -719,21 +720,21 @@ extension ButtonCustomization {
   final public func getCornerRadius() -> Swift.Int
   final public func setCornerRadius(_ radius: Swift.Int) throws
 }
-extension ECPublicKey : Swift.Encodable {
+extension ThreeDSSDK.ECPublicKey : Swift.Encodable {
   public func encode(to encoder: Swift.Encoder) throws
 }
-extension ECPublicKey : Swift.Decodable {
+extension ThreeDSSDK.ECPublicKey : Swift.Decodable {
   public init(from decoder: Swift.Decoder) throws
 }
-extension ECPrivateKey : Swift.Encodable {
+extension ThreeDSSDK.ECPrivateKey : Swift.Encodable {
   public func encode(to encoder: Swift.Encoder) throws
 }
-extension ECPrivateKey : Swift.Decodable {
+extension ThreeDSSDK.ECPrivateKey : Swift.Decodable {
   public init(from decoder: Swift.Decoder) throws
 }
 public struct Warning {
 }
-extension Warning {
+extension ThreeDSSDK.Warning {
   public init(_ id: Swift.String, _ message: Swift.String, _ severity: ThreeDSSDK.Severity)
   public func getID() -> Swift.String
   public func getMessage() -> Swift.String
@@ -742,7 +743,7 @@ extension Warning {
 public struct Verifier {
   public init?<KeyType>(verifyingAlgorithm: ThreeDSSDK.SignatureAlgorithm, publicKey: KeyType)
 }
-extension Data : ThreeDSSDK.ExpressibleAsECPrivateKeyComponents {
+extension Foundation.Data : ThreeDSSDK.ExpressibleAsECPrivateKeyComponents {
   public static func representing(ecPrivateKeyComponents components: ThreeDSSDK.ECPrivateKeyComponents) throws -> Foundation.Data
   public func ecPrivateKeyComponents() throws -> ThreeDSSDK.ECPrivateKeyComponents
 }
@@ -754,7 +755,7 @@ public protocol DataConvertible {
   convenience public init()
   @objc deinit
 }
-extension ToolbarCustomization {
+extension ThreeDSSDK.ToolbarCustomization {
   final public func getBackgroundColor() -> Swift.String
   final public func setBackgroundColor(_ hexColorCode: Swift.String) throws
   final public func setBackgroundColor(_ color: UIKit.UIColor)
@@ -766,7 +767,7 @@ extension ToolbarCustomization {
 public struct Encrypter<KeyType> {
   public init?(keyManagementAlgorithm: ThreeDSSDK.KeyManagementAlgorithm, contentEncryptionAlgorithm: ThreeDSSDK.ContentEncryptionAlgorithm, encryptionKey: KeyType)
 }
-extension Encrypter {
+extension ThreeDSSDK.Encrypter {
   @available(*, deprecated, message: "Use `init?(keyManagementAlgorithm:contentEncryptionAlgorithm:encryptionKey:)` instead")
   public init?(keyEncryptionAlgorithm: ThreeDSSDK.AsymmetricKeyAlgorithm, encryptionKey key: KeyType, contentEncyptionAlgorithm: ThreeDSSDK.SymmetricKeyAlgorithm)
   @available(*, deprecated, message: "Use `init?(keyManagementAlgorithm:contentEncryptionAlgorithm:encryptionKey:)` instead")
@@ -781,7 +782,7 @@ public struct SymmetricEncryptionContext {
 public struct Decrypter {
   public init?<KeyType>(keyManagementAlgorithm: ThreeDSSDK.KeyManagementAlgorithm, contentEncryptionAlgorithm: ThreeDSSDK.ContentEncryptionAlgorithm, decryptionKey: KeyType)
 }
-extension Decrypter {
+extension ThreeDSSDK.Decrypter {
   @available(*, deprecated, message: "Use `init?(keyManagementAlgorithm:contentEncryptionAlgorithm:decryptionKey:)` instead")
   public init?<KeyType>(keyDecryptionAlgorithm: ThreeDSSDK.AsymmetricKeyAlgorithm, decryptionKey key: KeyType, contentDecryptionAlgorithm: ThreeDSSDK.SymmetricKeyAlgorithm)
   @available(*, deprecated, message: "Use `init?(keyManagementAlgorithm:contentEncryptionAlgorithm:decryptionKey:)` instead")
@@ -797,12 +798,12 @@ public struct JWSHeader {
   public init(algorithm: ThreeDSSDK.SignatureAlgorithm)
   public init(parameters: [Swift.String : Any]) throws
 }
-extension JWSHeader {
+extension ThreeDSSDK.JWSHeader {
   public var algorithm: ThreeDSSDK.SignatureAlgorithm? {
     get
   }
 }
-extension JWSHeader : ThreeDSSDK.CommonHeaderParameterSpace {
+extension ThreeDSSDK.JWSHeader : ThreeDSSDK.CommonHeaderParameterSpace {
   public var jku: Foundation.URL? {
     get
     set
@@ -856,7 +857,7 @@ final public class ConfigParameters {
   final public func removeParam(_ group: Swift.String?, _ paramName: Swift.String) throws -> Swift.String
   @objc deinit
 }
-extension ConfigParameters {
+extension ThreeDSSDK.ConfigParameters {
   public enum Key : Swift.String {
     case integrityReferenceValue
     public init?(rawValue: Swift.String)
@@ -914,19 +915,19 @@ public protocol ThreeDS2Service : AnyObject {
 @objc public protocol WebChallengeProtocol : ThreeDSSDK.GenericChallengeProtocol {
   @objc func getWebView() -> WebKit.WKWebView
 }
-extension RSAPublicKey : Swift.Encodable {
+extension ThreeDSSDK.RSAPublicKey : Swift.Encodable {
   public func encode(to encoder: Swift.Encoder) throws
 }
-extension RSAPublicKey : Swift.Decodable {
+extension ThreeDSSDK.RSAPublicKey : Swift.Decodable {
   public init(from decoder: Swift.Decoder) throws
 }
-extension RSAPrivateKey : Swift.Encodable {
+extension ThreeDSSDK.RSAPrivateKey : Swift.Encodable {
   public func encode(to encoder: Swift.Encoder) throws
 }
-extension RSAPrivateKey : Swift.Decodable {
+extension ThreeDSSDK.RSAPrivateKey : Swift.Decodable {
   public init(from decoder: Swift.Decoder) throws
 }
-extension Data : ThreeDSSDK.ExpressibleAsRSAPublicKeyComponents {
+extension Foundation.Data : ThreeDSSDK.ExpressibleAsRSAPublicKeyComponents {
   public static func representing(rsaPublicKeyComponents components: ThreeDSSDK.RSAPublicKeyComponents) throws -> Foundation.Data
   public func rsaPublicKeyComponents() throws -> ThreeDSSDK.RSAPublicKeyComponents
 }
@@ -948,8 +949,8 @@ public protocol Transaction : AnyObject {
   public var progress: Foundation.Progress {
     get
   }
-  public typealias Completion = (ThreeDSSDK.ImageResponse?, ThreeDSSDK.ImagePipeline.Error?) -> Swift.Void
-  public typealias ProgressHandler = (ThreeDSSDK.ImageResponse?, Swift.Int64, Swift.Int64) -> Swift.Void
+  public typealias Completion = (_ response: ThreeDSSDK.ImageResponse?, _ error: ThreeDSSDK.ImagePipeline.Error?) -> Swift.Void
+  public typealias ProgressHandler = (_ response: ThreeDSSDK.ImageResponse?, _ completed: Swift.Int64, _ total: Swift.Int64) -> Swift.Void
   public func setPriority(_ priority: ThreeDSSDK.ImageRequest.Priority)
   public func cancel()
   public func hash(into hasher: inout Swift.Hasher)
@@ -1020,10 +1021,10 @@ public struct JWS {
   public func validate(using verifier: ThreeDSSDK.Verifier) throws -> ThreeDSSDK.JWS
   public func isValid(for verifier: ThreeDSSDK.Verifier) -> Swift.Bool
 }
-extension JWS : ThreeDSSDK.CompactSerializable {
+extension ThreeDSSDK.JWS : ThreeDSSDK.CompactSerializable {
   public func serialize(to serializer: inout ThreeDSSDK.CompactSerializer)
 }
-extension JWS : ThreeDSSDK.CompactDeserializable {
+extension ThreeDSSDK.JWS : ThreeDSSDK.CompactDeserializable {
   public static var componentCount: Swift.Int {
     get
   }
@@ -1033,7 +1034,7 @@ final public class UiCustomization {
   public init()
   @objc deinit
 }
-extension UiCustomization {
+extension ThreeDSSDK.UiCustomization {
   final public func setButtonCustomization(_ buttonCustomization: ThreeDSSDK.ButtonCustomization, _ buttonType: ThreeDSSDK.ButtonType) throws
   final public func setButtonCustomization(_ buttonCustomization: ThreeDSSDK.ButtonCustomization, _ buttonType: Swift.String) throws
   final public func getToolbarCustomization() -> ThreeDSSDK.ToolbarCustomization?
@@ -1052,7 +1053,7 @@ public struct JWKSet {
   public func jsonString() -> Swift.String?
   public func jsonData() -> Foundation.Data?
 }
-extension JWKSet : Swift.Collection {
+extension ThreeDSSDK.JWKSet : Swift.Collection {
   public typealias ArrayType = [ThreeDSSDK.JWK]
   public typealias Element = ThreeDSSDK.JWKSet.ArrayType.Element
   public typealias Index = ThreeDSSDK.JWKSet.ArrayType.Index
@@ -1071,7 +1072,7 @@ extension JWKSet : Swift.Collection {
   public typealias Indices = Swift.DefaultIndices<ThreeDSSDK.JWKSet>
   public typealias SubSequence = Swift.Slice<ThreeDSSDK.JWKSet>
 }
-extension JWKSet : Swift.ExpressibleByArrayLiteral {
+extension ThreeDSSDK.JWKSet : Swift.ExpressibleByArrayLiteral {
   public typealias ArrayLiteralElement = ThreeDSSDK.JWKSet.Element
   public init(arrayLiteral elements: ThreeDSSDK.JWKSet.ArrayLiteralElement...)
 }
@@ -1099,7 +1100,7 @@ public protocol Cancellable : AnyObject {
 public protocol DataLoading {
   func loadData(with request: Foundation.URLRequest, didReceiveData: @escaping (Foundation.Data, Foundation.URLResponse) -> Swift.Void, completion: @escaping (Swift.Error?) -> Swift.Void) -> ThreeDSSDK.Cancellable
 }
-extension URLSessionTask : ThreeDSSDK.Cancellable {
+extension Foundation.URLSessionTask : ThreeDSSDK.Cancellable {
 }
 final public class DataLoader : ThreeDSSDK.DataLoading {
   final public let session: Foundation.URLSession
@@ -1132,7 +1133,7 @@ public protocol ImageCaching : AnyObject {
   func storeResponse(_ response: ThreeDSSDK.ImageResponse, for request: ThreeDSSDK.ImageRequest)
   func removeResponse(for request: ThreeDSSDK.ImageRequest)
 }
-extension ImageCaching {
+extension ThreeDSSDK.ImageCaching {
   public subscript(request: ThreeDSSDK.ImageRequest) -> ThreeDSSDK.Image? {
     get
     set
@@ -1172,7 +1173,7 @@ final public class ImageCache : ThreeDSSDK.ImageCaching {
   convenience public init()
   @objc deinit
 }
-extension LabelCustomization {
+extension ThreeDSSDK.LabelCustomization {
   final public func getHeadingTextColor() -> Swift.String
   final public func setHeadingTextColor(_ hexColorCode: Swift.String) throws
   final public func setHeadingTextColor(_ color: UIKit.UIColor)
@@ -1183,12 +1184,12 @@ extension LabelCustomization {
 }
 public struct ProtocolErrorEvent {
 }
-extension ProtocolErrorEvent {
+extension ThreeDSSDK.ProtocolErrorEvent {
   public init(_ sdkTransactionID: Swift.String, _ errorMessage: ThreeDSSDK.ErrorMessage)
   public func getSDKTransactionID() -> Swift.String
   public func getErrorMessage() -> ThreeDSSDK.ErrorMessage
 }
-extension SecKey : ThreeDSSDK.ExpressibleAsECPublicKeyComponents {
+extension Security.SecKey : ThreeDSSDK.ExpressibleAsECPublicKeyComponents {
   public static func representing(ecPublicKeyComponents components: ThreeDSSDK.ECPublicKeyComponents) throws -> Self
   public func ecPublicKeyComponents() throws -> ThreeDSSDK.ECPublicKeyComponents
 }
@@ -1270,7 +1271,7 @@ public typealias AsymmetricKeyAlgorithm = ThreeDSSDK.KeyManagementAlgorithm
 public typealias SymmetricKeyAlgorithm = ThreeDSSDK.ContentEncryptionAlgorithm
 public struct CompletionEvent {
 }
-extension CompletionEvent {
+extension ThreeDSSDK.CompletionEvent {
   public init(_ sdkTransactionID: Swift.String, _ transactionStatus: Swift.String)
   public func getSDKTransactionID() -> Swift.String
   public func getTransactionStatus() -> Swift.String
@@ -1289,7 +1290,7 @@ public struct Payload : ThreeDSSDK.DataConvertible {
   public init(_ payload: Foundation.Data)
   public func data() -> Foundation.Data
 }
-extension SecKey : ThreeDSSDK.ExpressibleAsECPrivateKeyComponents {
+extension Security.SecKey : ThreeDSSDK.ExpressibleAsECPrivateKeyComponents {
   public static func representing(ecPrivateKeyComponents components: ThreeDSSDK.ECPrivateKeyComponents) throws -> Self
   public func ecPrivateKeyComponents() throws -> ThreeDSSDK.ECPrivateKeyComponents
 }
@@ -1312,21 +1313,21 @@ public struct JWE {
   public func decrypt<KeyType>(with key: KeyType) throws -> ThreeDSSDK.Payload
   public func decrypt(using decrypter: ThreeDSSDK.Decrypter) throws -> ThreeDSSDK.Payload
 }
-extension JWE : ThreeDSSDK.CompactSerializable {
+extension ThreeDSSDK.JWE : ThreeDSSDK.CompactSerializable {
   public func serialize(to serializer: inout ThreeDSSDK.CompactSerializer)
 }
-extension JWE : ThreeDSSDK.CompactDeserializable {
+extension ThreeDSSDK.JWE : ThreeDSSDK.CompactDeserializable {
   public static var componentCount: Swift.Int {
     get
   }
   public init(from deserializer: ThreeDSSDK.CompactDeserializer) throws
 }
-extension JWK {
+extension ThreeDSSDK.JWK {
   public subscript(parameter: Swift.String) -> Swift.String? {
     get
   }
 }
-extension JWK {
+extension ThreeDSSDK.JWK {
   public func jsonString() -> Swift.String?
   public func jsonData() -> Foundation.Data?
 }
@@ -1390,14 +1391,14 @@ public enum HashAlgorithm : Swift.String {
     get
   }
 }
-extension SecKey : ThreeDSSDK.ExpressibleAsRSAPublicKeyComponents {
+extension Security.SecKey : ThreeDSSDK.ExpressibleAsRSAPublicKeyComponents {
   public static func representing(rsaPublicKeyComponents components: ThreeDSSDK.RSAPublicKeyComponents) throws -> Self
   public func rsaPublicKeyComponents() throws -> ThreeDSSDK.RSAPublicKeyComponents
 }
 @_hasMissingDesignatedInitializers public class Customization {
   @objc deinit
 }
-extension Customization {
+extension ThreeDSSDK.Customization {
   public func getTextFontName() -> Swift.String
   public func setTextFontName(_ name: Swift.String) throws
   public func getTextColor() -> Swift.String
@@ -1416,7 +1417,7 @@ final public class DataCache : ThreeDSSDK.DataCaching {
   final public var sizeLimit: Swift.Int
   final public let path: Foundation.URL
   final public var sweepInterval: Swift.Double
-  public typealias FilenameGenerator = (Swift.String) -> Swift.String?
+  public typealias FilenameGenerator = (_ key: Swift.String) -> Swift.String?
   convenience public init(name: Swift.String, filenameGenerator: @escaping (Swift.String) -> Swift.String? = DataCache.filename(for:)) throws
   public init(path: Foundation.URL, filenameGenerator: @escaping (Swift.String) -> Swift.String? = DataCache.filename(for:)) throws
   public static func filename(for key: Swift.String) -> Swift.String?
