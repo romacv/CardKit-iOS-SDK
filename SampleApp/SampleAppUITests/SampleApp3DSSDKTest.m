@@ -57,9 +57,9 @@
 
 - (void) _runFlowWithBinding {
   [[_app.buttons elementBoundByIndex:1] tap];
-  
+
   [self _sleep];
-  
+
   [_app.cells.firstMatch tap];
 
   XCUIElement *cellWithBindingInfo = [_app.cells elementBoundByIndex:0];
@@ -132,7 +132,7 @@
 }
 
 - (void) _runFlowWithRadioButtonsWithNewCard {
-  [_app.cells.allElementsBoundByAccessibilityElement[12] tap];
+  [_app.cells.staticTexts[@"Single select (amount: 111)"] tap];
   [self _openKindPaymentController];
   [self _sleep];
   [self _fillNewCardForm];
@@ -152,12 +152,14 @@
 }
 
 - (void) _runFlowWithCheckBoxs {
-  [_app.cells.allElementsBoundByAccessibilityElement[13] tap];
+  [_app swipeUp];
+  [_app.cells.staticTexts[@"Multi-Select (amount: 222)"] tap];
   [self _runFlowWithBinding];
 }
 
 - (void) _runFlowWithRadioButtons {
-  [_app.cells.allElementsBoundByAccessibilityElement[12] tap];
+  [_app swipeUp];
+  [_app.cells.staticTexts[@"Single Select (amount: 111)"] tap];
   [self _runFlowWithBinding];
 }
 
