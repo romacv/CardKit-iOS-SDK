@@ -118,6 +118,7 @@
 
 - (void) _openPassCodeFlowWithNewCard {
   [self _tapOnCellWithOnePasscodeFlow];
+  [self _sleep];
   [self _openKindPaymentController];
   [self _sleep];
   [self _fillNewCardForm];
@@ -202,7 +203,7 @@
 }
 
 - (void) _sleep {
-  [NSThread sleepForTimeInterval:5];
+  [NSThread sleepForTimeInterval:15];
 }
 
 - (NSString *) _alertLable {
