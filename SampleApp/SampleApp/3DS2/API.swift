@@ -28,7 +28,7 @@ struct RequestParams {
   var clientId: String?
 }
 
-struct ResponseParams {
+struct ResponseParams: Codable {
   var orderId: String?
   var threeDSServerTransId: String?
   var threeDSSDKKey: String?
@@ -36,6 +36,15 @@ struct ResponseParams {
   var acsTransID: String?
   var acsReferenceNumber: String?
   var acsSignedContent: String?
+  
+  enum CodingKeys: String, CodingKey {
+    case orderId = "orderId"
+    case threeDSServerTransId = "threeDSServerTransId"
+    case threeDSSDKKey = "threeDSSDKKey"
+    case acsTransID = "threeDSAcsTransactionId"
+    case acsReferenceNumber = "threeDSAcsRefNumber"
+    case acsSignedContent = "threeDSAcsSignedContent"
+  }
 }
 
 var url = "https://web.rbsdev.com/soyuzpayment";
@@ -67,16 +76,13 @@ class API {
 
       let session = URLSession.shared
       let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-
-          guard let data = data else { return }
+        guard let data = data else { return }
         
-        let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-
-        if let responseJSON = responseJSON as? [String: Any] {
-          var responseParams = ResponseParams()
-          responseParams.orderId = (responseJSON["orderId"] as? String)
-          completionHandler(responseParams, data)
+        guard let responseParams = try? JSONDecoder().decode(ResponseParams.self, from: data) else {
+          return
         }
+        
+        completionHandler(responseParams, data)
       })
 
       dataTask.resume()
@@ -102,31 +108,16 @@ class API {
     request.encodeParameters(parameters: body)
 
     URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
-//      completionHandler(nil, data)
-
       guard let data = data else {
         completionHandler(nil, nil)
         return
       }
-      
-      guard let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any] else {
-        completionHandler(nil, data)
-        return
-      }
-      
-      guard
-        let threeDSSDKKey = responseJSON["threeDSSDKKey"] as? String,
-        let threeDSServerTransId = responseJSON["threeDSServerTransId"] as? String
-      else {
-        completionHandler(nil, data)
-        return
-      }
-      
-      var responseParams = ResponseParams()
 
-      responseParams.threeDSSDKKey = threeDSSDKKey
-      responseParams.threeDSServerTransId = threeDSServerTransId
-      
+      guard let responseParams = try? JSONDecoder().decode(ResponseParams.self, from: data) else {
+        completionHandler(nil, data)
+        return
+      }
+ 
       completionHandler(responseParams, data)
     }).resume()
   }
@@ -159,28 +150,13 @@ class API {
 
     let session = URLSession.shared
     session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-
       guard let data = data else { return }
       
-      guard let responseJSON = try! JSONSerialization.jsonObject(with: data, options: []) as? [String : Any] else {
-        return
-      }
-      
-      guard
-        let acsTransID = responseJSON["threeDSAcsTransactionId"] as? String,
-        let acsReferenceNumber = responseJSON["threeDSAcsRefNumber"] as? String,
-        let acsSignedContent = responseJSON["threeDSAcsSignedContent"] as? String
-      else {
+      guard let responseParams = try? JSONDecoder().decode(ResponseParams.self, from: data) else {
         completionHandler(nil, data)
         return
       }
-      
-      var responseParams = ResponseParams()
 
-      responseParams.acsTransID = acsTransID
-      responseParams.acsReferenceNumber = acsReferenceNumber
-      responseParams.acsSignedContent = acsSignedContent
-      
       completionHandler(responseParams, data)
     }).resume()
   }
@@ -206,7 +182,7 @@ class API {
       
       guard let data = data else { return }
       
-        let responseJSON = try! JSONSerialization.jsonObject(with: data, options: [])
+      let responseJSON = try! JSONSerialization.jsonObject(with: data, options: [])
       
       completionHandler(responseJSON, data)
     }).resume()
