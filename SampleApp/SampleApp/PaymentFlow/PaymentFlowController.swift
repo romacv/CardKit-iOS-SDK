@@ -41,7 +41,6 @@ class PaymentFlowController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    ThreeDS2ViewController.logs.removeAllObjects()
     if #available(iOS 13.0, *) {
       self.view.backgroundColor = .systemGray6
       CardKConfig.shared.theme = CardKTheme.system()

@@ -10,45 +10,37 @@ import ThreeDSSDK
 
 
 public protocol TransactionManagerDelegate: AnyObject {
-    func errorEventReceived()
+    func finishOrder() -> Void
 }
 
-protocol AddLogDelegate: AnyObject {
-  func addLog(title: String, request: String, response: String, isReload: Bool) -> Void
-}
-
-public class TransactionManager: NSObject, ChallengeStatusReceiver {
-  weak var delegateAddLog: AddLogDelegate?
+public class TransactionManager: NSObject {
   weak var delegate: TransactionManagerDelegate?
-
-  static var sdkProgressDialog: ProgressDialog? = nil
 
   var pubKey: String = ""
   var directoryServerId: String = ""
   var rootCI: String = ""
+  var useCustomTheme: Bool = false
   
-  var _service: ThreeDS2Service? = nil
-  var _sdkTransaction: Transaction?
-  var _isSdkInitialized: Bool = false
-  var _isChallengeTransaction : Bool? = false
+  private var _service: ThreeDS2Service = Ecom3DS2Service()
+  private var _sdkTransaction: Transaction?
+  private var _sdkProgressDialog: ProgressDialog?
+  private let _notificationCenter = NotificationCenter.default
   
-  let _notificationCenter = NotificationCenter.default
-  let HEADER_LABEL = "SECURE CHECKOUT"
-  let _logo:String = ""
-  let _uiConfig = UiCustomization()
+  public func initializeSdk() throws {
+    try _service.initialize(configParameters: ConfigParameters(), locale: Locale.current.languageCode, uiCustomization: _setUpTheme())
 
-  public func initializeSdk() {
-    do {
-      _initSdkOnce()
-      self._sdkTransaction = try self._service?.createTransaction(directoryServerID: self.directoryServerId, messageVersion: nil, publicKeyBase64: pubKey, rootCertificateBase64: self.rootCI, logoBase64: _logo)
+    _sdkTransaction = try _service.createTransaction(directoryServerID: directoryServerId, messageVersion: nil, publicKeyBase64: pubKey, rootCertificateBase64: rootCI, logoBase64: "")
 
-      TransactionManager.sdkProgressDialog = try self._sdkTransaction!.getProgressView()
-    } catch _ {
-      print("Error initializing SDK")
-    }
+    _sdkProgressDialog = try _sdkTransaction!.getProgressView()
   }
+  
+  private func _setUpTheme() throws -> UiCustomization {
+    let uiConfig = UiCustomization()
 
-  func setUpUICustomization(isDarkMode: Bool) throws {
+    if (!useCustomTheme) {
+      return uiConfig
+    }
+
     let indigoColor = UIColor(red: 0.25, green: 0.32, blue: 0.71, alpha: 1.00)
     
     var toolbarColor: UIColor = indigoColor
@@ -64,7 +56,7 @@ public class TransactionManager: NSObject, ChallengeStatusReceiver {
     }
     
     let toolbarCustomization = ToolbarCustomization()
-    try toolbarCustomization.setHeaderText(HEADER_LABEL)
+    try toolbarCustomization.setHeaderText("SECURE CHECKOUT")
     toolbarCustomization.setBackgroundColor(toolbarColor)
     toolbarCustomization.setTextColor(.white)
     
@@ -89,116 +81,81 @@ public class TransactionManager: NSObject, ChallengeStatusReceiver {
     titleCustomization.setTextColor(textColor)
     titleCustomization.setHeadingTextColor(textColor)
 
-    _uiConfig.setToolbarCustomization(toolbarCustomization)
-    _uiConfig.setTextBoxCustomization(textBoxCustomization)
-    _uiConfig.setLabelCustomization(titleCustomization)
-    try _uiConfig.setButtonCustomization(buttonDoneCustomization, .submit)
-    try _uiConfig.setButtonCustomization(buttonCancelCustomization, .cancel)
-    try _uiConfig.setButtonCustomization(buttonResendCustomization, .resend)
+    uiConfig.setToolbarCustomization(toolbarCustomization)
+    uiConfig.setTextBoxCustomization(textBoxCustomization)
+    uiConfig.setLabelCustomization(titleCustomization)
+    try uiConfig.setButtonCustomization(buttonDoneCustomization, .submit)
+    try uiConfig.setButtonCustomization(buttonCancelCustomization, .cancel)
+    try uiConfig.setButtonCustomization(buttonResendCustomization, .resend)
+    
+    return uiConfig
   }
 
-  private func _initSdkOnce(){
-    do {
-      self._service = Ecom3DS2Service()
-
-      try self._service!.initialize(configParameters: ConfigParameters(), locale: Locale.current.languageCode, uiCustomization: _uiConfig)
-
-      self._isSdkInitialized = true
-    } catch _ {
-      print("Error initializing SDK")
+  private func _executeChallenge(delegate: ChallengeStatusReceiver ,challengeParameters: ChallengeParameters, timeout : Int32) {
+    DispatchQueue.main.async() {
+      do {
+        try self._sdkTransaction?.doChallenge(challengeParameters: challengeParameters, challengeStatusReceiver: delegate, timeOut: Int(timeout))
+      } catch {
+        self.close()
+      }
     }
   }
-  
-  func getAuthRequestParameters() throws -> ThreeDSSDK.AuthenticationRequestParameters {
-    let authRequestParams = try self._sdkTransaction!.getAuthenticationRequestParameters()
-    
-    return authRequestParams;
+}
+
+extension TransactionManager {
+  public func getAuthRequestParameters() throws -> ThreeDSSDK.AuthenticationRequestParameters {
+    return try _sdkTransaction!.getAuthenticationRequestParameters();
   }
 
-  func handleResponse (responseObject: [String : String]){
-    self._isChallengeTransaction = false
-
+  public func handleResponse (responseObject: [String : String]){
     let challengeParameters = ChallengeParameters()
     challengeParameters.setAcsSignedContent(responseObject["acsSignedContent"]!)
     challengeParameters.setAcsRefNumber(responseObject["acsReferenceNumber"]!)
     challengeParameters.setAcsTransactionID(responseObject["acsTransID"]!)
     challengeParameters.set3DSServerTransactionID(responseObject["threeDSServerTransID"]!)
     
-    self._isChallengeTransaction = true
-
     _executeChallenge(delegate: self, challengeParameters: challengeParameters , timeout: 5)
   }
-
-  private func _executeChallenge(delegate: ChallengeStatusReceiver ,challengeParameters: ChallengeParameters, timeout : Int32) {
-    DispatchQueue.main.async(){
-      do {
-        try self._sdkTransaction?.doChallenge(challengeParameters: challengeParameters, challengeStatusReceiver: delegate, timeOut: Int(timeout))
-      } catch {
-        self.close()
-        dump(error)
-      }
-    }
+  
+  public func showProgressDialog() {
+    _sdkProgressDialog?.show()
   }
 
-  public func completed(completionEvent e: CompletionEvent) {
-    API.finishOrder(params: ThreeDS2ViewController.requestParams) { (data, response) in
-      let params = ThreeDS2ViewController.requestParams
-      let body = [
-        "threeDSServerTransId": params.threeDSServerTransId ?? "",
-        "userName": params.userName ?? "",
-        "password": params.password ?? "",
-      ];
-      
-      self.delegateAddLog?.addLog(title: "Finish order", request: String(describing: Utils.jsonSerialization(data: body)), response: String(describing: Utils.jsonSerialization(data: response)), isReload: false)
-
-      API.fetchOrderStatus(params: ThreeDS2ViewController.requestParams) {(data, response) in
-        let params = ThreeDS2ViewController.requestParams
-        let body = [
-          "orderId": params.orderId ?? "",
-          "userName": params.userName ?? "",
-          "password": params.password ?? ""
-        ];
-
-        DispatchQueue.main.async {
-          self.delegateAddLog?.addLog(title: "Fetch order status",
-                                 request: String(describing: Utils.jsonSerialization(data: body)),
-                                 response: String(describing: Utils.jsonSerialization(data: response)),
-                                 isReload: true)
-        }
-      }
-    }
+  public func closeProgressDialog() {
+    _sdkProgressDialog?.close()
   }
-
+  
   public func close() {
     do {
       try _sdkTransaction?.close()
     } catch {
-      
+      print("Can not close sdk transaction \(error.localizedDescription)")
     }
-  }
-  
-  private func _reloadTable() {
-    self._notificationCenter.post(name: Notification.Name("_reloadTable"), object: nil)
   }
 }
 
-extension TransactionManager {
+extension TransactionManager: ChallengeStatusReceiver {
+  private func _reloadTable() {
+    _notificationCenter.post(name: Notification.Name("_reloadTable"), object: nil)
+  }
+  
+  public func completed(completionEvent e: CompletionEvent) {
+    delegate?.finishOrder()
+  }
+
   public func cancelled() {
-    self._reloadTable()
+    _reloadTable()
   }
 
   public func timedout() {
-    delegate?.errorEventReceived()
-    self._reloadTable()
+    _reloadTable()
   }
 
   public func protocolError(protocolErrorEvent e: ProtocolErrorEvent) {
-    delegate?.errorEventReceived()
-    self._reloadTable()
+    _reloadTable()
   }
   
   public func runtimeError(runtimeErrorEvent: RuntimeErrorEvent) {
-    delegate?.errorEventReceived()
-    self._reloadTable()
+    _reloadTable()
   }
 }

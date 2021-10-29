@@ -410,16 +410,14 @@ class ViewController: UITableViewController {
   }
     
   func _open3DSView() {
-    let controller = ThreeDS2ViewController(style: .grouped);
+    let controller = ThreeDS2ViewController(style: .grouped, useCustomTheme: false);
 
     self.navigationController?.pushViewController(controller, animated: true)
   }
   
   func _open3DSViewCustom() {
-    let controller = ThreeDS2ViewController(style: .grouped);
+    let controller = ThreeDS2ViewController(style: .grouped, useCustomTheme: true);
     
-    controller.initialize(isUseCustomTheme: true)
-  
     self.navigationController?.pushViewController(controller, animated: true)
   }
   
