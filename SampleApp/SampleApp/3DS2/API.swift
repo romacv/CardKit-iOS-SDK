@@ -148,7 +148,8 @@ class API {
       "threeDSSDKEncData": params.authParams!.getDeviceData(),
       "threeDSSDKEphemPubKey":params.authParams!.getSDKEphemeralPublicKey(),
       "threeDSSDKAppId": params.authParams!.getSDKAppID(),
-      "threeDSSDKTransId": params.authParams!.getSDKTransactionID()
+      "threeDSSDKTransId": params.authParams!.getSDKTransactionID(),
+      "threeDSSDKReferenceNumber": "3DS_LOA_SDK_BPBT_020100_00233"
     ];
 
     var request = URLRequest(url: URL(string: "\(url)/rest/paymentorder.do")!)
