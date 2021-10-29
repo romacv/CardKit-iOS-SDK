@@ -127,6 +127,7 @@ class PaymentFlowController: UIViewController {
         cardKPaymentView.cardPaybutton = cardPayButton;
         cardKPaymentView.paymentRequest.merchantIdentifier = "merchant.cardkit";
         
+        self._paymentFlowController.directoryServerId = "directoryServerId"
         self._paymentFlowController.url = "https://web.rbsdev.com/soyuzpayment";
         self._paymentFlowController.cardKPaymentView = cardKPaymentView;
         self._paymentFlowController.allowedCardScaner = CardIOUtilities.canReadCardWithCamera();
@@ -134,6 +135,7 @@ class PaymentFlowController: UIViewController {
       
         self._paymentFlowController.textDoneButtonColor = .white
         self._paymentFlowController.primaryColor = .systemBlue
+        
         if #available(iOS 13.0, *) {
           self._paymentFlowController.textDoneButtonColor = .white
         }

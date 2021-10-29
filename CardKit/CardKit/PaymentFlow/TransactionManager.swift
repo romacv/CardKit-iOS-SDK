@@ -16,32 +16,28 @@ import ThreeDSSDK
   func didComplete(transactionStatus: NSString)
 }
 
-@objc public class TransactionManager: NSObject, ChallengeStatusReceiver {
+@objc public class TransactionManager: NSObject {
   @objc public weak var delegate: TransactionManagerDelegate?
-  static var sdkProgressDialog: ProgressDialog? = nil
 
   @objc public var pubKey: String = ""
   @objc public var headerLabel: String = ""
   @objc public var rootCertificate: String = ""
-  
-  var _service: ThreeDS2Service? = nil
-  var _sdkTransaction: Transaction?
-  var _isSdkInitialized: Bool = false
-  var _isChallengeTransaction : Bool? = false
-  
-  let _notificationCenter = NotificationCenter.default
-  let _logo:String = ""
-  let _uiConfig = UiCustomization()
-  
-  
+  @objc public var directoryServerId: String = ""
+
+  private var _service: ThreeDS2Service = Ecom3DS2Service()
+  private var _sdkTransaction: Transaction?
+  private var _sdkProgressDialog: ProgressDialog?
+  private let _uiConfig = UiCustomization()
+
   @objc public func initializeSdk() {
     do {
-      _initSdkOnce()
-      self._sdkTransaction = try self._service?.createTransaction(directoryServerID: "directoryServerId", messageVersion: nil, publicKeyBase64: pubKey, rootCertificateBase64: rootCertificate, logoBase64: _logo)
+      try _service.initialize(configParameters: ConfigParameters(), locale: Locale.current.languageCode, uiCustomization: _uiConfig)
 
-      TransactionManager.sdkProgressDialog = try self._sdkTransaction!.getProgressView()
-    } catch _ {
-      
+      _sdkTransaction = try _service.createTransaction(directoryServerID: directoryServerId, messageVersion: nil, publicKeyBase64: pubKey, rootCertificateBase64: rootCertificate, logoBase64: "")
+
+      _sdkProgressDialog = try _sdkTransaction!.getProgressView()
+    } catch {
+      self.delegate?.errorEventReceived(message: error.localizedDescription as NSString)
     }
   }
   
@@ -62,24 +58,19 @@ import ThreeDSSDK
     try _uiConfig.setButtonCustomization(buttonCancelCustomization, .cancel)
     try _uiConfig.setButtonCustomization(buttonDoneCustomization, .next)
   }
-
-  private func _initSdkOnce() {
-    do {
-        let p = ConfigParameters()
-        try p.addParam(nil, ConfigParameters.Key.integrityReferenceValue.rawValue, "abc")
-        let config = p
-        
-        self._service = Ecom3DS2Service()
-        
-        let locale = "en"
-      
-        try self._service!.initialize(configParameters: config, locale: locale, uiCustomization: _uiConfig)
-        self._isSdkInitialized = true
-    } catch _ {
-      
+    
+  private func _executeChallenge(delegate: ChallengeStatusReceiver ,challengeParameters: ChallengeParameters, timeout : Int32) {
+    DispatchQueue.main.async(){
+      do {
+        try self._sdkTransaction?.doChallenge(challengeParameters: challengeParameters, challengeStatusReceiver: delegate, timeOut: Int(timeout))
+      } catch {
+        self.delegate?.errorEventReceived(message: error.localizedDescription as NSString)
+      }
     }
   }
-    
+}
+
+extension TransactionManager {
   @objc public func getAuthRequestParameters() -> [NSString: Any]? {
     do {
       let authRequestParams = try self._sdkTransaction?.getAuthenticationRequestParameters()
@@ -104,27 +95,17 @@ import ThreeDSSDK
   
     _executeChallenge(delegate: self, challengeParameters: challengeParameters , timeout: 5)
   }
-
-  private func _executeChallenge(delegate: ChallengeStatusReceiver ,challengeParameters: ChallengeParameters, timeout : Int32) {
-    DispatchQueue.main.async(){
-      do {
-        try self._sdkTransaction?.doChallenge(challengeParameters: challengeParameters, challengeStatusReceiver: delegate, timeOut: Int(timeout))
-      } catch {
-        self.delegate?.errorEventReceived(message: error.localizedDescription as NSString)
-      }
-    }
-  }
-
+  
   @objc public func showProgressDialog() {
-    TransactionManager.sdkProgressDialog?.show();
+    _sdkProgressDialog?.show();
   }
   
   @objc public func closeProgressDialog() {
-    TransactionManager.sdkProgressDialog?.close();
+    _sdkProgressDialog?.close();
   }
 }
 
-extension TransactionManager {
+extension TransactionManager: ChallengeStatusReceiver {
   public func completed(completionEvent e: CompletionEvent) {
     let transactionStatus: NSString = e.getTransactionStatus() as NSString
     

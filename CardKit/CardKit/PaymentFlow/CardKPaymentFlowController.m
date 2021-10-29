@@ -60,9 +60,18 @@
       
       _transactionManager = [[TransactionManager alloc] init];
       _transactionManager.rootCertificate = CardKConfig.shared.rootCertificate;
+
       _transactionManager.delegate = self;
     }
     return self;
+  }
+
+  - (void)setDirectoryServerId:(NSString *)directoryServerId {
+    _transactionManager.directoryServerId = directoryServerId;
+  }
+
+  - (NSString *)directoryServerId {
+    return _transactionManager.directoryServerId;
   }
 
   - (void)viewDidLayoutSubviews {

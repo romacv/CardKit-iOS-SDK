@@ -28,4 +28,5 @@
   @property UIColor* textDoneButtonColor;
   @property BOOL allowedCardScaner;
   @property NSString *headerLabel;
+  @property NSString *directoryServerId;
 @end
