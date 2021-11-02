@@ -334,11 +334,12 @@
     NSString *threeDSSDKAppId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKAppId=", RequestParams.shared.threeDSSDKAppId];
     NSString *threeDSSDKTransId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKTransId=", RequestParams.shared.threeDSSDKTransId];
     NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
+    NSString *threeDSSDKReferenceNumber = [NSString stringWithFormat:@"%@%@", @"threeDSSDKReferenceNumber=", @"3DS_LOA_SDK_BPBT_020100_00233"];
     
     NSString *parameters = @"";
     
     if (CardKConfig.shared.bindingCVCRequired) {
-      parameters = [self _joinParametersInString:@[mdOrder, bindingId, cvc, threeDSSDK, language, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId]];
+      parameters = [self _joinParametersInString:@[mdOrder, bindingId, cvc, threeDSSDK, language, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId, threeDSSDKReferenceNumber]];
     } else {
       parameters = [self _joinParametersInString:@[mdOrder, bindingId, threeDSSDK, language, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId]];
     }
@@ -487,8 +488,9 @@
       NSString *threeDSSDKAppId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKAppId=", RequestParams.shared.threeDSSDKAppId];
       NSString *threeDSSDKTransId = [NSString stringWithFormat:@"%@%@", @"threeDSSDKTransId=", RequestParams.shared.threeDSSDKTransId];
       NSString *threeDSServerTransId = [NSString stringWithFormat:@"%@%@", @"threeDSServerTransId=", RequestParams.shared.threeDSServerTransId];
+      NSString *threeDSSDKReferenceNumber = [NSString stringWithFormat:@"%@%@", @"threeDSSDKReferenceNumber=", @"3DS_LOA_SDK_BPBT_020100_00233"];
     
-      NSString *parameters = [self _joinParametersInString:@[mdOrder, threeDSSDK, language, owner, bindingNotNeeded, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId, seTokenParam]];
+      NSString *parameters = [self _joinParametersInString:@[mdOrder, threeDSSDK, language, owner, bindingNotNeeded, threeDSSDKEncData, threeDSSDKEphemPubKey, threeDSSDKAppId, threeDSSDKTransId, threeDSServerTransId, seTokenParam, threeDSSDKReferenceNumber]];
 
       NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
       NSString *URL = [NSString stringWithFormat:@"%@%@", _url, @"/rest/processform.do"];

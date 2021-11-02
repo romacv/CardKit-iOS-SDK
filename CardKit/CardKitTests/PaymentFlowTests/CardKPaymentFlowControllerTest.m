@@ -56,7 +56,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 
   payment = [[PaymentFlowController alloc] init];
   payment.delegate = self;
-  payment.url = @"https://web.rbsdev.com/soyuzpayment";
+  payment.url = @"https://web.rbsdev.com/multigatepayment-release";
   payment.primaryColor = UIColor.systemBlueColor;
   payment.textDoneButtonColor = [UIColor colorWithRed:1.00 green:1.00 blue:1.00 alpha:1.00];
   payment.headerLabel = @"Custom header label";
@@ -448,7 +448,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 - (void)_registerOrderWithAmount:(NSString*) amount callback:(void (^)(void)) handler {
   NSString *amountParameter = [NSString stringWithFormat:@"%@%@", @"amount=", amount];
   NSString *userName = [NSString stringWithFormat:@"%@%@", @"userName=", @"3ds2-api"];
-  NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"testPwd"];
+  NSString *password = [NSString stringWithFormat:@"%@%@", @"password=", @"3ds2-api"];
   NSString *returnUrl = [NSString stringWithFormat:@"%@%@", @"returnUrl=", @"returnUrl"];
   NSString *failUrl = [NSString stringWithFormat:@"%@%@", @"failUrl=", @"errors_ru.html"];
   NSString *email = [NSString stringWithFormat:@"%@%@", @"email=", @"test@test.ru"];
@@ -458,7 +458,7 @@ typedef NS_ENUM(NSUInteger, ActionTypeInForm) {
 
   NSData *postData = [parameters dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
   
-  NSString *url = @"https://web.rbsdev.com/soyuzpayment";
+  NSString *url = @"https://web.rbsdev.com/multigatepayment-release";
   
   NSString *URL = [NSString stringWithFormat:@"%@%@", url, @"/rest/register.do"];
 

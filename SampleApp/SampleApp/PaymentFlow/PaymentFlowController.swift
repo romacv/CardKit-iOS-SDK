@@ -58,12 +58,12 @@ class PaymentFlowController: UIViewController {
     CardKConfig.shared.mrBinURL = "https://mrbin.io/bins/";
     CardKConfig.shared.pubKey = """
         -----BEGIN PUBLIC KEY-----
-        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAws0r6I8emCsURXfuQcU2c9mwUlOiDjuCZ/f+EdadA4vq/kYt3w6kC5TUW97Fm/HTikkHd0bt8wJvOzz3T0O4so+vBaC0xjE8JuU1eCd+zUX/plw1REVVii1RNh9gMWW1fRNu6KDNSZyfftY2BTcP1dbE1itpXMGUPW+TOk3U9WP4vf7pL/xIHxCsHzb0zgmwShm3D46w7dPW+HO3PEHakSWV9bInkchOvh/vJBiRw6iadAjtNJ4+EkgNjHwZJDuo/0bQV+r9jeOe+O1aXLYK/s1UjRs5T4uGeIzmdLUKnu4eTOQ16P6BHWAjyqPnXliYIKfi+FjZxyWEAlYUq+CRqQIDAQAB-----END PUBLIC KEY-----
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp04PhwMu5k3fRMRmAb1ZRxbD3brU4a7oKa4NDlGXKQJiCEuw6e8SYcYW2i4rt0WsieeRRrrX7VnUZ2pH20lMtUnrTUtw2MaH5Ta9c3begST7sFkqU3t22BYedtamLGR5y55C5GWwI0Ie9ozecSckqcLW7KVITNT4GXME+Q1lFWYMGwr66vhu1fIV1pfVNWvMX3lEzVLwmwPkt0gf2ODR+AfO8rg17P4z4BHN/jSL0maOFsJlriCEf11jqtVbJKz5EDghyFO9Iw+gzorwlioc133li1OG0NbKzK/Nq5z29udoEWneisp3ub5M53jWvxDNiVl8uvPUfxyz+86mwNQ87QIDAQAB-----END PUBLIC KEY-----
   """
     CardKConfig.shared.isEditBindingListMode = true
 
     PaymentFlowController.requestParams.userName = "3ds2-api"
-    PaymentFlowController.requestParams.password = "testPwd"
+    PaymentFlowController.requestParams.password = "3ds2-api"
     PaymentFlowController.requestParams.returnUrl = "returnUrl"
     PaymentFlowController.requestParams.failUrl = "errors_ru.html"
     PaymentFlowController.requestParams.email = "test@test.ru"
@@ -128,7 +128,7 @@ class PaymentFlowController: UIViewController {
         cardKPaymentView.paymentRequest.merchantIdentifier = "merchant.cardkit";
         
         self._paymentFlowController.directoryServerId = "directoryServerId"
-        self._paymentFlowController.url = "https://web.rbsdev.com/soyuzpayment";
+        self._paymentFlowController.url = "https://web.rbsdev.com/multigatepayment-release";
         self._paymentFlowController.cardKPaymentView = cardKPaymentView;
         self._paymentFlowController.allowedCardScaner = CardIOUtilities.canReadCardWithCamera();
         self._paymentFlowController.headerLabel = "Custom header label";

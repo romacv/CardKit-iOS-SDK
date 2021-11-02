@@ -84,7 +84,7 @@ class ThreeDS2ViewController: UITableViewController, TransactionManagerDelegate,
     _textFieldCost.keyboardType = .numberPad
     _textFieldCost.placeholder = "Стоимость"
     
-    _textFieldPassword.text = "testPwd"
+    _textFieldPassword.text = "3ds2-api"
     _textFieldPassword.isSecureTextEntry = true
     _textFieldPassword.placeholder = "Пароль"
     
