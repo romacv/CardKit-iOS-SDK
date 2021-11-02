@@ -24,14 +24,19 @@ import ThreeDSSDK
   @objc public var rootCertificate: String = ""
   @objc public var directoryServerId: String = ""
 
+  private let _uiConfig = UiCustomization()
+
   private var _service: ThreeDS2Service = Ecom3DS2Service()
   private var _sdkTransaction: Transaction?
   private var _sdkProgressDialog: ProgressDialog?
-  private let _uiConfig = UiCustomization()
+  private var _isInitService = false
 
   @objc public func initializeSdk() {
     do {
-      try _service.initialize(configParameters: ConfigParameters(), locale: Locale.current.languageCode, uiCustomization: _uiConfig)
+      if (!_isInitService) {
+        try _service.initialize(configParameters: ConfigParameters(), locale: Locale.current.languageCode, uiCustomization: _uiConfig)
+        _isInitService = true
+      }
 
       _sdkTransaction = try _service.createTransaction(directoryServerID: directoryServerId, messageVersion: nil, publicKeyBase64: pubKey, rootCertificateBase64: rootCertificate, logoBase64: "")
 
