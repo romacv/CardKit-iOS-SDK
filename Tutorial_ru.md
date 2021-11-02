@@ -11,6 +11,8 @@
 
 Для установки с использованием carthage в Cartfile добавьте строчку `github "Runet-Business-Systems/CardKit"`
 
+После интеграции Cardkit необходимо интегрироват [3DS2_SDK](Tutorial3DS2.md)
+
 ## 1. Настройка проекта
 
 1.1 Создать проект

@@ -11,6 +11,8 @@ To install using cocoapods in Podfile, add the line <br/>
 
 To install using carthage in Cartfile, add the line `github "Runet-Business-Systems/CardKit"`
 
+After integrating the Cardkit, you should integrate the [3DS2_SDK](Tutorial3DS2.md)
+
 ## 1. Project Setup
 
 1.1 Create a project
