@@ -140,9 +140,9 @@
 
 - (void) _openPassCodeFlowWithIncorrectNewCard {
   [self _tapOnCellWithOnePasscodeFlow];
-  
+  [self _sleep];
   [self _openKindPaymentController];
-  
+  [self _sleep];
   [self _fillNewCardFormWithIncorrectCVC];
 }
 
