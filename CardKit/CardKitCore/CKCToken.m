@@ -279,4 +279,7 @@
   return tokenResult;
 }
 
++ (NSString *) getVersion {
+  return [[[NSBundle bundleForClass: self] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+}
 @end

@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (CKCTokenResult *) generateWithBinding: (CKCBindingParams *) params;
 + (CKCTokenResult *) generateWithCard: (CKCCardParams *) params;
 + (NSString *) timestampForDate:(NSDate *) date;
++ (NSString *) getVersion;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -58,6 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void) fetchKeys:(NSString *)url;
 
 + (NSString *) timestampForDate:(NSDate *) date;
+
++ (NSString *) getVersion;
 @end
 
 NS_ASSUME_NONNULL_END

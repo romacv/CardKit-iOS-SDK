@@ -75,4 +75,8 @@ static CardKConfig *__instance = nil;
   return [CKCToken timestampForDate:date];
 }
 
++ (NSString *) getVersion {
+  return [[[NSBundle bundleForClass: CardKConfig.self] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+}
+
 @end
