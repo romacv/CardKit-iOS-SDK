@@ -8,6 +8,8 @@
 
 import UIKit
 import CardKit
+import CardKitCore
+import ThreeDSSDK
 
 struct Section {
   let title: String?
@@ -21,6 +23,7 @@ struct SectionItem {
   let language: String
   
   enum Kind {
+    case version
     case lightTheme
     case darkTheme
     case systemTheme
@@ -426,11 +429,13 @@ class ViewController: UITableViewController {
     paymentFlowController.amount = amount;
     self.navigationController?.pushViewController(paymentFlowController, animated: true)
   }
+  func _version() {}
   
   func _callFunctionByKindOfButton(kind: SectionItem.Kind, language: String) {
     _setDefaultParams();
 
     switch kind {
+      case .version: _version()
       case .lightTheme: _openController()
       case .darkTheme: _openDark()
       case .systemTheme: _openSystemTheme()
@@ -455,13 +460,19 @@ class ViewController: UITableViewController {
       case .paymentFlowInvalidCert: _openPaymentFlow(amount: "777")
     }
   }
-  
+
   var sections: [Section] = [
+    Section(title: "Versions", items: [
+      SectionItem(title: "CardKit: v\(CardKConfig.getVersion())", kind: .version, isShowChevron: false, language: ""),
+      SectionItem(title: "CardKitCore: v\(CKCToken.getVersion())", kind: .version, isShowChevron: false, language: ""),
+      SectionItem(title: "3DSSDK: v\(Ecom3DS2Service().getVersion())", kind: .version, isShowChevron: false, language: ""),
+    ]),
+    
     Section(title: "Modal", items: [
-      SectionItem(title: "Open Light with bindings", kind: .lightTheme, isShowChevron: false, language: ""),
-      SectionItem(title: "Dark Light", kind: .darkTheme, isShowChevron: false, language: ""),
-      SectionItem(title: "System theme", kind: .systemTheme, isShowChevron: false, language: ""),
-      SectionItem(title: "Custom theme", kind: .customTheme, isShowChevron: false, language: ""),
+      SectionItem(title: "Open Light with bindings", kind: .lightTheme, isShowChevron: true, language: ""),
+      SectionItem(title: "Dark Light", kind: .darkTheme, isShowChevron: true, language: ""),
+      SectionItem(title: "System theme", kind: .systemTheme, isShowChevron: true, language: ""),
+      SectionItem(title: "Custom theme", kind: .customTheme, isShowChevron: true, language: ""),
     ]),
     
     Section(title: "Navigation", items: [
@@ -495,12 +506,12 @@ class ViewController: UITableViewController {
     
     
     Section(title: "Localization", items: [
-      SectionItem(title: "English - en", kind: .language, isShowChevron: false, language: "en"),
-      SectionItem(title: "Russian - ru", kind: .language, isShowChevron: false, language: "ru"),
-      SectionItem(title: "German - de", kind: .language, isShowChevron: false, language: "de"),
-      SectionItem(title: "French - fr", kind: .language, isShowChevron: false, language: "fr"),
-      SectionItem(title: "Spanish - es", kind: .language, isShowChevron: false, language: "es"),
-      SectionItem(title: "Ukrainian - uk", kind: .language, isShowChevron: false, language: "uk"),
+      SectionItem(title: "English - en", kind: .language, isShowChevron: true, language: "en"),
+      SectionItem(title: "Russian - ru", kind: .language, isShowChevron: true, language: "ru"),
+      SectionItem(title: "German - de", kind: .language, isShowChevron: true, language: "de"),
+      SectionItem(title: "French - fr", kind: .language, isShowChevron: true, language: "fr"),
+      SectionItem(title: "Spanish - es", kind: .language, isShowChevron: true, language: "es"),
+      SectionItem(title: "Ukrainian - uk", kind: .language, isShowChevron: true, language: "uk"),
     ]),
   ]
 
