@@ -82,7 +82,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		mFBInourLaHexcoZ+QjRW7dyE/4=
+		zip+eP6GqujFVgtTJW+3iNBSqmM=
 		</data>
 		<key>LICENSE</key>
 		<data>
@@ -94,75 +94,75 @@
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		/ox0ouaNBxItUmmQjUg5HM0FYSg=
+		UmAnGqjzr4NdW8lfmqCoxEIfTSQ=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		x5HA5mCmbYapM/KAuDmMgFGR3WU=
+		lgmnY0Tq9OMSWkM2GU46tKfimG4=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		r+ZzCBJmgfAv4hDRFMAs8SLgxRQ=
+		OvYaltwQuJ0IZRuC3PlfShzX6JI=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		/ox0ouaNBxItUmmQjUg5HM0FYSg=
+		UmAnGqjzr4NdW8lfmqCoxEIfTSQ=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/arm64.swiftinterface</key>
 		<data>
-		x5HA5mCmbYapM/KAuDmMgFGR3WU=
+		lgmnY0Tq9OMSWkM2GU46tKfimG4=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		r+ZzCBJmgfAv4hDRFMAs8SLgxRQ=
+		OvYaltwQuJ0IZRuC3PlfShzX6JI=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
 		<data>
-		0l+Epex5410Xjapl/Ti9i5OxAUo=
+		KfV3QRIrkvakOAsch+B6W/HyJrs=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/i386-apple-ios-simulator.swiftinterface</key>
 		<data>
-		wjmTOLrKZ4rNW8R/kOFHCFJln2E=
+		iSQdg3dkgQcKBeJJ3hDkdc6jV/E=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/i386-apple-ios-simulator.swiftmodule</key>
 		<data>
-		F0lGy0HY+Qv/D1QYkiKBInRCUdM=
+		QATaijrFArXwpPDadnrLJFjTL2U=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/i386.swiftdoc</key>
 		<data>
-		0l+Epex5410Xjapl/Ti9i5OxAUo=
+		KfV3QRIrkvakOAsch+B6W/HyJrs=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/i386.swiftinterface</key>
 		<data>
-		wjmTOLrKZ4rNW8R/kOFHCFJln2E=
+		iSQdg3dkgQcKBeJJ3hDkdc6jV/E=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/i386.swiftmodule</key>
 		<data>
-		F0lGy0HY+Qv/D1QYkiKBInRCUdM=
+		QATaijrFArXwpPDadnrLJFjTL2U=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		822X6gmR8oOtHWgbvF9fcfj9qvM=
+		MMFAzZQWADpxF78Ogukg3aCuDnM=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		slfY9/TfO5zzcDDaYwlSRckG+P8=
+		jrkpdEYAnb1FinnYsHp5ylsAevw=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		pEXojnRx6YoEcbA+tgd6KuINtqI=
+		mRPavNjcUSwa7Tu3WZ9feljoou8=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		822X6gmR8oOtHWgbvF9fcfj9qvM=
+		MMFAzZQWADpxF78Ogukg3aCuDnM=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/x86_64.swiftinterface</key>
 		<data>
-		slfY9/TfO5zzcDDaYwlSRckG+P8=
+		jrkpdEYAnb1FinnYsHp5ylsAevw=
 		</data>
 		<key>Modules/ThreeDSSDK.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		pEXojnRx6YoEcbA+tgd6KuINtqI=
+		mRPavNjcUSwa7Tu3WZ9feljoou8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -430,198 +430,198 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			/ox0ouaNBxItUmmQjUg5HM0FYSg=
+			UmAnGqjzr4NdW8lfmqCoxEIfTSQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			MIaH1PJGnAtOnp+4eZnlZiz4/CrzoSWHbI2Nd4CyBt0=
+			fZOcmadzSCdt7LCOJRKLgWv58o6TSMG6YYhiMj23QSY=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			x5HA5mCmbYapM/KAuDmMgFGR3WU=
+			lgmnY0Tq9OMSWkM2GU46tKfimG4=
 			</data>
 			<key>hash2</key>
 			<data>
-			al3unOeQPh+LzRC0h0B8oOXSYSUO7vasg+IzeTqLblQ=
+			QMiclgwfExPhDxny7eTPSzcrYhslcSyvz5SsEHCK7bE=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			r+ZzCBJmgfAv4hDRFMAs8SLgxRQ=
+			OvYaltwQuJ0IZRuC3PlfShzX6JI=
 			</data>
 			<key>hash2</key>
 			<data>
-			4oSs9pPT3TYfBTh31D/tvyojbYhyIEqvqkTvXEj5UJY=
+			K13a6aBxgiyrNNvsbGh805T3ULX+sKE3RzRj05SEU0c=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			/ox0ouaNBxItUmmQjUg5HM0FYSg=
+			UmAnGqjzr4NdW8lfmqCoxEIfTSQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			MIaH1PJGnAtOnp+4eZnlZiz4/CrzoSWHbI2Nd4CyBt0=
+			fZOcmadzSCdt7LCOJRKLgWv58o6TSMG6YYhiMj23QSY=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/arm64.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			x5HA5mCmbYapM/KAuDmMgFGR3WU=
+			lgmnY0Tq9OMSWkM2GU46tKfimG4=
 			</data>
 			<key>hash2</key>
 			<data>
-			al3unOeQPh+LzRC0h0B8oOXSYSUO7vasg+IzeTqLblQ=
+			QMiclgwfExPhDxny7eTPSzcrYhslcSyvz5SsEHCK7bE=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			r+ZzCBJmgfAv4hDRFMAs8SLgxRQ=
+			OvYaltwQuJ0IZRuC3PlfShzX6JI=
 			</data>
 			<key>hash2</key>
 			<data>
-			4oSs9pPT3TYfBTh31D/tvyojbYhyIEqvqkTvXEj5UJY=
+			K13a6aBxgiyrNNvsbGh805T3ULX+sKE3RzRj05SEU0c=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			0l+Epex5410Xjapl/Ti9i5OxAUo=
+			KfV3QRIrkvakOAsch+B6W/HyJrs=
 			</data>
 			<key>hash2</key>
 			<data>
-			P0TFpADLjDW2hmQO6jHothoH65S+NgTab6Cj9kIHhxQ=
+			/dCQOlz7I4ykXwtk49rRk8gWLDmr4+s3zDXsuFPapY4=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/i386-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wjmTOLrKZ4rNW8R/kOFHCFJln2E=
+			iSQdg3dkgQcKBeJJ3hDkdc6jV/E=
 			</data>
 			<key>hash2</key>
 			<data>
-			fG7YIDK3fGYgfz3dNLQ1QlwNzgYah5vkE2T+VRMl05s=
+			HMJ1MfemqFTD8uNR7IYM0uVFS1tCh8cdZX/DmkLPcQ4=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/i386-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			F0lGy0HY+Qv/D1QYkiKBInRCUdM=
+			QATaijrFArXwpPDadnrLJFjTL2U=
 			</data>
 			<key>hash2</key>
 			<data>
-			8LiDdxUvOgdG/iFz6r1gIv0rizxw5XfR6TWBAZRUlME=
+			A6ehEgJ2SMQmDYSTYmL2bPsrUFEm/4aA/oGLVkElM3I=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/i386.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			0l+Epex5410Xjapl/Ti9i5OxAUo=
+			KfV3QRIrkvakOAsch+B6W/HyJrs=
 			</data>
 			<key>hash2</key>
 			<data>
-			P0TFpADLjDW2hmQO6jHothoH65S+NgTab6Cj9kIHhxQ=
+			/dCQOlz7I4ykXwtk49rRk8gWLDmr4+s3zDXsuFPapY4=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/i386.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wjmTOLrKZ4rNW8R/kOFHCFJln2E=
+			iSQdg3dkgQcKBeJJ3hDkdc6jV/E=
 			</data>
 			<key>hash2</key>
 			<data>
-			fG7YIDK3fGYgfz3dNLQ1QlwNzgYah5vkE2T+VRMl05s=
+			HMJ1MfemqFTD8uNR7IYM0uVFS1tCh8cdZX/DmkLPcQ4=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/i386.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			F0lGy0HY+Qv/D1QYkiKBInRCUdM=
+			QATaijrFArXwpPDadnrLJFjTL2U=
 			</data>
 			<key>hash2</key>
 			<data>
-			8LiDdxUvOgdG/iFz6r1gIv0rizxw5XfR6TWBAZRUlME=
+			A6ehEgJ2SMQmDYSTYmL2bPsrUFEm/4aA/oGLVkElM3I=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			822X6gmR8oOtHWgbvF9fcfj9qvM=
+			MMFAzZQWADpxF78Ogukg3aCuDnM=
 			</data>
 			<key>hash2</key>
 			<data>
-			Y5Z7Q1iJwq+X6Lvl4GymiNm6756EO2sbMYUUqIKiDI4=
+			rOyDip2VOCZmP12v88N8wKhgTxYTqHzI2iIxV0GO0To=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			slfY9/TfO5zzcDDaYwlSRckG+P8=
+			jrkpdEYAnb1FinnYsHp5ylsAevw=
 			</data>
 			<key>hash2</key>
 			<data>
-			jti10zIrnvpZYh3B/SanwXh0zN+22a6pz9qBA4wsYfw=
+			HiBTbx9Dt8WDQTKR/szg1v2DtdjDVgvifU3yvW/Pr6w=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pEXojnRx6YoEcbA+tgd6KuINtqI=
+			mRPavNjcUSwa7Tu3WZ9feljoou8=
 			</data>
 			<key>hash2</key>
 			<data>
-			A0IpR5LzuP4LxtOZtqyoJTJd2UKs7ukF1YZs5C5wlZE=
+			o2MD2mli18VWPHIfXy+8OSscA9rbRgxVq83PCV1G/G0=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			822X6gmR8oOtHWgbvF9fcfj9qvM=
+			MMFAzZQWADpxF78Ogukg3aCuDnM=
 			</data>
 			<key>hash2</key>
 			<data>
-			Y5Z7Q1iJwq+X6Lvl4GymiNm6756EO2sbMYUUqIKiDI4=
+			rOyDip2VOCZmP12v88N8wKhgTxYTqHzI2iIxV0GO0To=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/x86_64.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			slfY9/TfO5zzcDDaYwlSRckG+P8=
+			jrkpdEYAnb1FinnYsHp5ylsAevw=
 			</data>
 			<key>hash2</key>
 			<data>
-			jti10zIrnvpZYh3B/SanwXh0zN+22a6pz9qBA4wsYfw=
+			HiBTbx9Dt8WDQTKR/szg1v2DtdjDVgvifU3yvW/Pr6w=
 			</data>
 		</dict>
 		<key>Modules/ThreeDSSDK.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pEXojnRx6YoEcbA+tgd6KuINtqI=
+			mRPavNjcUSwa7Tu3WZ9feljoou8=
 			</data>
 			<key>hash2</key>
 			<data>
-			A0IpR5LzuP4LxtOZtqyoJTJd2UKs7ukF1YZs5C5wlZE=
+			o2MD2mli18VWPHIfXy+8OSscA9rbRgxVq83PCV1G/G0=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

@@ -542,7 +542,7 @@ extension ThreeDSSDK.Ecom3DS2Service : ThreeDSSDK.ThreeDS2Service {
   final public func initialize(configParameters: ThreeDSSDK.ConfigParameters, locale: Swift.String?, uiCustomization: ThreeDSSDK.UiCustomization?) throws
   final public func createTransaction(directoryServerID: Swift.String, messageVersion: Swift.String?, publicKeyBase64: Swift.String, rootCertificateBase64: Swift.String, logoBase64: Swift.String) throws -> ThreeDSSDK.Transaction
   final public func cleanup() throws
-  final public func getSDKVersion() throws -> Swift.String
+  final public func getVersion() -> Swift.String
   final public func getWarnings() throws -> [ThreeDSSDK.Warning]
 }
 public protocol ImageDecoding {
@@ -887,7 +887,7 @@ public protocol ThreeDS2Service : AnyObject {
   func initialize(configParameters: ThreeDSSDK.ConfigParameters, locale: Swift.String?, uiCustomization: ThreeDSSDK.UiCustomization?) throws
   func createTransaction(directoryServerID: Swift.String, messageVersion: Swift.String?, publicKeyBase64: Swift.String, rootCertificateBase64: Swift.String, logoBase64: Swift.String) throws -> ThreeDSSDK.Transaction
   func cleanup() throws
-  func getSDKVersion() throws -> Swift.String
+  func getVersion() -> Swift.String
   func getWarnings() throws -> [ThreeDSSDK.Warning]
 }
 @objc public protocol GenericChallengeProtocol {
