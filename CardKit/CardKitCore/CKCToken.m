@@ -280,6 +280,6 @@
 }
 
 + (NSString *) getVersion {
-  return [[[NSBundle bundleForClass: self] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+  return [[[NSBundle bundleForClass: CKCToken.self] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
 @end
