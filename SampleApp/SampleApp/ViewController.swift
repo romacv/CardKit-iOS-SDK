@@ -8,7 +8,6 @@
 
 import UIKit
 import CardKit
-import CardKitCore
 import ThreeDSSDK
 
 struct Section {
@@ -464,7 +463,7 @@ class ViewController: UITableViewController {
   var sections: [Section] = [
     Section(title: "Versions", items: [
       SectionItem(title: "CardKit: v\(CardKConfig.getVersion())", kind: .version, isShowChevron: false, language: ""),
-      SectionItem(title: "CardKitCore: v\(CKCToken.getVersion())", kind: .version, isShowChevron: false, language: ""),
+      SectionItem(title: "CardKitCore: v0.0.20", kind: .version, isShowChevron: false, language: ""),
       SectionItem(title: "3DSSDK: v\(Ecom3DS2Service().getVersion())", kind: .version, isShowChevron: false, language: ""),
     ]),
     
