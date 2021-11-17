@@ -27,8 +27,16 @@
 - (void)tearDown {
 }
 
+- (void)openCellWithEditMode {
+  [_app.cells.staticTexts[@"Light theme with edit mode"] tap];
+}
+
+- (void)openCellWithBindingsCVCField {
+  [_app.cells.staticTexts[@"Light theme with bindings"] tap];
+}
+
 - (void)testChooseBindingWithoutCVCGetSeToken {
-  [_app.cells.allElementsBoundByAccessibilityElement[5] tap];
+  [self openCellWithEditMode];
 
   [_app.cells.firstMatch tap];
   
@@ -40,8 +48,8 @@
 }
 
 - (void)testRemoveBindingBySwipe {
-  [_app.cells.allElementsBoundByAccessibilityElement[5] tap];
-
+  [self openCellWithEditMode];
+  
   [_app.cells.firstMatch swipeLeft];
   
   [_app.buttons[@"Delete"] tap];
@@ -50,8 +58,8 @@
 }
 
 - (void)testRemoveAllBindingsByOne {
-  [_app.cells.allElementsBoundByAccessibilityElement[5] tap];
-
+  [self openCellWithEditMode];
+  
   [_app.cells.firstMatch swipeLeft];
   
   [_app.buttons[@"Delete"] tap];
@@ -68,8 +76,8 @@
 }
 
 - (void)testRemoveAllBindingsOnEditMode {
-  [_app.cells.allElementsBoundByAccessibilityElement[5] tap];
-
+  [self openCellWithEditMode];
+  
   [_app.buttons[@"Edit"] tap];
 
   [_app.cells.firstMatch.buttons.firstMatch tap];
@@ -86,7 +94,7 @@
 }
 
 - (void)testChooseBindingAndGenerateSeToken {
-  [_app.cells.allElementsBoundByAccessibilityElement[5] tap];
+  [self openCellWithEditMode];
 
   [_app.cells.firstMatch tap];
   
@@ -100,12 +108,12 @@
 }
 
 - (void)testChooseBindingFillCVCAndGenerateSeToken {
-  [_app.cells.allElementsBoundByAccessibilityElement[4] tap];
-
+  [self openCellWithBindingsCVCField];
+  
   [_app.cells.firstMatch tap];
   
   XCUIElement *cellWithBindingInfo = [_app.cells elementBoundByIndex:0];
-
+  
   [cellWithBindingInfo tap];
   [cellWithBindingInfo typeText:@"123"];
   
@@ -117,7 +125,8 @@
 }
 
 - (void)testChooseBindingFillIncorrectCVCAndGenerateSeToken {
-  [_app.cells.allElementsBoundByAccessibilityElement[4] tap];
+  [self openCellWithBindingsCVCField];
+  
   [_app.cells.firstMatch tap];
   
   XCUIElement *cellWithBindingInfo = [_app.cells elementBoundByIndex:0];

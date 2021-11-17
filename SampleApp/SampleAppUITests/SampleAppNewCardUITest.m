@@ -202,7 +202,7 @@
 
 - (void) testStaticTextWichAreSetInClientApp {
   [self pressOnCell];
-  
+    
   BOOL isExistBindingSectionText = _app.staticTexts[@"Your cards"].exists;
   BOOL isExistNewCardButtonText = _app.buttons[@"New card"].exists;
   

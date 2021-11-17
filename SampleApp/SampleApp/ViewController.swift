@@ -475,7 +475,7 @@ class ViewController: UITableViewController {
     ]),
     
     Section(title: "Navigation", items: [
-      SectionItem(title: "Open Light with bindings", kind: .navLightTheme, isShowChevron: true, language: ""),
+      SectionItem(title: "Light theme with bindings", kind: .navLightTheme, isShowChevron: true, language: ""),
       SectionItem(title: "Light theme with edit mode", kind: .editMode, isShowChevron: true, language: ""),
       SectionItem(title: "Dark theme", kind: .navDarkTheme, isShowChevron: true, language: ""),
       SectionItem(title: "System theme", kind: .navSystemTheme, isShowChevron: true, language: ""),
