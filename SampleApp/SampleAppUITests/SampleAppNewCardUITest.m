@@ -38,8 +38,12 @@
 - (void)tearDown {
 }
 
+- (void)pressOnCell {
+  [_app.cells.staticTexts[@"Open Light with bindings"].firstMatch tap];
+}
+
 - (void)testFillNewCardForm {
-  [_app.cells.allElementsBoundByAccessibilityElement[4] tap];
+  [self pressOnCell];
   
   [_app.buttons[@"New card"] tap];
 
@@ -61,7 +65,7 @@
 }
 
 - (void)testFillNewCardFormWithIncorrectLengthCardNumber {
-  [_app.cells.allElementsBoundByAccessibilityElement[4] tap];
+  [self pressOnCell];
   
   [_app.buttons[@"New card"] tap];
 
@@ -79,13 +83,11 @@
   
   [_app.buttons[@"Custom purchase button"] tap];
   
-  XCUIElement *errorMassage = _app.staticTexts.allElementsBoundByAccessibilityElement[2];
-
-  XCTAssertTrue([errorMassage.label isEqualToString: @"Card number length should be 16-19 digits"]);
+  XCTAssertTrue(_app.staticTexts[@"Card number length should be 16-19 digits"].exists);
 }
 
 - (void)testFillNewCardFormWithIncorrectCardNumber {
-  [_app.cells.allElementsBoundByAccessibilityElement[4] tap];
+  [self pressOnCell];
   
   [_app.buttons[@"New card"] tap];
 
@@ -103,13 +105,11 @@
   
   [_app.buttons[@"Custom purchase button"] tap];
   
-  XCUIElement *errorMassage = _app.staticTexts.allElementsBoundByAccessibilityElement[1];
-
-  XCTAssertTrue([errorMassage.label isEqualToString: @"The card number is incorrect"]);
+  XCTAssertTrue(_app.staticTexts[@"The card number is incorrect"].exists);
 }
 
 - (void)testFillNewCardFormWithIncorrectExpireDate {
-  [_app.cells.allElementsBoundByAccessibilityElement[4] tap];
+  [self pressOnCell];
   
   [_app.buttons[@"New card"] tap];
 
@@ -127,13 +127,11 @@
   
   [_app.buttons[@"Custom purchase button"] tap];
   
-  XCUIElement *errorMassage = _app.staticTexts.allElementsBoundByAccessibilityElement[1];
-
-  XCTAssertTrue([errorMassage.label isEqualToString: @"Card expiry date is incorrect"]);
+  XCTAssertTrue(_app.staticTexts[@"Card expiry date is incorrect"].exists);
 }
 
 - (void)testFillNewCardFormWithIncorrectCVC {
-  [_app.cells.allElementsBoundByAccessibilityElement[4] tap];
+  [self pressOnCell];
   
   [_app.buttons[@"New card"] tap];
 
@@ -151,13 +149,11 @@
   
   [_app.buttons[@"Custom purchase button"] tap];
   
-  XCUIElement *errorMassage = _app.staticTexts.allElementsBoundByAccessibilityElement[1];
-
-  XCTAssertTrue([errorMassage.label isEqualToString: @"CVC2/CVV2 is incorrect"]);
+  XCTAssertTrue(_app.staticTexts[@"CVC2/CVV2 is incorrect"].exists);
 }
 
 - (void)testFillNewCardFormWithIncorrectCardholder {
-  [_app.cells.allElementsBoundByAccessibilityElement[4] tap];
+  [self pressOnCell];
   
   [_app.buttons[@"New card"] tap];
 
@@ -175,13 +171,11 @@
   
   [_app.buttons[@"Custom purchase button"] tap];
   
-  XCUIElement *errorMassage = _app.staticTexts[@"The card holder is incorrect"];
-  
-  XCTAssertTrue(errorMassage.exists);
+  XCTAssertTrue(_app.staticTexts[@"The card holder is incorrect"].exists);
 }
 
 - (void)testFillNewCardAndMarkSaveCard {
-  [_app.cells.allElementsBoundByAccessibilityElement[4] tap];
+  [self pressOnCell];
   
   [_app.buttons[@"New card"] tap];
 
@@ -200,14 +194,14 @@
   [_app.switches.firstMatch tap];
   
   [_app.buttons[@"Custom purchase button"] tap];
-  
+ 
   XCUIElement *element = [_app.alerts.element.staticTexts elementBoundByIndex:1];
   
   XCTAssertTrue([element.label containsString:@"allowSaveCard = true"]);
 }
 
 - (void) testStaticTextWichAreSetInClientApp {
-  [_app.cells.allElementsBoundByAccessibilityElement[4] tap];
+  [self pressOnCell];
   
   BOOL isExistBindingSectionText = _app.staticTexts[@"Your cards"].exists;
   BOOL isExistNewCardButtonText = _app.buttons[@"New card"].exists;
@@ -222,15 +216,14 @@
 }
 
 - (void) testOnExistSaveCardSwitch {
-  [_app.cells.allElementsBoundByAccessibilityElement[8] tap];
+  [_app.cells.staticTexts[@"The New Card form without save card"] tap];
   
   XCTAssertFalse(_app.staticTexts[@"Save card"].exists);
 }
 
 - (void) testOnExistCardholderTextField {
-  [_app.cells.allElementsBoundByAccessibilityElement[9] tap];
+  [_app.cells.staticTexts[@"The New Card form without card holder"] tap];
   
-
   XCTAssertTrue(_app.switches.firstMatch.value);
   XCTAssertFalse(_app.staticTexts[@"Cardholder"].exists);
 }
