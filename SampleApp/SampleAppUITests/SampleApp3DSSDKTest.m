@@ -200,10 +200,6 @@
   [NSThread sleepForTimeInterval:timeInterval];
 }
 
-- (void) _sleep {
-  [NSThread sleepForTimeInterval:15];
-}
-
 - (void) _tapWaitingElement:(XCUIElement *) element {
   if ([element waitForExistenceWithTimeout:100]) {
     [element tap];
@@ -212,6 +208,12 @@
 
 - (NSString *) _alertLable {
   return _app.alerts.element.label;
+}
+
+- (void) _checkAlertLabel:(NSString *) alert {
+  if ([_app.alerts.element waitForExistenceWithTimeout:150]) {
+    XCTAssertTrue([_app.alerts.element.label isEqualToString:alert]);
+  };
 }
 
 - (NSString *) _textDescrition {
@@ -224,10 +226,8 @@
   [self _fillTextFieldCorrectCode];
   
   [self _pressConfirmButton];
-  
-  if ([_app.alerts.element waitForExistenceWithTimeout:150]) {
-    XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
-  };
+ 
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void) testRunThreeDSSDKFlowWithBindingWithIncorrectCVC {
@@ -237,7 +237,7 @@
   
   [self _pressConfirmButton];
   
-  XCTAssertTrue([[self _alertLable] isEqualToString:@"Error"]);
+  [self _checkAlertLabel:@"Error"];
 }
 
 - (void) testRunThreeDSSDKFlowWithBindingWithIncorrectSMSCode {
@@ -263,7 +263,7 @@
     [self _sleep:5];
   }
   
-  XCTAssertTrue([[self _alertLable] isEqualToString:@"Cancel"]);
+  [self _checkAlertLabel:@"Cancel"];
 }
 
 - (void) testRunResendMessageFlow {
@@ -279,9 +279,7 @@
   
   [self _pressConfirmButton];
 
-  if ([_app.alerts.element waitForExistenceWithTimeout:150]) {
-    XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Success"]);
-  };
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void) testRunSingleSelectFlowWithBinding{
@@ -291,9 +289,7 @@
 
   [self _pressConfirmButton];
   
-  if ([_app.alerts.element waitForExistenceWithTimeout:150]) {
-    XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Success"]);
-  };
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void) testRunSingleSelectFlowWithBindingNoSelectButtons{
@@ -301,9 +297,7 @@
 
   [self _pressConfirmButton];
   
-  if ([_app.alerts.element waitForExistenceWithTimeout:150]) {
-    XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Success"]);
-  };
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void) testRunMultiSelectFlowWithBinding{
@@ -312,10 +306,8 @@
   [self _tapWaitingElement:[_app.otherElements elementBoundByIndex:10]];
 
   [self _pressConfirmButton];
-  
-  if ([_app.alerts.element waitForExistenceWithTimeout:150]) {
-    XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Success"]);
-  };
+
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void) testRunMultiSelectFlowWithBindingNoSelectCheckBoxs{
@@ -323,9 +315,7 @@
 
   [self _pressConfirmButton];
 
-  if ([_app.alerts.element waitForExistenceWithTimeout:150]) {
-    XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Success"]);
-  };
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void)testFillNewCardForm {
@@ -335,9 +325,7 @@
   
   [self _pressConfirmButton];
   
-  if ([_app.alerts.element waitForExistenceWithTimeout:150]) {
-    XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Success"]);
-  };
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void)testFillNewCardFormWithIncorrectCVC {
@@ -347,11 +335,7 @@
 
   [self _pressConfirmButton];
 
-  if ([_app.alerts.element waitForExistenceWithTimeout:150]) {
-    XCTAssertTrue([_app.alerts.element.label isEqualToString:@"Error"]);
-  };
+  [self _checkAlertLabel:@"Error"];
 }
-
-
 
 @end
