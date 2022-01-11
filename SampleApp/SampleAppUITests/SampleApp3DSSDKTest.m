@@ -41,9 +41,7 @@
 - (void) _runFlowWithBindingWithCVC:(NSString *) cvc {
   [[_app.buttons elementBoundByIndex:1] tap];
   
-  [self _sleep];
-  
-  [_app.cells.firstMatch tap];
+  [self _tapWaitingElement:_app.cells.firstMatch];
 
   XCUIElement *cellWithBindingInfo = [_app.cells elementBoundByIndex:0];
 
@@ -58,9 +56,7 @@
 - (void) _runFlowWithBinding {
   [[_app.buttons elementBoundByIndex:1] tap];
 
-  [self _sleep];
-
-  [_app.cells.firstMatch tap];
+  [self _tapWaitingElement:_app.cells.firstMatch];
 
   XCUIElement *cellWithBindingInfo = [_app.cells elementBoundByIndex:0];
 
@@ -73,7 +69,7 @@
 }
 
 - (void) _fillNewCardForm {
-  [_app.buttons[@"New card"] tap];
+  [self _tapWaitingElement:_app.buttons[@"New card"]];
 
   [_app.textFields[@"Number"] tap];
   [_app.textFields[@"Number"] typeText:@"5777777777777775"];
@@ -91,7 +87,7 @@
 }
 
 - (void) _fillNewCardFormWithIncorrectCVC {
-  [_app.buttons[@"New card"] tap];
+  [self _tapWaitingElement:_app.buttons[@"New card"]];
 
   [_app.textFields[@"Number"] tap];
   [_app.textFields[@"Number"] typeText:@"5777777777777775"];
@@ -109,7 +105,7 @@
 }
 
 - (void) _openKindPaymentController {
-  [[_app.buttons elementBoundByIndex:1] tap];
+  [self _tapWaitingElement:[_app.buttons elementBoundByIndex:1]];
 }
 
 - (void) _tapOnCellWithOnePasscodeFlow {
@@ -118,31 +114,25 @@
 
 - (void) _openPassCodeFlowWithNewCard {
   [self _tapOnCellWithOnePasscodeFlow];
-  [self _sleep];
   [self _openKindPaymentController];
-  [self _sleep];
   [self _fillNewCardForm];
 }
 
 - (void) _runFlowWithCheckBoxsWithNewCard {
   [_app.cells.allElementsBoundByAccessibilityElement[13] tap];
   [self _openKindPaymentController];
-  [self _sleep];
   [self _fillNewCardForm];
 }
 
 - (void) _runFlowWithRadioButtonsWithNewCard {
   [_app.cells.staticTexts[@"Single select (amount: 111)"] tap];
   [self _openKindPaymentController];
-  [self _sleep];
   [self _fillNewCardForm];
 }
 
 - (void) _openPassCodeFlowWithIncorrectNewCard {
   [self _tapOnCellWithOnePasscodeFlow];
-  [self _sleep];
   [self _openKindPaymentController];
-  [self _sleep];
   [self _fillNewCardFormWithIncorrectCVC];
 }
 
@@ -169,7 +159,7 @@
 }
 
 - (void) _pressConfirmButton {
-  [_app.buttons[@"Confirm"] tap];
+  [self _tapWaitingElement:_app.buttons[@"Confirm"]];
 }
 
 - (void) _pressResendSMSButton {
@@ -178,84 +168,88 @@
 
 - (void) _fillTextFieldCorrectCode {
   XCUIElement *textField = [_app.textFields elementBoundByIndex:0];
-  
-  [textField tap];
-  
-  [textField typeText:@"123456"];
+ 
+  if ([textField waitForExistenceWithTimeout:150]) {
+    [textField tap];
+
+    [textField typeText:@"123456"];
+  };
 }
 
 - (void) _fillTextFieldIncorrectCode {
   XCUIElement *textField = [_app.textFields elementBoundByIndex:0];
   
-  [textField tap];
-  
-  [textField typeText:@"1234"];
+  if ([textField waitForExistenceWithTimeout:150]) {
+    [textField tap];
+
+    [textField typeText:@"1234"];
+  };
 }
 
 - (void) _fillTextFieldResentCode {
   XCUIElement *textField = [_app.textFields elementBoundByIndex:0];
   
-  [textField tap];
-  
-  [textField typeText:@"111111"];
+  if ([textField waitForExistenceWithTimeout:150]) {
+    [textField tap];
+
+    [textField typeText:@"111111"];
+  };
 }
 
 - (void) _sleep:(NSTimeInterval) timeInterval {
   [NSThread sleepForTimeInterval:timeInterval];
 }
 
-- (void) _sleep {
-  [NSThread sleepForTimeInterval:15];
+- (void) _tapWaitingElement:(XCUIElement *) element {
+  if ([element waitForExistenceWithTimeout:100]) {
+    [element tap];
+  };
 }
 
 - (NSString *) _alertLable {
   return _app.alerts.element.label;
 }
 
+- (void) _checkAlertLabel:(NSString *) alert {
+  if ([_app.alerts.element waitForExistenceWithTimeout:150]) {
+    XCTAssertTrue([_app.alerts.element.label isEqualToString:alert]);
+  };
+}
+
 - (NSString *) _textDescrition {
-  return[_app.staticTexts elementBoundByIndex:3].label;
+  return [_app.staticTexts elementBoundByIndex:3].label;
 }
 
 - (void) testRunThreeDSSDKFlowWithBinding {
   [self _runPassCodeFlow];
   
-  [self _sleep];
-  
   [self _fillTextFieldCorrectCode];
   
   [self _pressConfirmButton];
-  
-  [self _sleep];
-  
-  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
+ 
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void) testRunThreeDSSDKFlowWithBindingWithIncorrectCVC {
   [self _runPassCodeFlowWithIncorrectCVC];
   
-  [self _sleep];
-  
   [self _fillTextFieldCorrectCode];
   
   [self _pressConfirmButton];
   
-  [self _sleep];
-  
-  XCTAssertTrue([[self _alertLable] isEqualToString:@"Error"]);
+  [self _checkAlertLabel:@"Error"];
 }
 
 - (void) testRunThreeDSSDKFlowWithBindingWithIncorrectSMSCode {
   [self _runPassCodeFlow];
-  
-  [self _sleep];
   
   [self _fillTextFieldIncorrectCode];
   
   NSString *textDescritionBeforeError = [self _textDescrition];
   
   [self _pressConfirmButton];
-  
-  [self _sleep];
+ 
+  [self _sleep:5];
   
   XCTAssertFalse([textDescritionBeforeError isEqualToString:[self _textDescrition]]);
 }
@@ -263,117 +257,85 @@
 - (void) testRunThreeDSSDKFlowWithBindingWithFillIncorrectCodeUntilCancelFlow {
   [self _runPassCodeFlow];
   
-  [self _sleep];
-  
   for (NSInteger i = 0; i < 3; i++) {
     [self _fillTextFieldIncorrectCode];
     [self _pressConfirmButton];
-    [self _sleep];
+    [self _sleep:5];
   }
   
-  XCTAssertTrue([[self _alertLable] isEqualToString:@"Cancel"]);
+  [self _checkAlertLabel:@"Cancel"];
 }
 
 - (void) testRunResendMessageFlow {
   [self _runPassCodeFlow];
   
-  [self _sleep];
-  
   [self _fillTextFieldIncorrectCode];
   
   [self _pressResendSMSButton];
   
-  [self _sleep];
-  
+  [self _sleep:5];
+
   [self _fillTextFieldResentCode];
   
   [self _pressConfirmButton];
-  
-  [self _sleep];
-  
-  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
+
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void) testRunSingleSelectFlowWithBinding{
   [self _runFlowWithRadioButtons];
-  
-  [self _sleep];
 
-  [[_app.otherElements elementBoundByIndex:10] tap];
+  [self _tapWaitingElement:[_app.otherElements elementBoundByIndex:10]];
 
   [self _pressConfirmButton];
   
-  [self _sleep];
-  
-  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void) testRunSingleSelectFlowWithBindingNoSelectButtons{
   [self _runFlowWithRadioButtons];
-  
-  [self _sleep];
 
   [self _pressConfirmButton];
   
-  [self _sleep];
-  
-  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void) testRunMultiSelectFlowWithBinding{
   [self _runFlowWithCheckBoxs];
-  
-  [self _sleep];
 
-  [[_app.otherElements elementBoundByIndex:10] tap];
+  [self _tapWaitingElement:[_app.otherElements elementBoundByIndex:10]];
 
   [self _pressConfirmButton];
-  
-  [self _sleep];
-  
-  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
+
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void) testRunMultiSelectFlowWithBindingNoSelectCheckBoxs{
   [self _runFlowWithCheckBoxs];
-  
-  [self _sleep];
 
   [self _pressConfirmButton];
-  
-  [self _sleep];
-  
-  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
+
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void)testFillNewCardForm {
   [self _openPassCodeFlowWithNewCard];
   
-  [self _sleep];
-  
   [self _fillTextFieldCorrectCode];
   
   [self _pressConfirmButton];
   
-  [self _sleep];
-  
-  XCTAssertTrue([[self _alertLable] isEqualToString:@"Success"]);
+  [self _checkAlertLabel:@"Success"];
 }
 
 - (void)testFillNewCardFormWithIncorrectCVC {
   [self _openPassCodeFlowWithIncorrectNewCard];
   
-  [self _sleep];
-  
   [self _fillTextFieldCorrectCode];
 
   [self _pressConfirmButton];
 
-  [self _sleep];
-  
-  XCTAssertTrue([[self _alertLable] isEqualToString:@"Error"]);
+  [self _checkAlertLabel:@"Error"];
 }
-
-
 
 @end
