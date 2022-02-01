@@ -611,7 +611,7 @@ extension ViewController: CardKDelegate {
   func willShow(_ paymentView: CardKPaymentView) {
     let paymentNetworks = [PKPaymentNetwork.amex, .discover, .masterCard, .visa]
     let paymentItem = PKPaymentSummaryItem.init(label: "Коробка", amount: NSDecimalNumber(value: 0.1))
-    let merchandId = "merchant.cardkit";
+    let merchandId = "merchant.test.applepay.id"
     paymentView.merchantId = merchandId
     paymentView.paymentRequest.currencyCode = "RUB"
     paymentView.paymentRequest.countryCode = "RU"

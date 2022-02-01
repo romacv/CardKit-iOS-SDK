@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.in-app-payments</key>
 	<array>
-		<string>merchant.cardkit</string>
+		<string>merchant.test.applepay.id</string>
 	</array>
 </dict>
 </plist>
