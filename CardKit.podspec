@@ -20,7 +20,7 @@ Pod::Spec.new do |spec|
   spec.exclude_files = "CardKit/Carthage/*.{h,m}", "CardKit/Carthage/**/**/*.lproj/*.strings"
 
   spec.source_files = 'CardKit/CardKit/*.{h,m}', 'CardKit/CardKit/PaymentFlow/*.{h,m,swift}'
-
+  spec.dependency = 'ThreeDSSDK', :podspec => 'https://raw.githubusercontent.com/Radarpayments/ios-sdk/master/ThreeDSSDK.podspec'
   spec.subspec 'CardKitCore' do |subspec|
     subspec.exclude_files = 'CardKit/CardKitCore/CardKitCore.{h,m}'
     subspec.source_files = 'CardKit/CardKitCore/*.{h,m}'
