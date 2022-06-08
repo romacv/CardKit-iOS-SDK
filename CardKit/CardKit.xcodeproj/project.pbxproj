@@ -88,7 +88,7 @@
 		D2D0B3642320F3A60007B3B9 /* banks-info in Resources */ = {isa = PBXBuildFile; fileRef = D2D0B3632320F3A60007B3B9 /* banks-info */; };
 		D2D0B367232122620007B3B9 /* PaymentSystemProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = D2D0B365232122620007B3B9 /* PaymentSystemProvider.h */; };
 		D2D0B368232122620007B3B9 /* PaymentSystemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D0B366232122620007B3B9 /* PaymentSystemProvider.m */; };
-		D2D0B36A232124120007B3B9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2D0B369232124120007B3B9 /* Images.xcassets */; };
+		D2D0B36A232124120007B3B9 /* CardKitImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2D0B369232124120007B3B9 /* CardKitImages.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -238,7 +238,7 @@
 		D2D0B3632320F3A60007B3B9 /* banks-info */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "banks-info"; sourceTree = "<group>"; };
 		D2D0B365232122620007B3B9 /* PaymentSystemProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentSystemProvider.h; sourceTree = "<group>"; };
 		D2D0B366232122620007B3B9 /* PaymentSystemProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentSystemProvider.m; sourceTree = "<group>"; };
-		D2D0B369232124120007B3B9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D2D0B369232124120007B3B9 /* CardKitImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CardKitImages.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -410,7 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				920072BC2615DF0D0014F864 /* PaymentFlow */,
-				D2D0B369232124120007B3B9 /* Images.xcassets */,
+				D2D0B369232124120007B3B9 /* CardKitImages.xcassets */,
 				D245AB3C231C435E00369747 /* CardKit.h */,
 				D245AB3D231C435E00369747 /* Info.plist */,
 				D245ABBA231C449F00369747 /* CardKViewController.h */,
@@ -690,7 +690,7 @@
 			files = (
 				D2D0B3642320F3A60007B3B9 /* banks-info in Resources */,
 				D20CEBCD232F660400F9407C /* Localizable.strings in Resources */,
-				D2D0B36A232124120007B3B9 /* Images.xcassets in Resources */,
+				D2D0B36A232124120007B3B9 /* CardKitImages.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
