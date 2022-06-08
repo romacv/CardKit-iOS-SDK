@@ -14,7 +14,7 @@
 #import "CardKPaymentSessionStatus.h"
 #import <ThreeDSSDK/ThreeDSSDK.h>
 
-#import <CardKit/CardKit-Swift.h>
+#import "CardKit-Swift.h"
 #import "ARes.h"
 
 @protocol TransactionManagerDelegate;
