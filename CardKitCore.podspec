@@ -10,10 +10,10 @@ Pod::Spec.new do |spec|
   spec.name         = "CardKitCore"
   spec.version      = "0.0.19"
   spec.summary      = "CardKitCore SDK."
-  spec.homepage     = "https://github.com/Runet-Business-Systems/CardKit"
+  spec.homepage     = "https://github.com/romacv/CardKit"
   spec.license      = "MIT"
   spec.author       = { "RBS" => "rbssupport@bpc.ru" }
-  spec.source       = { :git => "https://github.com/Runet-Business-Systems/CardKit.git" }
+  spec.source       = { :git => "https://github.com/romacv/CardKit.git" }
 
   spec.exclude_files = "CardKit/Carthage/*.{h,m}", "CardKit/Carthage/**/**/*.lproj/*.strings"
 

@@ -10,10 +10,10 @@ Pod::Spec.new do |spec|
   spec.name         = "CardKit"
   spec.version      = "0.0.19"
   spec.summary      = "CardKit SDK."
-  spec.homepage     = "https://github.com/Runet-Business-Systems/CardKit"
+  spec.homepage     = "https://github.com/romacv/CardKit"
   spec.license      = "MIT"
   spec.author       = { "RBS" => "rbssupport@bpc.ru" }
-  spec.source       = { :git => "https://github.com/Runet-Business-Systems/CardKit.git" }
+  spec.source       = { :git => "https://github.com/romacv/CardKit.git" }
 
   spec.resources =  "CardKit/banks-info", "CardKit/**/*.lproj/*.strings", "CardKit/CardKit/Images.xcassets", "CardKit/ThreeDSSDK.xcframework"
 
