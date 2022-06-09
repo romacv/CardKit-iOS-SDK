@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		123722872851947E00D5A9FF /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 929E6865274288CD008B6128 /* ThreeDSSDK.xcframework */; };
-		123722882851952000D5A9FF /* ThreeDSSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 929E6865274288CD008B6128 /* ThreeDSSDK.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1237228A2851967700D5A9FF /* ThreeDSSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 929E6865274288CD008B6128 /* ThreeDSSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		920072D92615E43F0014F864 /* CardKPaymentSessionStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 920072D72615E43F0014F864 /* CardKPaymentSessionStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		920072DA2615E43F0014F864 /* CardKPaymentSessionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 920072D82615E43F0014F864 /* CardKPaymentSessionStatus.m */; };
 		920312C3255D6562006FBED7 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 920312C2255D6562006FBED7 /* info.plist */; };
@@ -130,7 +129,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				123722882851952000D5A9FF /* ThreeDSSDK.xcframework in Embed Frameworks */,
+				1237228A2851967700D5A9FF /* ThreeDSSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,7 +277,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				123722872851947E00D5A9FF /* ThreeDSSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
