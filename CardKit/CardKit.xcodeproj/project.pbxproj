@@ -62,7 +62,6 @@
 		92985C8A246BEE1E009B7392 /* CardKKindPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92985C88246BEE1E009B7392 /* CardKKindPaymentViewController.m */; };
 		929BA32425591CFC00AB0526 /* TextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 929BA32225591CFC00AB0526 /* TextField.h */; };
 		929BA32525591CFC00AB0526 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 929BA32325591CFC00AB0526 /* TextField.m */; };
-		929E6866274288CD008B6128 /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 929E6865274288CD008B6128 /* ThreeDSSDK.xcframework */; };
 		92A1461A23435C6B002FBCC3 /* CardKConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A1461823435C6B002FBCC3 /* CardKConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		92A1461B23435C6B002FBCC3 /* CardKConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 92A1461923435C6B002FBCC3 /* CardKConfig.m */; };
 		92B718AD26569B5200D33E83 /* CardKValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9234CC4D247BC315009E3034 /* CardKValidation.m */; };
@@ -276,7 +275,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				929E6866274288CD008B6128 /* ThreeDSSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
