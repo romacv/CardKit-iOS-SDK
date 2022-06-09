@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		123722B02851BA8800D5A9FF /* ThreeDSSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 929E6865274288CD008B6128 /* ThreeDSSDK.xcframework */; };
 		920072D92615E43F0014F864 /* CardKPaymentSessionStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 920072D72615E43F0014F864 /* CardKPaymentSessionStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		920072DA2615E43F0014F864 /* CardKPaymentSessionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 920072D82615E43F0014F864 /* CardKPaymentSessionStatus.m */; };
 		920312C3255D6562006FBED7 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 920312C2255D6562006FBED7 /* info.plist */; };
@@ -276,7 +275,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				123722B02851BA8800D5A9FF /* ThreeDSSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
